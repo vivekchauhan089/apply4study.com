@@ -1,0 +1,174 @@
+.btn .btn-default {
+    color: #fff !important;
+    background-color: #f47920 !important;
+    font-weight: 500 !important;
+    border-radius: 20px 0 !important;
+    transition: all 0.5s ease 0s;
+    border: none !important;
+    padding: 0.5rem 0.75rem !important;
+    font-size: 1rem;
+    line-height: 1.25;
+    cursor: pointer;
+}
+
+
+*{
+    
+    font-family: 'Nunito', sans-serif;
+}
+.btn-default {
+    color: #fff !important;
+    background-color: #f47920 !important;
+ 
+    font-weight: 500 !important;
+    border-radius: 20px 0 !important;
+    transition: all 0.5s ease 0s;
+    border: none !important;
+    padding: 0.5rem 0.75rem !important;
+    font-size: 1rem;
+    line-height: 1.25;
+    cursor: pointer
+}
+
+.loader {
+    border: 7px solid #f3f3f3;
+    border-radius: 50%;
+    
+
+    border-top: 7px solid #f47920;
+    width: 40px;
+    height: 40px;
+    animation: spin 2s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+.btn-check:focus + .btn, .btn:focus{
+    box-shadow: none !important;
+}
+.btn-primary:focus{
+    background-color: #f47920 !important;
+    border-color: #f47920 !important;
+    color: #fff !important;
+}
+/* width */
+::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+.highcharts-credits{
+    display: none;
+}
+.headings{
+    font-size: 40px !important;
+    line-height: 48px;
+    letter-spacing: 0;
+    color: #101010;
+    text-transform: none;
+    text-align: center;
+    font-weight: 700;
+    font-style: normal;
+    font-family: "Nunito", sans-serif;
+  }
+.btn-default:hover {
+    border-radius: 0 20px 0px 0!important;
+    background-color: #000 !important;
+}
+
+a,a:hover, a:focus{
+
+    text-decoration:none !important;
+    outline:none !important;
+}
+.add-shadow {
+    box-shadow: 5px 5px 5px rgb(0 0 0 / 5%);
+}
+
+/* .btn-default {
+    color: #fff !important;
+    background-color: #f47920 !important;
+    height: 35px;
+    font-weight: 500 !important;
+    border-radius: 0 10px !important;
+    transition: all 0.5s ease 0s;
+    border: none !important;
+    padding: 0.5rem 0.75rem !important;
+    font-size: 1rem;
+    line-height: 1.25;
+    cursor: pointer
+} */
+h2{
+    font-family: 'Nunito', sans-serif;
+}
+/* .btn-default:hover {
+    border-radius: 0 !important;
+} */
+.text{
+    color:#212529;
+}
+.large-button {
+    width: 200px;
+    margin: 0 auto 20px;
+    display: block;
+}
+p{
+    color:#212529;
+}
+.btn-default a {
+    color: #fff !important;
+}
+.success:hover{
+    
+}
+.page-breadcrumb {
+    padding: 20px 50px;
+    background: repeating-linear-gradient(45deg, #fff, #fff 10px, #f9f9f9 10px, #f9f9f9 20px);
+    border-bottom: 1px solid #eee;
+}
+
+.breadcrumb {
+    background: transparent !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.breadcrumb li {
+    -webkit-clip-path: polygon(90% 0, 100% 50%, 90% 100%, 0% 100%, 7px 50%, 0% 0%);
+    clip-path: polygon(90% 0, 100% 50%, 90% 100%, 0% 100%, 7px 50%, 0% 0%);
+    background: #f47920;
+    padding: 5px 10px;
+    color: #fff;
+}
+
+.breadcrumb li:first-child {
+    -webkit-clip-path: polygon(0% 0%, 90% 0, 100% 50%, 90% 100%, 0% 100%);
+    clip-path: polygon(0% 0%, 90% 0, 100% 50%, 90% 100%, 0% 100%);
+}
+
+.breadcrumb-item+.breadcrumb-item::before {
+    display: none;
+}
+
+.breadcrumb li a,
+.breadcrumb li.active {
+    color: #fff !important;
+    font-size: 14px !important;
+    padding: 5px 8px;
+    clip-path: polygon(100% 0, 100% 50%, 100% 100%, 0% 100%, 6% 50%, 0% 0%);
+}
