@@ -1,7 +1,7 @@
 import { FormEvent, useRef, useState } from 'react';
 import { Button, Col, Container, Form, Row, Stack } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import Select, { SingleValue } from 'react-select/';
+import Select, { SingleValue } from 'react-select';
 
 import { toast } from 'react-toastify';
 
