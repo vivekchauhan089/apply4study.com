@@ -4,6 +4,8 @@ import { join } from 'path';
 import winston from 'winston';
 import winstonDaily from 'winston-daily-rotate-file';
 
+console.log(LOG_DIR)
+
 // logs dir
 const logDir: string = join(__dirname, LOG_DIR);
 
