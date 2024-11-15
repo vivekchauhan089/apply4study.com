@@ -42,7 +42,7 @@ try {
         const io = new Server(server, {
           cors: {
             credentials: true,
-            origin: ['http://localhost:8000', 'http://127.0.0.1:8000'],
+            origin: ['http://localhost:8183', 'http://127.0.0.1:8183'],
           },
         });
         global.onlineUsers = new Map();

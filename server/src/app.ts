@@ -22,12 +22,12 @@ class App {
   public app: express.Application;
   public env: string;
   public port: string | number;
-  public allowedOrigins = ['http://localhost:8000', 'http://127.0.0.1:8000'];
+  public allowedOrigins = ['http://localhost:8183', 'http://127.0.0.1:8183'];
 
   constructor(routes: Routes[]) {
     this.app = express();
     this.env = NODE_ENV || 'development';
-    this.port = PORT || 3000;
+    this.port = PORT || 8183;
 
     this.initializeMiddlewares();
     this.initializeRoutes(routes);
