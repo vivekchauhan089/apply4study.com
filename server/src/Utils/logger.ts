@@ -7,7 +7,7 @@ import winstonDaily from 'winston-daily-rotate-file';
 // console.log(LOG_DIR)
 
 // logs dir
-const logDir: string = join(__dirname, "/usr/data/apply4study.com/logs/");
+const logDir: string = join(__dirname, "");
 
 if (!existsSync(logDir)) {
   mkdirSync(logDir);
