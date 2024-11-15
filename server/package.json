@@ -7,9 +7,9 @@
   "scripts": {
     "build": "swc src -d dist --source-maps --copy-files",
     "deploy:prod": "yarn run build && pm2 start ecosystem.config.js --only prod",
-    "dev": "cross-env NODE_ENV=development nodemon node --trace-deprecation dist/app.ts",
+    "dev": "cross-env NODE_ENV=development nodemon node --trace-deprecation dist/app.js",
     "lint": "yarn run eslint --fix --ignore-path .gitignore --ext .ts src/",
-    "start": "yarn run build && cross-env NODE_ENV=production node dist/app.ts",
+    "start": "yarn run build && cross-env NODE_ENV=production node dist/app.js",
     "test": "jest --forceExit --detectOpenHandles"
   },
   "dependencies": {
