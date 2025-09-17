@@ -1,0 +1,61 @@
+@import '../../constants/colors.css';
+
+/* IMPORT GOOGLE FONT */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
+
+a{
+    text-decoration: none;
+}
+
+.QuestionCard-block{
+    width: 70%;
+    margin: auto;
+    text-align: center;
+    font-family: 'Montserrat' ,Arial, Helvetica, sans-serif !important;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.QuestionCard-block__elem--qs{
+    padding: 14px 5px 10px 5px;
+}
+
+.QuestionCard-block__elem--ans{
+    text-align: left;
+    padding: 5px 10px;
+}
+
+.QuestionCard-block__elem--ansIndividual{
+    display: block;
+    padding: 10px 10px;
+}
+
+.QuestionCard-block__elem--ansIndividual:hover{
+    background-color: #eee;
+}
+
+.QuestionCard-block__elem--btn{
+    background-color: var(--backgroundColor);
+    color: var(--primaryColor);
+    border: 1px var(--primaryColor) solid;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.QuestionCard-block__elem--btn:hover{
+    background-color: var(--primaryColor);
+    color: var(--secondaryColor);
+}
+
+@media(max-width:768px){
+    .QuestionCard-block{
+        width: 80%;
+    }
+}
+
+@media(max-width:500px){
+    .QuestionCard-block{
+        width: 90%;
+    }
+}

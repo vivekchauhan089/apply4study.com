@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
+
+:root{
+    --primaryColor: #6a0dad;
+    --backgroundColor: #ccc;
+    --accentColor: #333;
+}
+
+*{
+    list-style: none;
+    font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+}
+
+h2{
+    font-weight: lighter;
+}
+
+.linearGradientText{
+    background-image: linear-gradient(-225deg, #5271C4 0%, #B19FFF 48%, #ECA1FE 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+body{
+    width: 95%;
+    text-align: center;
+    margin: 20px auto;
+    box-sizing: border-box;
+}
+
+.Home-block__elem--popularContainer h2{
+    text-align: center;
+    margin: 75px auto 30px auto;
+    text-transform: uppercase;
+    letter-spacing: 6px;
+}
+
+.Home-block__elem--popularInsideContainer{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.Home-block__elem--popularIndividualContainer{
+    width: 300px;
+    height: 300px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.1);
+    transition: 0.3s;
+    background-color: rgba(250, 250, 250, 0.8);
+}
+
+.Home-block__elem--popularIndividualContainer:hover{
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.1);
+}
+
+.Home-block__elem--tutorContainer{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 5px 10px 0 10px;
+    margin-bottom: 5px;
+}
+
+.Home-block__elem--tutorImageContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: center;
+}
+
+.Home-block__elem--tutorNameContainer p{
+    margin: 5px;
+    text-align: right;
+}
+
+.Home-block__elem--courseTitleContainer p{
+    text-align: left;
+    padding: 3px 5px 5px 5px;
+    margin: 0 5px 5px 5px;
+}
+
+.Home-block__elem--courseDuration{
+    margin-top: -32px !important;
+    color: #fff;
+    font-weight: bolder;
+    text-align: right;
+}
+
+@media(max-width: 650px){
+    .Home-block__elem--popularInsideContainer{
+        justify-content: center !important;
+    }
+}
+
+.Home-block {
+    width: 95%;
+    text-align: center !important;
+    margin: auto;
+}

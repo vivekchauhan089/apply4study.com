@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
+
+:root{
+    --primaryColor: #6a0dad;
+    --backgroundColor: #ccc;
+    --accentColor: #333;
+}
+
+*{
+    list-style: none;
+    font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+}
+
+.Promos-block{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 16px auto;
+}
+
+.Promos-block__elem--gifContainer img{
+    border-radius: 10px;
+    width: 400px;
+    height: 266px;
+}
+
+.Promos-block__elem--textContainer{
+    margin: 0 22px;
+    width: 400px !important
+}
+
+.Promos-block__elem--textLeft{
+    float: left;
+    margin: 10px 60px 10px 10px;
+    font-size: 40px;
+    font-weight: bolder;
+}
+
+.Promos-block__elem--textRight{
+    float: right;
+    margin: 10px 10px 10px 60px;
+    font-size: 40px;
+    font-weight: bolder;
+}
+
+.Promos-block__elem--topTutorh2{
+    text-transform: uppercase;
+    letter-spacing: 6px;
+    margin: 75px auto 20px auto;
+}
+
+.Promos-block__elem--topTutorContainer{
+    display: flex !important;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px 16px;
+}
+
+.Promos-block__elem--topTutorIndividualContainer{
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-gap: 5px;
+    border: var(--accentColor) 1px solid;
+    border-radius: 20px;
+    padding: 5px 10px;
+}
+
+@media(max-width: 1439px){
+    .Promos-block{
+        justify-content: space-around;
+    }
+    .hide-on-1439{
+        display: none;
+    }
+}
+
+@media(max-width: 440px){
+    .Promos-block__elem--topTutorContainer{
+        justify-content: center;
+    }
+    .Promos-block__elem--gifContainer img{
+        width: 300px;
+        height: 220px;
+    }
+    .Promos-block__elem--textLeft, .Promos-block__elem--textRight{
+        font-size: 22px;
+    }
+    .Promos-block__elem--topTutorh2{
+        margin: 45px auto 20px auto;
+    }
+    .Promos-block__elem--textContainer{
+        margin: 10px 12px;
+    }
+}

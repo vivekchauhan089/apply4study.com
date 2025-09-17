@@ -1,0 +1,33 @@
+{
+  "courseId": 1,
+
+  "name": "Python Data Structures",
+
+  "about": "This Course builds on the success of the Python for Everybody course and will introduce fundamental programming concepts including data structures, networked application program interfaces, and databases, using the Python programming language. In the Capstone Project, you’ll use the technologies learned throughout the Specialization to design and create your own applications for data retrieval, processing, and visualization.",
+
+  "note": "Congratulations on finishing Python Data Structures. I really want to thank you for sharing your time with us. Completing the first two courses in the Python Specialization (Getting Started with Python and this course) is an important milestone in your programming education. You are half way through the specialization and at the point where you switch from learning how to program to how to use your programming skills. To celebrate this important moment and transition, we have a nice graduation recorded ceremony that you can view - complete with a commencement speech from Indiana University professor Curt Bonk. I would not wait too long before starting the next course in the sequence to avoid forgetting what you know and then needing to come back and review. Again, thank you for sharing your time with us in this course. - Chuck and the Teaching Staff of Python for Everybody",
+
+  "topics": [
+    {
+      "title": "Introduction",
+      "text": "Edit the code block below to output 'Hello World!'. You can use the IDE to verify your answer.",
+      "code": "",
+      "url": "https://www.youtube.com/watch?v=faAVAai7szM"
+    },
+
+    {
+    "title": "Title of topic 1",
+    "text": "Edit the code block below to output 'Hello World!'. You can use the IDE to verify your answer",
+    "code": "",
+    "url": "https://www.youtube.com/watch?v=faAVAai7szM"
+    },
+
+    {
+    "title": "Title of topic 2",
+    "text": "Edit the code block below to output 'Hello World!'. You can use the IDE to verify your answer",
+    "code": "",
+    "url": "https://www.youtube.com/watch?v=faAVAai7szM"
+   }
+  ]
+  
+}
