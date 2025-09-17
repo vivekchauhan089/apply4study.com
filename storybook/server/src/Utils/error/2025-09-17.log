@@ -1,0 +1,114 @@
+2025-09-17 16:19:42 error: uncaughtException: Cannot find module '@/Utils/logger.js'
+Require stack:
+- E:\STD\test\apply4study.com_\server\src\app.ts
+- E:\STD\test\apply4study.com_\server\src\server.ts
+Error: Cannot find module '@/Utils/logger.js'
+Require stack:
+- E:\STD\test\apply4study.com_\server\src\app.ts
+- E:\STD\test\apply4study.com_\server\src\server.ts
+    at Function.Module._resolveFilename (node:internal/modules/cjs/loader:1077:15)
+    at Function.Module._resolveFilename.sharedData.moduleResolveFilenameHook.installedValue (C:\Users\vivek.kumar5\AppData\Roaming\npm\node_modules\ts-node\node_modules\@cspotcode\source-map-support\source-map-support.js:811:30)
+    at Function.Module._resolveFilename (E:\STD\test\apply4study.com_\server\node_modules\tsconfig-paths\src\register.ts:115:36)
+    at Function.Module._load (node:internal/modules/cjs/loader:922:27)
+    at Module.require (node:internal/modules/cjs/loader:1143:19)
+    at require (node:internal/modules/cjs/helpers:110:18)
+    at Object.<anonymous> (E:\STD\test\apply4study.com_\server\src\app.ts:17:1)
+    at Module._compile (node:internal/modules/cjs/loader:1256:14)
+    at Module.m._compile (C:\Users\vivek.kumar5\AppData\Roaming\npm\node_modules\ts-node\src\index.ts:1618:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1310:10)
+2025-09-17 16:19:45 error: uncaughtException: Cannot find module '@/Utils/logger.js'
+Require stack:
+- E:\STD\test\apply4study.com_\server\src\app.ts
+- E:\STD\test\apply4study.com_\server\src\server.ts
+Error: Cannot find module '@/Utils/logger.js'
+Require stack:
+- E:\STD\test\apply4study.com_\server\src\app.ts
+- E:\STD\test\apply4study.com_\server\src\server.ts
+    at Function.Module._resolveFilename (node:internal/modules/cjs/loader:1077:15)
+    at Function.Module._resolveFilename.sharedData.moduleResolveFilenameHook.installedValue (C:\Users\vivek.kumar5\AppData\Roaming\npm\node_modules\ts-node\node_modules\@cspotcode\source-map-support\source-map-support.js:811:30)
+    at Function.Module._resolveFilename (E:\STD\test\apply4study.com_\server\node_modules\tsconfig-paths\src\register.ts:115:36)
+    at Function.Module._load (node:internal/modules/cjs/loader:922:27)
+    at Module.require (node:internal/modules/cjs/loader:1143:19)
+    at require (node:internal/modules/cjs/helpers:110:18)
+    at Object.<anonymous> (E:\STD\test\apply4study.com_\server\src\app.ts:17:1)
+    at Module._compile (node:internal/modules/cjs/loader:1256:14)
+    at Module.m._compile (C:\Users\vivek.kumar5\AppData\Roaming\npm\node_modules\ts-node\src\index.ts:1618:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1310:10)
+2025-09-17 16:19:54 error: uncaughtException: Cannot find module 'bcrypt'
+Require stack:
+- E:\STD\test\apply4study.com_\server\src\Admin\admin.model.ts
+- E:\STD\test\apply4study.com_\server\src\User\user.util.ts
+- E:\STD\test\apply4study.com_\server\src\Token\token.util.ts
+- E:\STD\test\apply4study.com_\server\src\Authentication\auth.controller.ts
+- E:\STD\test\apply4study.com_\server\src\Authentication\auth.route.ts
+- E:\STD\test\apply4study.com_\server\src\server.ts
+Error: Cannot find module 'bcrypt'
+Require stack:
+- E:\STD\test\apply4study.com_\server\src\Admin\admin.model.ts
+- E:\STD\test\apply4study.com_\server\src\User\user.util.ts
+- E:\STD\test\apply4study.com_\server\src\Token\token.util.ts
+- E:\STD\test\apply4study.com_\server\src\Authentication\auth.controller.ts
+- E:\STD\test\apply4study.com_\server\src\Authentication\auth.route.ts
+- E:\STD\test\apply4study.com_\server\src\server.ts
+    at Function.Module._resolveFilename (node:internal/modules/cjs/loader:1077:15)
+    at Function.Module._resolveFilename.sharedData.moduleResolveFilenameHook.installedValue (C:\Users\vivek.kumar5\AppData\Roaming\npm\node_modules\ts-node\node_modules\@cspotcode\source-map-support\source-map-support.js:811:30)
+    at Function.Module._resolveFilename (E:\STD\test\apply4study.com_\server\node_modules\tsconfig-paths\src\register.ts:115:36)
+    at Function.Module._load (node:internal/modules/cjs/loader:922:27)
+    at Module.require (node:internal/modules/cjs/loader:1143:19)
+    at require (node:internal/modules/cjs/helpers:110:18)
+    at Object.<anonymous> (E:\STD\test\apply4study.com_\server\src\Admin\admin.model.ts:3:1)
+    at Module._compile (node:internal/modules/cjs/loader:1256:14)
+    at Module.m._compile (C:\Users\vivek.kumar5\AppData\Roaming\npm\node_modules\ts-node\src\index.ts:1618:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1310:10)
+2025-09-17 16:20:29 error: uncaughtException: Cannot find module 'bcrypt'
+Require stack:
+- E:\STD\test\apply4study.com_\server\src\Admin\admin.model.ts
+- E:\STD\test\apply4study.com_\server\src\User\user.util.ts
+- E:\STD\test\apply4study.com_\server\src\Token\token.util.ts
+- E:\STD\test\apply4study.com_\server\src\Authentication\auth.controller.ts
+- E:\STD\test\apply4study.com_\server\src\Authentication\auth.route.ts
+- E:\STD\test\apply4study.com_\server\src\server.ts
+Error: Cannot find module 'bcrypt'
+Require stack:
+- E:\STD\test\apply4study.com_\server\src\Admin\admin.model.ts
+- E:\STD\test\apply4study.com_\server\src\User\user.util.ts
+- E:\STD\test\apply4study.com_\server\src\Token\token.util.ts
+- E:\STD\test\apply4study.com_\server\src\Authentication\auth.controller.ts
+- E:\STD\test\apply4study.com_\server\src\Authentication\auth.route.ts
+- E:\STD\test\apply4study.com_\server\src\server.ts
+    at Function.Module._resolveFilename (node:internal/modules/cjs/loader:1077:15)
+    at Function.Module._resolveFilename.sharedData.moduleResolveFilenameHook.installedValue (C:\Users\vivek.kumar5\AppData\Roaming\npm\node_modules\ts-node\node_modules\@cspotcode\source-map-support\source-map-support.js:811:30)
+    at Function.Module._resolveFilename (E:\STD\test\apply4study.com_\server\node_modules\tsconfig-paths\src\register.ts:115:36)
+    at Function.Module._load (node:internal/modules/cjs/loader:922:27)
+    at Module.require (node:internal/modules/cjs/loader:1143:19)
+    at require (node:internal/modules/cjs/helpers:110:18)
+    at Object.<anonymous> (E:\STD\test\apply4study.com_\server\src\Admin\admin.model.ts:3:1)
+    at Module._compile (node:internal/modules/cjs/loader:1256:14)
+    at Module.m._compile (C:\Users\vivek.kumar5\AppData\Roaming\npm\node_modules\ts-node\src\index.ts:1618:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1310:10)
+2025-09-17 16:21:29 error: uncaughtException: Cannot find module 'bcrypt'
+Require stack:
+- E:\STD\test\apply4study.com_\server\src\Admin\admin.model.ts
+- E:\STD\test\apply4study.com_\server\src\User\user.util.ts
+- E:\STD\test\apply4study.com_\server\src\Token\token.util.ts
+- E:\STD\test\apply4study.com_\server\src\Authentication\auth.controller.ts
+- E:\STD\test\apply4study.com_\server\src\Authentication\auth.route.ts
+- E:\STD\test\apply4study.com_\server\src\server.ts
+Error: Cannot find module 'bcrypt'
+Require stack:
+- E:\STD\test\apply4study.com_\server\src\Admin\admin.model.ts
+- E:\STD\test\apply4study.com_\server\src\User\user.util.ts
+- E:\STD\test\apply4study.com_\server\src\Token\token.util.ts
+- E:\STD\test\apply4study.com_\server\src\Authentication\auth.controller.ts
+- E:\STD\test\apply4study.com_\server\src\Authentication\auth.route.ts
+- E:\STD\test\apply4study.com_\server\src\server.ts
+    at Function.Module._resolveFilename (node:internal/modules/cjs/loader:1077:15)
+    at Function.Module._resolveFilename.sharedData.moduleResolveFilenameHook.installedValue (C:\Users\vivek.kumar5\AppData\Roaming\npm\node_modules\ts-node\node_modules\@cspotcode\source-map-support\source-map-support.js:811:30)
+    at Function.Module._resolveFilename (E:\STD\test\apply4study.com_\server\node_modules\tsconfig-paths\src\register.ts:115:36)
+    at Function.Module._load (node:internal/modules/cjs/loader:922:27)
+    at Module.require (node:internal/modules/cjs/loader:1143:19)
+    at require (node:internal/modules/cjs/helpers:110:18)
+    at Object.<anonymous> (E:\STD\test\apply4study.com_\server\src\Admin\admin.model.ts:3:1)
+    at Module._compile (node:internal/modules/cjs/loader:1256:14)
+    at Module.m._compile (C:\Users\vivek.kumar5\AppData\Roaming\npm\node_modules\ts-node\src\index.ts:1618:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1310:10)
