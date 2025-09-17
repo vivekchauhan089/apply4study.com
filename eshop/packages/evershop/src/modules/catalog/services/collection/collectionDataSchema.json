@@ -1,0 +1,50 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "size": {
+            "type": "number"
+          },
+          "columns": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "size": {
+                  "type": "number"
+                },
+                "data": {
+                  "type": "object"
+                }
+              },
+              "required": ["id", "size", "data"]
+            }
+          }
+        },
+        "required": ["id", "size", "columns"]
+      },
+      "default": []
+    },
+    "code": {
+      "type": "string",
+      "pattern": "^\\S+$",
+      "errorMessage": {
+        "pattern": "Collection ID should not contain spaces"
+      }
+    }
+  },
+  "additionalProperties": true
+}

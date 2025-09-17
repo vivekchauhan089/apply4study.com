@@ -1,0 +1,63 @@
+{
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": ["string", "integer"],
+      "enum": ["0", "1", 0, 1]
+    },
+    "name": {
+      "type": "string"
+    },
+    "content": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "size": {
+            "type": "number"
+          },
+          "columns": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "size": {
+                  "type": "number"
+                },
+                "data": {
+                  "type": "object"
+                }
+              },
+              "required": ["id", "size", "data"]
+            }
+          }
+        },
+        "required": ["id", "size", "columns"]
+      },
+      "default": []
+    },
+    "url_key": {
+      "type": "string",
+      "pattern": "^\\S+$",
+      "errorMessage": {
+        "pattern": "Url key should not contain spaces"
+      }
+    },
+    "meta_title": {
+      "type": "string"
+    },
+    "meta_description": {
+      "type": "string"
+    },
+    "meta_keywords": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}
