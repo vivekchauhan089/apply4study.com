@@ -1,0 +1,51 @@
+{
+  "expo": {
+    "name": "Markets React",
+    "description": "Ever want to check the stock market, but you just couldn't figure out how? Well look no further, this app has got you covered!",
+    "slug": "markets-react",
+    "privacy": "public",
+    "sdkVersion": "33.0.0",
+    "platforms": ["ios", "android"],
+    "version": "1.2.0",
+    "orientation": "portrait",
+    "primaryColor": "#182129",
+    "icon": "./assets/icon.png",
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "bundleIdentifier": "com.kmr.marketsreact",
+      "buildNumber": "1.2.0",
+      "supportsTablet": true,
+      "splash": {
+        "backgroundColor": "#182129",
+        "resizeMode": "contain",
+        "image": "./assets/icon-transparent.png",
+        "tabletImage": "./assets/icon-transparent.png"
+      }
+    },
+    "android": {
+      "package": "com.kmr.marketsreact",
+      "permissions": [],
+      "versionCode": 26,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon-transparent.png",
+        "backgroundColor": "#182129"
+      },
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.kmr.marketsreact",
+      "splash": {
+        "backgroundColor": "#182129",
+        "resizeMode": "contain",
+        "ldpi": "./assets/icon-transparent.png",
+        "mdpi": "./assets/icon-transparent.png",
+        "hdpi": "./assets/icon-transparent.png",
+        "xhdpi": "./assets/icon-transparent.png",
+        "xxhdpi": "./assets/icon-transparent.png",
+        "xxxhdpi": "./assets/icon-transparent.png"
+      }
+    }
+  }
+}

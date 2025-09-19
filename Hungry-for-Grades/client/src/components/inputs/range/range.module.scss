@@ -1,0 +1,92 @@
+.rangeContainer {
+    position: relative;
+}
+
+input[type='range'] {
+    min-width: 150px;
+    width: 100%;
+    margin: 18px 0;
+    -webkit-appearance: none;
+}
+
+input[type='range']:focus {
+    outline: none;
+}
+
+input[type='number'].rangeNumber {
+    background-color: #fff;
+    position: absolute;
+    top: -4px;
+    left: 90px;
+    width: 70px;
+    padding: 4px 0;
+    text-align: center;
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+
+/* Chrome & Safari */
+
+input[type='range']::-webkit-slider-runnable-track {
+    background: var(--secondary-color);
+    border-radius: 4px;
+    width: 100%;
+    height: 10px;
+    cursor: pointer;
+}
+
+input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 24px;
+    width: 24px;
+    background: #fff;
+    border-radius: 50%;
+    border: 1px solid var(--primary-color);
+    margin-top: -7px;
+    cursor: pointer;
+}
+
+
+/* Firefox */
+
+input[type='range']::-moz-range-track {
+    background: var(--primary-color);
+    border-radius: 4px;
+    width: 100%;
+    height: 13px;
+    cursor: pointer;
+}
+
+input[type='range']::-moz-range-thumb {
+    -webkit-appearance: none;
+    height: 24px;
+    width: 24px;
+    background: #fff;
+    border-radius: 50%;
+    border: 1px solid var(--primary-color);
+    margin-top: -7px;
+    cursor: pointer;
+}
+
+
+/* IE */
+
+input[type='range']::-ms-track {
+    background: var(--primary-color);
+    border-radius: 4px;
+    width: 100%;
+    height: 13px;
+    cursor: pointer;
+}
+
+input[type='range']::-ms-thumb {
+    -webkit-appearance: none;
+    height: 24px;
+    width: 24px;
+    background: #fff;
+    border-radius: 50%;
+    border: 1px solid var(--primary-color);
+    margin-top: -7px;
+    cursor: pointer;
+}

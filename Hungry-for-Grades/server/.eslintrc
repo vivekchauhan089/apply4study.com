@@ -1,0 +1,41 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "plugin:jsonc/base",
+    "plugin:security/recommended",
+    "plugin:typescript-sort-keys/recommended",
+    "prettier",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": ["xss", "sort-keys-fix", "typescript-sort-keys"],
+  "rules": {
+    "@typescript-eslint/explicit-member-accessibility": 0,
+    "@typescript-eslint/explicit-function-return-type": 0,
+    "@typescript-eslint/no-parameter-properties": 0,
+    "@typescript-eslint/interface-name-prefix": 0,
+    "@typescript-eslint/explicit-module-boundary-types": 0,
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/ban-types": "off",
+    "@typescript-eslint/no-var-requires": "error",
+    "typescript-sort-keys/interface": "off",
+    "typescript-sort-keys/string-enum": "off",
+    "sort-keys": "off",
+    "no-console": "warn",
+    "no-debugger": "error",
+    "no-var": "error",
+    "prefer-const": "error",
+    "prefer-template": "error",
+    "prefer-arrow-callback": "error",
+    "prefer-rest-params": "error",
+    "prefer-spread": "error",
+    "prefer-destructuring": "error",
+    "sort-keys-fix/sort-keys-fix": "off",
+    "xss/no-location-href-assign": "error",
+    "xss/no-mixed-html": "off"
+  }
+}
