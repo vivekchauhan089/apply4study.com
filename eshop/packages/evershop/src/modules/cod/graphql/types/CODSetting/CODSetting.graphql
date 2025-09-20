@@ -1,4 +1,0 @@
-extend type Setting {
-  codPaymentStatus: Int
-  codDisplayName: String
-}

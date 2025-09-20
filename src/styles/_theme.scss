@@ -1,0 +1,11 @@
+@import './variable';
+
+body.light-theme {
+  background-color: $light-bg;
+  color: $light-text;
+}
+
+body.dark-theme {
+  background-color: $dark-bg;
+  color: $dark-text;
+}

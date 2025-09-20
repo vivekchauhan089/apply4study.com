@@ -1,0 +1,77 @@
+/* Container styles */
+.search-container {
+  background: linear-gradient(90deg, #0c4cc5, #4c9dfb);
+  color: white;
+  padding: 40px 20px;
+  border-radius: 20px;
+}
+
+/* Heading style */
+.search-container h1 {
+  font-size: 28px;
+  font-weight: 400;
+  margin-bottom: 25px;
+}
+
+.search-container h1 strong {
+  font-weight: 700;
+}
+
+/* Flex layout for search bar */
+.search-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+/* Input + Icon container */
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+/* Icon inside input/select */
+.input-wrapper .icon {
+  position: absolute;
+  left: 14px;
+  color: #777;
+  font-size: 18px;
+}
+
+/* Input styling */
+.input-wrapper input,
+.input-wrapper select {
+  padding: 12px 16px 12px 40px;
+  border: none;
+  font-size: 16px;
+}
+
+/* Button styling */
+.search-bar button {
+  padding: 12px 25px;
+  background-color: white;
+  color: #0066ff;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.search-bar button:hover {
+  background-color: #e6eaff;
+}
+
+.search-title {
+  font-size: 36px;
+  font-weight: 500;
+  line-height: 50px;
+  margin-bottom: 1.5rem;
+  color: #fff;
+  font-family: "roboto", sans-serif;
+}/*# sourceMappingURL=SearchSection.css.map */

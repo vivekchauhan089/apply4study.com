@@ -1,7 +1,0 @@
-User-agent: *
-Disallow: /database/
-Disallow: /scripts/
-User-agent: Googlebot-Image
-Disallow: /*.jpg$
-Disallow: /workvisa$
-Disallow: /partnervisa$

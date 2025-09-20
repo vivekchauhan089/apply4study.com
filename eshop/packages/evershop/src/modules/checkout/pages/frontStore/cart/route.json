@@ -1,5 +1,0 @@
-{
-  "methods": ["GET"],
-  "path": "/cart",
-  "name": "Cart page"
-}
