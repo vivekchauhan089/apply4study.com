@@ -1,94 +1,86 @@
- 
+
 <%- include('../elements/header'); %>
 <div class="main-content">
-        <div class="main-content-inner">
-            
-            <div class="breadcrumbs ace-save-state" id="breadcrumbs">
-                <ul class="breadcrumb">
-                    <li> <i class="ace-icon fa fa-tachometer"></i> <a href="<%=nodeAdminUrl%>/Dashboard">Dashboard</a> </li>
-                    <li class="active"><a href="<%=nodeAdminUrl%>/<%=controller%>/list"> Users </a> </li>
-                    <li class="active">List</li>
-                </ul>  
+    <div class="main-content-inner">
+        <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+            <ul class="breadcrumb">
+                <li><i class="ace-icon fa fa-tachometer"></i>
+                    <a href="<%=nodeAdminUrl%>/Dashboard">Dashboard</a>
+                </li>
+                <li class="active"><a href="<%=nodeAdminUrl%>/<%=controller%>/list"> Blogs </a></li>
+                <li class="active">List</li>
+            </ul>
+        </div>
+
+        <div class="page-content">
+            <%- include ../elements/flash.ejs %>
+            <div class="page-header col-xs-12">
+                <div class="col-xs-6">
+                    <h1><%=controller%> List <small></small></h1>
+                </div>
+                <div class="col-xs-6">
+                    <a href="<%=nodeAdminUrl%>/<%=controller%>/add">
+                        <button class="btn btn-info pull-right" type="button">Add Blog</button>
+                    </a>
+                </div>
             </div>
 
-            <div class="page-content"> 
-                    <%- include ../elements/flash.ejs %>    
-                <div class="page-header col-xs-12">
-                    <div class="col-xs-6"> 
-                            <h1>  <%=controller%> List <small>    </h1> 
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="table-header">Results for all blogs</div>
+                    <div>
+                        <table id="dynamic-table" class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>S.NO.</th>
+                                    <th>Title</th>
+                                    <th>Author</th>
+                                    <th>Status</th>
+                                    <th>Created Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if(data.length){  
+                                    for(var i = 0;i < data.length;i++) { %>
+                                    <tr>
+                                        <td><%=i+1%></td>
+                                        <td><%=data[i].title%></td>
+                                        <td><%= data[i].author ? data[i].author.first_name : '—' %></td>
+                                        <td>
+                                            <% if(data[i].status === "published"){ %>
+                                                <span class="label label-sm label-success">Published</span>
+                                            <% } else { %>
+                                                <span class="label label-sm label-warning">Draft</span>
+                                            <% } %>
+                                        </td>
+                                        <td><%=moment(data[i].createdAt).format('YYYY-MM-DD hh:mm:ss')%></td>
+                                        <td>
+                                            <div class="hidden-sm hidden-xs action-buttons">
+                                                <a class="green" href="<%=nodeAdminUrl%>/<%=controller%>/edit/<%=data[i]._id%>">
+                                                    <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                                </a>
+                                                <a class="red" onclick="return confirm('Are you sure you want to delete this blog?')" 
+                                                   href="<%=nodeAdminUrl%>/<%=controller%>/delete/<%=data[i]._id%>">
+                                                    <i class="ace-icon fa fa-trash-o bigger-130"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <% } } else { %>
+                                    <tr><td colspan="6">No record found</td></tr>
+                                <% } %>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="col-xs-6"> 
-                        <a href="<%=nodeAdminUrl%>/<%=controller%>/add%>"> <button class="btn btn-info pull-right" type="button">   Add   </button></a> 
-                    </div> 
-                </div>  
-                <div class="row">
-                        <div class="col-xs-12"> 
-                            <div class="clearfix"> 
-                                <div class="pull-right tableTools-container"></div>
-                            </div>
-                            <div class="table-header">  Results for all regiatered users. </div> 
-                            <div>   
-                                <table id="dynamic-table" class="table table-striped table-bordered table-hover">
-                                        <thead>
-                                            <tr> 
-                                                <th>S.NO.</th>
-                                                <th>First Name</th>
-                                                <th>Email</th>
-                                                <th>Mobile Number</th>
-                                                <th>Role</th>
-                                                <th class="hidden-480">Created Date</th> 
-                                                <th> <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i> Status </th>
-                                                <th class="hidden-480">Action</th>  
-                                                
-                                            </tr>
-                                        </thead>
+                </div>
+            </div>
 
-                                        <tbody>
-                                                <% if(data.length){  
-                                                    for(var i = 0;i < data.length;i++) { %>
-                                            <tr> 
-                                                <td> <a href="#"><%=i+1%></a>  </td>
-                                                <td style="width: 15%;"><%=data[i].first_name%></td> 
-                                                <td style="width: 15%;"><%=data[i].email%></td> 
-                                                <td style="width: 15%;"><%=data[i].mobile_number%></td>
-                                                <td style="width: 15%;"><%=((data[i].role_id) ? data[i].role_id.name : data[i].role)%></td> 
-                                                <td><%=moment(data[i].created_at).format('YYYY-MM-DD hh:mm:ss')%></td>  
-                                                <td class="hidden-480">
-                                                    <%if(data[i].is_active == 1){  %>
-                                                    <span class="label label-sm label-success">Active</span>
-                                                    <% }else{ %> 
-                                                        <span class="label label-sm label-warning">Deactivate</span> 
-                                                    <%}%>
-                                                </td> 
-                                                <td class="hidden-480">
-                                                    <div class="hidden-sm hidden-xs action-buttons">
-                                                        <a class="blue" href="#"> <i class="ace-icon fa fa-search-plus bigger-130"></i> </a> 
-                                                        <a class="green" href="<%=nodeAdminUrl%>/<%=controller%>/edit/<%=data[i].id%>"> <i class="ace-icon fa fa-pencil bigger-130"></i> </a>   
-                                                        <a class="red" onclick="return confirm('Are you sure you want to delete this ?')" href="<%=nodeAdminUrl%>/<%=controller%>/delete/<%=data[i].id%>" > <i class="ace-icon fa fa-trash-o bigger-130"></i>  </a>   
-                                                    </div> 
-                                                </td> 
-                                            </tr>
-                                            <% }  }else{ %>
-                                                <tr>  <td colspan="5">No record found</td>  </tr>
-                                        <% } %>   
-                                        </tbody>
-                                    </table>  
-                            </div>
-                        </div>
-                    </div>
-  
-            </div><!-- /.page-content -->
-        </div>
-    </div><!-- /.main-content -->
+        </div><!-- /.page-content -->
+    </div>
+</div><!-- /.main-content -->
 
-
-    
-     
- 
-    
-
-<%- include('../elements/footer'); %> 
-
+<%- include('../elements/footer'); %>
 
 
 <!-- page specific plugin scripts -->
@@ -117,7 +109,7 @@
                 "aaSorting": [], 
                 //"bProcessing": true,
                 //"bServerSide": true,
-                //"sAjaxSource": "http://127.0.0.1/table.php"	, 
+                //"sAjaxSource": "http://127.0.0.1/table.php"   , 
                 //"sScrollY": "200px",
                 //"bPaginate": false, 
                 //"sScrollX": "100%",
@@ -166,7 +158,7 @@
                 "className": "btn btn-white btn-primary btn-bold",
                 autoPrint: false,
                 message: 'This print was produced using the Print button for DataTables'
-              }		  
+              }       
             ]
         } );
         myTable.buttons().container().appendTo( $('.tableTools-container') );

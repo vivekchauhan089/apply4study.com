@@ -125,9 +125,21 @@
  
                                     <div>
                                         <label for="form-field-select-1"> Mobile Number </label> 
-                                        <input type="text" name="contact_number" value="<%=data.contact_number%>" id="form-field-select-1" placeholder="Mobile Number" class="form-control">  
-                                        <span class="error"><%=errorData.contact_number%></span> 
-                                    </div>  <br>  
+                                        <input type="text" name="mobile_number" value="<%=data.mobile_number%>" id="form-field-select-1" placeholder="Mobile Number" class="form-control">  
+                                        <span class="error"><%=errorData.mobile_number%></span> 
+                                    </div>  <br> 
+
+                                    <div>
+                                        <label for="form-field-select-2">Role</label> 
+                                        <select class="form-control" name="role_id" id="form-field-select-2">
+                                            <% if (roles && roles.length > 0) { %>
+                                                <% roles.forEach(function(role) { %>
+                                                    <option value="<%=String(role._id)%>" <%=String(data.role_id)===String(role._id) ? 'selected' : '' %>><%=role.name%></option>
+                                                <% }) %>
+                                            <% } %>
+                                        </select>
+                                        <span class="error"><%=errorData.role%></span>
+                                    </div>  <br> 
 
                                     <div>
                                         <label for="form-field-select-1"> Profile Image </label> 

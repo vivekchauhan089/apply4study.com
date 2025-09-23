@@ -14,10 +14,9 @@ app.use(fileUpload());
 global.connectPool = require('./config/db.js');    
   
 // Constants 
-//global.nodeSiteUrl = 'http://192.168.1.151/constructionApp/nodeApi/'; // node  
-global.nodeSiteUrl = 'http://192.168.1.151:8083'; // node  
-global.nodeAdminUrl = 'http://192.168.1.151:8083/admin'; // node  
-global.siteTitle = 'cApp Admin';
+global.nodeSiteUrl = 'http://localhost:8083'; // node  
+global.nodeAdminUrl = 'http://localhost:8083/admin'; // node  
+global.siteTitle = 'Apply4study Admin';
 global.successStatus = 200;
 global.failStatus = 401; 
 global.SessionExpireStatus = 500;  
@@ -50,9 +49,10 @@ app.get('/', (req, res) => {
 });
 
 var apiRouter = require('./routes/api');
-app.use('/', apiRouter); 
+var blogRouter = require('./routes/blogs');
+app.use('/',apiRouter,blogRouter); 
 var server = app.listen(8083, function () { 
-    console.log("Example app listening at http://192.168.1.151:%s", server.address().port);
+    console.log("Example app listening at http://localhost:%s", server.address().port);
 });       
 process.on('uncaughtException', function (err) { 
     console.log('Caught exception: ' + err);

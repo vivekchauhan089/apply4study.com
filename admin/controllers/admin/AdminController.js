@@ -60,9 +60,9 @@ async function login(req , res){
             var password      = input.password;       
             const user = await Users.findOne({ email: email});
 
-            //var salt = bcrypt.genSaltSync(saltRounds);
-            //var password = bcrypt.hashSync(input.password, salt);
-           // console.log(password);  
+            /*var salt = bcrypt.genSaltSync(saltRounds);
+            var password = bcrypt.hashSync(input.password, salt);
+            console.log(password);*/  
               
             if (user && bcrypt.compareSync(password, user.password)) { 
                 req.session.LoginUser = user;  

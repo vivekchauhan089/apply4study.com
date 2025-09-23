@@ -1,6 +1,7 @@
 var Request = require("request");      
 //var Categories = require.main.require('./models/Categories');   
-var Users = require.main.require('./models/Users');   
+var Users = require.main.require('./models/Users');
+var Roles = require.main.require('./models/Roles');   
 const controller = 'Users'; 
 const module_name = 'Users'; 
 const bcrypt = require('bcrypt');
@@ -20,12 +21,12 @@ async function list(req, res) {
 
     res.set('content-type' , 'text/html; charset=mycharset'); 
     data = {};    
-    action = 'list'; 
+    action = 'list';    
     //const allRecord = await Users.findAll();   
-    const allRecord = await Users.find({}); 
+    const allRecord = await Users.find({}).populate('role_id'); 
     res.render('admin/users/list',{
         page_title:" List",
-        data:allRecord, 
+        data:allRecord,
         controller:controller, 
         action:action,
         module_name:module_name
@@ -47,6 +48,7 @@ async function edit(req, res) {
     var action = 'edit';
     var entityDetail = {}; 
     var errorData = {};
+    var roles = await Roles.find({}); 
     if(req.params.id){
         var id =  req.params.id; 
         const entityDetail = await Users.findById({_id:id});    
@@ -60,7 +62,7 @@ async function edit(req, res) {
             console.log(input); console.log('Here');  
             req.checkBody('first_name', 'First name is required').notEmpty();
             req.checkBody('last_name', 'Last name is required').notEmpty();  
-            req.checkBody('contact_number', 'Mobile number is required').notEmpty();  
+            req.checkBody('mobile_number', 'Mobile number is required').notEmpty();  
             var errors = req.validationErrors();    
             if(errors){	   
                 if(errors.length > 0){
@@ -97,7 +99,7 @@ async function edit(req, res) {
                 }        
             }  
         }  
-        res.render('admin/'+controller+'/edit',{page_title:" Edit",data:entityDetail,errorData:errorData,controller:controller,action:action});  
+        res.render('admin/'+controller+'/edit',{page_title:" Edit", roles:roles, data:entityDetail,errorData:errorData,controller:controller,action:action});  
     }else{ 
         req.flash('error', 'Invalid url.');  
         return res.redirect(nodeAdminUrl+'/'+controller+'/list');     
@@ -120,12 +122,13 @@ async function add(req, res) {
     var errorData = {}; 
     var data = {};  
     var action = 'add'; 
-    var errorData = {};    
+    var errorData = {};
+    var roles = await Roles.find({});    
     if (req.method == "POST") { 
         var input = JSON.parse(JSON.stringify(req.body));  
         req.checkBody('first_name', 'First name is required').notEmpty();
         req.checkBody('last_name', 'Last name is required').notEmpty();  
-        req.checkBody('contact_number', 'Mobile number is required').notEmpty(); 
+        req.checkBody('mobile_number', 'Mobile number is required').notEmpty(); 
         req.checkBody('password', 'Password is required').notEmpty(); 
         req.checkBody('email', 'email is required').notEmpty();  
         var errors = req.validationErrors();    
@@ -175,7 +178,7 @@ async function add(req, res) {
             }      
         } 
     }   
-    res.render('admin/'+controller+'/add',{page_title:page_title,data:data, errorData:errorData,controller:controller,action:action});    
+    res.render('admin/'+controller+'/add',{page_title:page_title,data:data, roles:roles, errorData:errorData,controller:controller,action:action});    
 };          
 exports.add = add; 
 
