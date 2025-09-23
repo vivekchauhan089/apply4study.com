@@ -46,7 +46,7 @@
                                     <tr>
                                         <td><%=i+1%></td>
                                         <td><%=data[i].title%></td>
-                                        <td><%= data[i].author ? data[i].author.first_name : '—' %></td>
+                                        <td><%=((data[i].author_id) ? data[i].author_id.first_name : '—')%></td>
                                         <td>
                                             <% if(data[i].status === "published"){ %>
                                                 <span class="label label-sm label-success">Published</span>

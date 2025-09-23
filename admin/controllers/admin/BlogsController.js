@@ -1,5 +1,6 @@
 var Blogs = require.main.require('./models/Blogs');
 var Users = require.main.require('./models/Users');
+var Roles = require.main.require('./models/Roles');
 
 const controller = 'Blogs';
 const module_name = 'Blogs';
@@ -11,8 +12,8 @@ async function list(req, res) {
     res.set('content-type' , 'text/html; charset=mycharset'); 
     data = {};    
     action = 'list';
-    const allBlogs = await Blogs.find({});
-        res.render('admin/blogs/list', {
+    const allBlogs = await Blogs.find({}).populate('author_id');
+    res.render('admin/blogs/list', {
         page_title: "Blog List",
         data: allBlogs,
         controller,
@@ -32,7 +33,8 @@ async function add(req, res) {
     let action = 'add';
     let page_title = 'Add Blog';
 
-    var authors = await Users.where('role').equals('author'); 
+    var authorRole = await Roles.findOne({ name: 'author' });
+    var authors = await Users.find({ role_id: authorRole._id });
 
     if (req.method === "POST") {
         let input = JSON.parse(JSON.stringify(req.body));
@@ -82,7 +84,8 @@ async function edit(req, res) {
 
     if (req.params.id) {
         let blog = await Blogs.findById(req.params.id);
-        var authors = await Users.where('role').equals('author'); 
+        var authorRole = await Roles.findOne({ name: 'author' });
+        var authors = await Users.find({ role_id: authorRole._id }); 
         if (!blog) {
             req.flash("error", "Invalid Blog ID");
             return res.redirect(nodeAdminUrl + "/" + controller + "/list");
