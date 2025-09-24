@@ -70,6 +70,25 @@
                         <b class="arrow"></b>
                     </li>
                 </ul>    
+            </li>
+
+            <li class="<%=controller=='Survey' ? 'open' : '' %>">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-desktop"></i>
+                    <span class="menu-text">  Survey </span> 
+                    <b class="arrow fa fa-angle-down"></b>
+                </a> 
+                <b class="arrow"></b> 
+                <ul class="submenu">  
+                    <li class="<%=controller=='Survey' && action =='list' ? 'active' : '' %>">
+                        <a href="<%=nodeAdminUrl%>/Survey/list"> <i class="menu-icon fa fa-caret-right"></i> All Survey </a> 
+                        <b class="arrow"></b>
+                    </li> 
+                    <li class="<%=controller=='Survey' && action =='add' ? 'active' : '' %>">
+                        <a href="<%=nodeAdminUrl%>/Survey/add"> <i class="menu-icon fa fa-caret-right"></i> Add Survey </a> 
+                        <b class="arrow"></b>
+                    </li>
+                </ul>
             </li> 
 <!--             
             <li class="<%=controller=='categories' ? 'open' : '' %>">
