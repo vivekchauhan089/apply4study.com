@@ -1,0 +1,346 @@
+<%- include('../elements/header'); %>
+<div class="main-content">
+    <div class="main-content-inner">
+        <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+            <ul class="breadcrumb">
+                <li><i class="ace-icon fa fa-tachometer"></i>
+                    <a href="<%=nodeAdminUrl%>/Dashboard">Dashboard</a>
+                </li>
+                <li class="active"><a href="<%=nodeAdminUrl%>/<%=controller%>/list"> Pages </a></li>
+                <li class="active">Edit</li>
+            </ul>
+        </div>
+
+        <div class="page-content">
+            <div class="page-header">
+                <h1>Edit Page</h1>
+            </div>
+
+            <div class="row">
+                <%- include ../elements/flash.ejs %>
+                <div class="col-xs-12 col-sm-8">
+                    <form id="pageForm" method="post" action="<%=nodeAdminUrl%>/<%=controller%>/edit/<%=data._id%>" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" name="title" value="<%=data.title%>" class="form-control" placeholder="Page Title">
+                            <span class="error"><%=errorData.title%></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Slug</label>
+                            <input type="text" name="slug" value="<%=data.slug%>" class="form-control" placeholder="Page Slug">
+                            <span class="error"><%=errorData.slug%></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Content</label>
+                            <textarea name="content" rows="6" class="form-control" placeholder="Page Content"><%=data.content%></textarea>
+                            <span class="error"><%=errorData.content%></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Blocks</label>
+                            <div id="blocksContainer"></div>
+                            <button type="button" id="addBlockBtn" class="btn btn-success">+ Add Block</button>
+                            <input type="hidden" id="blocksData" name="blocks">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Status</label>
+                            <select name="status" class="form-control">
+                                <option value="draft" <%=data.status==="draft"?"selected":""%>>Draft</option>
+                                <option value="published" <%=data.status==="published"?"selected":""%>>Published</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <button class="btn btn-info" type="submit">
+                                <i class="ace-icon fa fa-check bigger-110"></i> Update
+                            </button>
+                            <a href="<%=nodeAdminUrl%>/<%=controller%>/list">
+                                <button class="btn" type="button">Cancel</button>
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div><!-- /.page-content -->
+    </div>
+</div>
+<%- include('../elements/footer'); %>
+
+<link href="<%=nodeSiteUrl%>/css/quill.snow.css" rel="stylesheet">
+<script src="<%=nodeSiteUrl%>/js/quill.js"></script>
+
+<script>
+var existingBlocks = <%- JSON.stringify(data.blocks || []) %>;
+var blocks = existingBlocks || [];
+var quillEditors = [];
+var blockCount = blocks.length;
+
+// --- Render blocks from DB ---
+if(blocks.length){
+    blocks.forEach((block, index) => {
+        addBlock(block.type, block.content, index);
+    });
+}
+
+// --- Function to add block ---
+function addBlock(type, blockData = {}, index = null) {
+    const blockWrapper = document.createElement("div");
+    blockWrapper.classList.add("block");
+    blockWrapper.dataset.type = type;
+
+    let html = "";
+
+    if (type === "heading") {
+      html = `
+        <label>Heading:</label>
+        <select class="form-control mb-2 heading-style">
+          <option value="h1" ${(blockData.style === "h1") ? "selected" : ""}>H1</option>
+          <option value="h2" ${(blockData.style === "h2") ? "selected" : ""}>H2</option>
+          <option value="h3" ${(blockData.style === "h3") ? "selected" : ""}>H3</option>
+        </select>
+        <input type="text" value="${blockData.text || ""}" class="form-control"/>
+        <input type="hidden" class="block-type" value="heading"/>
+      `;
+    }
+
+    if (type === "paragraph") {
+      html = `
+        <label>Paragraph:</label>
+        <div id="para-editor-${index ?? Date.now()}" class="quill-editor"></div>
+        <input type="hidden" id="para-input-${index ?? Date.now()}" value="${blockData || ""}">
+        <input type="hidden" id="para-block-${index ?? Date.now()}" class="block-type" value="paragraph"/>
+      `;
+    }
+
+    if (type === "image") {
+      html = `
+        <label>Image:</label>
+        <input type="text" value="${blockData.url || ""}" class="form-control"/>
+        <input type="text" value="${blockData.caption || ""}" class="form-control"/>
+        <input type="hidden" class="block-type" value="image"/>
+      `;
+    }
+
+    if (type === "faq") {
+      html = `
+        <div class="faq-block">
+          <label>FAQs:</label>
+          <div class="faq-questions" id="faq-questions-${index ?? Date.now()}"></div>
+          <button type="button" class="btn btn-sm btn-info add-faq-question" data-id="${index ?? Date.now()}">Add Question</button>
+          <input type="hidden" class="block-type" value="faq"/>
+        </div>
+      `;
+    }
+
+    blockWrapper.innerHTML = html;
+
+    // Delete button
+    const delBtn = document.createElement("button");
+    delBtn.type = "button";
+    delBtn.textContent = "Remove";
+    delBtn.classList.add("btn", "btn-danger", "btn-sm", "mt-2");
+    delBtn.addEventListener("click", () => blockWrapper.remove());
+
+    blockWrapper.appendChild(delBtn);
+    blocksContainer.appendChild(blockWrapper);
+    blocksContainer.appendChild(document.createElement("br"));
+
+    if (type === "paragraph") {
+      const quill = new Quill(`#para-editor-${index ?? Date.now()}`, { theme: "snow" });
+      quill.root.innerHTML = blockData || "";
+      quill.on("text-change", () => {
+        document.getElementById(`para-input-${index ?? Date.now()}`).value = quill.root.innerHTML;
+      });
+      quillEditors.push({ editurId: `#para-editor-${index ?? Date.now()}`, quill });
+    }
+
+    // --- FAQ block handling ---
+    if (type === "faq") {
+      const faqContainer = document.getElementById(`faq-questions-${index ?? Date.now()}`);
+      const faqList = blockData || [];
+
+      if(faqList.length){
+        faqList.forEach((q, i) => addFaqQuestion(index ?? Date.now(), q, i));
+      }
+
+      const addBtn = blockWrapper.querySelector(".add-faq-question");
+      addBtn.addEventListener("click", () => addFaqQuestion(index ?? Date.now()));
+    }
+}
+
+function addFaqQuestion(blockId, questionData = {}, index = null) {
+    const faqContainer = document.getElementById(`faq-questions-${blockId}`);
+    const uniqueKey = index ?? Date.now();
+
+    const faqItem = document.createElement("div");
+    faqItem.classList.add("faq-item", "mb-2", "p-2", "border");
+
+    faqItem.innerHTML = `
+      <label>Question:</label>
+      <input type="text" class="form-control mb-1"
+        name="blocks[${blockId}][questions][${uniqueKey}][question]"
+        value="${questionData.question || ""}">
+
+      <label>Answer:</label>
+      <textarea class="form-control"
+        name="blocks[${blockId}][questions][${uniqueKey}][answer]">${questionData.answer || ""}</textarea>
+
+      <button type="button" class="btn btn-sm btn-danger mt-1 remove-faq">Remove FAQ</button>
+    `;
+
+    faqItem.querySelector(".remove-faq").addEventListener("click", () => faqItem.remove());
+    faqContainer.appendChild(faqItem);
+}
+</script>
+
+<script>
+// Add new block
+document.addEventListener("DOMContentLoaded", function () {
+  document.getElementById("addBlockBtn").addEventListener("click", () => {
+    blockCount++;
+    const blockHtml = `
+      <div class="block border p-2 mb-3" data-index="${blockCount}">
+        <select class="form-control mb-2 block-type">
+          <option value="heading">Heading</option>
+          <option value="paragraph">Paragraph</option>
+          <option value="image">Image</option>
+          <option value="faq">FAQ</option>
+        </select>
+
+        <div class="block-content">
+          <input type="text" class="form-control" placeholder="Content" />
+        </div>
+
+        <button type="button" class="btn btn-danger btn-sm remove-block">Remove</button>
+      </div><br/>
+    `;
+    document.getElementById("blocksContainer").insertAdjacentHTML("beforeend", blockHtml);
+  });
+
+  // Change block type → update input fields dynamically
+  document.addEventListener("change", (e) => {
+    if (e.target.classList.contains("block-type")) {
+      const block = e.target.closest(".block");
+      const contentDiv = block.querySelector(".block-content");
+      let html = "";
+      switch (e.target.value) {
+        case "heading":
+          html = `<select class="form-control mb-2 heading-style">
+              <option value="h1">H1</option>
+              <option value="h2">H2</option>
+              <option value="h3">H3</option>
+            </select>
+            <input type="text" class="form-control" placeholder="Heading text">`;
+          break;
+        case "paragraph":
+          html = `<div class="quill-editor" style="height:150px;"></div>`;
+          break;
+        case "image":
+          html = `<input type="text" class="form-control" placeholder="Image URL">
+                  <input type="text" class="form-control mt-1" placeholder="Caption">`;
+          break;
+        case "faq":
+          html = `<div class="faq-list"></div>
+            <button type="button" class="btn btn-secondary btn-sm add-faq">+ Add FAQ</button>`;
+          break;
+      }
+      contentDiv.innerHTML = html;
+
+      if (e.target.value === "paragraph") {
+        const editorEl = contentDiv.querySelector(".quill-editor");
+
+        const quill = new Quill(editorEl, {
+          theme: "snow",
+          placeholder: "Write paragraph content..."
+        });
+
+        quillEditors.push({ block, quill });
+      }
+    }
+  });
+
+  // Add FAQ item
+  document.addEventListener("click", (e) => {
+    if (e.target.classList.contains("add-faq")) {
+      const faqList = e.target.closest(".block-content").querySelector(".faq-list");
+      const faqHtml = `
+        <div class="faq-item border p-2 mb-2">
+          <input type="text" class="form-control mb-1" placeholder="Question">
+          <textarea class="form-control mb-1" placeholder="Answer"></textarea>
+          <button type="button" class="btn btn-danger btn-sm remove-faq">Remove Q</button>
+        </div>
+      `;
+      faqList.insertAdjacentHTML("beforeend", faqHtml);
+    }
+  });
+
+  // Remove FAQ item
+  document.addEventListener("click", (e) => {
+    if (e.target.classList.contains("remove-faq")) {
+      e.target.closest(".faq-item").remove();
+    }
+  });
+
+  // Remove block
+  document.addEventListener("click", (e) => {
+    if (e.target.classList.contains("remove-block")) {
+      e.target.closest(".block").remove();
+    }
+  });
+
+  // Before submit → collect block data
+  document.getElementById("pageForm").addEventListener("submit", (e) => {
+    const blocks = [];
+
+    document.querySelectorAll("#blocksContainer .block").forEach(block => {
+      const type = block.querySelector(".block-type").value;
+      let content = null;
+
+      switch (type) {
+        case "heading":
+          content = {
+            style: block.querySelector(".heading-style").value,
+            text: block.querySelector("input").value
+          };
+          break;
+
+        case "paragraph":
+          const editorObj = quillEditors.find(ed => ed.block === block);
+          var blockTypeId = block.querySelector(".block-type").id;
+          if (editorObj) {
+            content = editorObj.quill.root.innerHTML; // save HTML
+          } else if(blockTypeId) {
+            let quillEditorId = '#'+blockTypeId.replace('block','editor');
+            let edtorObj = quillEditors.find(ed => ed.editurId === quillEditorId);
+            content = edtorObj.quill.root.innerHTML; // save HTML
+          }
+          break;
+
+        case "image":
+          content = {
+            url: block.querySelectorAll("input")[0].value,
+            caption: block.querySelectorAll("input")[1].value
+          };
+          break;
+
+        case "faq":
+          content = [];
+          block.querySelectorAll(".faq-item").forEach(faq => {
+            content.push({
+              question: faq.querySelector("input").value,
+              answer: faq.querySelector("textarea").value
+            });
+          });
+          break;
+      }
+
+      blocks.push({ type, content });
+    });
+
+    document.getElementById("blocksData").value = JSON.stringify(blocks);
+  });
+});   
+</script>

@@ -34,6 +34,25 @@
                 </ul>    
             </li>
 
+            <li class="<%=controller=='Pages' ? 'open' : '' %>">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-desktop"></i>
+                    <span class="menu-text">  Pages </span> 
+                    <b class="arrow fa fa-angle-down"></b>
+                </a> 
+                <b class="arrow"></b> 
+                <ul class="submenu">  
+                    <li class="<%=controller=='Pages' && action =='list' ? 'active' : '' %>">
+                        <a href="<%=nodeAdminUrl%>/Pages/list"> <i class="menu-icon fa fa-caret-right"></i> All Pages </a> 
+                        <b class="arrow"></b>
+                    </li> 
+                    <li class="<%=controller=='Pages' && action =='add' ? 'active' : '' %>">
+                        <a href="<%=nodeAdminUrl%>/Pages/add"> <i class="menu-icon fa fa-caret-right"></i> Add Page </a> 
+                        <b class="arrow"></b>
+                    </li>
+                </ul>
+            </li>
+
             <li class="<%=controller=='Blogs' ? 'open' : '' %>">
                 <a href="#" class="dropdown-toggle">
                     <i class="menu-icon fa fa-desktop"></i>

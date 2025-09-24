@@ -50,7 +50,10 @@ app.get('/', (req, res) => {
 
 var apiRouter = require('./routes/api');
 var blogRouter = require('./routes/blogs');
-app.use('/',apiRouter,blogRouter); 
+var pageRouter = require('./routes/pages');
+
+app.use('/',apiRouter,blogRouter,pageRouter);
+
 var server = app.listen(8083, function () { 
     console.log("Example app listening at http://localhost:%s", server.address().port);
 });       
