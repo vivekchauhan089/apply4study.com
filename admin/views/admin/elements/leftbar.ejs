@@ -34,6 +34,82 @@
                 </ul>    
             </li>
 
+            <li class="<%=controller=='Category' ? 'open' : '' %>">
+                <a href="#" class="dropdown-toggle">
+                    <i class=" menu-icon fa fa-list-alt"></i>
+                    <span class="menu-text"> Category </span> 
+                    <b class="arrow fa fa-angle-down"></b>
+                </a> 
+                <b class="arrow"></b> 
+                <ul class="submenu">
+                    <li class="<%=controller=='Category' && action =='list' ? 'active' : '' %>">
+                        <a href="<%=nodeAdminUrl%>/Category/list"> <i class="menu-icon fa fa-caret-right"></i> All Category </a> 
+                        <b class="arrow"></b>
+                    </li> 
+                    <li class="<%=controller=='Category' && action =='add' ? 'active' : '' %>">
+                        <a href="<%=nodeAdminUrl%>/Category/add"> <i class="menu-icon fa fa-caret-right"></i> Add Category </a> 
+                        <b class="arrow"></b>
+                    </li> 
+                </ul>
+            </li>
+
+            <li class="<%=controller=='Course' ? 'open' : '' %>">
+                <a href="#" class="dropdown-toggle">
+                    <i class=" menu-icon fa fa-list-alt"></i>
+                    <span class="menu-text"> Course </span> 
+                    <b class="arrow fa fa-angle-down"></b>
+                </a> 
+                <b class="arrow"></b> 
+                <ul class="submenu">
+                    <li class="<%=controller=='Course' && action =='list' ? 'active' : '' %>">
+                        <a href="<%=nodeAdminUrl%>/Course/list"> <i class="menu-icon fa fa-caret-right"></i> All Course </a> 
+                        <b class="arrow"></b>
+                    </li> 
+                    <li class="<%=controller=='Course' && action =='add' ? 'active' : '' %>">
+                        <a href="<%=nodeAdminUrl%>/Course/add"> <i class="menu-icon fa fa-caret-right"></i> Add Course </a> 
+                        <b class="arrow"></b>
+                    </li> 
+                </ul>
+            </li>
+
+            <li class="<%=controller=='Survey' ? 'open' : '' %>">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-desktop"></i>
+                    <span class="menu-text">  Survey </span> 
+                    <b class="arrow fa fa-angle-down"></b>
+                </a> 
+                <b class="arrow"></b> 
+                <ul class="submenu">  
+                    <li class="<%=controller=='Survey' && action =='list' ? 'active' : '' %>">
+                        <a href="<%=nodeAdminUrl%>/Survey/list"> <i class="menu-icon fa fa-caret-right"></i> All Survey </a> 
+                        <b class="arrow"></b>
+                    </li> 
+                    <li class="<%=controller=='Survey' && action =='add' ? 'active' : '' %>">
+                        <a href="<%=nodeAdminUrl%>/Survey/add"> <i class="menu-icon fa fa-caret-right"></i> Add Survey </a> 
+                        <b class="arrow"></b>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="<%=controller=='Menu' ? 'open' : '' %>">
+                <a href="#" class="dropdown-toggle">
+                    <i class="menu-icon fa fa-desktop"></i>
+                    <span class="menu-text">  Menu </span> 
+                    <b class="arrow fa fa-angle-down"></b>
+                </a> 
+                <b class="arrow"></b> 
+                <ul class="submenu">  
+                    <li class="<%=controller=='Menu' && action =='list' ? 'active' : '' %>">
+                        <a href="<%=nodeAdminUrl%>/Menu/list"> <i class="menu-icon fa fa-caret-right"></i> All Menu </a> 
+                        <b class="arrow"></b>
+                    </li> 
+                    <li class="<%=controller=='Menu' && action =='add' ? 'active' : '' %>">
+                        <a href="<%=nodeAdminUrl%>/Menu/add"> <i class="menu-icon fa fa-caret-right"></i> Add Menu </a> 
+                        <b class="arrow"></b>
+                    </li>
+                </ul>
+            </li>
+
             <li class="<%=controller=='Pages' ? 'open' : '' %>">
                 <a href="#" class="dropdown-toggle">
                     <i class="menu-icon fa fa-desktop"></i>
@@ -71,40 +147,22 @@
                     </li>
                 </ul>    
             </li>
-
-            <li class="<%=controller=='Survey' ? 'open' : '' %>">
-                <a href="#" class="dropdown-toggle">
-                    <i class="menu-icon fa fa-desktop"></i>
-                    <span class="menu-text">  Survey </span> 
-                    <b class="arrow fa fa-angle-down"></b>
-                </a> 
-                <b class="arrow"></b> 
-                <ul class="submenu">  
-                    <li class="<%=controller=='Survey' && action =='list' ? 'active' : '' %>">
-                        <a href="<%=nodeAdminUrl%>/Survey/list"> <i class="menu-icon fa fa-caret-right"></i> All Survey </a> 
-                        <b class="arrow"></b>
-                    </li> 
-                    <li class="<%=controller=='Survey' && action =='add' ? 'active' : '' %>">
-                        <a href="<%=nodeAdminUrl%>/Survey/add"> <i class="menu-icon fa fa-caret-right"></i> Add Survey </a> 
-                        <b class="arrow"></b>
-                    </li>
-                </ul>
-            </li> 
+             
 <!--             
-            <li class="<%=controller=='categories' ? 'open' : '' %>">
+            <li class="<%=controller=='Category' ? 'open' : '' %>">
                 <a href="#" class="dropdown-toggle">
                     <i class=" menu-icon fa fa-list-alt"></i>
-                    <span class="menu-text"> Categories </span> 
+                    <span class="menu-text"> Category </span> 
                     <b class="arrow fa fa-angle-down"></b>
                 </a> 
                 <b class="arrow"></b> 
                 <ul class="submenu">
-                    <li class="<%=controller=='categories' && action =='list' ? 'active' : '' %>">
-                        <a href="<%=nodeAdminUrl%>/Categories/list"> <i class="menu-icon fa fa-caret-right"></i> All Categories </a> 
+                    <li class="<%=controller=='Category' && action =='list' ? 'active' : '' %>">
+                        <a href="<%=nodeAdminUrl%>/Category/list"> <i class="menu-icon fa fa-caret-right"></i> All Category </a> 
                         <b class="arrow"></b>
                     </li> 
-                    <li class="<%=controller=='categories' && action =='add' ? 'active' : '' %>">
-                        <a href="<%=nodeAdminUrl%>/Categories/add"> <i class="menu-icon fa fa-caret-right"></i> Add Category </a> 
+                    <li class="<%=controller=='Category' && action =='add' ? 'active' : '' %>">
+                        <a href="<%=nodeAdminUrl%>/Category/add"> <i class="menu-icon fa fa-caret-right"></i> Add Category </a> 
                         <b class="arrow"></b>
                     </li> 
                 </ul>

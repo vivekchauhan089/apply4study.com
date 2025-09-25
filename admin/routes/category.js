@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const PagesController = require("../controllers/admin/PagesController");
+const CategoryController = require("../controllers/admin/CategoryController");
 
-router.get("/Pages/list", requiredAuthentication, PagesController.list);
-router.get("/Pages/add", requiredAuthentication, PagesController.add);
-router.post("/Pages/add", requiredAuthentication, PagesController.add);
-router.get("/Pages/edit/:id", requiredAuthentication, PagesController.edit);
-router.post("/Pages/edit/:id", requiredAuthentication, PagesController.edit);
-router.get("/Pages/delete/:id", requiredAuthentication, PagesController.deleteRecord);
+router.get("/Category/list", requiredAuthentication, CategoryController.list);
+router.get("/Category/add", requiredAuthentication, CategoryController.add);
+router.post("/Category/add", requiredAuthentication, CategoryController.add);
+router.get("/Category/edit/:id", requiredAuthentication, CategoryController.edit);
+router.post("/Category/edit/:id", requiredAuthentication, CategoryController.edit);
+router.get("/Category/delete/:id", requiredAuthentication, CategoryController.deleteRecord);
 
 module.exports = router;
 

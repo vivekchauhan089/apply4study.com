@@ -87,7 +87,8 @@ var usersRouter = require('./routes/users');
 var blogRouter = require('./routes/blogs');
 var pageRouter = require('./routes/pages');
 var surveyRouter = require('./routes/survey');
-app.use('/admin',adminRouter,usersRouter,blogRouter,pageRouter,surveyRouter);
+var courseRouter = require('./routes/course');
+app.use('/admin',adminRouter,usersRouter,blogRouter,pageRouter,surveyRouter,courseRouter);
 
 var server = app.listen(8083, function () { 
     console.log("Example app listening at http://localhost:%s", server.address().port);
