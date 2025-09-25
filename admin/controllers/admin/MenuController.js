@@ -1,21 +1,21 @@
-var Category = require.main.require('./models/Category');
+var Menu = require.main.require('./models/Menu');
 var Users = require.main.require('./models/Users');
 var Roles = require.main.require('./models/Roles');
 
-const controller = 'Category';
-const module_name = 'Category';
+const controller = 'Menu';
+const module_name = 'Menu';
 
 /**
- * List all Category
+ * List all Menu
  */
 async function list(req, res) {
     res.set('content-type' , 'text/html; charset=mycharset'); 
     data = {};    
     action = 'list';
-    const allCategory = await Category.find({}).populate('author_id');
-    res.render('admin/Category/list', {
-        page_title: "Blog List",
-        data: allCategory,
+    const allMenu = await Menu.find({}).populate('author_id');
+    res.render('admin/Menu/list', {
+        page_title: "Menu List",
+        data: allMenu,
         controller,
         module_name,
         action
@@ -24,14 +24,14 @@ async function list(req, res) {
 exports.list = list;
 
 /**
- * Add Blog
+ * Add Menu
  */
 async function add(req, res) {
     res.set('content-type' , 'text/html; charset=mycharset'); 
     let errorData = {};
     let data = {};
     let action = 'add';
-    let page_title = 'Add Blog';
+    let page_title = 'Add Menu';
 
     var authorRole = await Roles.findOne({ name: 'author' });
     var authors = await Users.find({ role_id: authorRole._id });
@@ -51,21 +51,21 @@ async function add(req, res) {
         } else {
           // Upload Image
             if (req.files && req.files.image) {
-                let blogImage = req.files.image;
-                let filename = Date.now() + "-" + blogImage.name;
+                let MenuImage = req.files.image;
+                let filename = Date.now() + "-" + MenuImage.name;
                 input.image = filename;
-                blogImage.mv("public/upload/" + filename, err => {
+                MenuImage.mv("public/upload/" + filename, err => {
                     if (err) console.log("Image upload error", err);
                 });
             }
 
-            const SaveData = new Category(input);
+            const SaveData = new Menu(input);
             const saveResult = await SaveData.save();
             if (saveResult) {
                 req.flash("success", controller + " added successfully.");
                 return res.redirect(nodeAdminUrl + "/" + controller + "/list");
             } else {
-                req.flash("error", "Could not save blog. Try again!");
+                req.flash("error", "Could not save Menu. Try again!");
             }
         }
     }
@@ -75,7 +75,7 @@ async function add(req, res) {
 exports.add = add;
 
 /**
- * Edit Blog
+ * Edit Menu
  */
 async function edit(req, res) {
     res.set('content-type' , 'text/html; charset=mycharset'); 
@@ -83,11 +83,11 @@ async function edit(req, res) {
     let action = 'edit';
 
     if (req.params.id) {
-        let blog = await Category.findById(req.params.id);
+        let Menu = await Menu.findById(req.params.id);
         var authorRole = await Roles.findOne({ name: 'author' });
         var authors = await Users.find({ role_id: authorRole._id }); 
-        if (!blog) {
-            req.flash("error", "Invalid Blog ID");
+        if (!Menu) {
+            req.flash("error", "Invalid Menu ID");
             return res.redirect(nodeAdminUrl + "/" + controller + "/list");
         }
 
@@ -103,22 +103,22 @@ async function edit(req, res) {
                 });
             } else {
                 if (req.files && req.files.image) {
-                  let blogImage = req.files.image;
-                  let filename = Date.now() + "-" + blogImage.name;
+                  let MenuImage = req.files.image;
+                  let filename = Date.now() + "-" + MenuImage.name;
                   input.image = filename;
-                  blogImage.mv("public/upload/" + filename, err => {
+                  MenuImage.mv("public/upload/" + filename, err => {
                     if (err) console.log("Image upload error", err);
                   });
                 }
-                await Category.findByIdAndUpdate(req.params.id, { $set: input });
-                req.flash("success", "Blog updated successfully.");
+                await Menu.findByIdAndUpdate(req.params.id, { $set: input });
+                req.flash("success", "Menu updated successfully.");
                 return res.redirect(nodeAdminUrl + "/" + controller + "/list");
             }
         }
 
-        res.render('admin/Category/edit', {
-            page_title: "Edit Blog",
-            data: blog,
+        res.render('admin/Menu/edit', {
+            page_title: "Edit Menu",
+            data: Menu,
             authors: authors,
             errorData,
             controller,
@@ -132,12 +132,12 @@ async function edit(req, res) {
 exports.edit = edit;
 
 /**
- * Delete Blog
+ * Delete Menu
  */
 async function deleteRecord(req, res) {
   if (req.params.id) {
-    await Category.findByIdAndRemove(req.params.id);
-    req.flash("success", "Blog deleted successfully.");
+    await Menu.findByIdAndRemove(req.params.id);
+    req.flash("success", "Menu deleted successfully.");
     return res.redirect(nodeAdminUrl + "/" + controller + "/list");
   } else {
     req.flash("error", "Invalid URL");

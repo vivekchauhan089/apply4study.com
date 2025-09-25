@@ -84,11 +84,14 @@ app.use('/api',apiRouter);
 
 var adminRouter = require('./routes/admin');
 var usersRouter = require('./routes/users');
-var blogRouter = require('./routes/blogs');
-var pageRouter = require('./routes/pages');
-var surveyRouter = require('./routes/survey');
+var categoryRouter = require('./routes/category');
 var courseRouter = require('./routes/course');
-app.use('/admin',adminRouter,usersRouter,blogRouter,pageRouter,surveyRouter,courseRouter);
+var surveyRouter = require('./routes/survey');
+
+var menuRouter = require('./routes/menu');
+var pageRouter = require('./routes/pages');
+var blogRouter = require('./routes/blogs');
+app.use('/admin',adminRouter,usersRouter,blogRouter,menuRouter,pageRouter,surveyRouter,categoryRouter,courseRouter);
 
 var server = app.listen(8083, function () { 
     console.log("Example app listening at http://localhost:%s", server.address().port);

@@ -14,7 +14,7 @@ async function list(req, res) {
     action = 'list';
     const allCategory = await Category.find({}).populate('author_id');
     res.render('admin/Category/list', {
-        page_title: "Blog List",
+        page_title: "Category List",
         data: allCategory,
         controller,
         module_name,
@@ -24,14 +24,14 @@ async function list(req, res) {
 exports.list = list;
 
 /**
- * Add Blog
+ * Add Category
  */
 async function add(req, res) {
     res.set('content-type' , 'text/html; charset=mycharset'); 
     let errorData = {};
     let data = {};
     let action = 'add';
-    let page_title = 'Add Blog';
+    let page_title = 'Add Category';
 
     var authorRole = await Roles.findOne({ name: 'author' });
     var authors = await Users.find({ role_id: authorRole._id });
@@ -51,10 +51,10 @@ async function add(req, res) {
         } else {
           // Upload Image
             if (req.files && req.files.image) {
-                let blogImage = req.files.image;
-                let filename = Date.now() + "-" + blogImage.name;
+                let CategoryImage = req.files.image;
+                let filename = Date.now() + "-" + CategoryImage.name;
                 input.image = filename;
-                blogImage.mv("public/upload/" + filename, err => {
+                CategoryImage.mv("public/upload/" + filename, err => {
                     if (err) console.log("Image upload error", err);
                 });
             }
@@ -65,7 +65,7 @@ async function add(req, res) {
                 req.flash("success", controller + " added successfully.");
                 return res.redirect(nodeAdminUrl + "/" + controller + "/list");
             } else {
-                req.flash("error", "Could not save blog. Try again!");
+                req.flash("error", "Could not save Category. Try again!");
             }
         }
     }
@@ -75,7 +75,7 @@ async function add(req, res) {
 exports.add = add;
 
 /**
- * Edit Blog
+ * Edit Category
  */
 async function edit(req, res) {
     res.set('content-type' , 'text/html; charset=mycharset'); 
@@ -83,11 +83,11 @@ async function edit(req, res) {
     let action = 'edit';
 
     if (req.params.id) {
-        let blog = await Category.findById(req.params.id);
+        let Category = await Category.findById(req.params.id);
         var authorRole = await Roles.findOne({ name: 'author' });
         var authors = await Users.find({ role_id: authorRole._id }); 
-        if (!blog) {
-            req.flash("error", "Invalid Blog ID");
+        if (!Category) {
+            req.flash("error", "Invalid Category ID");
             return res.redirect(nodeAdminUrl + "/" + controller + "/list");
         }
 
@@ -103,22 +103,22 @@ async function edit(req, res) {
                 });
             } else {
                 if (req.files && req.files.image) {
-                  let blogImage = req.files.image;
-                  let filename = Date.now() + "-" + blogImage.name;
+                  let CategoryImage = req.files.image;
+                  let filename = Date.now() + "-" + CategoryImage.name;
                   input.image = filename;
-                  blogImage.mv("public/upload/" + filename, err => {
+                  CategoryImage.mv("public/upload/" + filename, err => {
                     if (err) console.log("Image upload error", err);
                   });
                 }
                 await Category.findByIdAndUpdate(req.params.id, { $set: input });
-                req.flash("success", "Blog updated successfully.");
+                req.flash("success", "Category updated successfully.");
                 return res.redirect(nodeAdminUrl + "/" + controller + "/list");
             }
         }
 
         res.render('admin/Category/edit', {
-            page_title: "Edit Blog",
-            data: blog,
+            page_title: "Edit Category",
+            data: Category,
             authors: authors,
             errorData,
             controller,
@@ -132,12 +132,12 @@ async function edit(req, res) {
 exports.edit = edit;
 
 /**
- * Delete Blog
+ * Delete Category
  */
 async function deleteRecord(req, res) {
   if (req.params.id) {
     await Category.findByIdAndRemove(req.params.id);
-    req.flash("success", "Blog deleted successfully.");
+    req.flash("success", "Category deleted successfully.");
     return res.redirect(nodeAdminUrl + "/" + controller + "/list");
   } else {
     req.flash("error", "Invalid URL");
