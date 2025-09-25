@@ -6,6 +6,37 @@ const fileUpload = require('express-fileupload');
 const cors = require('cors');
 const bodyParser = require('body-parser');   
    
+const swaggerHost = require('./config/config').swaggerHost;
+const expressSwagger = require('express-swagger-generator')(app);
+let options = {
+    swaggerDefinition: {
+        info: {
+            description: 'This is a sample server',
+            title: 'Study',
+            version: '1.0.0',
+        },
+        host: swaggerHost ,
+        basePath: '/api',
+        produces: [
+            "application/json",
+            "application/xml"
+        ],
+        schemes: ['http','https'],
+        securityDefinitions: {
+            JWT: {
+                type: 'apiKey',
+                in: 'header',
+                name: 'x-access-token',
+                description: "",
+            }
+        }
+    },
+    basedir: __dirname, //app absolute path
+    //files: ['./routes/**/*.js'] //Path to the API handle folder
+    files: ['./routes/api.js'] //Path to the API handle folder
+};
+expressSwagger(options);
+
 // Required module 
 app.use(expressValidator());
 app.use(cors()); 
@@ -49,11 +80,14 @@ app.get('/', (req, res) => {
 });
 
 var apiRouter = require('./routes/api');
+app.use('/api',apiRouter);
+
+var adminRouter = require('./routes/admin');
+var usersRouter = require('./routes/users');
 var blogRouter = require('./routes/blogs');
 var pageRouter = require('./routes/pages');
 var surveyRouter = require('./routes/survey');
-
-app.use('/',apiRouter,blogRouter,pageRouter,surveyRouter);
+app.use('/admin',adminRouter,usersRouter,blogRouter,pageRouter,surveyRouter);
 
 var server = app.listen(8083, function () { 
     console.log("Example app listening at http://localhost:%s", server.address().port);

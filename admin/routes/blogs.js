@@ -2,12 +2,12 @@ const express = require("express");
 const router = express.Router();
 const BlogsController = require("../controllers/admin/BlogsController");
 
-router.get("/admin/Blogs/list", requiredAuthentication, BlogsController.list);
-router.get("/admin/Blogs/add", requiredAuthentication, BlogsController.add);
-router.post("/admin/Blogs/add", requiredAuthentication, BlogsController.add);
-router.get("/admin/Blogs/edit/:id", requiredAuthentication, BlogsController.edit);
-router.post("/admin/Blogs/edit/:id", requiredAuthentication, BlogsController.edit);
-router.get("/admin/Blogs/delete/:id", requiredAuthentication, BlogsController.deleteRecord);
+router.get("/Blogs/list", requiredAuthentication, BlogsController.list);
+router.get("/Blogs/add", requiredAuthentication, BlogsController.add);
+router.post("/Blogs/add", requiredAuthentication, BlogsController.add);
+router.get("/Blogs/edit/:id", requiredAuthentication, BlogsController.edit);
+router.post("/Blogs/edit/:id", requiredAuthentication, BlogsController.edit);
+router.get("/Blogs/delete/:id", requiredAuthentication, BlogsController.deleteRecord);
 
 module.exports = router;
 

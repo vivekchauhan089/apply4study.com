@@ -1,36 +1,60 @@
 var express = require('express');
-var router = express.Router(); 
-var AdminController    =  require('../controllers/admin/AdminController');   
-var UsersController    =  require('../controllers/admin/UsersController');   
+var router = express.Router();
 
-/** Routes for admin  */     
-//router.get('/login', AdminController.login);     
-router.post('/admin/login', AdminController.login);     
-router.get('/admin/login', AdminController.login);     
-router.get('/admin/Dashboard', requiredAuthentication, AdminController.dashboard);  
-router.get('/admin/logout', AdminController.logout);         
+let connection_config = require("../config/config");
+let v_name = connection_config.version_name;
+let v_code = connection_config.version_code; 
 
-/** Routes for users module  */ 
-router.get('/admin/Users/list',requiredAuthentication,  UsersController.list);     
-router.get('/admin/Users/edit/:id', requiredAuthentication, UsersController.edit);     
-router.post('/admin/Users/edit/:id',requiredAuthentication,  UsersController.edit); 
-router.post('/admin/Users/add',requiredAuthentication, UsersController.add); 
-router.get('/admin/Users/add', requiredAuthentication, UsersController.add); 
-router.get('/admin/Users/delete/:id', requiredAuthentication, UsersController.deleteRecord);
+let rateLimit = require('express-rate-limit');
+const limiter = rateLimit({
+	windowMs: 120 * 60 * 1000, // Blocked for 2 hour from Last hit
+	max: 5, // Limit each IP to 5 requests per windowMs
+	keyGenerator: (req, res) => {
+		// console.log("dealer login Client IP: ", req.ip)
+		let email = req.body?.email?.toLowerCase();
+		return (email ? `${email}_${req.ip}` : req.ip);
+	},
+	handler: (req, res, next) => {
+		res.status(401).json({error:1,message: 'Too many requests, please try again later.'});
+	},
+	message: "Too many requests, please try again later.",
+	headers: true, // Sends rate limit info in response headers
+});
 
+var ApiController = require('../controllers/api/ApiController');
+var ApiMiddleware = require('../middleware/ApiMiddleware');
+
+/** Routes for Frontend & App Users  */
+
+/**
+ * @route POST /api/login
+ * @group api - Authentication
+ * @param {string} email.body.required - User email
+ * @param {string} password.body.required - User password
+ * @returns {object} 200 - { success: true, token: "JWT_TOKEN" }
+ * @returns {Error} 401 - Invalid credentials
+ */    
+router.post('/login', limiter, ApiController.login);     
+//router.post('/dashboard', limiter, ApiMiddleware, ApiStudentController.dashboard);  
+
+/**
+ * @route POST /api/logout
+ * @group api - Authentication
+ * @security JWT
+ * @returns {object} 200 - { success: true, message: "Logged out successfully" }
+ */
+router.post('/logout', limiter, ApiController.logout);
+
+
+/**
+ * @route GET /api/version_check
+ * @group api - Version
+ * @returns {object} 200 - An array of version objects
+ * @returns {Error} 401 - Unexpected error
+ */
+router.get('/version_check', function(req, res, next) {
+	let response = {success:1,data: {version_name: v_name, version_code: v_code, mandatory: false} , message: "version details succcesfully fetched"};
+	res.json(response);
+})
 
 module.exports = router;        
- 
-
-function requiredAuthentication(req, res, next) { 
-    if(req.session){
-        LoginUser = req.session.LoginUser; 
-        if(LoginUser){    
-            next();   
-        }else{
-            res.redirect(nodeAdminUrl+'/login');       
-        } 
-    }else{
-        res.redirect(nodeAdminUrl+'/login');       
-    }
-}
