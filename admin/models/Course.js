@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
 const courseSchema = new mongoose.Schema({
-  title: { type: String, required: true },
+  courseName: { type: String, required: true },
   type: { type: String, enum: ["classroom", "elearning"], required: true },
-  content: { type: String }, // can store HTML / Quill / EditorJS JSON
+  courseDescription: { type: String }, // can store HTML / Quill / EditorJS JSON
   category: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
   status: { type: String, enum: ["draft", "published", "archived"], default: "draft" },
   videos: [
@@ -13,9 +13,33 @@ const courseSchema = new mongoose.Schema({
       title: String
     }
   ],
-  learners: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], // assigned users
+  learners: [{ type: mongoose.Schema.Types.ObjectId, ref: "Users" }], // assigned users
   created_at: { type: Date, default: Date.now },
   updated_at: { type: Date, default: Date.now }
 });
 
 module.exports = mongoose.model("Course", courseSchema);
+
+
+/*db.courses.updateMany(
+  {
+    category: {
+      $exists: true, 
+      $type: "string",
+      $regex: "^[0-9a-fA-F]{24}$",
+      $ne: "", 
+      $ne: null
+    }
+  },
+  [
+    { $set: { category: { $toObjectId: "$category" } } }
+  ]
+);
+
+db.courses.find(
+  { category: { $type: "string" } },
+  { category: 1 }
+);
+
+
+*/

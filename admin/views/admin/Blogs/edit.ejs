@@ -51,7 +51,7 @@
                             <select name="author_id" class="form-control">
                                 <% if (authors && authors.length > 0) { %>
                                     <% authors.forEach(function(author) { %>
-                                        <option value="<%=String(author._id)%>"><%=author.first_name%></option>
+                                        <option value="<%=String(author._id)%>" <%=String(data.author_id)===String(author._id)?"selected":""%>><%=author.first_name%></option>
                                     <% }) %>
                                 <% } %>
                             </select>

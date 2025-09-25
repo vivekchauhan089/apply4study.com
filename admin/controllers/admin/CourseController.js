@@ -1,6 +1,7 @@
 var Course = require.main.require('./models/Course');
 var Users = require.main.require('./models/Users');
 var Roles = require.main.require('./models/Roles');
+var Category = require.main.require('./models/Category');
 
 const controller = 'Course';
 const module_name = 'Course';
@@ -12,7 +13,9 @@ async function list(req, res) {
     res.set('content-type' , 'text/html; charset=mycharset'); 
     data = {};    
     action = 'list';
-    const allCourse = await Course.find({}).populate('author_id');
+    
+    const allCourse = await Course.find({}).populate('category');
+    
     res.render('admin/Course/list', {
         page_title: "Course List",
         data: allCourse,
@@ -46,7 +49,7 @@ async function add(req, res) {
           }
 
           const newCourse = new Course({
-            title: input.title,
+            courseName: input.courseName,
             type: input.type,
             content: input.content,
             category: input.category,
@@ -68,8 +71,9 @@ async function add(req, res) {
 
     var userRole = await Roles.findOne({ name: 'student' });
     var learners = await Users.find({ role_id: userRole._id });
+    var categories = await Category.find({});
 
-    res.render('admin/'+controller+'/add',{page_title:page_title,data:data, learners: learners, errorData:errorData,controller:controller,action:action});
+    res.render('admin/'+controller+'/add',{page_title:page_title,data:data, categories: categories, learners: learners, errorData:errorData,controller:controller,action:action});
 }
 exports.add = add;
 
@@ -80,9 +84,11 @@ async function edit(req, res) {
     res.set('content-type' , 'text/html; charset=mycharset'); 
     let errorData = {};
     let action = 'edit';
+    let page_title = 'Edit Course';
 
     if (req.params.id) {
         const course = await Course.findById(req.params.id).populate("learners");
+        const categories = await Category.find({});
         if (req.method === "POST") {
             try {
               const input = req.body;
@@ -95,7 +101,7 @@ async function edit(req, res) {
               }
 
               await Course.findByIdAndUpdate(req.params.id, {
-                title: input.title,
+                courseName: input.courseName,
                 type: input.type,
                 content: input.content,
                 category: input.category,
@@ -117,7 +123,7 @@ async function edit(req, res) {
         var userRole = await Roles.findOne({ name: 'student' });
         var learners = await Users.find({ role_id: userRole._id });
 
-        res.render("admin/courses/edit", { page_title:page_title, data:course, learners: learners, errorData:errorData,controller:controller,action:action });
+        res.render('admin/'+controller+'/add', { page_title:page_title, data:course, categories: categories, learners: learners, errorData:errorData,controller:controller,action:action });
     } else {
         req.flash("error", "Invalid URL");
         return res.redirect(nodeAdminUrl + "/" + controller + "/list");

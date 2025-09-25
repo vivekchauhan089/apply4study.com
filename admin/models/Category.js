@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const CategorySchema = new mongoose.Schema({
-    title: { type: String, required: true },
+    categoryName: { type: String, required: true },
     slug: { type: String, required: true, unique: true },
     status: { type: String, enum: ["draft", "published"], default: "draft" },
     created_at: { type: Date, default: Date.now },

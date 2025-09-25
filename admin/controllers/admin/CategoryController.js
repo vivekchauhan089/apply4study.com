@@ -39,8 +39,7 @@ async function add(req, res) {
     if (req.method === "POST") {
         let input = JSON.parse(JSON.stringify(req.body));
 
-        req.checkBody("title", "Title is required").notEmpty();
-        req.checkBody("content", "Content is required").notEmpty();
+        req.checkBody("categoryName", "Title is required").notEmpty();
 
         const errors = req.validationErrors();
         if (errors) {
@@ -93,8 +92,7 @@ async function edit(req, res) {
 
         if (req.method === "POST") {
             let input = JSON.parse(JSON.stringify(req.body));
-            req.checkBody("title", "Title is required").notEmpty();
-            req.checkBody("content", "Content is required").notEmpty();
+            req.checkBody("categoryName", "Title is required").notEmpty();
 
             const errors = req.validationErrors();
             if (errors) {

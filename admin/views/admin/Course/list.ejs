@@ -32,43 +32,34 @@
                         <table id="dynamic-table" class="table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th>S.NO.</th>
-                                    <th>Title</th>
-                                    <th>Slug</th>
-                                    <th>Status</th>
-                                    <th>Created Date</th>
-                                    <th>Action</th>
+                                <th>#</th>
+                                <th>Title</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Category</th>
+                                <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <% if(data.length){  
-                                    for(var i = 0;i < data.length;i++) { %>
-                                    <tr>
-                                        <td><%=i+1%></td>
-                                        <td><%=data[i].title%></td>
-                                        <td><%=data[i].slug%></td>
-                                        <td>
-                                            <% if(data[i].status === "published"){ %>
-                                                <span class="label label-sm label-success">Published</span>
-                                            <% } else { %>
-                                                <span class="label label-sm label-warning">Draft</span>
-                                            <% } %>
-                                        </td>
-                                        <td><%=moment(data[i].createdAt).format('YYYY-MM-DD hh:mm:ss')%></td>
-                                        <td>
-                                            <div class="hidden-sm hidden-xs action-buttons">
-                                                <a class="green" href="<%=nodeAdminUrl%>/<%=controller%>/edit/<%=data[i]._id%>">
-                                                    <i class="ace-icon fa fa-pencil bigger-130"></i>
-                                                </a>
-                                                <a class="red" onclick="return confirm('Are you sure you want to delete this Page?')" 
-                                                   href="<%=nodeAdminUrl%>/<%=controller%>/delete/<%=data[i]._id%>">
-                                                    <i class="ace-icon fa fa-trash-o bigger-130"></i>
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                <% } } else { %>
-                                    <tr><td colspan="6">No record found</td></tr>
+                                <% if(data && data.length > 0) { %>
+                                <% data.forEach((course, index) => { %>
+                                  <tr>
+                                    <td><%= index+1 %></td>
+                                    <td><%= course.courseName %></td>
+                                    <td><%= course.type %></td>
+                                    <td><%= course.status %></td>
+                                    <td><%= ((course.category) ? course.category.categoryName : '-') %></td>
+                                    <td>
+                                      <a href="<%=nodeAdminUrl%>/<%=controller%>/edit/<%=course._id%>" 
+                                         class="btn btn-info btn-xs">Edit</a>
+                                      <a href="<%=nodeAdminUrl%>/<%=controller%>/delete/<%=course._id%>" 
+                                         onclick="return confirm('Delete this course?')" 
+                                         class="btn btn-danger btn-xs">Delete</a>
+                                    </td>
+                                  </tr>
+                                <% }) %>
+                                <% } else { %>
+                                <tr><td colspan="6" class="text-center">No courses found</td></tr>
                                 <% } %>
                             </tbody>
                         </table>
