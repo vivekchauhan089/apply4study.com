@@ -46,6 +46,37 @@ router.post('/login', limiter, ApiController.login);
 router.post('/logout', limiter, ApiController.logout);
 
 
+var courseController = require('../controllers/api/ApiCourseController');
+
+/**
+ * @typedef Course
+ * @property {string} title.required - Course Title
+ * @property {string} type.required - Type of course (classroom | elearning)
+ * @property {string} content - Course content/description
+ * @property {string} category - Category ObjectId
+ * @property {string} status - Course status (draft | published)
+ * @property {array} videos - Array of video URLs or embed codes
+ * @property {array} learners - Array of learner ObjectIds
+ */
+
+/**
+ * Get list of all courses
+ * @route POST /api/courses
+ * @group Courses - Course management
+ * @returns {Array.<Course>} 200 - List of courses
+ */
+router.post('/courses', ApiMiddleware, courseController.list);
+
+/**
+ * Get single course by ID
+ * @route POST /api/courses/{id}
+ * @group Courses - Course management
+ * @param {string} id.path.required - Course ID
+ * @returns {Course.model} 200 - Course object
+ * @returns {Error} 404 - Course not found
+ */
+router.post('/courses/:id', ApiMiddleware, courseController.getById);
+
 /**
  * @route GET /api/version_check
  * @group api - Version
