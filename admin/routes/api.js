@@ -78,6 +78,110 @@ router.post('/courses', ApiMiddleware, courseController.list);
 router.post('/courses/:id', ApiMiddleware, courseController.getById);
 
 /**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Progress:
+ *       type: object
+ *       required:
+ *         - userId
+ *         - courseId
+ *         - lessonId
+ *       properties:
+ *         userId:
+ *           type: string
+ *           description: ID of the user
+ *         courseId:
+ *           type: string
+ *           description: ID of the course
+ *         lessonId:
+ *           type: string
+ *           description: ID of the lesson
+ *         progress:
+ *           type: number
+ *           description: Progress percentage (0–100)
+ *         completed:
+ *           type: boolean
+ *           description: Whether the lesson is completed
+ *       example:
+ *         userId: 650ab1234f1b2c3d4e5f6789
+ *         courseId: 650ab9876f1b2c3d4e5f1234
+ *         lessonId: 650ab1111f1b2c3d4e5f2222
+ *         progress: 50
+ *         completed: false
+ */
+
+/**
+ * @swagger
+ * /progress:
+ *   post:
+ *     summary: Save or update lesson progress
+ *     tags: [Progress]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Progress'
+ *     responses:
+ *       200:
+ *         description: Progress saved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               example:
+ *                 success: true
+ *                 data:
+ *                   userId: "650ab1234f1b2c3d4e5f6789"
+ *                   courseId: "650ab9876f1b2c3d4e5f1234"
+ *                   lessonId: "650ab1111f1b2c3d4e5f2222"
+ *                   progress: 75
+ *                   completed: false
+ */
+router.post("/progress", ApiMiddleware, courseController.updateProgress);
+
+
+/**
+ * @swagger
+ * /progress/{userId}/{courseId}:
+ *   get:
+ *     summary: Get progress for a specific course
+ *     tags: [Progress]
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the user
+ *       - in: path
+ *         name: courseId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the course
+ *     responses:
+ *       200:
+ *         description: List of progress records for that user & course
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               example:
+ *                 success: true
+ *                 data:
+ *                   - lessonId: "650ab1111f1b2c3d4e5f2222"
+ *                     progress: 100
+ *                     completed: true
+ *                   - lessonId: "650ab2222f1b2c3d4e5f3333"
+ *                     progress: 50
+ *                     completed: false
+ */
+router.post("/progress/:userId/:courseId", ApiMiddleware, courseController.updateProgress);
+
+
+/**
  * @route GET /api/version_check
  * @group api - Version
  * @returns {object} 200 - An array of version objects
