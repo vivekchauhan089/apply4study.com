@@ -22,4 +22,12 @@ module.exports = [
             "pin_code": 0
         }
     },
+    {
+        "method":'post',
+        "name":'courses',
+        "body":{
+            "user_id": 0,
+            "source": "string"
+        }
+    },
 ];

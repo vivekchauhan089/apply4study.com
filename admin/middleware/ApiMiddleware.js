@@ -10,13 +10,18 @@ router.use(function(req, res, next) {
     // check header or url parameters or post parameters for token
     let checkLsqUrl = req.originalUrl.split("?");
     if(checkLsqUrl[0] == '/api/login') {
-        token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo3LCJ1c2VyX3R5cGVfaWQiOjEsImlhdCI6MTU5MDMxNjkxOCwiZXhwIjoyMTA4NzE2OTE4fQ.I1QS34-JeVdPeRN-pQOoIUYqQgQMgqSbCBu7p6DE-Ao'
+        token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMjM0LCJ1c2VyX3R5cGVfaWQiOjAsInJvbGUiOiJndWVzdCIsImlhdCI6MTc1ODg4NDcwOCwiZXhwIjoxNzY0MDY4NzA4fQ.zWg19kpqcRf0sxKzrioWP_HzogoC5fHQPeGHTE6nZpc'
     } else {
         token = req.headers['x-access-token'];
     }
 
     // decode token
     if (token) {
+
+        /*const user = {user_id:1234,user_type_id:0,role:'guest'};
+        const token = jwt.sign(user, secretKey, {expiresIn: '60d'});
+        console.log('test token',token);*/
+
         // verifies secret and checks exp
         jwt.verify(token, secretKey, function(err, decoded) {      
             if (err) {

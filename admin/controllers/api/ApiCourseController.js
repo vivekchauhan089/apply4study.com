@@ -15,7 +15,7 @@ var Course = require.main.require('./models/Course');
 
 // Fetch all courses from the system
 async function list (req,res,next) {
-	let body = APIBody.find(e => e.method == 'post' && e.name == 'lms_dashboard');
+	let body = APIBody.find(e => e.method == 'post' && e.name == 'courses');
     if(!(BodyCheck.checkBody(req.body,body.body)).success) {
 		console.log('parameter not find');
 		res.status(200).json({success : false ,message : 'Required parameter is missing'});

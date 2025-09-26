@@ -5,6 +5,7 @@ import Home from '../pages/Home';
 import About from '../pages/About';
 import Pricing from '../pages/Price';
 import Services from '../pages/Services';
+import Courses from '../pages/Courses';
 import Blog from '../pages/Blog';
 import Partners from '../pages/Partners';
 // import SearchResults from '../pages/SearchResults';
@@ -22,6 +23,7 @@ const LayoutRoutes = () => (
       <Route path='pricing' element={<Pricing />} />
       <Route path='services' element={<Services />} />
       <Route path='blog' element={<Blog />} />
+      <Route path='courses' element={<Courses />} />
       <Route path='partners' element={<Partners />} />
       <Route path='get-started' element={<GetStarted />} />
       {/* <Route path="/search" element={<SearchResults />} /> */}
