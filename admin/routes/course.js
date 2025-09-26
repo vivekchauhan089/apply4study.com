@@ -10,6 +10,8 @@ router.post("/Course/add", requiredAuthentication, courseController.add);
 router.get("/Course/edit/:id", requiredAuthentication, courseController.edit);
 router.post("/Course/edit/:id", requiredAuthentication, courseController.edit);
 
+router.post("/Course/qr/:id", requiredAuthentication, courseController.generateQr);
+
 router.get("/Course/delete/:id", requiredAuthentication, courseController.deleteRecord);
 
 module.exports = router;

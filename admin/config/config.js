@@ -27,6 +27,7 @@ let config = function(){
             ccEmails:[],
             secretKey:'@studyLatt1cek1', // use your own secret key
             baseUrl:'http://localhost:8083',
+            siteUrl:'http://localhost:3000',
             sendgridKey:'', //sendgrid key
             firebaseKey:'',// kirebase key from google
             version_name : "v1.1", // current app version

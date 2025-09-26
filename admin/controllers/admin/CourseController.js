@@ -3,6 +3,11 @@ var Users = require.main.require('./models/Users');
 var Roles = require.main.require('./models/Roles');
 var Category = require.main.require('./models/Category');
 
+const config = require('../../config/config');
+const path = require("path");
+const fs = require("fs");
+const QRCode = require('qrcode');
+
 const controller = 'Course';
 const module_name = 'Course';
 
@@ -145,3 +150,54 @@ async function deleteRecord(req, res) {
   }
 }
 exports.deleteRecord = deleteRecord;
+
+async function generateQr(req, res) {
+  try {
+    if (req.params.id) {
+      const courseId = req.params.id;
+      const course = await Course.findById(courseId); // Make sure Course model is imported
+
+      if (!course) return res.status(404).json({ success: false, msg: 'Course not found' });
+
+      const courseUrl = `${config.siteUrl}/course/${course._id}`;
+      const title = course.title;
+
+      /*const qrDataUrl = await QRCode.toDataURL(courseUrl, {
+        errorCorrectionLevel: 'H',
+        type: 'image/png',
+        margin: 1,
+        width: 300
+      });*/
+
+      const qrDir = path.join(__dirname, "../../public/qrcodes");
+      if (!fs.existsSync(qrDir)) fs.mkdirSync(qrDir);
+
+      const fileName = `${course._id}-qr.png`;
+      const filePath = path.join(qrDir, fileName);
+
+      // Data inside QR (title + URL)
+      //const qrData = `Course: ${course.courseName} @Apply4study\nURL: ${courseUrl}`;
+      const qrData = `${courseUrl}`;
+
+      await QRCode.toFile(filePath, qrData, {
+        width: 300,
+        margin: 2,
+        color: {
+          dark: "#000000",
+          light: "#ffffff"
+        }
+      });
+
+      const qrUrl = `Scan QRCode to Enroll this course @Apply4study - ${config.baseUrl}/qrcodes/${fileName}`;
+
+      res.json({ success: true, qr: qrUrl, url: courseUrl, title });
+    } else {
+      res.status(401).json({ success: false, msg: 'QR code not generated' });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
+}
+
+exports.generateQr = generateQr;
