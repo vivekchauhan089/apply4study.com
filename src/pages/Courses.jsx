@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+
+import LazyImage from '../components/common/LazyImage';
 import AvailableCourses from '../components/Courses/AvailableCourses';
 import DocumentMeta from 'react-document-meta';
 
@@ -32,7 +34,7 @@ export default function Courses() {
     
     <div className="page-title dark-background pricing_bg">
       <div className="container position-relative">
-        <h1>Our Pricing</h1>
+        <h1>Enroll Courses</h1>
         <nav className="breadcrumbs">
           <ol>
             <li><a href="index.html">Home</a></li>

@@ -6,8 +6,6 @@ import React, { useEffect, useRef, useState } from "react";
  * Single-file React component for a course video player that:
  * - plays lessons (video)
  * - tracks per-lesson progress (0-100)
- * - marks lessons complete
- * - resumes from saved progress (reads/writes to /api/progress)
  * - autosaves with debounce to reduce API calls
  *
  * Usage:
@@ -17,34 +15,58 @@ import React, { useEffect, useRef, useState } from "react";
  *   lessons={[{ id: 'l1', title: 'Intro', src: '/videos/intro.mp4' }, ...]}
  * />
  *
- * Notes:
- * - Styling uses Tailwind utility classes.
- * - Assumes API endpoints (as created earlier):
- *    POST /api/progress  { userId, courseId, lessonId, progress, completed }
- *    GET  /api/progress/:userId/:courseId
- * - If API is unreachable, component falls back to localStorage for progress storage.
  */
 
-export default function CoursePlayer({ userId, courseId, lessons = [] }) {
+export default function CoursePlayer({ userId, courseId, lessons = [], startLessonId }) {
   const videoRef = useRef(null);
-  const [currentLessonIndex, setCurrentLessonIndex] = useState(0);
+  const initialIndex = lessons.findIndex(l => l.id === startLessonId);
+  const [currentLessonIndex, setCurrentLessonIndex] = useState(initialIndex >= 0 ? initialIndex : 0);
   const [progressMap, setProgressMap] = useState({}); // { lessonId: { progress, completed, lastUpdated } }
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState(null);
   const saveTimer = useRef(null);
   const autosaveDelay = 900; // ms debounce
 
+  const [currentLesson, setCurrentLesson] = useState(null); // selected lesson
   const currentLesson = lessons[currentLessonIndex];
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Helper: localStorage key
   const lsKey = `course_progress_${courseId}_${userId}`;
+
+  // Handle lesson click
+  const openLesson = (lesson) => {
+    setCurrentLesson(lesson);
+    setIsModalOpen(true);
+    setError(null);
+  };
+
+  // Close popup
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setCurrentLesson(null);
+  };
+
+  useEffect(() => {
+    if (startLessonId) {
+      const idx = lessons.findIndex(l => l.id === startLessonId);
+      if (idx >= 0) setCurrentLessonIndex(idx);
+    }
+  }, [startLessonId, lessons]);
 
   // Fetch progress from API (or localStorage fallback)
   useEffect(() => {
     let mounted = true;
     async function fetchProgress() {
       try {
-        const res = await fetch(`/api/progress/${userId}/${courseId}`);
+        const res = await fetch(`http://localhost:8083/api/course/progress`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMjM0LCJ1c2VyX3R5cGVfaWQiOjAsInJvbGUiOiJndWVzdCIsImlhdCI6MTc1ODg4NDcwOCwiZXhwIjoxNzY0MDY4NzA4fQ.zWg19kpqcRf0sxKzrioWP_HzogoC5fHQPeGHTE6nZpc" // token in header
+            },
+            body: JSON.stringify({userId: userId, courseId: courseId})
+        });
         if (!res.ok) throw new Error(`API error ${res.status}`);
         const json = await res.json();
         if (!mounted) return;
@@ -114,9 +136,12 @@ export default function CoursePlayer({ userId, courseId, lessons = [] }) {
     }));
 
     try {
-      const res = await fetch(`/api/progress`, {
+      const res = await fetch(`http://localhost:8083/api/course/progress`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+            "Content-Type": "application/json",
+            "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMjM0LCJ1c2VyX3R5cGVfaWQiOjAsInJvbGUiOiJndWVzdCIsImlhdCI6MTc1ODg4NDcwOCwiZXhwIjoxNzY0MDY4NzA4fQ.zWg19kpqcRf0sxKzrioWP_HzogoC5fHQPeGHTE6nZpc" // token in header
+        },
         body: JSON.stringify(payload),
       });
       if (!res.ok) throw new Error(`Save failed: ${res.status}`);

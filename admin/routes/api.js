@@ -139,13 +139,13 @@ router.post('/courses/:id', ApiMiddleware, courseController.getById);
  *                   progress: 75
  *                   completed: false
  */
-router.post("/progress", ApiMiddleware, courseController.updateProgress);
+router.post("/course/progress", ApiMiddleware, courseController.updateProgress);
 
 
 /**
  * @swagger
  * /progress/{userId}/{courseId}:
- *   get:
+ *   post:
  *     summary: Get progress for a specific course
  *     tags: [Progress]
  *     parameters:
@@ -178,7 +178,7 @@ router.post("/progress", ApiMiddleware, courseController.updateProgress);
  *                     progress: 50
  *                     completed: false
  */
-router.post("/progress/:userId/:courseId", ApiMiddleware, courseController.updateProgress);
+router.post("/course/progress", ApiMiddleware, courseController.updateProgress);
 
 
 /**

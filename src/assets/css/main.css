@@ -3049,3 +3049,102 @@ section,
   line-height: 1;
 
 }
+
+/*--------------------------------------------------------------
+# Course Posts Section
+--------------------------------------------------------------*/
+.course-posts article {
+  background-color: var(--surface-color);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.course-posts .post-img {
+  max-height: 240px;
+  margin: -30px -30px 15px -30px;
+  overflow: hidden;
+}
+
+.course-posts .post-category {
+  font-size: 16px;
+  color: color-mix(in srgb, var(--default-color), transparent 40%);
+  margin-bottom: 10px;
+}
+
+.course-posts .title {
+  font-size: 20px;
+  font-weight: 700;
+  padding: 0;
+  margin: 0 0 20px 0;
+}
+
+.course-posts .title a {
+  color: var(--heading-color);
+  transition: 0.3s;
+}
+
+.course-posts .title a:hover {
+  color: var(--accent-color);
+}
+
+.course-posts .post-author-img {
+  width: 50px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.course-posts .post-author {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.course-posts .post-date {
+  font-size: 14px;
+  color: color-mix(in srgb, var(--default-color), transparent 40%);
+  margin-bottom: 0;
+}
+
+/*--------------------------------------------------------------
+# course Pagination Section
+--------------------------------------------------------------*/
+.course-pagination {
+  padding-top: 0;
+  color: color-mix(in srgb, var(--default-color), transparent 40%);
+}
+
+.course-pagination ul {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.course-pagination li {
+  margin: 0 5px;
+  transition: 0.3s;
+}
+
+.course-pagination li a {
+  color: var(--accent-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--accent-color);
+}
+
+.course-pagination li a.active,
+.course-pagination li a:hover {
+  background: var(--accent-color);
+  color: var(--contrast-color);
+}
+
+.course-pagination li a.active a,
+.course-pagination li a:hover a {
+  color: var(--contrast-color);
+}

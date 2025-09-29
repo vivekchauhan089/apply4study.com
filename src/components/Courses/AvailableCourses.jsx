@@ -1,142 +1,172 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
+import CoursePlayer from "./CoursePlayer";
 
 const AvailableCourses = () => {
     const [activeTab, setActiveTab] = useState('popular');
 
+    const [courses, setCourses] = useState([]);
+    const [selectedCourse, setSelectedCourse] = useState(null);
+    const [playingVideo, setPlayingVideo] = useState(null);
+
+    useEffect(() => {
+        fetch("http://localhost:8083/api/courses", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMjM0LCJ1c2VyX3R5cGVfaWQiOjAsInJvbGUiOiJndWVzdCIsImlhdCI6MTc1ODg4NDcwOCwiZXhwIjoxNzY0MDY4NzA4fQ.zWg19kpqcRf0sxKzrioWP_HzogoC5fHQPeGHTE6nZpc" // token in header
+            },
+            body: JSON.stringify({
+                "user_id": "68d27fa20a1b391f84d652ba",
+                "source": "Livguard"
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.data) {
+              setCourses(data.data);
+            } else {
+              console.error("Error:", data.error);
+            }
+        })
+        .catch(err => console.error(err));
+    }, []);
+
+    const handlePlay = (course, video) => {
+        setSelectedCourse({
+            courseId: course._id,
+            lessons: course.videos.map(v => ({
+              id: v._id.toString(),
+              title: v.name,
+              src: v.url
+            })),
+            startLessonId: video._id.toString()
+        });
+    };
+
+    const chunkArray = (arr, size) => {
+      const result = [];
+      for (let i = 0; i < arr.length; i += size) {
+        result.push(arr.slice(i, i + size));
+      }
+      return result;
+    };
+
+
+    const closeModal = () => setSelectedCourse(null);
+
     return (
-        <section className="pricing section light-background">
-            <div className="container">
+        <section className="course-posts section light-background">
+            <div className="container mx-auto p-4">
                 <div className="section-title" data-aos="fade-up">
-                    <h5>Choose Your Plan</h5>
-                    <p>We offer a variety of plans to suit your learning needs. Explore our options and find the perfect fit for you.</p>
-                    <p>Explore our platform with a <strong>7-day free trial</strong> — no credit card required!</p>
+                    <h5>Popular Courses</h5>
+                    <p>We offer a variety of courses to suit your learning needs. Explore our options and find the perfect fit for you.</p>
                 </div>
 
                 {/* Tab Buttons */}
                 <div className="text-center mb-5 tabs">
-                    <button
-                        className={`btn theme-btn mx-2 ${activeTab === 'popular' ? 'active' : ''}`}
-                        onClick={() => setActiveTab('popular')}
-                    >
+                    <button className={`btn theme-btn mx-2 ${activeTab === 'popular' ? 'active' : ''}`} onClick={() => setActiveTab('popular')} >
                         For Students
                     </button>
-                    <button
-                        className={`btn theme-btn mx-2 ${activeTab === 'recommended' ? 'active' : ''}`}
-                        onClick={() => setActiveTab('recommended')}
-                    >
+                    <button className={`btn theme-btn mx-2 ${activeTab === 'recommended' ? 'active' : ''}`} onClick={() => setActiveTab('recommended')} >
                         For Teachers
                     </button>
                 </div>
-
-                <div className="row mt-3">
-
-                    {activeTab === 'popular' && (
-                        <>
+                {activeTab === 'popular' && (
+                    <>
+                        {chunkArray(courses, 3).map((row, rowIndex) => (
+                        <div className="row gy-4 featured">
+                            {row.map(course => (
                             <div className="col-lg-4">
-                                <div className="pricing-item">
-                                    <h3>🆓 Free Plan</h3>
-                                    <h4><sup>₹</sup>19<span>/month</span></h4>
-                                    <h4><span className="na">Perfect for exploring</span></h4>
-                                    <p className="text-description">Get started with essential learning tools at no cost.</p>
+                                <article>                                    
+                                    <div className="post-img">
+                                        <div>
+                                            <img alt="" className="img-fluid" src={course.courseImage ?? '/static/media/blog-1.97a1a61032fc6b5b3c4c.jpg'} />
+                                        </div>
+                                    </div>                            
+                                    <p className="post-category"> Study Tips</p>
+                                    <h3 className="title mb-2">{course.courseName} - <sup>₹</sup>19<span>/month</span></h3>
+                                    <a href="#" className="buy-btn">Enroll Now</a>
                                     <ul>
-                                        <li><i className="bi bi-check2-all"></i> Access to selected free courses</li>
-                                        <li><i className="bi bi-check2-all"></i> Join live webinars & demo classes</li>
-                                        <li><i className="bi bi-check2-all"></i> Personalized learner dashboard</li>
-                                        <li><i className="bi bi-check2-all"></i> Progress tracking tools</li>
-                                        <li className="na"><i className="bi bi-check2"></i> <span>No certificates or full course access</span></li>
-                                    </ul>
-                                    <a href="#" className="buy-btn">Buy Now</a>
-                                </div>
+                                        {course.videos.map(video => (
+                                          <li key={video.id} className="d-flex justify-content-between align-items-center">
+                                            <span>
+                                              <i className="bi bi-play-circle"></i> {video.title}
+                                            </span>
+                                            <button
+                                              className="btn btn-sm btn-primary"
+                                              onClick={() => handlePlay(course, video)} // use your play handler
+                                            >
+                                              ▶ Play
+                                            </button>
+                                          </li>
+                                        ))}
+                                    </ul>                                    
+                                </article>
                             </div>
+                            ))}
+                        </div>
+                        ))}
+                    </>                        
+                )}
 
-                            <div className="col-lg-4 featured">
-                                <div className="pricing-item">
-                                    <h3>💼 Starter Plan</h3>
-                                    <h4><sup>₹</sup>499<span>/month</span></h4>
-                                    <h4 className="mb-0"><span>Ideal for beginners & students</span></h4>
-                                    <h6 className="mb-0">Build strong foundations with structured learning.</h6>
+                {activeTab === 'recommended' && (
+                    <>
+                        {chunkArray(courses, 3).map((row, rowIndex) => (
+                        <div className="row gy-4 featured">
+                            {row.map(course => (
+                            <div className="col-lg-4">
+                                <article>
+                                    <div className="post-img">
+                                        <div>
+                                            <img alt="" className="img-fluid" src="/static/media/blog-1.97a1a61032fc6b5b3c4c.jpg" />
+                                        </div>
+                                    </div>                            
+                                    <p className="post-category"> Study Tips</p>
+                                    <h3 className="title mb-2">{course.courseName} - <sup>₹</sup>19<span>/month</span></h3>
+                                    <a href="#" className="buy-btn">Enroll Now</a>
                                     <ul>
-                                        <li><i className="bi bi-check2-all"></i> Full access to academic & skill courses</li>
-                                        <li><i className="bi bi-check2-all"></i> Interactive video lessons & notes</li>
-                                        <li><i className="bi bi-check2-all"></i> Live class access (limited sessions)</li>
-                                        <li><i className="bi bi-check2-all"></i> Basic quizzes & assignments</li>
-                                        <li><i className="bi bi-check2-all"></i> Monthly progress report</li>
-                                        <li><i className="bi bi-check2-all"></i> Certificate of completion</li>
-                                    </ul>
-                                    <a href="#" className="buy-btn">Buy Now</a>
-                                </div>
+                                        {course.videos.map(video => (
+                                          <li key={video.id} className="d-flex justify-content-between align-items-center">
+                                            <span>
+                                              <i className="bi bi-play-circle"></i> {video.name}
+                                            </span>
+                                            <button
+                                              className="btn btn-sm btn-primary"
+                                              onClick={() => handlePlay(video.url)} // use your play handler
+                                            >
+                                              ▶ Play
+                                            </button>
+                                          </li>
+                                        ))}
+                                    </ul>                                    
+                                </article>
                             </div>
+                            ))}
+                        </div>
+                        ))}
+                    </>
+                )}
+            
+                {/* Modal for Video Player */}
+                {isModalOpen && currentLesson && (
+                    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-[9999]">
+                        <div className="relative bg-white rounded-lg shadow-lg max-w-6xl w-full max-h-[90vh] overflow-y-auto p-4">
+                            {/* Close button */}
+                            <button
+                              onClick={closeModal}
+                              className="absolute top-3 right-3 text-gray-700 hover:text-black text-2xl"
+                            >✖</button>
 
-                            <div className="col-lg-4">
-                                <div className="pricing-item">
-                                    <h3>🚀 Pro Plan</h3>
-                                    <h4><sup>₹</sup>999<span>/month</span></h4>
-                                    <h4><span>Best for serious learners</span></h4>
-                                    <p>Everything you need to master your goals and grow.</p>
-                                    <ul>
-                                        <li><i className="bi bi-check2-all"></i> Unlimited course access</li>
-                                        <li><i className="bi bi-check2-all"></i> All live classes & Q&A sessions</li>
-                                        <li><i className="bi bi-check2-all"></i> Downloadable content</li>
-                                        <li><i className="bi bi-check2-all"></i> Premium quizzes & mock tests</li>
-                                        <li><i className="bi bi-check2-all"></i> 1-on-1 mentorship (2 sessions/month)</li>
-                                        <li><i className="bi bi-check2-all"></i> Advanced certification</li>
-                                        <li><i className="bi bi-check2-all"></i> Performance dashboard</li>
-                                    </ul>
-                                    <a href="#" className="buy-btn">Buy Now</a>
-                                </div>
-                            </div>
-                        </>
-                    )}
-
-                    {activeTab === 'recommended' && (
-                        <>
-                            <div className="col-lg-4">
-                                <div className="pricing-item">
-                                    <h3>🧑‍🏫 Basic Educator</h3>
-                                    <h4><sup>₹</sup>299<span>/month</span></h4>
-                                    <ul>
-                                        <li><i className="bi bi-check2-all"></i> Create and publish up to 5 courses</li>
-                                        <li><i className="bi bi-check2-all"></i> Access to educator dashboard</li>
-                                        <li><i className="bi bi-check2-all"></i> View learner analytics</li>
-                                        <li><i className="bi bi-check2-all"></i> Email support</li>
-                                    </ul>
-                                     <a href="#" className="buy-btn">Buy Now</a>
-                                </div>
-                            </div>
-                            <div className="col-lg-4 featured">
-                                <div className="pricing-item">
-                                    <h3>💼 Starter Plan</h3>
-                                    <h4><sup>₹</sup>499<span>/month</span></h4>
-                                    <h4 className="mb-0"><span>Ideal for beginners & students</span></h4>
-                                    <h6 className="mb-0">Build strong foundations with structured learning.</h6>
-                                    <ul>
-                                        <li><i className="bi bi-check2-all"></i> Full access to academic & skill courses</li>
-                                        <li><i className="bi bi-check2-all"></i> Interactive video lessons & notes</li>
-                                        <li><i className="bi bi-check2-all"></i> Live class access (limited sessions)</li>
-                                        <li><i className="bi bi-check2-all"></i> Basic quizzes & assignments</li>
-                                        <li><i className="bi bi-check2-all"></i> Monthly progress report</li>
-                                        <li><i className="bi bi-check2-all"></i> Certificate of completion</li>
-                                    </ul>
-                                    <a href="#" className="buy-btn">Buy Now</a>
-                                </div>
-                            </div>
-                            <div className="col-lg-4">
-                                <div className="pricing-item">
-                                    <h3>🌟 Pro Educator</h3>
-                                    <h4><sup>₹</sup>799<span>/month</span></h4>
-                                    <ul>
-                                        <li><i className="bi bi-check2-all"></i> Unlimited course publishing</li>
-                                        <li><i className="bi bi-check2-all"></i> Access to live session tools</li>
-                                        <li><i className="bi bi-check2-all"></i> Priority support</li>
-                                        <li><i className="bi bi-check2-all"></i> Detailed engagement analytics</li>
-                                        <li><i className="bi bi-check2-all"></i> Monetize your content</li>
-                                    </ul>
-                                    <a href="#" className="buy-btn">Buy Now</a>
-                                </div>
-                            </div>
-                        </>
-                    )}
-                </div>
+                            <CoursePlayer
+                              userId="68d27fa20a1b391f84d652ba" // your real Mongo ObjectId
+                              courseId={selectedCourse.courseId.toString()}
+                              lessons={selectedCourse.lessons}
+                              startLessonId={selectedCourse.startLessonId}
+                            />
+                        </div>
+                    </div>
+                )}
             </div>
         </section>
     );

@@ -85,7 +85,9 @@ async function updateProgress(req, res) {
 // Get progress for a course
 async function getProgress(req, res) {
   try {
-    const { userId, courseId } = req.params;
+  	const { userId, courseId } = req.params;
+  	console.log("vivek 1", userId);
+  	console.log("vivek 2", courseId);
     const progress = await CourseProgress.find({ userId, courseId });
     res.json({ success: true, data: progress });
   } catch (err) {
