@@ -7,7 +7,7 @@ const AvailableCourses = () => {
   const [selectedCourse, setSelectedCourse] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:8083/api/courses", {
+    fetch("http://apply4study.com/api/courses", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

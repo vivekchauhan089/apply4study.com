@@ -67,7 +67,7 @@ export default function CoursePlayer({
     let mounted = true;
     async function fetchProgress() {
       try {
-        const res = await fetch(`http://localhost:8083/api/course/progress`, {
+        const res = await fetch(`http://apply4study.com/api/course/progress`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -121,7 +121,7 @@ export default function CoursePlayer({
     }));
 
     try {
-      const res = await fetch(`http://localhost:8083/api/course/progress`, {
+      const res = await fetch(`http://apply4study.com/api/course/progress`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
