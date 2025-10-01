@@ -1,3 +1,4 @@
+// CoursePlayer.jsx
 import React, { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 
@@ -7,8 +8,45 @@ export default function CoursePlayer({
   lessons = [],
   startLessonId,
   isOpen,
-  onClose
+  onClose,
 }) {
+  const portalEl = useRef(null);
+
+  // Create a dedicated portal container appended to document.body
+  useEffect(() => {
+    const el = document.createElement("div");
+    el.className = "course-player-portal"; // you can style if needed
+    document.body.appendChild(el);
+    portalEl.current = el;
+    return () => {
+      if (portalEl.current) document.body.removeChild(portalEl.current);
+      portalEl.current = null;
+    };
+  }, []);
+
+  // Diagnostics: check for any ancestor with a transform/filter that can break fixed positioning
+  useEffect(() => {
+    if (!portalEl.current) return;
+    let cur = portalEl.current.parentElement;
+    while (cur) {
+      const cs = getComputedStyle(cur);
+      if ((cs.transform && cs.transform !== "none")
+        || (cs.filter && cs.filter !== "none")
+        || (cs.perspective && cs.perspective !== "none")
+        || (cs.willChange && cs.willChange !== "auto")
+      ) {
+        console.warn("Ancestor with transform/filter detected which can trap fixed children:", cur, {
+          transform: cs.transform,
+          filter: cs.filter,
+          perspective: cs.perspective,
+          willChange: cs.willChange
+        });
+        break;
+      }
+      cur = cur.parentElement;
+    }
+  }, [portalEl.current]);
+
   const videoRef = useRef(null);
   const initialIndex = lessons.findIndex(l => l.id === startLessonId);
   const [currentLessonIndex, setCurrentLessonIndex] = useState(initialIndex >= 0 ? initialIndex : 0);
@@ -152,135 +190,102 @@ export default function CoursePlayer({
     return Math.round(sum / total);
   };
 
-  if (!isOpen || !currentLesson) return null;
+  // If not open or portal not ready, render nothing
+  if (!isOpen || !portalEl.current) return null;
 
-  // ✅ Portal: render modal outside normal DOM flow
+  const backdropStyle = {
+    position: "fixed",
+    inset: 0,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    background: "rgba(0,0,0,0.65)",
+    zIndex: 999999
+  };
+
+  const modalStyle = {
+    width: "min(1100px, 96vw)",
+    maxHeight: "90vh",
+    overflow: "hidden",
+    borderRadius: 12,
+    background: "#fff",
+    boxShadow: "0 10px 30px rgba(0,0,0,0.25)",
+    position: "relative",
+    display: "flex",
+    gap: 16,
+  };
+
+  const leftStyle = { flex: 2, padding: 16, display: "flex", flexDirection: "column", gap: 12 };
+  const rightStyle = { flex: 1, padding: 16, overflowY: "auto", borderLeft: "1px solid #eee" };
+
   return ReactDOM.createPortal(
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-[999999]">
-      <div className="relative bg-white rounded-lg shadow-lg max-w-6xl w-full max-h-[90vh] overflow-y-auto p-4">
-        {/* Close button */}
+    <div style={backdropStyle} onClick={onClose} role="dialog" aria-modal="true">
+      <div style={modalStyle} onClick={(e) => e.stopPropagation()}>
+        {/* Close */}
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 text-gray-700 hover:text-black text-2xl"
-        >
-          ✖
-        </button>
+          style={{ position: "absolute", right: 12, top: 12, border: "none", background: "transparent", fontSize: 20, cursor: "pointer" }}
+          aria-label="Close"
+        >✖</button>
 
-        <div className="max-w-5xl mx-auto p-4 grid md:grid-cols-3 gap-6">
-          {/* Player */}
-          <div className="md:col-span-2 bg-white rounded-2xl shadow p-4">
-            <h2 className="text-xl font-semibold mb-3">{currentLesson?.title || "No lesson selected"}</h2>
+        {/* Left: Video & controls */}
+        <div style={leftStyle}>
+          <h3 style={{ margin: 0 }}>{currentLesson?.title ?? "No lesson selected"}</h3>
 
-            {/* Progress Bar */}
-            <div className="w-full bg-gray-100 rounded overflow-hidden mb-3">
-              <div className="px-3 py-2 flex items-center justify-between">
-                <div className="text-sm">Course Completion</div>
-                <div className="text-sm font-medium">{overallCompletion()}%</div>
+          <div style={{ aspectRatio: "16/9", background: "#000", borderRadius: 8, overflow: "hidden" }}>
+            {currentLesson ? (
+              <video
+                ref={videoRef}
+                key={currentLesson.id}
+                src={currentLesson.src}
+                controls
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                onTimeUpdate={onTimeUpdate} 
+                onEnded={onEnded}
+              />
+            ) : (
+              <div style={{ color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
+                No lesson
               </div>
-              <div className="h-2 bg-gray-200">
-                <div className="h-2 rounded" style={{ width: `${overallCompletion()}%`, background: 'linear-gradient(90deg,#4f46e5,#06b6d4)' }} />
-              </div>
-            </div>
-
-            {/* Video */}
-            <div className="w-full bg-black aspect-video rounded overflow-hidden">
-              {currentLesson ? (
-                <video
-                  ref={videoRef}
-                  key={currentLesson.id}
-                  src={currentLesson.src}
-                  controls
-                  onTimeUpdate={onTimeUpdate}
-                  onEnded={onEnded}
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <div className="w-full h-full flex items-center justify-center text-white">No lesson</div>
-              )}
-            </div>
-
-            {/* Controls */}
-            <div className="flex items-center gap-3 mt-3">
-              <button
-                onClick={() => { const v = videoRef.current; v && (v.currentTime = Math.max(0, (v.currentTime || 0) - 10)); }}
-                className="px-3 py-2 bg-gray-100 rounded shadow-sm"
-              >
-                ◀ 10s
-              </button>
-              <button
-                onClick={() => { const v = videoRef.current; v && (v.currentTime = Math.min(v.duration || 0, (v.currentTime || 0) + 10)); }}
-                className="px-3 py-2 bg-gray-100 rounded shadow-sm"
-              >
-                10s ▶
-              </button>
-              <button
-                onClick={() => { const v = videoRef.current; if (!v) return; v.paused ? v.play().catch(()=>{}) : v.pause(); }}
-                className="px-3 py-2 bg-indigo-600 text-white rounded shadow"
-              >
-                Play/Pause
-              </button>
-              <button
-                onClick={markComplete}
-                className="ml-auto px-3 py-2 bg-emerald-500 text-white rounded shadow"
-              >
-                Mark as Complete
-              </button>
-            </div>
-
-            {error && <div className="mt-3 text-sm text-yellow-700">{error}</div>}
-            <div className="mt-2 text-sm text-gray-500">{saving ? "Saving..." : "All changes saved."}</div>
+            )}
           </div>
 
-          {/* Lessons */}
-          <aside className="bg-white rounded-2xl shadow p-4">
-            <h3 className="text-lg font-medium mb-3">Lessons</h3>
-            <ul className="space-y-2">
-              {lessons.map((lesson, idx) => {
-                const p = progressMap[lesson.id]?.progress || 0;
-                const completed = progressMap[lesson.id]?.completed || false;
-                return (
-                  <li key={lesson.id} className="flex items-center gap-3">
-                    <button
-                      onClick={() => jumpToLesson(idx)}
-                      className="flex-1 text-left py-2 px-3 rounded hover:bg-gray-50"
-                    >
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <div className="font-medium">{lesson.title}</div>
-                          <div className="text-xs text-gray-500">{p}%</div>
-                        </div>
-                        <div className="ml-3 text-sm">
-                          {completed ? (
-                            <span className="text-green-600">✓</span>
-                          ) : (
-                            <span className="text-gray-400">●</span>
-                          )}
-                        </div>
-                      </div>
-                      <div className="mt-2 h-2 bg-gray-200 rounded overflow-hidden">
-                        <div className="h-2" style={{ width: `${p}%`, background: 'linear-gradient(90deg,#7c3aed,#06b6d4)' }} />
-                      </div>
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
-
-            <div className="mt-4">
-              <button
-                onClick={() => {
-                  const summary = lessons.map((l) => ({ title: l.title, progress: progressMap[l.id]?.progress || 0 }));
-                  alert(JSON.stringify({ overall: overallCompletion(), items: summary }, null, 2));
-                }}
-                className="w-full py-2 bg-indigo-600 text-white rounded"
-              >
-                Show Progress Summary
-              </button>
+          <div style={{ display: "flex", gap: 8 }}>
+            <button onClick={() => { const v = videoRef.current; if (v) v.currentTime = Math.max(0, (v.currentTime || 0) - 10); }}>◀ 10s</button>
+            <button onClick={() => { const v = videoRef.current; if (v) v.pause(); else v && v.play().catch(()=>{}); }}>Play/Pause</button>
+            <div style={{ marginLeft: "auto" }}>
+              <button onClick={markComplete}>Mark as Complete</button>
             </div>
-          </aside>
+          </div>
         </div>
+
+        {/* Right: Lessons */}
+        <aside style={rightStyle}>
+          <h4 style={{ marginTop: 0 }}>Lessons</h4>
+          <ul style={{ padding: 0, margin: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>
+            {lessons.map((l, idx) => (
+              <li key={l.id}>
+                <button
+                  onClick={() => setCurrentLessonIndex(idx)}
+                  style={{
+                    width: "100%",
+                    textAlign: "left",
+                    padding: "10px",
+                    borderRadius: 6,
+                    background: idx === currentLessonIndex ? "#f3f4f6" : "transparent",
+                    border: "none",
+                    cursor: "pointer"
+                  }}
+                >
+                  <div style={{ fontWeight: 600 }}>{l.title}</div>
+                  {/* small progress text if you have it */}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </aside>
       </div>
     </div>,
-    document.body // 👈 append modal to <body>
+    portalEl.current
   );
 }
