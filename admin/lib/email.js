@@ -1,26 +1,28 @@
 let nodemailer = require('nodemailer');
 let config = require('../config/config');
-let connection = require('mysql').createPool(config.database);
+// let connection = require('mysql').createPool(config.database);
 let { firebaseadmin } = require('./firebaseconfig');
+
+const UserDetail = require('../models/Users');
 
 async function getUserToken (dealId,rmId=null) {
     console.log("Dealer Token", dealId)
 	return new Promise((resolve) => {
-		connection.getConnection((error,tempConnection)=>{
+		/*connection.getConnection((error,tempConnection)=>{
 			if(error){
 				resolve(false)
-			} else {
+			} else {*/
                 let tokens = []
-				let selectDealer = `SELECT dealer_id,token FROM dealer_token_map WHERE dealer_id IN (?,?) AND token IS NOT NULL AND token != '';`;
-				tempConnection.query(selectDealer, [dealId,rmId], (err, rows, field) => {
-                    console.log(err)
-					if(rows.length) {
-                        tokens = rows.map(token=>token.token)
-                        resolve(tokens)
-                    }
-                })
-            }
-        })
+                const rows = await UserDetail.findOne({
+                    _id: dealId,
+                    is_deleted: false
+                }).lean();
+				if(rows.length) {
+                    tokens = rows.map(token=>token.token)
+                }
+                resolve(tokens)
+            /*}
+        })*/
     })
 }
 
@@ -194,7 +196,8 @@ module.exports.sendEmail = function(data) {
     //console.log(emailContent);
     //return;
     new Promise((resolve) => {
-        connection.getConnection(function(error, tempConnection){
+        resolve(true);
+        /*connection.getConnection(function(error, tempConnection){
             if(error){
                 console.log("error : ",error.message);
                 resolve(true);
@@ -212,7 +215,7 @@ module.exports.sendEmail = function(data) {
                     }
                 })
             }
-        })
+        })*/
     }).then((flag) => {
         emailContent.to = (flag) ? emailContent.to : ['testing@gmail.com'];
         if(!flag) emailContent.cc = 'testing@gmail.com';   
@@ -222,43 +225,38 @@ module.exports.sendEmail = function(data) {
                     console.log('Problem in sending the mail ', response);
             } else {
                 let sysDate = new Date().getTime();
-                    connection.getConnection(function(error, tempConnection){
-                        if(error){
-                                console.log("error : ",error.message);
-                        } else {
-                                var title = "New Notification";
-                                var message = "Email Reminder Notification";
-                                var priority = "High";
-                                if(data.code == "new-lead"){
-                                    title = "New Homeowner Lead Assigned";
-                                    message = "You got a new homeowner lead, Please have a look and take the necessary actions";
-                                    priority = "High";
-                                } 
-    
-                                tempConnection.query("INSERT INTO `notification_history`(`title`,`homeowner_mobile`,`message`,`sent_to`, `priority`) VALUES (?,?,?,?,?);",[`${title}`,data.phone,`${message}`,data.sentToId, `${priority}`], function (error, results, fields) {
-                                tempConnection.release();
-                                    if (error){
-                                            console.log(error);
-                                    }
-                                    
-                                });
-                                
-                                let rm_Id = !data.rmId ? data.rmId : 0;
-                                getUserToken(data.sentToId,rm_Id).then((tokens) => {
-                                    if(tokens) {
-                                        // pushNotification(message, title, tokens)
-                                    }
-                                })
-    
-                                //unlink if path exist
-                                if(data.unlinkPath !== undefined && data.unlinkPath != 'undefined') {
-                                    let fs = require('fs');
-                                    fs.unlinkSync(data.unlinkPath);
-                                }
-                        }
-                    });
-               }
-           return response;
+                     
+                var title = "New Notification";
+                var message = "Email Reminder Notification";
+                var priority = "High";
+                if(data.code == "new-lead"){
+                    title = "New Homeowner Lead Assigned";
+                    message = "You got a new homeowner lead, Please have a look and take the necessary actions";
+                    priority = "High";
+                } 
+
+                /*tempConnection.query("INSERT INTO `notification_history`(`title`,`homeowner_mobile`,`message`,`sent_to`, `priority`) VALUES (?,?,?,?,?);",[`${title}`,data.phone,`${message}`,data.sentToId, `${priority}`], function (error, results, fields) {
+                tempConnection.release();
+                    if (error){
+                            console.log(error);
+                    }
+                    
+                });*/
+                
+                let rm_Id = !data.rmId ? data.rmId : 0;
+                getUserToken(data.sentToId,rm_Id).then((tokens) => {
+                    if(tokens) {
+                        // pushNotification(message, title, tokens)
+                    }
+                })
+
+                //unlink if path exist
+                if(data.unlinkPath !== undefined && data.unlinkPath != 'undefined') {
+                    let fs = require('fs');
+                    fs.unlinkSync(data.unlinkPath);
+                }
+            }
+            return response;
         });
     })   	
 };
