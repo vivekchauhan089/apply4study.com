@@ -7,7 +7,7 @@ const UserDetail = require('../models/Users');
 
 async function getUserToken (dealId,rmId=null) {
     console.log("Dealer Token", dealId)
-	return new Promise((resolve) => {
+	return new Promise(async(resolve) => {
 		/*connection.getConnection((error,tempConnection)=>{
 			if(error){
 				resolve(false)
