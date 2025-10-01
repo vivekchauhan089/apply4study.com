@@ -21,12 +21,12 @@ async function list (req,res,next) {
 		console.log('parameter not find');
 		res.status(200).json({success : false ,message : 'Required parameter is missing'});
 	} else {
-		connection.getConnection(async(error,tempConnection)=>{
+		/*connection.getConnection(async(error,tempConnection)=>{
 			if(error){
 				console.log("connection error ",error.message);
 				let response = {error: 1, message: 'Unable to connect to the DB. Try again'};
 				res.status(504).json(response);
-			} else {
+			} else {*/
 				const allCourse = await Course.find({}).populate('category');
 				res.status(200).json({
 					success: true,
@@ -34,8 +34,8 @@ async function list (req,res,next) {
 					message: 'courses list successfully'
 				});
 
-			}
-		});
+			/*}
+		});*/
 	}
 }
 
@@ -45,12 +45,12 @@ async function getById (req,res,next) {
 		console.log('parameter not find');
 		res.status(400).json({error : 1 ,message : 'Required parameter is missing'});	
 	} else {
-		connection.getConnection(async(error,tempConnection)=>{
+		/*connection.getConnection(async(error,tempConnection)=>{
 			if(error){
 				console.log("connection error ",error.message);
 				let response = {error: 1, message: 'Unable to connect to the DB. Try again'};
 				res.status(504).json(response);
-			} else {
+			} else {*/
 				var course_id = req.body.course_id;
 				var coursedata = await Course.findById(course_id).populate('category');
 
@@ -60,8 +60,8 @@ async function getById (req,res,next) {
 					message: 'courses data successfully'
 				});
 
-			}
-		});
+			/*}
+		});*/
 	}
 }
 

@@ -20,7 +20,7 @@ async function login(req, res, next) {
     try {
         const user = await UserDetail.findOne({
             $or: [{ email: req.body.email }, { phone: req.body.email }],
-            is_deleted: 0
+            is_deleted: false
         }).lean();
 
         if (!user) {
@@ -28,33 +28,33 @@ async function login(req, res, next) {
             return res.status(401).json({ error: 1, message: 'This email/mobile is not registered with us' });
         }
 
-        if (!user.is_enable) {
+        if (!user.is_active) {
             await addLoginLogs(req.body.email, 'Login_Failure', req);
             return res.status(401).json({ error: 1, message: 'Not authorized to access the app' });
         }
 
         let userLogin = {};
-        const passwordMatch = bcrypt.hashSync(req.body.password, user.salt) === user.user_password || req.body.password === 'LGLFLivsol321!';
+        const passwordMatch = bcrypt.hashSync(req.body.password, user.salt) === user.password || req.body.password === 'LGLFLivsol321!';
 
-        if (user.app_used && user.user_password && user.is_verified && passwordMatch) {
+        if (user.password && user.is_active && passwordMatch) {
             userLogin = {
-                user_type_id: user.role_id.toString(),
+                user_type_id: (user?.role_id?.toString?.() || ""),
                 user_id: user._id.toString(),
                 company: user.company_name,
                 role: user.role?.trim() || "",
                 theme: user.company_name?.includes('fast') ? "apply4study" : "vidyarthee",
                 lms_sso_url: `https://apply4study.com/autologin.php?username=${user.phone}`,
                 is_new_user: 'N',
-                token: createToken({ user_id: user._id.toString(), user_type_id: user.role_id.toString(), role: user.role?.trim() || "" })
+                token: createToken({ user_id: user._id.toString(), user_type_id: (user?.role_id?.toString?.() || ""), role: user.role?.trim() || "" })
             };
 
             await addLoginLogs(req.body.email, 'Login_Success', req);
             res.status(200).json({ success: 1, data: userLogin, message: 'Login successfully' });
-        } else if (!user.app_used && req.body.password === user.assigned_password) {
-            userLogin.user_type_id = user.role_id.toString();
+        } else if (req.body.password === user.assigned_password) {
+            userLogin.user_type_id = (user?.role_id?.toString?.() || "");
             userLogin.is_new_user = 'Y';
             if (user.email) {
-                await sendOTPEmail(user._id.toString(), user.role_id.toString(), user.email, user.name, res);
+                await sendOTPEmail(user._id.toString(), (user?.role_id?.toString?.() || ""), user.email, user.name, res);
             } else if (user.phone) {
                 const statusSMS = await sendSMS(user.phone, user._id.toString());
                 if (statusSMS) {
@@ -82,19 +82,19 @@ async function logout(req, res, next) {
     try {
         const user = await UserDetail.findOne({
             $or: [{ email: req.body.email }, { phone: req.body.email }],
-            is_deleted: 0
+            is_deleted: false
         }).lean();
 
         if (!user) {
             return res.status(401).json({ error: 1, message: 'This email/mobile is not registered with us' });
         }
 
-        if (!user.is_enable) {
+        if (!user.is_active) {
             return res.status(401).json({ error: 1, message: 'Not authorized to access the app' });
         }
 
         if (user.email) {
-            await sendOTPEmail(user._id.toString(), user.role_id.toString(), user.email, user.name, res);
+            await sendOTPEmail(user._id.toString(), (user?.role_id?.toString?.() || ""), user.email, user.name, res);
         } else if (user.phone) {
             const statusSMS = await sendSMS(user.phone, user._id.toString());
             if (statusSMS) {
@@ -123,7 +123,7 @@ async function otp_verify(req, res, next) {
         const user = await UserDetail.findOne({
             $or: [{ email: req.body.email }, { phone: req.body.email }],
             verification_key: req.body.otp,
-            is_deleted: 0
+            is_deleted: false
         });
 
         if (!user) {
