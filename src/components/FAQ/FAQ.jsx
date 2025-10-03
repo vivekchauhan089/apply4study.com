@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import SEO from "../../components/SEO";
 
 const FaqSection = () => {
   const [activeIndex, setActiveIndex] = useState(null);
