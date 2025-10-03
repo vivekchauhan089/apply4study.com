@@ -9,24 +9,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 // import getStartedImg from '../assets/img/getStarted.png';
 import LazyImage from '../components/common/LazyImage';
-import DocumentMeta from 'react-document-meta';
-
-const meta = {
-  title: 'Get Started | Apply4Study',
-  description: 'Lorem Ipsum content here',
-  meta: {
-    charset: 'utf-8',
-    name: {
-      keywords: 'study, apply, international, education',
-    },
-    property: {
-      'og:title': 'Get Started | Apply4Study',
-      'og:description': 'Lorem Ipsum content here',
-      'og:image': 'https://www.apply4study.com/assets/img/loremIpsum.jpg',
-    },
-  },
-};
-
+import useSEO from "../hooks/useSEO";
 
 const testimonials = [
   {
@@ -71,8 +54,29 @@ export default function GetStarted() {
     AOS.init({ duration: 1000 });
   }, []);
 
+  useSEO({
+    title: "Get Started — Join Apply4Study",
+    description: "Sign up today and start your journey with Apply4Study’s interactive online learning platform.",
+    canonical: "https://apply4study.com/get-started",
+    schema: {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Get Started with Apply4Study",
+      "url": "https://apply4study.com/get-started",
+      "description": "Sign up for Apply4Study and access online courses, classrooms, and digital learning resources.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Apply4Study",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://apply4study.com/assets/logo.png"
+        }
+      }
+    }
+  });
+
   return (
-    <DocumentMeta {...meta}>
+    <>      
       <div className="partners-page">
 
         <div className="page-title dark-background get_started_bg getStarted_bg">
@@ -184,6 +188,6 @@ export default function GetStarted() {
         </section>
 
       </div>
-    </DocumentMeta>
+    </>
   );
 }

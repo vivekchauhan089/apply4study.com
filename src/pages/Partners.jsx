@@ -11,24 +11,7 @@ import testimonial1 from '../assets/img/exam.png';
 import testimonial2 from '../assets/img/exam.png';
 import testimonial3 from '../assets/img/exam.png';
 import LazyImage from '../components/common/LazyImage';
-import DocumentMeta from 'react-document-meta';
-
-const meta = {
-  title: 'Partners | Apply4Study',
-  description: 'Lorem Ipsum content here',
-  meta: {
-    charset: 'utf-8',
-    name: {
-      keywords: 'study, apply, international, education',
-    },
-    property: {
-      'og:title': 'Partners | Apply4Study',
-      'og:description': 'Lorem Ipsum content here',
-      'og:image': 'https://www.apply4study.com/assets/img/loremIpsum.jpg',
-    },
-  },
-};
-
+import useSEO from "../hooks/useSEO";
 
 const testimonials = [
   {
@@ -73,8 +56,33 @@ export default function Partners() {
     AOS.init({ duration: 1000 });
   }, []);
 
+  useSEO({
+    title: "Our Partners — Apply4Study",
+    description: "Meet Apply4Study’s global education partners and collaborators.",
+    canonical: "https://apply4study.com/partners",
+    schema: {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Apply4Study Partners",
+      "url": "https://apply4study.com/partners",
+      "logo": "https://apply4study.com/assets/logo.png",
+      "brand": [
+        {
+          "@type": "Brand",
+          "name": "EduGlobal",
+          "url": "https://eduglobal.com"
+        },
+        {
+          "@type": "Brand",
+          "name": "SmartLearning",
+          "url": "https://smartlearning.com"
+        }
+      ]
+    }
+  });
+
   return (
-    <DocumentMeta {...meta}>
+    <>
       <div className="partners-page">
 
         <div className="page-title dark-background partners_bg">
@@ -334,6 +342,6 @@ export default function Partners() {
 
 
       </div>
-    </DocumentMeta>
+    </>
   );
 }

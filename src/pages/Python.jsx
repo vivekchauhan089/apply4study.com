@@ -12,32 +12,40 @@ export default function Courses() {
   }, []);
 
   useSEO({
-    title: "Explore Online Courses — Apply4Study",
-    description: "Browse Apply4Study’s collection of online courses designed to enhance your learning journey.",
-    canonical: "https://apply4study.com/courses",
+    title: "Full-Stack Web Development Course — Apply4Study",
+    description: "Learn full-stack development with Apply4Study’s online course covering React, Node.js, and MongoDB.",
+    canonical: "https://apply4study.com/courses/fullstack-web-development",
     schema: {
       "@context": "https://schema.org",
-      "@type": "ItemList",
-      "itemListElement": [
-        {
-          "@type": "Course",
-          "name": "Full-Stack Web Development",
-          "description": "Learn React, Node.js, and MongoDB in this full-stack developer course.",
+      "@type": "Course",
+      "name": "Full-Stack Web Development",
+      "description": "Comprehensive full-stack course covering React, Node.js, MongoDB, and deployment best practices.",
+      "provider": {
+        "@type": "Organization",
+        "name": "Apply4Study",
+        "sameAs": "https://apply4study.com"
+      },
+      "hasCourseInstance": {
+        "@type": "CourseInstance",
+        "courseMode": "online",
+        "startDate": "2025-10-15",
+        "endDate": "2026-03-15",
+        "instructor": {
+          "@type": "Person",
+          "name": "John Doe"
+        },
+        "location": {
+          "@type": "VirtualLocation",
+          "url": "https://apply4study.com/classroom"
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "9999",
+          "priceCurrency": "INR",
+          "availability": "https://schema.org/InStock",
           "url": "https://apply4study.com/courses/fullstack-web-development"
-        },
-        {
-          "@type": "Course",
-          "name": "Digital Marketing Essentials",
-          "description": "Master SEO, SEM, and social media marketing strategies.",
-          "url": "https://apply4study.com/courses/digital-marketing"
-        },
-        {
-          "@type": "Course",
-          "name": "Data Science with Python",
-          "description": "Hands-on Python, Pandas, and Machine Learning training.",
-          "url": "https://apply4study.com/courses/data-science"
         }
-      ]
+      }
     }
   });
 

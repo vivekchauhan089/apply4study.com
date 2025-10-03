@@ -3,23 +3,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 import LazyImage from '../components/common/LazyImage';
-import DocumentMeta from 'react-document-meta';
-
-const meta = {
-  title: 'Blog | Apply4Study',
-  description: 'Lorem Ipsum content here',
-  meta: {
-    charset: 'utf-8',
-    name: {
-      keywords: 'study, apply, international, education',
-    },
-    property: {
-      'og:title': 'Blog | Apply4Study',
-      'og:description': 'Lorem Ipsum content here',
-      'og:image': 'https://www.apply4study.com/assets/img/loremIpsum.jpg',
-    },
-  },
-};
+import useSEO from "../hooks/useSEO";
 
 import blog1 from '../assets/img/blog/blog-1.jpg';
 import blog2 from '../assets/img/blog/blog-2.jpg';
@@ -44,9 +28,34 @@ export default function Blog() {
     alert('Thank you for subscribing!');
   };
 
-  return (
+  useSEO({
+    title: "How to Succeed in Online Learning — Apply4Study Blog",
+    description: "Tips and strategies for succeeding in online classrooms.",
+    canonical: "https://apply4study.com/blog/online-learning-tips",
+    schema: {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "How to Succeed in Online Learning",
+      "author": {
+        "@type": "Person",
+        "name": "Vivek Kumar"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Apply4Study",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://apply4study.com/assets/logo.png"
+        }
+      },
+      "datePublished": "2025-10-01",
+      "dateModified": "2025-10-02",
+      "image": "https://apply4study.com/assets/blog/online-learning.jpg"
+    }
+  });
 
-    <DocumentMeta {...meta}>
+  return (
+    <>
       <div className="blog-page" >
 
         <div className="page-title dark-background blog_bg">
@@ -293,6 +302,6 @@ export default function Blog() {
           </div>
         </div>
       </div>
-    </DocumentMeta>
+    </>
   );
 }

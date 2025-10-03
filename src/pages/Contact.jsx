@@ -12,9 +12,9 @@ export default function About() {
   }, []);
 
   useSEO({
-    title: "Apply4Study — Know about Us",
+    title: "Contact Apply4Study — Get in Touch",
     description: "Reach out to Apply4Study for online learning support, inquiries, or collaborations.",
-    canonical: "https://apply4study.com/about",
+    canonical: "https://apply4study.com/contact",
     schema: {
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
@@ -38,6 +38,7 @@ export default function About() {
       ]
     }
   });
+
 
   return (
     <>    

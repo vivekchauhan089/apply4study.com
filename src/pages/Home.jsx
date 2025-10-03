@@ -10,7 +10,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import FaqSection from '../components/FAQ/FAQ';
 import LazyImage from '../components/common/LazyImage';
-import DocumentMeta from 'react-document-meta';
+import useSEO from "../hooks/useSEO";
 
 import hero1 from '../assets/img/hero-img-1.jpg';
 import quize1 from '../assets/img/quiz_img.jpg';
@@ -75,22 +75,6 @@ const testimonials = [
   },
 ];
 
-const meta = {
-  title: 'Home | Apply4Study',
-  description: 'Lorem Ipsum content here',
-  meta: {
-    charset: 'utf-8',
-    name: {
-      keywords: 'study, apply, international, education',
-    },
-    property: {
-      'og:title': 'Home | Apply4Study',
-      'og:description': 'Lorem Ipsum content here',
-      'og:image': 'https://www.apply4study.com/assets/img/loremIpsum.jpg',
-    },
-  },
-};
-
 export default function Home() {
 
   const [isMobile, setIsMobile] = useState(false);
@@ -117,10 +101,41 @@ export default function Home() {
     alert('Thank you for subscribing!');
   };
 
+  useSEO({
+    title: "Apply4Study — Online Learning Platform",
+    description: "Join Apply4Study to access interactive e-learning, online classrooms, and flexible study options.",
+    canonical: "https://apply4study.com/",
+    keywords: "elearning, online classroom, virtual study, apply4study",
+    og: {
+      "og:title": "Apply4Study — Online Learning Platform",
+      "og:description": "Learn smarter with Apply4Study. Online classrooms, live lectures, and flexible e-learning options.",
+      "og:type": "website",
+      "og:url": "https://apply4study.com/",
+      "og:image": "https://apply4study.com/assets/og-banner.jpg",
+    },
+    twitter: {
+      "twitter:card": "summary_large_image",
+      "twitter:title": "Apply4Study — Online Learning Platform",
+      "twitter:description": "Access interactive online courses with Apply4Study.",
+      "twitter:image": "https://apply4study.com/assets/og-banner.jpg",
+    },
+    schema: {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Apply4Study",
+      "url": "https://apply4study.com/",
+      "logo": "https://apply4study.com/assets/logo.png",
+      "sameAs": [
+        "https://www.facebook.com/apply4study",
+        "https://twitter.com/apply4study",
+        "https://www.linkedin.com/company/apply4study"
+      ]
+    }
+  });
 
 
   return (
-    <DocumentMeta {...meta} >
+    <>
       <section id="hero" className="hero section">
         <div className="container py-lg-5">
 
@@ -381,8 +396,7 @@ export default function Home() {
 
         </div>
       </div>
-    </DocumentMeta>
-
+    </>
 
   );
 }

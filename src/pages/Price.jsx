@@ -2,31 +2,39 @@ import { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import PricePlan from '../components/PricePlan/PricePlan';
-import DocumentMeta from 'react-document-meta';
-
-const meta = {
-  title: 'Price | Apply4Study',
-  description: 'Lorem Ipsum content here',
-  meta: {
-    charset: 'utf-8',
-    name: {
-      keywords: 'study, apply, international, education',
-    },
-    property: {
-      'og:title': 'Price | Apply4Study',
-      'og:description': 'Lorem Ipsum content here',
-      'og:image': 'https://www.apply4study.com/assets/img/loremIpsum.jpg',
-    },
-  },
-};
+import useSEO from "../hooks/useSEO";
 
 export default function Price() {
   useEffect(() => {
     AOS.init({ duration: 1000 });
   }, []);
 
+  useSEO({
+    title: "Pricing Plans — Apply4Study",
+    description: "Choose from affordable pricing plans for online courses and e-learning services at Apply4Study.",
+    canonical: "https://apply4study.com/pricing",
+    schema: {
+      "@context": "https://schema.org",
+      "@type": "Offer",
+      "name": "Apply4Study Course Subscription",
+      "price": "4999",
+      "priceCurrency": "INR",
+      "availability": "https://schema.org/InStock",
+      "url": "https://apply4study.com/pricing",
+      "eligibleRegion": {
+        "@type": "Country",
+        "name": "India"
+      },
+      "seller": {
+        "@type": "Organization",
+        "name": "Apply4Study",
+        "url": "https://apply4study.com"
+      }
+    }
+  });
+
   return (
-    <DocumentMeta {...meta}>
+    <>
     <div className="price-page">
       
     
@@ -99,6 +107,6 @@ export default function Price() {
     </div>
     </div>
 
-    </DocumentMeta>
+    </>
   );
 }

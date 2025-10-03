@@ -6,31 +6,36 @@ import aboutImg1 from '../assets/img/about.jpg';
 import aboutImg2 from '../assets/img/about.jpg';
 import aboutImg3 from '../assets/img/about.jpg';
 
-import DocumentMeta from 'react-document-meta';
-
-const meta = {
-  title: 'Services | Apply4Study',
-  description: 'Lorem Ipsum content here',
-  meta: {
-    charset: 'utf-8',
-    name: {
-      keywords: 'study, apply, international, education',
-    },
-    property: {
-      'og:title': 'Services | Apply4Study',
-      'og:description': 'Lorem Ipsum content here',
-      'og:image': 'https://www.apply4study.com/assets/img/loremIpsum.jpg',
-    },
-  },
-};
+import useSEO from "../hooks/useSEO";
 
 export default function Services() {
   useEffect(() => {
     AOS.init({ duration: 1000 });
   }, []);
 
+  useSEO({
+    title: "Our Services — Apply4Study Online Learning",
+    description: "Explore Apply4Study’s services including e-learning courses, online classrooms, and digital study tools.",
+    canonical: "https://apply4study.com/services",
+    schema: {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "serviceType": "E-Learning Platform",
+      "provider": {
+        "@type": "Organization",
+        "name": "Apply4Study",
+        "url": "https://apply4study.com"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "India"
+      },
+      "description": "Apply4Study provides online learning services including interactive courses, virtual classrooms, and live sessions."
+    }
+  });
+
   return (
-    <DocumentMeta {...meta}>
+    <>      
       <div className="services-page">
 
 
@@ -515,6 +520,6 @@ export default function Services() {
 
 
       </div>
-    </DocumentMeta>
+    </>
   );
 }
