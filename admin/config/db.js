@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
-global.url = 'mongodb+srv://lmsuser:Phph73g9d5sjWiTf@ev.hfsqrfg.mongodb.net/lms?retryWrites=true&w=majority'; 
+global.url = "mongodb+srv://lmsuser:Phph73g9d5sjWiTf@ev.hfsqrfg.mongodb.net/lms?retryWrites=true&w=majority";
 // Connecting to the database
 mongoose.connect(url, {
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    ssl: true
 }).then(() => {
     console.log("Successfully connected to the database");    
 }).catch(err => {
