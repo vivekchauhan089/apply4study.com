@@ -62,12 +62,14 @@ export default function CoursePlayer({
 
   const lsKey = `course_progress_${courseId}_${userId}`;
 
+  const API_URL = process.env.REACT_APP_API_URL;
+
   // Load progress
   useEffect(() => {
     let mounted = true;
     async function fetchProgress() {
       try {
-        const res = await fetch(`https://apply4study.com/api/course/progress`, {
+        const res = await fetch(`${API_URL}/course/progress`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -121,7 +123,7 @@ export default function CoursePlayer({
     }));
 
     try {
-      const res = await fetch(`https://apply4study.com/api/course/progress`, {
+      const res = await fetch(`${API_URL}/course/progress`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

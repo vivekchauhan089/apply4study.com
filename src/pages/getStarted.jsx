@@ -54,22 +54,24 @@ export default function GetStarted() {
     AOS.init({ duration: 1000 });
   }, []);
 
+  const APP_URL = process.env.REACT_APP_URL;
+
   useSEO({
     title: "Get Started — Join Apply4Study",
     description: "Sign up today and start your journey with Apply4Study’s interactive online learning platform.",
-    canonical: "https://apply4study.com/get-started",
+    canonical: `${APP_URL}/get-started`,
     schema: {
       "@context": "https://schema.org",
       "@type": "WebPage",
       "name": "Get Started with Apply4Study",
-      "url": "https://apply4study.com/get-started",
+      "url": `${APP_URL}/get-started`,
       "description": "Sign up for Apply4Study and access online courses, classrooms, and digital learning resources.",
       "publisher": {
         "@type": "Organization",
         "name": "Apply4Study",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://apply4study.com/assets/logo.png"
+          "url": `${APP_URL}/assets/logo.png`
         }
       }
     }

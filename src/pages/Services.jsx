@@ -13,10 +13,12 @@ export default function Services() {
     AOS.init({ duration: 1000 });
   }, []);
 
+  const APP_URL = process.env.REACT_APP_URL;
+
   useSEO({
     title: "Our Services — Apply4Study Online Learning",
     description: "Explore Apply4Study’s services including e-learning courses, online classrooms, and digital study tools.",
-    canonical: "https://apply4study.com/services",
+    canonical: `${APP_URL}/services`,
     schema: {
       "@context": "https://schema.org",
       "@type": "Service",
@@ -24,7 +26,7 @@ export default function Services() {
       "provider": {
         "@type": "Organization",
         "name": "Apply4Study",
-        "url": "https://apply4study.com"
+        "url": `${APP_URL}`
       },
       "areaServed": {
         "@type": "Country",
@@ -45,7 +47,7 @@ export default function Services() {
             <p>Empowering You Through Smart, Flexible Learning</p>
             <nav className="breadcrumbs">
               <ol>
-                <li><a href="index.html">Home</a></li>
+                <li><a href={APP_URL}>Home</a></li>
                 <li className="current">Services</li>
               </ol>
             </nav>

@@ -7,6 +7,8 @@ const FaqSection = () => {
     setActiveIndex(activeIndex === index ? null : index);
   };
 
+  const APP_URL = process.env.REACT_APP_URL;
+
   const schema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -51,7 +53,7 @@ const FaqSection = () => {
     {/*<SEO
       title="FAQ — Apply4Study Online Learning"
       description="Find answers to common questions about Apply4Study’s online courses, live classes, certifications and pricing."
-      url="https://apply4study.com/faq"
+      url=`${APP_URL}/faq`
       schema={schema}
     />*/}
     <div className="section">

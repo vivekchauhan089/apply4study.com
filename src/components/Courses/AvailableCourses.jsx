@@ -6,8 +6,10 @@ const AvailableCourses = () => {
   const [courses, setCourses] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState(null);
 
+  const API_URL = process.env.REACT_APP_API_URL;
+
   useEffect(() => {
-    fetch("https://apply4study.com/api/courses", {
+    fetch(`${API_URL}/courses`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

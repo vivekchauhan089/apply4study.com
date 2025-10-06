@@ -79,6 +79,8 @@ export default function Home() {
 
   const [isMobile, setIsMobile] = useState(false);
 
+  const APP_URL = process.env.REACT_APP_URL;
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
@@ -104,27 +106,27 @@ export default function Home() {
   useSEO({
     title: "Apply4Study — Online Learning Platform",
     description: "Join Apply4Study to access interactive e-learning, online classrooms, and flexible study options.",
-    canonical: "https://apply4study.com/",
+    canonical: `${APP_URL}/`,
     keywords: "elearning, online classroom, virtual study, apply4study",
     og: {
       "og:title": "Apply4Study — Online Learning Platform",
       "og:description": "Learn smarter with Apply4Study. Online classrooms, live lectures, and flexible e-learning options.",
       "og:type": "website",
-      "og:url": "https://apply4study.com/",
-      "og:image": "https://apply4study.com/assets/og-banner.jpg",
+      "og:url": `${APP_URL}/`,
+      "og:image": `${APP_URL}/assets/og-banner.jpg`,
     },
     twitter: {
       "twitter:card": "summary_large_image",
       "twitter:title": "Apply4Study — Online Learning Platform",
       "twitter:description": "Access interactive online courses with Apply4Study.",
-      "twitter:image": "https://apply4study.com/assets/og-banner.jpg",
+      "twitter:image": `${APP_URL}/assets/og-banner.jpg`,
     },
     schema: {
       "@context": "https://schema.org",
       "@type": "Organization",
       "name": "Apply4Study",
-      "url": "https://apply4study.com/",
-      "logo": "https://apply4study.com/assets/logo.png",
+      "url": `${APP_URL}/`,
+      "logo": `${APP_URL}/assets/logo.png`,
       "sameAs": [
         "https://www.facebook.com/apply4study",
         "https://twitter.com/apply4study",

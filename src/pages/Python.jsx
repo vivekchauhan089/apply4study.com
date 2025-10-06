@@ -11,10 +11,12 @@ export default function Courses() {
     AOS.init({ duration: 1000 });
   }, []);
 
+  const APP_URL = process.env.REACT_APP_URL;
+
   useSEO({
     title: "Full-Stack Web Development Course — Apply4Study",
     description: "Learn full-stack development with Apply4Study’s online course covering React, Node.js, and MongoDB.",
-    canonical: "https://apply4study.com/courses/fullstack-web-development",
+    canonical: `${APP_URL}/courses/fullstack-web-development`,
     schema: {
       "@context": "https://schema.org",
       "@type": "Course",
@@ -23,7 +25,7 @@ export default function Courses() {
       "provider": {
         "@type": "Organization",
         "name": "Apply4Study",
-        "sameAs": "https://apply4study.com"
+        "sameAs": `${APP_URL}`
       },
       "hasCourseInstance": {
         "@type": "CourseInstance",
@@ -36,14 +38,14 @@ export default function Courses() {
         },
         "location": {
           "@type": "VirtualLocation",
-          "url": "https://apply4study.com/classroom"
+          "url": `${APP_URL}/classroom`
         },
         "offers": {
           "@type": "Offer",
           "price": "9999",
           "priceCurrency": "INR",
           "availability": "https://schema.org/InStock",
-          "url": "https://apply4study.com/courses/fullstack-web-development"
+          "url": `${APP_URL}/courses/fullstack-web-development`
         }
       }
     }
@@ -57,7 +59,7 @@ export default function Courses() {
           <h1>Enroll Courses</h1>
           <nav className="breadcrumbs">
             <ol>
-              <li><a href="index.html">Home</a></li>
+              <li><a href={APP_URL}>Home</a></li>
               <li className="current">Courses</li>
             </ol>
           </nav>

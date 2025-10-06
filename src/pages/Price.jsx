@@ -9,10 +9,12 @@ export default function Price() {
     AOS.init({ duration: 1000 });
   }, []);
 
+  const APP_URL = process.env.REACT_APP_URL;
+
   useSEO({
     title: "Pricing Plans — Apply4Study",
     description: "Choose from affordable pricing plans for online courses and e-learning services at Apply4Study.",
-    canonical: "https://apply4study.com/pricing",
+    canonical: `${APP_URL}/pricing`,
     schema: {
       "@context": "https://schema.org",
       "@type": "Offer",
@@ -20,7 +22,7 @@ export default function Price() {
       "price": "4999",
       "priceCurrency": "INR",
       "availability": "https://schema.org/InStock",
-      "url": "https://apply4study.com/pricing",
+      "url": `${APP_URL}/pricing`,
       "eligibleRegion": {
         "@type": "Country",
         "name": "India"
@@ -28,7 +30,7 @@ export default function Price() {
       "seller": {
         "@type": "Organization",
         "name": "Apply4Study",
-        "url": "https://apply4study.com"
+        "url": `${APP_URL}`
       }
     }
   });
@@ -43,7 +45,7 @@ export default function Price() {
         <h1>Our Pricing</h1>
         <nav className="breadcrumbs">
           <ol>
-            <li><a href="index.html">Home</a></li>
+            <li><a href={APP_URL}>Home</a></li>
             <li className="current">Price</li>
           </ol>
         </nav>

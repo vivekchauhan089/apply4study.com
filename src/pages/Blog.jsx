@@ -23,6 +23,8 @@ export default function Blog() {
     AOS.init({ duration: 1000 });
   }, []);
 
+  const APP_URL = process.env.REACT_APP_URL;
+
   const handleSubmit = (event) => {
     event.preventDefault();
     alert('Thank you for subscribing!');
@@ -31,7 +33,7 @@ export default function Blog() {
   useSEO({
     title: "How to Succeed in Online Learning — Apply4Study Blog",
     description: "Tips and strategies for succeeding in online classrooms.",
-    canonical: "https://apply4study.com/blog/online-learning-tips",
+    canonical: `${APP_URL}/blog/online-learning-tips`,
     schema: {
       "@context": "https://schema.org",
       "@type": "Article",
@@ -45,12 +47,12 @@ export default function Blog() {
         "name": "Apply4Study",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://apply4study.com/assets/logo.png"
+          "url": `${APP_URL}/assets/logo.png`
         }
       },
       "datePublished": "2025-10-01",
       "dateModified": "2025-10-02",
-      "image": "https://apply4study.com/assets/blog/online-learning.jpg"
+      "image": `${APP_URL}/assets/blog/online-learning.jpg`
     }
   });
 
@@ -63,7 +65,7 @@ export default function Blog() {
             <h1>Our Blog</h1>
             <nav className="breadcrumbs">
               <ol>
-                <li><a href="index.html">Home</a></li>
+                <li><a href={APP_URL}>Home</a></li>
                 <li className="current">Blog</li>
               </ol>
             </nav>

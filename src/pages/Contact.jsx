@@ -11,16 +11,18 @@ export default function About() {
     AOS.init({ duration: 1000 });
   }, []);
 
+  const APP_URL = process.env.REACT_APP_URL;
+
   useSEO({
     title: "Contact Apply4Study — Get in Touch",
     description: "Reach out to Apply4Study for online learning support, inquiries, or collaborations.",
-    canonical: "https://apply4study.com/contact",
+    canonical: `${APP_URL}/contact`,
     schema: {
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
       "name": "Apply4Study",
-      "image": "https://apply4study.com/assets/logo.png",
-      "url": "https://apply4study.com/",
+      "image": `${APP_URL}/assets/logo.png`,
+      "url": `${APP_URL}/`,
       "telephone": "+91-9876543210",
       "email": "support@apply4study.com",
       "address": {
@@ -50,7 +52,7 @@ export default function About() {
         <p>Learn Anywhere. Grow Anytime.</p>
         <nav class="breadcrumbs">
           <ol>
-            <li><a href="index.html">Home</a></li>
+            <li><a href={APP_URL}>Home</a></li>
             <li class="current">About</li>
           </ol>
         </nav>

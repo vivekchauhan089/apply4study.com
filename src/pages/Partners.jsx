@@ -56,16 +56,18 @@ export default function Partners() {
     AOS.init({ duration: 1000 });
   }, []);
 
+  const APP_URL = process.env.REACT_APP_URL;
+
   useSEO({
     title: "Our Partners — Apply4Study",
     description: "Meet Apply4Study’s global education partners and collaborators.",
-    canonical: "https://apply4study.com/partners",
+    canonical: `${APP_URL}/partners`,
     schema: {
       "@context": "https://schema.org",
       "@type": "Organization",
       "name": "Apply4Study Partners",
-      "url": "https://apply4study.com/partners",
-      "logo": "https://apply4study.com/assets/logo.png",
+      "url": `${APP_URL}/partners`,
+      "logo": `${APP_URL}/assets/logo.png`,
       "brand": [
         {
           "@type": "Brand",
@@ -90,7 +92,7 @@ export default function Partners() {
             <h1>Our Partners</h1>
             <nav className="breadcrumbs">
               <ol>
-                <li><a href="index.html">Home</a></li>
+                <li><a href={APP_URL}>Home</a></li>
                 <li className="current">Partners</li>
               </ol>
             </nav>
