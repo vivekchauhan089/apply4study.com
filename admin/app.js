@@ -45,8 +45,8 @@ app.use(fileUpload());
 global.connectPool = require('./config/db.js');    
   
 // Constants 
-global.nodeSiteUrl = 'http://apply4study.com'; // node  
-global.nodeAdminUrl = 'http://apply4study.com/admin'; // node  
+global.nodeSiteUrl = 'https://apply4study.com/admin'; // node  
+global.nodeAdminUrl = 'https://apply4study.com/admin'; // node  
 global.siteTitle = 'Apply4study Admin';
 global.successStatus = 200;
 global.failStatus = 401; 

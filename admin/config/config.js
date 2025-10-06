@@ -18,7 +18,7 @@ let config = function(){
             port : '8083',
             timeout: 10000,
             swaggerHost:'apply4study.com',
-            adminUrl: 'http://apply4study.com/admin',
+            adminUrl: 'https://apply4study.com/admin',
             mailFrom:'',
             mailPort:587,
             mailHost:'smtp.office365.com',
@@ -26,8 +26,8 @@ let config = function(){
             mailPass:'',
             ccEmails:[],
             secretKey:'@studyLatt1cek1', // use your own secret key
-            baseUrl:'http://apply4study.com',
-            siteUrl:'http://apply4study.com',
+            baseUrl:'https://apply4study.com',
+            siteUrl:'https://apply4study.com',
             sendgridKey:'', //sendgrid key
             firebaseKey:'',// kirebase key from google
             version_name : "v1.1", // current app version
