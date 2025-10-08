@@ -1351,6 +1351,222 @@ section,
   margin-bottom: 0;
 }
 
+.bg-1 {
+  background: #68328e;
+}
+
+.bg-secondary {
+  background: #1D2027 !important;
+}
+
+.bg-white {
+  background: #FFFFFF;
+}
+
+.header--sticky {
+  transition: 0.3s;
+  top: 0;
+  z-index: 999;
+  position: relative;
+}
+
+/* Header style hear  */
+.header-top-one .left {
+  display: flex;
+  align-items: center;
+}
+.header-top-one .left .mail {
+  position: relative;
+}
+.header-top-one .left .mail a {
+    padding: 7px 0;
+    display: block;
+    color: #fff;
+    margin-right: 18px;
+    font-size: 14px;
+    position: relative;
+    transition: var(--transition);
+}
+.header-top-one .left .mail a i {
+  margin-right: 6px;
+}
+.header-top-one .left .mail a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 12px;
+  height: 1px;
+  width: 0%;
+  background: #fff;
+  transition: var(--transition);
+}
+.header-top-one .left .mail a:hover {
+  color: var(--color-white);
+}
+.header-top-one .left .mail a:hover::after {
+  width: 100%;
+}
+.header-top-one .left .mail::after {
+    position: absolute;
+    content: "";
+    width: 1px;
+    height: 14px;
+    background: #fff;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.header-top-one .left .working-time p {
+  color: #fff;
+  font-size: 14px;
+}
+.header-top-one .left .working-time p i {
+  margin-right: 6px;
+}
+.header-top-one .right {
+  display: flex;
+  justify-content: flex-end;
+}
+.header-top-one .right .top-nav {
+  display: flex;
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+.header-top-one .right .top-nav li {
+  margin: 0;
+  margin-right: 20px;
+}
+.header-top-one .right .top-nav li a {
+  font-size: 14px;
+  transition: var(--transition);
+  position: relative;
+  padding: 6px 0;
+  display: block;
+  color: #fff;
+}
+.header-top-one .right .top-nav li a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 12px;
+  height: 1px;
+  width: 0%;
+  background: #fff;
+  transition: var(--transition);
+}
+
+ul.social-wrapper-one {
+    padding: 6px;
+}
+
+.header-top-one .right .top-nav li a:hover::after {
+  width: 100%;
+}
+.header-top-one .right .social-wrapper-one {
+  margin-left: 30px;
+  position: relative;
+}
+.header-top-one .right .social-wrapper-one a i {
+  transition: 0.3s;
+}
+.header-top-one .right .social-wrapper-one a:hover i {
+  transform: scale(1.2);
+}
+.header-top-one .right .social-wrapper-one i {
+  color: #fff;
+}
+.header-top-one .right .social-wrapper-one::after {
+    position: absolute;
+    content: "";
+    width: 1px;
+    height: 14px;
+    left: -25px;
+    top: 50%;
+    transform: translateY(-50%);
+    /* background: #F36464; */
+}
+.header-top-one.header-top-four {
+  border-bottom: 1px solid #EDEDED;
+}
+@media (max-width: 1200px) {
+  .header-top-one.header-top-four {
+    display: none;
+  }
+}
+.header-top-one.header-top-four.header-top-five .top-left a {
+  color: var(--color-primary-2);
+}
+.header-top-one.header-top-four.header-top-five .right-h-three .header-top-right .email i {
+  color: var(--color-primary-2);
+}
+.header-top-one.header-top-four.header-top-five .right-h-three .header-top-right .call i {
+  color: var(--color-primary-2);
+}
+.header-top-one.header-top-four .top-left {
+  padding: 10px 0;
+  padding-left: 0;
+  font-size: 16px;
+  font-weight: 400;
+  color: #5D666F;
+  display: flex;
+  align-items: center;
+}
+.header-top-one.header-top-four .top-left a {
+  color: var(--color-primary-4);
+  display: flex;
+  align-items: center;
+  margin-left: 5px;
+}
+.header-top-one.header-top-four .top-left a i {
+  transition: 0.3s;
+  margin-left: 5px;
+}
+.header-top-one.header-top-four .top-left a:hover i {
+  margin-left: 10px;
+}
+.header-top-one.header-top-four .right-h-three {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.header-top-one.header-top-four .right-h-three .header-top-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: 0;
+}
+.header-top-one.header-top-four .right-h-three .header-top-right .email {
+  margin-right: 30px;
+}
+.header-top-one.header-top-four .right-h-three .header-top-right .email i {
+  margin-right: 10px;
+  color: var(--color-primary-4);
+}
+.header-top-one.header-top-four .right-h-three .header-top-right .email a {
+  color: #1C2539;
+  transition: 0.3s;
+  font-weight: 500;
+}
+.header-top-one.header-top-four .right-h-three .header-top-right .email a:hover {
+  color: var(--color-primary-4);
+}
+.header-top-one.header-top-four .right-h-three .header-top-right .call {
+  margin-right: 0;
+}
+.header-top-one.header-top-four .right-h-three .header-top-right .call i {
+  margin-right: 10px;
+  color: var(--color-primary-4);
+  transform: rotate(-30deg);
+}
+.header-top-one.header-top-four .right-h-three .header-top-right .call a {
+  color: #1C2539;
+  transition: 0.3s;
+  font-weight: 500;
+}
+.header-top-one.header-top-four .right-h-three .header-top-right .call a:hover {
+  color: var(--color-primary-4);
+}
 
 /* Global Header on Scroll
 ------------------------------*/

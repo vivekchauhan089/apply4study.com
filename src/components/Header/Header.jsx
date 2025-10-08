@@ -117,6 +117,28 @@ export default function Header() {
 
   return (
     <header id="header" className={`${styles.header} header d-flex align-items-center fixed-top`}>
+      <div class="container-fluid container-xl position-relative header-top header-top-one bg-1">
+          <div class="container">
+              <div class="row">
+                  <div class="d-flex col-lg-9 d-xl-block d-none">
+                      <div class="left">
+                        <div class="mail"><a href="mailto:info@apply4study.com"><i class="bi bi-envelope" aria-hidden="true"></i> info@apply4study.com</a> </div>
+                         <div class="working-time"><p><a href="tel:+917506275062">+91-9716003265</a></p></div>
+                      </div>
+                  </div>
+                  <div class="d-flex col-lg-3 d-xl-block d-none">
+                      <div class="right">
+                      <ul class="social-wrapper-one">
+                              <li><a href="https://www.instagram.com/apply4studyindia"><i class="bi bi-facebook"></i></a></li>
+                              <li><a href=""><i class="bi bi-twitter"></i></a></li>
+                              <li><a href="https://www.instagram.com/apply4study/"><i class="bi bi-instagram"></i></a></li>
+                              <li><a href=""><i class="bi bi-linkedin"></i></a></li>
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
       <div className="container-fluid container-xl position-relative">
         <div className='d-flex align-items-center justify-content-between w-100'>
           <Link to='/' className={`${styles.logo} logo d-flex align-items-center`}>
