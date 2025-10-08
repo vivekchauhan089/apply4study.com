@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import ReactGA from "react-ga4";
-ReactGA.initialize("GTM-PB4KJDZS"); // replace with your GA4 Measurement ID
+ReactGA.initialize("G-J4D70SLKDY"); // replace with your GA4 Measurement ID
 
 export default function useTrackLinkClicks() {
   useEffect(() => {
