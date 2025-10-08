@@ -47,7 +47,8 @@
     "random-number": "0.0.9",
     "request": "^2.88.0",
     "sendgrid": "^5.2.3",
-    "supertest": "^3.3.0"
+    "supertest": "^3.3.0",
+    "ws": "^8.18.3"
   },
   "scripts": {
     "prod": "cross-env NODE_ENV=prod node app.js",

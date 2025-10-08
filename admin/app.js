@@ -4,7 +4,8 @@ global.moment = require('moment');
 const expressValidator = require('express-validator');
 const fileUpload = require('express-fileupload');
 const cors = require('cors');
-const bodyParser = require('body-parser');   
+const bodyParser = require('body-parser');
+const WebSocket = require('ws');   
    
 const swaggerHost = require('./config/config').swaggerHost;
 const expressSwagger = require('express-swagger-generator')(app);
@@ -98,6 +99,17 @@ var server = app.listen(8083, function () {
 });       
 process.on('uncaughtException', function (err) { 
     console.log('Caught exception: ' + err);
+});
+
+const wss = new WebSocket.Server({ server, path: '/ws' });
+wss.on('connection', (ws) => {
+  console.log('WebSocket connected!');
+  ws.send('Hello client!');
+  
+  ws.on('message', (msg) => {
+    console.log('Received:', msg);
+    ws.send(`Echo: ${msg}`);
+  });
 });  
  
 
