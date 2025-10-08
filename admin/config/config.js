@@ -34,6 +34,7 @@ let config = function(){
             version_code : "12",
             // phoneID: '',
             // METATK: '',
+            GROQ_API_KEY: '',
             pagelimit: 10
         };
         // use for development environment

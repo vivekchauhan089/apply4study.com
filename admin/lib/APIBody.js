@@ -30,4 +30,12 @@ module.exports = [
             "source": "string"
         }
     },
+    {
+        "method":'post',
+        "name":'create_chat_reply',
+        "body":{
+            "query": "string",
+            "source": "string"
+        }
+    },
 ];

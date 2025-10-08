@@ -192,4 +192,21 @@ router.get('/version_check', function(req, res, next) {
 	res.json(response);
 })
 
+
+var ApiChatController = require('../controllers/api/ApiChatController');
+/**
+ * @typedef Chat
+ * @property {string} query.required - User message text
+ */
+
+/**
+ * Generate AI-based response for users
+ * @route POST /api/chat
+ * @group Chat - Chat management
+ * @param {Chat.model} Chat.body.required - Chat message input
+ * @returns {object} 200 - { success: true, reply: "Response message" }
+ * @returns {Error}  default - Unexpected error
+ */
+router.post('/chat', ApiMiddleware, ApiChatController.createReply);
+
 module.exports = router;        
