@@ -209,4 +209,31 @@ var ApiChatController = require('../controllers/api/ApiChatController');
  */
 router.post('/chat', ApiMiddleware, ApiChatController.createReply);
 
+const ApiSubscriptionController = require("../controllers/api/ApiSubscriptionController");
+
+/**
+ * @typedef Subscription
+ * @property {string} contact.required - Email or mobile number
+ */
+
+/**
+ * Subscribe user (email or mobile)
+ * @route POST /api/subscribe
+ * @group Subscription - User Subscription Management
+ * @param {Subscription.model} Subscription.body.required - Subscription input
+ * @returns {object} 201 - { success: true, message: "Subscribed successfully", subscription: {...} }
+ * @returns {Error} 409 - Already subscribed
+ */
+router.post("/subscribe", ApiSubscriptionController.subscribe);
+
+/**
+ * Unsubscribe user by contact (email or mobile)
+ * @route DELETE /api/unsubscribe/{contact}
+ * @group Subscription - User Subscription Management
+ * @param {string} contact.path.required - Email or mobile number
+ * @returns {object} 200 - { success: true, message: "Unsubscribed successfully" }
+ * @returns {Error} 404 - Subscription not found
+ */
+router.delete("/unsubscribe/:contact", ApiSubscriptionController.unsubscribe);
+
 module.exports = router;        

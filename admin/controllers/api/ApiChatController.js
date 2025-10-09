@@ -23,7 +23,8 @@ async function createReply (req,res,next) {
 	    const aiModel = "openai/gpt-oss-20b";
 	    const { query, tone = "informative", wordCount = 100 } = req.body;
 	    if (!query) {
-	      return res.status(400).json({ error: "query is required" });
+	      res.status(400).json({ error: "query is required" });
+        return;
 	    }
 
 	    if (query.toString().includes("hello")) return res.status(200).json({ query, reply: "Hi there! How can I assist you today?" });
@@ -75,7 +76,7 @@ async function createReply (req,res,next) {
     		cache.set(session_id, fullReply);
 
 	      res.status(200).json({ query, reply: content });
-	      res.end();
+	      return;
 	    });
 	  } catch (err) {
 	    console.error(err.message);

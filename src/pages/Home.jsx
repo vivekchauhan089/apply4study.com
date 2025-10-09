@@ -27,6 +27,7 @@ import testimonial2 from '../assets/img/exam.png';
 import testimonial3 from '../assets/img/exam.png';
 import SearchSection from '../components/SearchSection/HomeSearchSection';
 import StatsSection from '../components/StatsSection/StatsSection';
+import Newsletter from '../components/common/Newsletter';
 
 const sliderData = [
   {
@@ -376,28 +377,7 @@ export default function Home() {
       </section>
       <AppDownloadPromo />
       <FaqSection />
-      <div className="section light-background">
-
-        <div className="container">
-          <div className="row gy-4 align-items-center">
-            <div className="col-lg-6 col-md-6 col-12" data-aos="slide-up" data-aos-delay="100">
-              <div className="container section-title pb-0" data-aos="fade-up">
-                <h5>Subscribe to Our Newsletter</h5>
-                <p>Get the latest updates, learning tips, and offers delivered straight to your inbox.</p>
-              </div>
-            </div>
-            <div className="col-lg-6 col-md-6 col-12" data-aos="slide-down" data-aos-delay="200">
-              <div className="newsletter-form">
-                <form className="newsletter-form" onSubmit={handleSubmit}>
-                  <input type="email" placeholder="Enter your email" required />
-                  <button type="submit">Subscribe</button>
-                </form>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
+      <Newsletter />
     </>
 
   );

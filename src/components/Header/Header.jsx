@@ -117,27 +117,58 @@ export default function Header() {
 
   return (
     <header id="header" className={`${styles.header} header d-flex align-items-center fixed-top`}>
-      <div class="container-fluid container-xl position-relative header-top header-top-one bg-1">
-          <div class="container">
-              <div class="row">
-                  <div class="d-flex col-lg-9 d-xl-block d-none">
-                      <div class="left">
-                        <div class="mail"><a href="mailto:info@apply4study.com"><i class="bi bi-envelope" aria-hidden="true"></i> info@apply4study.com</a> </div>
-                         <div class="working-time"><p><a href="tel:+917506275062">+91-9716003265</a></p></div>
-                      </div>
-                  </div>
-                  <div class="d-flex col-lg-3 d-xl-block d-none">
-                      <div class="right">
-                      <ul class="social-wrapper-one">
-                              <li><a href="https://www.instagram.com/apply4studyindia"><i class="bi bi-facebook"></i></a></li>
-                              <li><a href=""><i class="bi bi-twitter"></i></a></li>
-                              <li><a href="https://www.instagram.com/apply4study/"><i class="bi bi-instagram"></i></a></li>
-                              <li><a href=""><i class="bi bi-linkedin"></i></a></li>
-                          </ul>
-                      </div>
-                  </div>
-              </div>
+      <div className="top-info-bar">
+        {/* Desktop info bar */}
+        {!isMobile && (
+        <div className="top-info-container">
+          <div className="info-left desktop-only">
+            <a href="mailto:info@apply4study.com" className="info-link">
+              <i class="bi bi-envelope" aria-hidden="true"></i> info@Apply4study.com
+            </a>
+            <a href="tel:+919716003265" className="info-link">
+              <i class="bi bi-phone" aria-hidden="true"></i> +91-9716003265
+            </a>
+            <span className="working-hours">Mon — Sat: 9:00 AM – 6:00 PM</span>
           </div>
+
+          <div className="info-right desktop-only">
+            <a href="https://www.facebook.com/apply4study" className="social-link" aria-label="Facebook">
+              <i class="bi bi-facebook"></i>
+            </a>
+            <a href="https://twitter.com/apply4study" className="social-link" aria-label="Twitter">
+              <i class="bi bi-twitter"></i>
+            </a>
+            <a href="https://www.instagram.com/apply4study/" className="social-link" aria-label="Instagram">
+              <i class="bi bi-instagram"></i>
+            </a>
+            <a href="https://www.linkedin.com/apply4study" className="social-link" aria-label="LinkedIn">
+              <i class="bi bi-linkedin"></i>
+            </a>
+          </div>
+        </div>
+        )}
+        {/* Mobile info bar */}
+        {isMobile && (
+          <div className="mobile-info">
+            <a href="mailto:info@apply4study.com" className="info-link">
+              <i class="bi bi-envelope"></i> info@Apply4study.com
+            </a>
+            <div className="social-links">
+              <a href="https://www.facebook.com/apply4study" className="social-link" aria-label="Facebook">
+                <i class="bi bi-facebook"></i>
+              </a>
+              <a href="https://twitter.com/apply4study" className="social-link" aria-label="Twitter">
+                <i class="bi bi-twitter"></i>
+              </a>
+              <a href="https://www.instagram.com/apply4study" className="social-link" aria-label="Instagram">
+                <i class="bi bi-instagram"></i>
+              </a>
+              <a href="https://www.linkedin.com/apply4study" className="social-link" aria-label="LinkedIn">
+                <i class="bi bi-linkedin"></i>
+              </a>
+            </div>
+          </div>
+        )}
       </div>
       <div className="container-fluid container-xl position-relative">
         <div className='d-flex align-items-center justify-content-between w-100'>
@@ -165,7 +196,7 @@ export default function Header() {
           {!isMobile && (
             <div className='d-flex align-items-center justify-content-start col-lg-4 pt-2'>
               <SearchResults />
-              <Link to='/joinUs' className="btn ms-3 glossy-button--blue joinBtn py-1">Join Us</Link>
+              <Link to='/get-started' className="btn ms-3 glossy-button--blue joinBtn py-1">Join Us</Link>
             </div>
           )}
         </div>

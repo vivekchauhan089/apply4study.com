@@ -28,6 +28,149 @@
   color: var(--heading-color);
 }
 
+/* 🔹 Top Info Bar */
+.top-info-bar {
+  width: 100%;
+  background: #FD7311;
+  color: #e6eef8;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1040;
+  /*padding: 6px 0;*/
+}
+
+.top-info-bar .mobile-info {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.top-info-bar .info-link {
+  color: #e6eef8;
+  text-decoration: none;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.top-info-bar .info-link i {
+  color: #9fb7e6;
+  font-size: 1rem;
+}
+
+/* centers your inner content like a container */
+.top-info-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Responsive rules */
+.desktop-only {
+  display: flex;
+}
+
+/* Left (desktop) */
+.info-left {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+/* Right (desktop social icons) */
+.info-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.top-info-bar .social-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.top-info-bar .social-link {
+  color: #cfe4ff;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 6px;
+  border-radius: 5px;
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.top-info-bar .social-link:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.top-info-bar .working-hours {
+  margin-left: 8px;
+  color: rgba(230,238,248,0.85);
+  font-size: 0.85rem;
+}
+
+/* 🔹 Push header below the info bar */
+header#header {
+  position: fixed;
+  top: 34px; /* height of top bar */
+  left: 0;
+  width: 100%;
+  z-index: 1030;
+  background: #fff;
+  transition: top 0.3s ease;
+}
+
+/* 🔹 Responsive behavior */
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none;
+  }
+
+  .top-info-bar {
+    font-size: 0.8rem;
+    padding: 8px 0;
+  }
+
+  header#header {
+    top: 40px; /* offset for taller bar */
+  }
+
+  .top-info-bar .mobile-info {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* Left side: email + phone stacked */
+  .top-info-bar .info-link {
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* Right side: icons in one line */
+  .top-info-bar .social-links {
+    flex-shrink: 0;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+}
+
 /* Global Header on Scroll
 ------------------------------*/
 .scrolled .header {
