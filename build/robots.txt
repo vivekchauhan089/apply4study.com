@@ -1,3 +1,6 @@
-# https://www.robotstxt.org/robotstxt.html
+# robots.txt generated on 2025-10-10T11:36:32.917Z
 User-agent: *
-Disallow:
+Allow: /
+
+Sitemap: https://apply4study.com/sitemap.xml
+Host: https://apply4study.com

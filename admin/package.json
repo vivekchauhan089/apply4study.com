@@ -51,6 +51,8 @@
     "ws": "^8.18.3"
   },
   "scripts": {
+    "generate:robots": "cross-env NODE_ENV=local node scripts/generate-robots.js",
+    "generate:sitemap": "cross-env NODE_ENV=local node scripts/generate-sitemap.js",
     "prod": "cross-env NODE_ENV=prod node app.js",
     "dev": "cross-env NODE_ENV=dev node app.js",
     "local": "cross-env NODE_ENV=local node app.js",
