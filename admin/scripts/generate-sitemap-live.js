@@ -89,17 +89,19 @@ function pingSearchEngines(sitemapUrl, done) {
   ];
 
   console.log('\n🔔 Pinging search engines...');
-  let remaining = engines.length;
 
+  let remaining = engines.length;
   engines.forEach(engine => {
-    request(engine.url, (err, res) => {
-      if (!err && res && res.statusCode === 200) {
-        console.log(`✅ Successfully pinged ${engine.name}`);
-      } else {
-        console.warn(`⚠️ Failed to ping ${engine.name}`);
-      }
-      if (--remaining === 0) done();
-    });
+    setTimeout(() => {
+      request(engine.url, (err, res) => {
+        if (!err && res && res.statusCode === 200) {
+          console.log(`✅ Successfully pinged ${engine.name}`);
+        } else {
+          console.warn(`⚠️ Failed to ping ${engine.name} (code: ${res && res.statusCode})`);
+        }
+        if (--remaining === 0) done();
+      });
+    }, 3000); // Wait 3s before sending to give sitemap time to upload
   });
 }
 
