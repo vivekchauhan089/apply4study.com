@@ -636,7 +636,7 @@ section,
 .newsletter-form {
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 0.4rem;
   margin-top: 1rem;
 }
 
@@ -648,12 +648,12 @@ section,
 }
 
 .newsletter-form button {
-  padding: 0.8rem 20px;
+  padding: 0.6rem 20px;
   background-color: #FD7311;
   color: white;
   /* font-weight: bold; */
   border: none;
-  border-radius: 40px;
+  border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }

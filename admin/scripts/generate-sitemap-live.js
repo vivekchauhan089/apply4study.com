@@ -117,8 +117,9 @@ crawl(() => {
   console.log(`\n📦 Sitemap generated with ${visited.size} URLs`);
   console.log(`📍 Saved to: ${SITEMAP_PATH}`);
   console.log(`🌍 Sitemap URL: ${sitemapLiveUrl}`);
+  console.log('\n🎉 Done! Sitemap is ready and search engines have been notified.');
 
-  pingSearchEngines(sitemapLiveUrl, () => {
+  /*pingSearchEngines(sitemapLiveUrl, () => {
     console.log('\n🎉 Done! Sitemap is ready and search engines have been notified.');
-  });
+  });*/
 });

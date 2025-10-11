@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form, Toast, ToastContainer } from 'react-bootstrap';
 
 const Modals = ({ show, onHide, type }) => {
@@ -12,6 +12,10 @@ const Modals = ({ show, onHide, type }) => {
   });
   const [errors, setErrors] = useState({});
   const [showToast, setShowToast] = useState(false);
+
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -33,8 +37,7 @@ const Modals = ({ show, onHide, type }) => {
       if (!formData.role) newErrors.role = 'Please select a role';
       if (!formData.termsAccepted) newErrors.termsAccepted = 'You must agree to terms';
     } else if (type === 'subscribe') {
-      if (!formData.email) newErrors.email = 'Email is required';
-      else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Invalid email address';
+      if (!formData.email) newErrors.email = 'Email or mobile number is required';
     }
 
     return newErrors;
@@ -63,6 +66,46 @@ const Modals = ({ show, onHide, type }) => {
     }
   };
 
+  const handleNewsletterSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setMessage("");
+
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/subscribe`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMjM0LCJ1c2VyX3R5cGVfaWQiOjAsInJvbGUiOiJndWVzdCIsImlhdCI6MTc1ODg4NDcwOCwiZXhwIjoxNzY0MDY4NzA4fQ.zWg19kpqcRf0sxKzrioWP_HzogoC5fHQPeGHTE6nZpc"
+        },
+        body: JSON.stringify({ contact: email, type: 'updates' }), // field name matches backend
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        setMessage(data.message || "Subscribed successfully!");
+        setEmail("");
+      } else {
+        setMessage(data.message || "You are already subscribed.");
+      }
+    } catch (error) {
+      console.error("Subscription error:", error);
+      setMessage("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // 🕒 Auto-clear message after 3 seconds
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setMessage("");
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
+
   return (
     <>
       <Modal show={show} onHide={onHide} className={type === 'register' ? 'modal-sm registermodal' : 'modal-sm subscribemodal'}>
@@ -70,7 +113,7 @@ const Modals = ({ show, onHide, type }) => {
           <Modal.Title>{type === 'register' ? 'Register' : 'Subscribe'}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form noValidate validated={validated} onSubmit={handleSubmit}>
+          <Form noValidate validated={validated} onSubmit={type === 'register' ? handleSubmit : handleNewsletterSubmit}>
             {type === 'register' ? (
               <>
                 <Form.Group>
@@ -148,23 +191,27 @@ const Modals = ({ show, onHide, type }) => {
             ) : (
               <>
                 <Form.Group className="mb-3">
-                  <Form.Label>Email</Form.Label>
+                  <Form.Label>Email or Mobile Number</Form.Label>
                   <Form.Control
-                    type="email"
-                    name="email"
-                    placeholder="Enter your email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    isInvalid={!!errors.email}
+                    type="text"
+                    name="subscribe_email"
+                    placeholder="Enter your email or mobile number"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     required
                   />
                   <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>
                 </Form.Group>
 
-                <Button type="submit" className="w-100" variant="primary">Subscribe</Button>
+                <Button type="submit" className="w-100" variant="primary" disabled={loading}>{loading ? "Subscribing..." : "Subscribe"}</Button>
               </>
             )}
           </Form>
+          {message && (
+            <p style={{ marginTop: "8px", color: "#FD7311", fontSize: "0.8rem" }}>
+              {message}{" "}
+            </p>
+          )}
         </Modal.Body>
       </Modal>
 

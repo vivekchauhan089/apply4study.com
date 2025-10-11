@@ -40,7 +40,7 @@ const Newsletter = () => {
     if (message) {
       const timer = setTimeout(() => {
         setMessage("");
-      }, 3000);
+      }, 3000000);
       return () => clearTimeout(timer);
     }
   }, [message]);
@@ -73,7 +73,7 @@ const Newsletter = () => {
                 </form>
               </div>
               {message && (
-                <p style={{ marginTop: "8px", color: "#fff", fontSize: "0.9rem" }}>
+                <p style={{ color: "#FD7311", margin: "0 120px", fontSize: "0.9rem" }}>
                   {message}{" "}
                 </p>
               )}

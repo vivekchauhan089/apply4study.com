@@ -337,8 +337,8 @@ export default function Partners() {
 
             <p>If you're an educator, institution, or organization looking to amplify your impact in the digital learning
               space, we'd love to partner with you.</p>
-            <p className="my-3"><strong>👉 Contact us at <a href="mailto:partnerships@apply4study.com"
-              title="partnerships@apply4study.com">partnerships@apply4study.com</a></strong></p>
+            <p className="my-3"><strong>👉 Contact us at <a href="mailto:partnership@apply4study.com"
+              title="partnership@apply4study.com">partnership@apply4study.com</a></strong></p>
           </div>
         </section>
 

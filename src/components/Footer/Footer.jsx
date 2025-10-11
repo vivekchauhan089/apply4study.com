@@ -44,7 +44,6 @@ export default function Footer() {
     if (message) {
       const timer = setTimeout(() => {
         setMessage("");
-        setTime("");
       }, 3000);
       return () => clearTimeout(timer);
     }
