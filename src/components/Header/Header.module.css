@@ -56,7 +56,7 @@
 .top-info-bar .info-link {
   color: #e6eef8;
   text-decoration: none;
-  font-size: 0.85rem;
+  /*font-size: 0.85rem;*/
   display: flex;
   align-items: center;
   gap: 6px;
@@ -159,7 +159,7 @@ header#header {
 
   /* Left side: email + phone stacked */
   .top-info-bar .info-link {
-    display: block;
+    /*display: block;*/
     margin-bottom: 4px;
   }
 

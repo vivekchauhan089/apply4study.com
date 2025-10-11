@@ -1,279 +1,248 @@
-import { useEffect } from 'react';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import img1 from '../assets/img/about.jpg';
-import LazyImage from '../components/common/LazyImage';
-
+import { useState, useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import LazyImage from "../components/common/LazyImage";
+import contactImg from "../assets/img/about.jpg";
 import useSEO from "../hooks/useSEO";
 
-export default function About() {
+export default function Contact() {
+  const [isMobile, setIsMobile] = useState(false);
+
   useEffect(() => {
     AOS.init({ duration: 1000 });
   }, []);
 
   const APP_URL = process.env.REACT_APP_URL;
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   useSEO({
     title: "Contact Apply4Study — Get in Touch",
-    description: "Reach out to Apply4Study for online learning support, inquiries, or collaborations.",
+    description:
+      "Have questions or need support? Contact Apply4Study for online learning assistance, business inquiries, or partnership opportunities.",
     canonical: `${APP_URL}/contact`,
     schema: {
       "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "name": "Apply4Study",
-      "image": `${APP_URL}/assets/logo.png`,
-      "url": `${APP_URL}/`,
-      "telephone": "+91-9876543210",
-      "email": "support@apply4study.com",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "123 Learning Street",
-        "addressLocality": "New Delhi",
-        "addressRegion": "Delhi",
-        "postalCode": "110001",
-        "addressCountry": "IN"
-      },
-      "sameAs": [
-        "https://www.facebook.com/apply4study",
-        "https://twitter.com/apply4study",
-        "https://www.linkedin.com/company/apply4study"
-      ]
-    }
+      "@type": "ContactPage",
+      "mainEntity": {
+        "@type": "Organization",
+        "name": "Apply4Study",
+        "url": `${APP_URL}/`,
+        "logo": `${APP_URL}/assets/logo.png`,
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+91-9716003265",
+          "email": "support@apply4study.com",
+          "contactType": "customer support",
+          "areaServed": "IN",
+          "availableLanguage": ["English", "Hindi"]
+        },
+        "sameAs": [
+          "https://www.facebook.com/apply4study",
+          "https://www.twitter.com/apply4study",
+          "https://www.instagram.com/apply4study",
+          "https://www.linkedin.com/company/apply4study",
+          "https://www.pinterest.com/apply4study",
+        ]
+      }
+    },
   });
 
-
   return (
-    <>    
-    <div className="about-page">
-      
-     <div class="page-title dark-background about_us_bg">
-      <div class="container position-relative col-lg-6 col-md-6 col-12">
-        <h1>About Us</h1>
-        <p>Learn Anywhere. Grow Anytime.</p>
-        <nav class="breadcrumbs">
-          <ol>
-            <li><a href={APP_URL}>Home</a></li>
-            <li class="current">About</li>
-          </ol>
-        </nav>
-      </div>
-    </div>
-
-
-    <section class="about section light-background">
-      <div class="container section-title" data-aos="fade-up">
-        <h2> Learn Anywhere. Grow Anytime.</h2>
-        <p>At <strong>Apply4Study</strong>, we're on a mission to make quality education accessible, flexible, and truly
-          learner-centric. Our online classroom platform is designed to help students, professionals, and lifelong
-          learners gain in-demand skills and knowledge—on their own schedule, from anywhere in the world.</p>
-        <p>Whether you're looking to advance your career, explore a new field, or simply learn something new,
-          <strong>Apply4Study</strong> is here to support you every step of the way. Join us and discover a world of
-          learning opportunities at your fingertips.
-        </p>
-      </div>
-
-
-    </section>
-
-     <section id="about" className="about section">
-
-      <div className="container">
-
-        <div className="row gy-4" data-aos="fade-up"  data-aos-delay="100">
-          <div className="col-lg-6 position-relative align-self-start">
-            <LazyImage src={img1} className="img-fluid" alt="" />
-            <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" className="glightbox pulsating-play-btn"></a>
-          </div>
-          <div className="col-lg-6 content">
-
-            <h3>Why Choose Apply4Study?</h3>
-
-            <ul>
-              <li data-aos="slide-left" data-aos-delay="100">
-                <div className="row">
-                  <div className="col-auto">
-                    <i className="bi bi-check2-all"></i>
-                  </div>
-                  <div className="col-10">
-                    <strong>🎓 Expert-Led Courses</strong>
-                    <p>Explore a wide range of courses across various subjects, from academic subjects to professional
-                      skills and personal development.</p>
-                  </div>
-                </div>
-              </li>
-              <li data-aos="slide-left" data-aos-delay="100">
-                <div className="row">
-                  <div className="col-auto">
-                    <i className="bi bi-check2-all"></i>
-                  </div>
-                  <div className="col-10">
-                    <strong>💻 Flexible Learning</strong>
-                    <p>Access courses 24/7 through your desktop, tablet, or phone. Pause, resume, or revisit content
-                      anytime to fit your learning pace.</p>
-                  </div>
-                </div>
-              </li>
-              <li data-aos="slide-left" data-aos-delay="100">
-                <div className="row">
-                  <div className="col-auto">
-                    <i className="bi bi-check2-all"></i>
-                  </div>
-                  <div className="col-10">
-                    <strong>📈 Skill-Focused Curriculum</strong>
-                    <p>Our courses are built around real skills that matter—be it in academics, test prep, technology,
-                      communication, or career development.</p>
-                  </div>
-                </div>
-
-              </li>
-              <li data-aos="slide-left" data-aos-delay="100">
-                <div className="row">
-                  <div className="col-auto">
-                    <i className="bi bi-check2-all"></i>
-                  </div>
-                  <div className="col-10">
-                    <strong>🌐 Engaging Learning Environment</strong>
-                    <p>From video lectures and live classes to quizzes, peer forums, and assignments—our online
-                      classrooms are designed to keep you involved and motivated.</p>
-                  </div>
-                </div>
-
-              </li>
-            </ul>
-
+    <>
+      <div className="contact-page">
+        {/* Page Title */}
+        <div className="page-title dark-background contact_bg">
+          <div className="container position-relative col-lg-6 col-md-6 col-12">
+            <h1>Contact Us</h1>
+            <p>We’d Love to Hear from You</p>
+            <nav className="breadcrumbs">
+              <ol>
+                <li><a href={APP_URL}>Home</a></li>
+                <li className="current">Contact Us</li>
+              </ol>
+            </nav>
           </div>
         </div>
 
-      </div>
-
-    </section>
-    <section id="stats" className="stats section dark-background">
-
-      <div className="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div className="row gy-4">
-
-          <div className="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
-            <div className="stats-item text-center w-100 h-100">
-              <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1"
-                className="purecounter"></span>
-              <p>Clients</p>
+        {/* Contact Section */}
+        <section id="contact" className="contact section light-background">
+          <div className="container" data-aos="fade-up">
+            <div className="section-title">
+              <h2>Get in Touch with Apply4Study</h2>
+              <p>
+                Have a question about our online courses, classrooms, or partnership
+                opportunities? We're here to help! Reach out using the contact form,
+                or connect with us through email or phone.
+              </p>
             </div>
-          </div>
 
-          <div className="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
-            <div className="stats-item text-center w-100 h-100">
-              <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1"
-                className="purecounter"></span>
-              <p>Projects</p>
-            </div>
-          </div>
+            <div className="row gy-4 align-items-start">
+              {/* Left Side - Contact Image */}
+              <div
+                className="col-lg-6 col-md-12"
+                data-aos="fade-right"
+                data-aos-delay="100"
+              >
+                <LazyImage
+                  src={contactImg}
+                  className="img-fluid rounded-3 shadow-sm w-100"
+                  alt="Contact Apply4Study"
+                />
+              </div>
 
-          <div className="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
-            <div className="stats-item text-center w-100 h-100">
-              <span data-purecounter-start="0" data-purecounter-end="1453" data-purecounter-duration="1"
-                className="purecounter"></span>
-              <p>Hours Of Support</p>
-            </div>
-          </div>
-          <div className="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
-            <div className="stats-item text-center w-100 h-100">
-              <span data-purecounter-start="0" data-purecounter-end="32" data-purecounter-duration="1"
-                className="purecounter"></span>
-              <p>Workers</p>
-            </div>
-          </div>
+              {/* Right Side - Info + Map */}
+              <div
+                className="col-lg-6 col-md-12"
+                data-aos="fade-left"
+                data-aos-delay="200"
+              >
+                {/* Google Map */}
+                <div
+                  className="map-container rounded-3 overflow-hidden shadow-sm"
+                  style={{
+                    width: "100%",
+                    height: "240px",
+                    maxHeight: "50vh",
+                    border: "2px solid #FD7311" 
+                  }}
+                >
+                  <iframe
+                    title="Apply4Study Location"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3503.065210785168!2d77.209021175504!3d28.612912175685023!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce31c14a22b8f%3A0x3f63b725a2e693c!2sConnaught%20Place%2C%20New%20Delhi%2C%20Delhi!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen=""
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  ></iframe>
+                </div>
 
-        </div>
+                <div className="info-box mb-4">
+                  <h3>Contact Information</h3>
+                  <ul className="list-unstyled">
+                    <li>
+                      <i className="bi bi-geo-alt"></i>{" "}
+                      <strong>Address:</strong> A-108 Worldmark-2, Aerocity, New Delhi 110037
+                    </li>
+                    <li>
+                      <i className="bi bi-telephone"></i>{" "}
+                      <strong>Phone:</strong> {" "}
+                      <a href="tel:+919716003265">+91-9716003265</a>
+                    </li>
+                    <li>
+                      <i className="bi bi-envelope"></i>{" "}
+                      <strong>Email:</strong>{" "}
+                      <a href="mailto:support@apply4study.com">support@apply4study.com</a>
+                    </li>
+                    <li>
+                      <i className="bi bi-clock"></i>{" "}
+                      <strong>Hours:</strong> Mon–Sat: 9 AM – 6 PM
+                    </li>
+                  </ul>
 
-      </div>
+                  <div className="social-links mt-3 mb-3">
+                    <a href="https://www.facebook.com/apply4study" className="me-3"><i className="bi bi-facebook"></i></a>
+                    <a href="https://twitter.com/apply4study" className="me-3"><i className="bi bi-twitter-x"></i></a>
+                    <a href="https://www.instagram.com/apply4study" className="me-3"><i className="bi bi-instagram"></i></a>
+                    <a href="https://www.linkedin.com/company/apply4study" className="me-3"><i className="bi bi-linkedin"></i></a>
+                    <a href="https://www.pinterest.com/apply4study"><i className="bi bi-pinterest"></i></a>
+                  </div>
+                </div>
 
-    </section>
-    
-    <section id="services" className="services section light-background" data-aos="fade-up" data-aos-delay="100">
-      <div className="container section-title" >
-        <h2> What We Offer</h2>
-      </div>
-      <div className="container">
-
-        <div className="row gy-4">
-
-          <div className="col-lg-4 col-md-6" >
-            <div className="service-item position-relative">
-
-              <h4> <i className="bi bi-file-earmark-text"></i> Academic Courses</h4>
-              <p>Math, Science, Languages, and more for school and college-level students</p>
-            </div>
-          </div>
-          <div className="col-lg-4 col-md-6" >
-            <div className="service-item position-relative">
-
-              <h4> <i className="bi bi-file-earmark-check"></i> Test Prep</h4>
-              <p>Comprehensive preparation for competitive exams like IELTS, SAT, or subject-specific assessments</p>
-            </div>
-          </div>
-          <div className="col-lg-4 col-md-6" >
-            <div className="service-item position-relative">
-
-              <h4> <i className="bi bi-file-earmark-person"></i> Skill Building</h4>
-              <p>Public speaking, digital literacy, coding, critical thinking, etc.</p>
-            </div>
-          </div>
-          <div className="col-lg-4 col-md-6">
-            <div className="service-item position-relative">
-
-              <h4> <i className="bi bi-file-earmark-person"></i> Live Classrooms</h4>
-              <p>Interactive sessions with instructors, real-time Q&A, and feedback</p>
-            </div>
-          </div>
-          <div className="col-lg-4 col-md-6">
-            <div className="service-item position-relative">
-
-              <h4> <i className="bi bi-file-earmark-person"></i>Certificates</h4>
-              <p>Earn completion certificates to showcase your achievements</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="vision" className="vision section" data-aos="slide-right" data-aos-delay="100">
-      <div className="container">
-        <div className="row gy-4">
-          <div className="col-lg-6 col-md-6">
-            <div className="row gy-4">
-              <div className="col-12">
-                <h3>Our Vision</h3>
-                <p>We envision a world where learning is not limited by geography, time, or background. With
-                  Apply4Study,
-                  education becomes a continuous journey—powered by curiosity, supported by technology, and led by
-                  purpose.</p>
-                <p>Join our growing learning community and take the next step in your academic or personal growth.</p>
-                <p>👉 Start learning today—because your future begins with knowledge.</p>
               </div>
             </div>
           </div>
-          <div className="col-lg-6 col-md-6">
-            <div className="row gy-4">
-              <div className="col-12">
-                <h3>Our Mission</h3>
-                <p>At Apply4Study, we're on a mission to make quality education accessible, flexible, and truly
-                  learner-centric. Our online classroom platform is designed to help students, professionals, and
-                  lifelong
-                  learners gain in-demand skills and knowledge—on their own schedule, from anywhere in the world.</p>
-                <p>Whether you're looking to advance your career, explore a new field, or simply learn something new,
-                  Apply4Study is here to support you every step of the way. Join us and discover a world of learning
-                  opportunities at your fingertips.</p>
+        </section>
+
+        {/* Contact Form Section */}
+        <section
+          id="contact-form"
+          className="section"
+          data-aos="fade-up"
+          data-aos-delay="100"
+        >
+          <div className="container">
+            <div className="section-title text-center">
+              <h2>Send Us a Message</h2>
+              <p>We’ll get back to you as soon as possible.</p>
+            </div>
+
+            <div className="row justify-content-center">
+              <div className="col-lg-8">
+                <form
+                  action="https://formspree.io/f/xzzpqvdk"
+                  method="POST"
+                  className="php-email-form"
+                >
+                  <div className="row gy-3">
+                    <div className="col-md-6">
+                      <input
+                        type="text"
+                        name="name"
+                        className="form-control"
+                        placeholder="Your Name"
+                        required
+                      />
+                    </div>
+
+                    <div className="col-md-6">
+                      <input
+                        type="email"
+                        className="form-control"
+                        name="email"
+                        placeholder="Your Email"
+                        required
+                      />
+                    </div>
+
+                    <div className="col-md-12">
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="subject"
+                        placeholder="Subject"
+                        required
+                      />
+                    </div>
+
+                    <div className="col-md-12">
+                      <textarea
+                        className="form-control"
+                        name="message"
+                        rows="6"
+                        placeholder="Your Message"
+                        required
+                      ></textarea>
+                    </div>
+
+                    <div className="col-md-12 text-center">
+                      <button
+                        type="submit"
+                        className="btn btn-primary rounded-pill px-4 py-2"
+                      >
+                        Send Message
+                      </button>
+                    </div>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
-        </div>
+        </section>
       </div>
-
-
-    </section>
-     
-    </div>
     </>
   );
 }

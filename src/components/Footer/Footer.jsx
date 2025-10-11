@@ -67,10 +67,11 @@ export default function Footer() {
                 <p><strong>Email:</strong> <span>info@Apply4Study.com</span></p>
               </div>
               <div className="social-links d-flex mt-4">
-                <a href="https://www.twitter.com/apply4study"><i className="bi bi-twitter-x"></i></a>
                 <a href="https://www.facebook.com/apply4study"><i className="bi bi-facebook"></i></a>
+                <a href="https://www.twitter.com/apply4study"><i className="bi bi-twitter-x"></i></a>
                 <a href="https://www.instagram.com/apply4study"><i className="bi bi-instagram"></i></a>
-                <a href="https://www.linkedin.com/apply4study"><i className="bi bi-linkedin"></i></a>
+                <a href="https://www.linkedin.com/company/apply4study"><i className="bi bi-linkedin"></i></a>
+                <a href="https://www.pinterest.com/apply4study"><i className="bi bi-pinterest"></i></a>
               </div>
             </div>
 
@@ -80,8 +81,8 @@ export default function Footer() {
                 <li><a href="/">Home</a></li>
                 <li><a href="/about">About us</a></li>
                 <li><a href="/service">Services</a></li>
-                <li><a href="#">Terms of service</a></li>
-                <li><a href="#">Privacy policy</a></li>
+                <li><a href="/terms-conditions">Terms of service</a></li>
+                <li><a href="/privacy-policy">Privacy policy</a></li>
               </ul>
             </div>
 
@@ -103,7 +104,7 @@ export default function Footer() {
                 <form className="newsletter-form justify-content-start" onSubmit={handleSubmit}>
                   <input
                     type="text"
-                    placeholder="Enter your your email or mobile number"
+                    placeholder="Enter your email or mobile number"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
@@ -129,10 +130,10 @@ export default function Footer() {
         <p>&copy; {new Date().getFullYear()} Apply4Study. All rights reserved.</p>
         <nav>
           <ul className={`${styles.footerNav} d-flex justify-content-center list-unstyled m-0 p-0`}>
-            {['Terms & condition', 'Privacy & policy'].map((path) => (
+            {['Terms & Conditions', 'Privacy & Policy'].map((path) => (
               <li key={path} className="mx-2">
                 <Link
-                  to={path === 'home' ? '/' : `/${path}`}
+                  to={path === 'home' ? '/' : `/${path.toLowerCase().replace(' & ', '-')}`}
                   className={`${styles.footerLinks}`}
                 >
                   {path.charAt(0).toUpperCase() + path.slice(1)}

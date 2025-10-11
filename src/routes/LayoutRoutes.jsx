@@ -14,6 +14,9 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import '../styles/global.css';
 import GetStarted from '../pages/getStarted';
+import Contact from '../pages/Contact';
+import PrivacyPolicy from '../pages/PrivacyPolicy';
+import TermsConditions from '../pages/TermsConditions';
 
 const LayoutRoutes = () => (
   <Routes>
@@ -26,6 +29,9 @@ const LayoutRoutes = () => (
       <Route path='courses' element={<Courses />} />
       <Route path='partners' element={<Partners />} />
       <Route path='get-started' element={<GetStarted />} />
+      <Route path='contact' element={<Contact />} />
+      <Route path='privacy-policy' element={<PrivacyPolicy />} />
+      <Route path='terms-conditions' element={<TermsConditions />} />
       {/* <Route path="/search" element={<SearchResults />} /> */}
     </Route>
   </Routes>

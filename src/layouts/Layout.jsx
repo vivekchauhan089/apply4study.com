@@ -9,7 +9,7 @@ const Layout = () => (
   <div className='app-container'>
     <Header />
     {/* <ThemeToggle /> */}
-    <main className='main-content'>
+    <main className='main-content mt-4'>
       <Outlet />
     </main>
     <Footer />

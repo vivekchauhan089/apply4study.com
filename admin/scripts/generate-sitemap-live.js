@@ -18,6 +18,9 @@ const queue = [
   '/get-started',
   '/blog',
   '/partners',
+  '/contact',
+  '/privacy-policy',
+  '/terms-conditions',
 ];
 
 // 🕷️ Crawl pages recursively

@@ -19,10 +19,24 @@ const groupByCategory = (items) => {
 };
 
 const SearchResults = () => {
+  const [isMobile, setIsMobile] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredGrouped, setFilteredGrouped] = useState({});
   const [showDropdown, setShowDropdown] = useState(false);
   const inputRef = useRef(null);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     if (searchTerm.trim() === '') {
@@ -51,13 +65,14 @@ const SearchResults = () => {
     <div className="search-box col" ref={inputRef}>
       <div className="position-relative">
         {/* 🔍 Search Icon */}
-        <i className="bi bi-search position-absolute top-50 start-0 translate-middle-y ps-3 text-muted"></i>
+        <i className="bi bi-search position-absolute top-50 start-0 translate-middle-y ps-2 text-muted"></i>
 
         {/* Search Input */}
         <input
           type="text"
-          className="form-control ps-5"
-          placeholder="Search courses, instructors, articles..."
+          className="form-control"
+          style={{padding: ".250rem .75rem 0.1rem 2rem"}}
+          placeholder={isMobile ? "Search Universities Courses & More..." : "Search..."}
           value={searchTerm}
           onChange={(e) => {
             setSearchTerm(e.target.value);

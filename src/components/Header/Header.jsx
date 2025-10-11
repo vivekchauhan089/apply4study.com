@@ -15,6 +15,7 @@ const navLinks = [
   { path: '/pricing', label: 'Pricing' },
   { path: '/blog', label: 'Blog' },
   { path: '/partners', label: 'Partners' },
+  { path: '/contact', label: 'Contact Us' },
   // { path: '/get-started', label: 'Get Started' }, 
   // { path: '/join', label: 'Join Us' },
 ];
@@ -136,13 +137,16 @@ export default function Header() {
               <i class="bi bi-facebook"></i>
             </a>
             <a href="https://twitter.com/apply4study" className="social-link" aria-label="Twitter">
-              <i class="bi bi-twitter"></i>
+              <i class="bi bi-twitter-x"></i>
             </a>
             <a href="https://www.instagram.com/apply4study/" className="social-link" aria-label="Instagram">
               <i class="bi bi-instagram"></i>
             </a>
-            <a href="https://www.linkedin.com/apply4study" className="social-link" aria-label="LinkedIn">
+            <a href="https://www.linkedin.com/company/apply4study" className="social-link" aria-label="LinkedIn">
               <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="https://www.pinterest.com/apply4study" className="social-link" aria-label="Pinterest">
+              <i class="bi bi-pinterest"></i>
             </a>
           </div>
         </div>
@@ -158,13 +162,16 @@ export default function Header() {
                 <i class="bi bi-facebook"></i>
               </a>
               <a href="https://twitter.com/apply4study" className="social-link" aria-label="Twitter">
-                <i class="bi bi-twitter"></i>
+                <i class="bi bi-twitter-x"></i>
               </a>
               <a href="https://www.instagram.com/apply4study" className="social-link" aria-label="Instagram">
                 <i class="bi bi-instagram"></i>
               </a>
-              <a href="https://www.linkedin.com/apply4study" className="social-link" aria-label="LinkedIn">
+              <a href="https://www.linkedin.com/company/apply4study" className="social-link" aria-label="LinkedIn">
                 <i class="bi bi-linkedin"></i>
+              </a>
+              <a href="https://www.pinterest.com/apply4study" className="social-link" aria-label="Pinterest">
+                <i class="bi bi-pinterest"></i>
               </a>
             </div>
           </div>
@@ -194,19 +201,19 @@ export default function Header() {
 
           </nav>
           {!isMobile && (
-            <div className='d-flex align-items-center justify-content-start col-lg-4 pt-2'>
+            <div className='d-flex align-items-center justify-content-start col-lg-2 pt-1'>
               <SearchResults />
-              <Link to='/get-started' className="btn ms-3 glossy-button--blue joinBtn py-1">Join Us</Link>
+              <Link to='/get-started' className="btn ms-2 glossy-button--blue joinBtn py-1">Join Us</Link>
             </div>
           )}
         </div>
 
         {isMobile && (
-          <div className='d-flex align-items-center justify-content-start w-100 pt-2'>
+          <div className='d-flex align-items-center justify-content-start w-100 pt-1'>
             <SearchResults />
           </div>
         )
-        }      
+        }
 
 
         <Button variant="primary" className="getStartedBtn fw-bold" onClick={() => handleOpenModal('register')}>

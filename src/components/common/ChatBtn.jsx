@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { MessageCircle } from 'lucide-react'; // icon
+import whatsappIcon from '../../assets/img/whatsapp.png'; 
 
 const ChatBtn = () => {
   const [messages, setMessages] = useState(() => {
@@ -95,8 +96,39 @@ const ChatBtn = () => {
     if (e.key === "Enter") sendMessage();
   };
 
+  // ✅ React WhatsApp Button
+  const handleWhatsAppClick = () => {
+    window.open("https://api.whatsapp.com/send?phone=919716003265", "_blank");
+  };
+
   return (
     <>
+      {/* ✅ WhatsApp Floating Button */}
+      <button
+        onClick={handleWhatsAppClick}
+        style={{
+          position: "fixed",
+          bottom: "74px",
+          right: "20px",
+          backgroundColor: "#25D366",
+          border: "none",
+          borderRadius: "50%",
+          width: "50px",
+          height: "50px",
+          boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
+          zIndex: 999,
+          cursor: "pointer",
+          padding: "10px",
+        }}
+        aria-label="Chat on WhatsApp"
+      >
+        <img
+          src={whatsappIcon}
+          alt="WhatsApp"
+          style={{ width: "100%", height: "100%", borderRadius: "50%" }}
+        />
+      </button>
+
       {/* Toggle Chat Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
