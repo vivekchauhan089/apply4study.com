@@ -1,4 +1,4 @@
-import tailwindcss from "@tailwindcss/postcss";
+import tailwindcss from "tailwindcss";
 import autoprefixer from "autoprefixer";
 import purgecss from "@fullhuman/postcss-purgecss";
 import cssnano from "cssnano";
@@ -20,8 +20,8 @@ const purge = purgecss({
 
 export default {
   plugins: [
-    tailwindcss(),
-    autoprefixer(),
+    tailwindcss,
+    autoprefixer,
     ...(process.env.NODE_ENV === "production"
       ? [purge, cssnano({ preset: "default" })]
       : []),
