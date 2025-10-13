@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@tailwindcss/postcss": "^4.1.14",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
@@ -25,6 +26,7 @@
     "sass": "^1.89.1",
     "sass-loader": "^13.3.3",
     "swiper": "^11.2.6",
+    "tailwindcss": "^4.1.14",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -44,5 +46,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^7.0.2",
+    "autoprefixer": "^10.4.21",
+    "cssnano": "^7.1.1",
+    "postcss": "^8.5.6"
   }
 }
