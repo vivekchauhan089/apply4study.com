@@ -167,8 +167,7 @@ export default function Home() {
                             src={slide.image}
                             alt={`Slide ${index + 1}`}
                             className="img-fluid rounded"
-
-                            decoding="async"
+                            fetchPriority="high"
                           />
                         </div>
                       </div>

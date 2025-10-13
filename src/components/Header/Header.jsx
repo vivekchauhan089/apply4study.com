@@ -4,7 +4,7 @@ import styles from './Header.scss';
 import logo from '../../assets/img/apply4study_logo.png';
 import LazyImage from '../common/LazyImage';
 import SearchResults from '../../pages/SearchResults';
-import Modals from '../Modal/Modal';
+import Modals from '../Modal/Modal.jsx';
 import { Button } from 'react-bootstrap';
 
 const navLinks = [
@@ -124,29 +124,29 @@ export default function Header() {
         <div className="top-info-container">
           <div className="info-left desktop-only">
             <a href="mailto:info@apply4study.com" className="info-link">
-              <i class="bi bi-envelope" aria-hidden="true"></i> info@Apply4study.com
+              <i className="bi bi-envelope" aria-hidden="true"></i> info@Apply4study.com
             </a>
             <a href="tel:+919716003265" className="info-link">
-              <i class="bi bi-phone" aria-hidden="true"></i> +91-9716003265
+              <i className="bi bi-phone" aria-hidden="true"></i> +91-9716003265
             </a>
             <span className="working-hours">Mon — Sat: 9:00 AM – 6:00 PM</span>
           </div>
 
           <div className="info-right desktop-only">
             <a href="https://www.facebook.com/apply4study" className="social-link" aria-label="Facebook">
-              <i class="bi bi-facebook"></i>
+              <i className="bi bi-facebook"></i>
             </a>
             <a href="https://twitter.com/apply4study" className="social-link" aria-label="Twitter">
-              <i class="bi bi-twitter-x"></i>
+              <i className="bi bi-twitter-x"></i>
             </a>
             <a href="https://www.instagram.com/apply4study/" className="social-link" aria-label="Instagram">
-              <i class="bi bi-instagram"></i>
+              <i className="bi bi-instagram"></i>
             </a>
             <a href="https://www.linkedin.com/company/apply4study" className="social-link" aria-label="LinkedIn">
-              <i class="bi bi-linkedin"></i>
+              <i className="bi bi-linkedin"></i>
             </a>
             <a href="https://www.pinterest.com/apply4study" className="social-link" aria-label="Pinterest">
-              <i class="bi bi-pinterest"></i>
+              <i className="bi bi-pinterest"></i>
             </a>
           </div>
         </div>
@@ -155,23 +155,23 @@ export default function Header() {
         {isMobile && (
           <div className="mobile-info">
             <a href="mailto:info@apply4study.com" className="info-link">
-              <i class="bi bi-envelope"></i> info@Apply4study.com
+              <i className="bi bi-envelope"></i> info@Apply4study.com
             </a>
             <div className="social-links">
               <a href="https://www.facebook.com/apply4study" className="social-link" aria-label="Facebook">
-                <i class="bi bi-facebook"></i>
+                <i className="bi bi-facebook"></i>
               </a>
               <a href="https://twitter.com/apply4study" className="social-link" aria-label="Twitter">
-                <i class="bi bi-twitter-x"></i>
+                <i className="bi bi-twitter-x"></i>
               </a>
               <a href="https://www.instagram.com/apply4study" className="social-link" aria-label="Instagram">
-                <i class="bi bi-instagram"></i>
+                <i className="bi bi-instagram"></i>
               </a>
               <a href="https://www.linkedin.com/company/apply4study" className="social-link" aria-label="LinkedIn">
-                <i class="bi bi-linkedin"></i>
+                <i className="bi bi-linkedin"></i>
               </a>
               <a href="https://www.pinterest.com/apply4study" className="social-link" aria-label="Pinterest">
-                <i class="bi bi-pinterest"></i>
+                <i className="bi bi-pinterest"></i>
               </a>
             </div>
           </div>
@@ -180,7 +180,7 @@ export default function Header() {
       <div className="container-fluid container-xl position-relative">
         <div className='d-flex align-items-center justify-content-between w-100'>
           <Link to='/' className={`${styles.logo} logo d-flex align-items-center`}>
-            <LazyImage src={logo} alt="logo" className="img-fluid" loading='lazy' />
+            <LazyImage src={logo} alt="logo" className="img-fluid" fetchPriority="high" />
           </Link>
           <nav id="navmenu" className={`${styles.navmenu} navmenu`}>
             <ul>

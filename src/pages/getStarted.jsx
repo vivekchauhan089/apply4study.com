@@ -110,7 +110,7 @@ export default function GetStarted() {
           <div className="container">
             <div className="row pt-lg-5">
               <div className="col-lg-7 col-md-7 col-12">
-                <h5 class="mb-3">🎁 What You Get with Free Access:</h5>
+                <h5 className="mb-3">🎁 What You Get with Free Access:</h5>
                 <p>
                   With our free account, you can explore a variety of courses and learning modules at no cost. Enjoy
                   instant access to selected content, live webinars, and personalized learning tools designed to help you

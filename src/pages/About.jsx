@@ -45,22 +45,22 @@ export default function About() {
     <>    
     <div className="about-page">
       
-     <div class="page-title dark-background about_us_bg">
-      <div class="container position-relative col-lg-6 col-md-6 col-12">
+     <div className="page-title dark-background about_us_bg">
+      <div className="container position-relative col-lg-6 col-md-6 col-12">
         <h1>About Us</h1>
         <p>Learn Anywhere. Grow Anytime.</p>
-        <nav class="breadcrumbs">
+        <nav className="breadcrumbs">
           <ol>
             <li><a href={APP_URL}>Home</a></li>
-            <li class="current">About</li>
+            <li className="current">About</li>
           </ol>
         </nav>
       </div>
     </div>
 
 
-    <section class="about section light-background">
-      <div class="container section-title" data-aos="fade-up">
+    <section className="about section light-background">
+      <div className="container section-title" data-aos="fade-up">
         <h2> Learn Anywhere. Grow Anytime.</h2>
         <p>At <strong>Apply4Study</strong>, we're on a mission to make quality education accessible, flexible, and truly
           learner-centric. Our online classroom platform is designed to help students, professionals, and lifelong
