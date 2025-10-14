@@ -6,13 +6,100 @@ import contactImg from "../assets/img/about.jpg";
 import useSEO from "../hooks/useSEO";
 
 export default function Contact() {
-  const [isMobile, setIsMobile] = useState(false);
+  const [validated, setValidated] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    mobile: '',
+    subject: '',
+    content: ''
+  });
+  const [errors, setErrors] = useState({});
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     AOS.init({ duration: 1000 });
   }, []);
 
   const APP_URL = process.env.REACT_APP_URL;
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.name.trim()) newErrors.name = 'Name is required';
+    if (!formData.email) newErrors.email = 'Email is required';
+    else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Invalid email address';
+    if (!formData.mobile) newErrors.mobile = 'Mobile is required';
+    else if (!/^\d{10}$/.test(formData.mobile)) newErrors.mobile = 'Mobile must be a 10 digit number';
+    if (!formData.subject.trim()) newErrors.subject = 'Subject is required';
+    if (!formData.content.trim()) newErrors.content = 'Message is required';
+
+    return newErrors;
+  };
+
+  const handleContactFormSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setMessage("");
+
+    const newErrors = validateForm();
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      setValidated(false);
+    } else {
+      setErrors({});
+      setValidated(true);
+
+      try {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/subscribe`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMjM0LCJ1c2VyX3R5cGVfaWQiOjAsInJvbGUiOiJndWVzdCIsImlhdCI6MTc1ODg4NDcwOCwiZXhwIjoxNzY0MDY4NzA4fQ.zWg19kpqcRf0sxKzrioWP_HzogoC5fHQPeGHTE6nZpc"
+          },
+          body: JSON.stringify({
+            name: formData.name,
+            contact: formData.email,
+            mobile:  formData.mobile,
+            subject: formData.subject,
+            content: formData.content,
+            type:    "contact"
+          }),
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          setMessage(data.message || "Subscribed successfully!");
+          setFormData({
+            name: "",
+            email: "",
+            mobile: "",
+            subject: "",
+            content: "",
+          });
+        } else {
+          setMessage(data.message || "You are already subscribed.");
+        }
+      } catch (error) {
+        console.error("Subscription error:", error);
+        setMessage("Something went wrong. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
+
+  // 🕒 Auto-clear message after 3 seconds
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setMessage("");
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -182,11 +269,7 @@ export default function Contact() {
 
             <div className="row justify-content-center">
               <div className="col-lg-8">
-                <form
-                  action="https://formspree.io/f/xzzpqvdk"
-                  method="POST"
-                  className="php-email-form"
-                >
+                <form noValidate validated={validated} onSubmit={handleContactFormSubmit}>
                   <div className="row gy-3">
                     <div className="col-md-6">
                       <input
@@ -195,7 +278,10 @@ export default function Contact() {
                         className="form-control"
                         placeholder="Your Name"
                         required
+                        value={formData.name}
+                        isInvalid={!!errors.name}
                       />
+                      <span type="invalid">{errors.name}</span>
                     </div>
 
                     <div className="col-md-6">
@@ -205,7 +291,24 @@ export default function Contact() {
                         name="email"
                         placeholder="Your Email"
                         required
+                        value={formData.email}
+                        isInvalid={!!errors.email}
                       />
+                      <span type="invalid">{errors.email}</span>
+                    </div>
+
+                    <div className="col-md-6">
+                      <input
+                        type="number"
+                        className="form-control"
+                        name="mobile"
+                        maxlength="10"
+                        placeholder="Your Mobile"
+                        required
+                        value={formData.mobile}
+                        isInvalid={!!errors.mobile}
+                      />
+                      <span type="invalid">{errors.mobile}</span>
                     </div>
 
                     <div className="col-md-12">
@@ -215,17 +318,22 @@ export default function Contact() {
                         name="subject"
                         placeholder="Subject"
                         required
+                        value={formData.subject}
+                        isInvalid={!!errors.subject}
                       />
+                      <span type="invalid">{errors.subject}</span>
                     </div>
 
                     <div className="col-md-12">
                       <textarea
                         className="form-control"
-                        name="message"
+                        name="content"
                         rows="6"
                         placeholder="Your Message"
                         required
-                      ></textarea>
+                        isInvalid={!!errors.name}
+                      >{formData.content}</textarea>
+                      <span type="invalid">{errors.content}</span>
                     </div>
 
                     <div className="col-md-12 text-center">
@@ -238,6 +346,11 @@ export default function Contact() {
                     </div>
                   </div>
                 </form>
+                {message && (
+                  <p style={{ marginTop: "8px", color: "#FD7311", fontSize: "0.8rem" }}>
+                    {message}{" "}
+                  </p>
+                )}
               </div>
             </div>
           </div>

@@ -56,6 +56,104 @@ export default function GetStarted() {
 
   const APP_URL = process.env.REACT_APP_URL;
 
+  const [validated, setValidated] = useState(false);
+  const [formData, setFormData] = useState({
+    first_name: '',
+    last_name: '',
+    email: '',
+    mobile: '',
+    role: '',
+    termsAccepted: false,
+  });
+  const [errors, setErrors] = useState({});
+  const [showToast, setShowToast] = useState(false);
+
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value,
+    }));
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (type === 'register') {
+      if (!formData.first_name.trim()) newErrors.first_name = 'First name is required';
+      if (!formData.email) newErrors.email = 'Email is required';
+      else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Invalid email address';
+      if (!formData.mobile) newErrors.mobile = 'Mobile is required';
+      else if (!/^\d{10}$/.test(formData.mobile)) newErrors.mobile = 'Mobile must be a 10 digit number';
+      if (!formData.role) newErrors.role = 'Please select a role';
+      if (!formData.termsAccepted) newErrors.termsAccepted = 'You must agree to terms';
+    } else if (type === 'subscribe') {
+      if (!formData.email) newErrors.email = 'Email or mobile number is required';
+    }
+
+    return newErrors;
+  };
+
+  const handleRegisterSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setMessage("");
+
+    const newErrors = validateForm();
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      setValidated(false);
+    } else {
+      setErrors({});
+      setValidated(true);
+      
+      try {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/register`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMjM0LCJ1c2VyX3R5cGVfaWQiOjAsInJvbGUiOiJndWVzdCIsImlhdCI6MTc1ODg4NDcwOCwiZXhwIjoxNzY0MDY4NzA4fQ.zWg19kpqcRf0sxKzrioWP_HzogoC5fHQPeGHTE6nZpc"
+          },
+          body: JSON.stringify({
+            first_name: formData.first_name,
+            last_name: formData.last_name,
+            email: formData.email,
+            mobile: formData.mobile,
+            role: formData.role,
+            termsAccepted: formData.termsAccepted,
+          }),
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          setMessage(data.message || "Registration successful!");
+          setShowToast(true);
+          onHide();
+          setFormData({
+            first_name: "",
+            last_name: "",
+            email: "",
+            mobile: "",
+            role: "",
+            termsAccepted: false,
+          });
+        } else {
+          setMessage(data.message || "Registration failed. Please try again.");
+        }
+      } catch (error) {
+        console.error("Registration error:", error);
+        setMessage("Something went wrong. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
+
   useSEO({
     title: "Get Started — Join Apply4Study",
     description: "Sign up today and start your journey with Apply4Study’s interactive online learning platform.",
@@ -127,37 +225,84 @@ export default function GetStarted() {
               <div className="col-lg-5 col-md-5 col-12">
                 <div className="mb-5">
                   <h5 className="mb-4">✍️ Create Your Free Account</h5>
-                  <form action="/register" method="post" className="p-4 border rounded bg-light">
+                  <form noValidate validated={validated} onSubmit={handleRegisterSubmit} className="p-4 border rounded bg-light">
                     <div className="mb-3">
-                      <label htmlFor="name" className="form-label">Full Name *</label>
-                      <input type="text" id="name" name="name" required className="form-control" />
+                      <label htmlFor="first_name" className="form-label">First Name *</label>
+                      <input type="text" 
+                        id="first_name" 
+                        name="first_name" 
+                        required 
+                        className="form-control"
+                        value={formData.first_name}
+                        onChange={handleChange}
+                        isInvalid={!!errors.first_name} />
+                      <span type="invalid">{errors.first_name}</span>
+                    </div>
+
+                    <div className="mb-3">
+                      <label htmlFor="last_name" className="form-label">Last Name *</label>
+                      <input type="text" 
+                        id="last_name" 
+                        name="last_name" 
+                        required 
+                        className="form-control"
+                        value={formData.last_name} />
+                      <span type="invalid">{errors.last_name}</span>
                     </div>
 
                     <div className="mb-3">
                       <label htmlFor="email" className="form-label">Email Address *</label>
-                      <input type="email" id="email" name="email" required className="form-control" />
+                      <input type="email" id="email" name="email" required className="form-control" 
+                        value={formData.email}
+                        onChange={handleChange}
+                        isInvalid={!!errors.email} />
+                      <span type="invalid">{errors.email}</span>
                     </div>
 
                     <div className="mb-3">
-                      <label htmlFor="password" className="form-label">Create Password *</label>
-                      <input type="password" id="password" name="password" required className="form-control" />
+                      <label htmlFor="mobile" className="form-label">Mobile Number *</label>
+                      <input type="text"
+                        name="mobile"
+                        value={formData.mobile}
+                        onChange={handleChange}
+                        isInvalid={!!errors.mobile}
+                        required 
+                        className="form-control" />
+                        <span type="invalid">{errors.mobile}</span>
                     </div>
 
                     <div className="mb-3">
                       <label htmlFor="role" className="form-label">I am a:</label>
-                      <select id="role" name="role" className="form-select">
+                      <select id="role" name="role" className="form-select" 
+                        value={formData.role}
+                        onChange={handleChange}
+                        isInvalid={!!errors.role}>
                         <option value="student">Student</option>
                         <option value="professional">Professional</option>
                         <option value="parent">Parent</option>
                         <option value="other">Other</option>
                       </select>
+                      <span type="invalid">{errors.role}</span>
                     </div>
 
                     <div className="form-check mb-3">
-                      <input type="checkbox" id="agree" required className="form-check-input" />
+                      <input type="checkbox"
+                        name="termsAccepted"
+                        checked={formData.termsAccepted}
+                        onChange={handleChange}
+                        label={
+                          <>
+                            I agree to the <a href="/terms" target="_blank" rel="noreferrer">Terms & Conditions</a>
+                          </>
+                        }
+                        isInvalid={!!errors.termsAccepted}
+                        feedback={errors.termsAccepted}
+                        feedbackType="invalid" required 
+                        className="form-check-input" />
                       <label htmlFor="agree" className="form-check-label">
                         I agree to the <a href="/terms" target="_blank">Terms & Conditions</a>
                       </label>
+                      <span type="invalid">{errors.termsAccepted}</span>
                     </div>
 
                     <button type="submit" className="btn btn-primary w-100">Create Free Account</button>

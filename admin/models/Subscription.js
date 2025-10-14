@@ -18,9 +18,18 @@ const subscriptionSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ["newsletter", "updates", "promo"],
+      enum: ["newsletter", "updates", "promo", "contact"],
       default: "updates",
       required: true,
+    },
+    mobile: {
+      type: String
+    },
+    subject: {
+      type: String
+    },
+    content: {
+      type: String
     },
     status: {
       type: String,

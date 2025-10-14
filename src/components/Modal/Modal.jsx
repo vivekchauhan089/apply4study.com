@@ -4,9 +4,10 @@ import { Modal, Button, Form, Toast, ToastContainer } from 'react-bootstrap';
 const Modals = ({ show, onHide, type }) => {
   const [validated, setValidated] = useState(false);
   const [formData, setFormData] = useState({
-    name: '',
+    first_name: '',
+    last_name: '',
     email: '',
-    password: '',
+    mobile: '',
     role: '',
     termsAccepted: false,
   });
@@ -29,11 +30,11 @@ const Modals = ({ show, onHide, type }) => {
     const newErrors = {};
 
     if (type === 'register') {
-      if (!formData.name.trim()) newErrors.name = 'Full name is required';
+      if (!formData.first_name.trim()) newErrors.first_name = 'First name is required';
       if (!formData.email) newErrors.email = 'Email is required';
       else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Invalid email address';
-      if (!formData.password) newErrors.password = 'Password is required';
-      else if (formData.password.length < 6) newErrors.password = 'Password must be at least 6 characters';
+      if (!formData.mobile) newErrors.mobile = 'Mobile is required';
+      else if (!/^\d{10}$/.test(formData.mobile)) newErrors.mobile = 'Mobile must be a 10 digit number';
       if (!formData.role) newErrors.role = 'Please select a role';
       if (!formData.termsAccepted) newErrors.termsAccepted = 'You must agree to terms';
     } else if (type === 'subscribe') {
@@ -43,8 +44,11 @@ const Modals = ({ show, onHide, type }) => {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleRegisterSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setMessage("");
+
     const newErrors = validateForm();
 
     if (Object.keys(newErrors).length > 0) {
@@ -53,16 +57,46 @@ const Modals = ({ show, onHide, type }) => {
     } else {
       setErrors({});
       setValidated(true);
-      console.log(`${type === 'register' ? 'Registered' : 'Subscribed'} with:`, formData);
-      setShowToast(true);
-      onHide();
-      setFormData({
-        name: '',
-        email: '',
-        password: '',
-        role: '',
-        termsAccepted: false,
-      });
+      
+      try {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/register`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMjM0LCJ1c2VyX3R5cGVfaWQiOjAsInJvbGUiOiJndWVzdCIsImlhdCI6MTc1ODg4NDcwOCwiZXhwIjoxNzY0MDY4NzA4fQ.zWg19kpqcRf0sxKzrioWP_HzogoC5fHQPeGHTE6nZpc"
+          },
+          body: JSON.stringify({
+            first_name: formData.first_name,
+            last_name: formData.last_name,
+            email: formData.email,
+            mobile: formData.mobile,
+            role: formData.role,
+            termsAccepted: formData.termsAccepted,
+          }),
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          setMessage(data.message || "Registration successful!");
+          setShowToast(true);
+          onHide();
+          setFormData({
+            first_name: "",
+            last_name: "",
+            email: "",
+            mobile: "",
+            role: "",
+            termsAccepted: false,
+          });
+        } else {
+          setMessage(data.message || "Registration failed. Please try again.");
+        }
+      } catch (error) {
+        console.error("Registration error:", error);
+        setMessage("Something went wrong. Please try again.");
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -113,19 +147,30 @@ const Modals = ({ show, onHide, type }) => {
           <Modal.Title>{type === 'register' ? 'Register' : 'Subscribe'}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form noValidate validated={validated} onSubmit={type === 'register' ? handleSubmit : handleNewsletterSubmit}>
+          <Form noValidate validated={validated} onSubmit={type === 'register' ? handleRegisterSubmit : handleNewsletterSubmit}>
             {type === 'register' ? (
               <>
                 <Form.Group>
-                  <Form.Label>Full Name *</Form.Label>
+                  <Form.Label>First Name *</Form.Label>
                   <Form.Control
                     type="text"
-                    name="name"
-                    value={formData.name}
+                    name="first_name"
+                    value={formData.first_name}
                     onChange={handleChange}
-                    isInvalid={!!errors.name}
+                    isInvalid={!!errors.first_name}
                   />
-                  <Form.Control.Feedback type="invalid">{errors.name}</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">{errors.first_name}</Form.Control.Feedback>
+                </Form.Group>
+
+                <Form.Group>
+                  <Form.Label>Last Name </Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="last_name"
+                    value={formData.last_name}
+                    isInvalid={!!errors.last_name}
+                  />
+                  <Form.Control.Feedback type="invalid">{errors.last_name}</Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Group className="mt-3">
@@ -141,15 +186,15 @@ const Modals = ({ show, onHide, type }) => {
                 </Form.Group>
 
                 <Form.Group className="mt-3">
-                  <Form.Label>Create Password *</Form.Label>
+                  <Form.Label>Mobile Number *</Form.Label>
                   <Form.Control
-                    type="password"
-                    name="password"
-                    value={formData.password}
+                    type="text"
+                    name="mobile"
+                    value={formData.mobile}
                     onChange={handleChange}
-                    isInvalid={!!errors.password}
+                    isInvalid={!!errors.mobile}
                   />
-                  <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">{errors.mobile}</Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Group className="mt-3">

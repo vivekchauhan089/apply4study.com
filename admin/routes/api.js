@@ -236,4 +236,60 @@ router.post("/subscribe", ApiSubscriptionController.subscribe);
  */
 router.delete("/unsubscribe/:contact", ApiSubscriptionController.unsubscribe);
 
+
+const ApiUserController = require("../controllers/api/ApiUserController");
+
+/**
+ * @typedef User
+ * @property {string} first_name.required
+ * @property {string} last_name
+ * @property {string} email.required
+ * @property {string} mobile_number
+ * @property {string} password.required
+ * @property {string} role
+ */
+
+/**
+ * Register a new user
+ * @route POST /api/register
+ * @group User - User management
+ * @param {User.model} User.body.required - User registration data
+ * @returns {object} 200 - { success: true, message: "User registered successfully" }
+ * @returns {Error}  default - Unexpected error
+ */
+router.post("/register", ApiMiddleware, ApiUserController.register);
+
+/**
+ * Forgot password (generate reset token)
+ * @route POST /api/forgot_password
+ * @group User - User management
+ * @param {string} email.body.required - Registered email address
+ * @returns {object} 200 - { success: true, message: "Reset link sent" }
+ * @returns {Error}  default - Unexpected error
+ */
+router.post("/forgot_password", ApiMiddleware, ApiUserController.forgotPassword);
+
+/**
+ * Set a new password
+ * @route POST /api/set_password
+ * @group User - User management
+ * @param {string} email.body.required - User email
+ * @param {string} token.body.required - Reset token
+ * @param {string} new_password.body.required - New password
+ * @returns {object} 200 - { success: true, message: "Password updated successfully" }
+ * @returns {Error}  default - Unexpected error
+ */
+router.post("/set_password", ApiMiddleware, ApiUserController.setPassword);
+
+/**
+ * Update user details
+ * @route PUT /api/update_user/{id}
+ * @group User - User management
+ * @param {string} id.path.required - User ID
+ * @param {User.model} User.body.required - Updated user data
+ * @returns {object} 200 - { success: true, message: "User updated successfully" }
+ * @returns {Error}  default - Unexpected error
+ */
+router.put("/update_user/:id", ApiMiddleware, ApiUserController.updateUser);
+
 module.exports = router;        

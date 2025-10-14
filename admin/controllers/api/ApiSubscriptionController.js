@@ -9,7 +9,7 @@ const Subscription = require.main.require('./models/Subscription');
 // Subscribe (POST)
 async function subscribe (req, res) {
   try {
-    const { contact, type="updates" } = req.body;
+    const { contact, type="updates", mobile="", subject="", content="" } = req.body;
 
     if (!contact) {
       res.status(400).json({ message: "Please enter your email or mobile number" });
@@ -25,7 +25,7 @@ async function subscribe (req, res) {
       return;
     }
 
-    const newSub = new Subscription({ contact, type });
+    const newSub = new Subscription({ contact, type, mobile, subject, content });
     await newSub.save();
 
     res.status(201).json({
