@@ -66,7 +66,6 @@ export default function GetStarted() {
     termsAccepted: false,
   });
   const [errors, setErrors] = useState({});
-  const [showToast, setShowToast] = useState(false);
 
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -153,8 +152,6 @@ export default function GetStarted() {
         const data = await response.json();
         if (response.ok) {
           setMessage(data.message || "Registration successful!");
-          setShowToast(true);
-          onHide();
           setFormData({
             first_name: "",
             last_name: "",
@@ -174,6 +171,16 @@ export default function GetStarted() {
       }
     }
   };
+
+  // 🕒 Auto-clear message after 3 seconds
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setMessage("");
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
 
   useSEO({
     title: "Get Started — Join Apply4Study",
@@ -323,6 +330,11 @@ export default function GetStarted() {
 
                     <button type="submit" className="btn btn-primary w-100">Create Free Account</button>
                   </form>
+                  {message && (
+                    <p style={{ marginTop: "8px", color: "#FD7311", fontSize: "0.8rem" }}>
+                      {message}{" "}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
