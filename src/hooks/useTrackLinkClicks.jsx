@@ -1,13 +1,24 @@
+// hooks/useTrackLinkClicks.js
 import { useEffect } from "react";
 import ReactGA from "react-ga4";
-ReactGA.initialize("G-J4D70SLKDY"); // replace with your GA4 Measurement ID
+
+// ✅ Initialize GA only once (outside the hook)
+if (!window.GA_INITIALIZED) {
+  ReactGA.initialize("G-J4D70SLKDY"); // 🔁 Replace with your GA4 ID
+  window.GA_INITIALIZED = true;
+}
 
 export default function useTrackLinkClicks() {
   useEffect(() => {
-    const handleClick = (e) => {
-      const link = e.target.closest("a");
-      if (!link) return;
+    const handleClick = (event) => {
+      // Find the nearest <a> element
+      const link = event.target.closest("a");
+      if (!link || !link.href) return;
 
+      // Ignore internal hash or same-page anchors
+      if (link.href.startsWith("#") || link.href === window.location.href) return;
+
+      // Build event data
       const eventData = {
         event: "link_click",
         link_url: link.href,
@@ -15,17 +26,20 @@ export default function useTrackLinkClicks() {
         link_target: link.target || "_self",
       };
 
-      // Send event to GA4
-      ReactGA.event("link_click", {
-        link_url: eventData.link_url,
-        link_text: eventData.link_text,
-        link_target: eventData.link_target,
-      });
+      // ✅ Fire GA4 event
+      ReactGA.event("link_click", eventData);
 
-      console.log("Tracked:", eventData);
+      // Optional: console log only in development
+      if (process.env.NODE_ENV === "development") {
+        console.log("Tracked link click:", eventData);
+      }
     };
 
-    document.addEventListener("click", handleClick);
-    return () => document.removeEventListener("click", handleClick);
+    // ✅ Use capture phase to catch early clicks before navigation
+    document.addEventListener("click", handleClick, true);
+
+    return () => {
+      document.removeEventListener("click", handleClick, true);
+    };
   }, []);
 }
