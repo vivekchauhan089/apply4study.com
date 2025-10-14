@@ -14,8 +14,9 @@ const AppDownloadPromo = () => {
             aria-label="Download on Google Play"
           >
             <img
-              src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
+              src="./Google_Play_Store_badge_EN.svg"
               alt="Google Play"
+              loading="lazy"
               className="mx-2"
             />
           </a>
@@ -27,8 +28,9 @@ const AppDownloadPromo = () => {
             aria-label="Download on the App Store"
           >
             <img
-              src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
+              src="./download-on-the-app-store.svg"
               alt="App Store"
+              loading="lazy"
               className="mx-2"
             />
           </a>

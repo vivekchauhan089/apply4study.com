@@ -5,7 +5,7 @@ import cssnano from "cssnano";
 
 const purge = purgecss({
   content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
+    "./src/**/*.{js,jsx,ts,tsx,html}",
     "./public/index.html",
   ],
   safelist: [
