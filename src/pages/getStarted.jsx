@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 
@@ -68,7 +68,6 @@ export default function GetStarted() {
   const [errors, setErrors] = useState({});
   const [showToast, setShowToast] = useState(false);
 
-  const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -83,16 +82,38 @@ export default function GetStarted() {
   const validateForm = () => {
     const newErrors = {};
 
-    if (type === 'register') {
-      if (!formData.first_name.trim()) newErrors.first_name = 'First name is required';
-      if (!formData.email) newErrors.email = 'Email is required';
-      else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Invalid email address';
-      if (!formData.mobile) newErrors.mobile = 'Mobile is required';
-      else if (!/^\d{10}$/.test(formData.mobile)) newErrors.mobile = 'Mobile must be a 10 digit number';
-      if (!formData.role) newErrors.role = 'Please select a role';
-      if (!formData.termsAccepted) newErrors.termsAccepted = 'You must agree to terms';
-    } else if (type === 'subscribe') {
-      if (!formData.email) newErrors.email = 'Email or mobile number is required';
+    if (!formData.first_name.trim()) {
+      newErrors.firstNameClass = 'is-invalid';
+      newErrors.firstNameMsgClass = 'invalid-feedback';
+      newErrors.first_name = 'First name is required';
+    }
+    if (!formData.email) {
+      newErrors.emailClass = 'is-invalid';
+      newErrors.emailMsgClass = 'invalid-feedback';
+      newErrors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.emailClass = 'is-invalid';
+      newErrors.emailMsgClass = 'invalid-feedback';
+      newErrors.email = 'Invalid email address';
+    }
+    if (!formData.mobile) {
+      newErrors.mobileClass = 'is-invalid';
+      newErrors.mobileMsgClass = 'invalid-feedback';
+      newErrors.mobile = 'Mobile is required';
+    } else if (!/^\d{10}$/.test(formData.mobile)) {
+      newErrors.mobileClass = 'is-invalid';
+      newErrors.mobileMsgClass = 'invalid-feedback';
+      newErrors.mobile = 'Mobile must be a 10 digit number';
+    }
+    if (!formData.role) {
+      newErrors.roleClass = 'is-invalid';
+      newErrors.roleMsgClass = 'invalid-feedback';
+      newErrors.role = 'Please select a role';
+    }
+    if (!formData.termsAccepted) {
+      newErrors.termsClass = 'is-invalid';
+      newErrors.termsMsgClass = 'invalid-feedback';
+      newErrors.termsAccepted = 'You must agree to terms';
     }
 
     return newErrors;
@@ -225,38 +246,35 @@ export default function GetStarted() {
               <div className="col-lg-5 col-md-5 col-12">
                 <div className="mb-5">
                   <h5 className="mb-4">✍️ Create Your Free Account</h5>
-                  <form noValidate validated={validated} onSubmit={handleRegisterSubmit} className="p-4 border rounded bg-light">
+                  <form noValidate validated={validated.toString()} onSubmit={handleRegisterSubmit} className="p-4 border rounded bg-light">
                     <div className="mb-3">
                       <label htmlFor="first_name" className="form-label">First Name *</label>
                       <input type="text" 
-                        id="first_name" 
                         name="first_name" 
                         required 
-                        className="form-control"
+                        className={"form-control " + errors.firstNameClass}
                         value={formData.first_name}
-                        onChange={handleChange}
-                        isInvalid={!!errors.first_name} />
-                      <span type="invalid">{errors.first_name}</span>
+                        onChange={handleChange} />
+                      <div className={errors.firstNameMsgClass}>{errors.first_name}</div>
                     </div>
 
                     <div className="mb-3">
-                      <label htmlFor="last_name" className="form-label">Last Name *</label>
+                      <label htmlFor="last_name" className="form-label">Last Name</label>
                       <input type="text" 
-                        id="last_name" 
                         name="last_name" 
-                        required 
-                        className="form-control"
+                        className={"form-control " + errors.lastNameClass}
+                        onChange={handleChange}
                         value={formData.last_name} />
-                      <span type="invalid">{errors.last_name}</span>
+                      <div className={errors.lastNameMsgClass}>{errors.last_name}</div>
                     </div>
 
                     <div className="mb-3">
                       <label htmlFor="email" className="form-label">Email Address *</label>
-                      <input type="email" id="email" name="email" required className="form-control" 
+                      <input type="email" name="email" required 
+                        className={"form-control " + errors.emailClass} 
                         value={formData.email}
-                        onChange={handleChange}
-                        isInvalid={!!errors.email} />
-                      <span type="invalid">{errors.email}</span>
+                        onChange={handleChange} />
+                      <div className={errors.emailMsgClass}>{errors.email}</div>
                     </div>
 
                     <div className="mb-3">
@@ -265,24 +283,24 @@ export default function GetStarted() {
                         name="mobile"
                         value={formData.mobile}
                         onChange={handleChange}
-                        isInvalid={!!errors.mobile}
                         required 
-                        className="form-control" />
-                        <span type="invalid">{errors.mobile}</span>
+                        className={"form-control " + errors.mobileClass} />
+                        <div className={errors.mobileMsgClass}>{errors.mobile}</div>
                     </div>
 
                     <div className="mb-3">
                       <label htmlFor="role" className="form-label">I am a:</label>
-                      <select id="role" name="role" className="form-select" 
-                        value={formData.role}
-                        onChange={handleChange}
-                        isInvalid={!!errors.role}>
+                      <select type="selectbox" 
+                        name="role" 
+                        className={"form-control " + errors.roleClass} 
+                        onChange={handleChange}>
+                        <option value="">-- Select --</option>
                         <option value="student">Student</option>
                         <option value="professional">Professional</option>
                         <option value="parent">Parent</option>
                         <option value="other">Other</option>
                       </select>
-                      <span type="invalid">{errors.role}</span>
+                      <div className={errors.roleMsgClass}>{errors.role}</div>
                     </div>
 
                     <div className="form-check mb-3">
@@ -295,14 +313,12 @@ export default function GetStarted() {
                             I agree to the <a href="/terms" target="_blank" rel="noreferrer">Terms & Conditions</a>
                           </>
                         }
-                        isInvalid={!!errors.termsAccepted}
-                        feedback={errors.termsAccepted}
-                        feedbackType="invalid" required 
-                        className="form-check-input" />
+                        required 
+                        className={"form-check-input " + errors.termsClass} />
                       <label htmlFor="agree" className="form-check-label">
                         I agree to the <a href="/terms" target="_blank">Terms & Conditions</a>
                       </label>
-                      <span type="invalid">{errors.termsAccepted}</span>
+                      <div className={errors.termsMsgClass}>{errors.termsAccepted}</div>
                     </div>
 
                     <button type="submit" className="btn btn-primary w-100">Create Free Account</button>

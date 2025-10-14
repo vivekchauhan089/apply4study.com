@@ -7,6 +7,7 @@ import useSEO from "../hooks/useSEO";
 
 export default function Contact() {
   const [validated, setValidated] = useState(false);
+  const [IsMobile, setIsMobile] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -22,18 +23,54 @@ export default function Contact() {
     AOS.init({ duration: 1000 });
   }, []);
 
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value,
+    }));
+  };
+
   const APP_URL = process.env.REACT_APP_URL;
 
   const validateForm = () => {
     const newErrors = {};
 
-    if (!formData.name.trim()) newErrors.name = 'Name is required';
-    if (!formData.email) newErrors.email = 'Email is required';
-    else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Invalid email address';
-    if (!formData.mobile) newErrors.mobile = 'Mobile is required';
-    else if (!/^\d{10}$/.test(formData.mobile)) newErrors.mobile = 'Mobile must be a 10 digit number';
     if (!formData.subject.trim()) newErrors.subject = 'Subject is required';
     if (!formData.content.trim()) newErrors.content = 'Message is required';
+    if (!formData.name.trim()) {
+      newErrors.nameClass = 'is-invalid';
+      newErrors.nameMsgClass = 'invalid-feedback';
+      newErrors.name = 'Name is required';
+    }
+    if (!formData.email) {
+      newErrors.emailClass = 'is-invalid';
+      newErrors.emailMsgClass = 'invalid-feedback';
+      newErrors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.emailClass = 'is-invalid';
+      newErrors.emailMsgClass = 'invalid-feedback';
+      newErrors.email = 'Invalid email address';
+    }
+    if (!formData.mobile) {
+      newErrors.mobileClass = 'is-invalid';
+      newErrors.mobileMsgClass = 'invalid-feedback';
+      newErrors.mobile = 'Mobile is required';
+    } else if (!/^\d{10}$/.test(formData.mobile)) {
+      newErrors.mobileClass = 'is-invalid';
+      newErrors.mobileMsgClass = 'invalid-feedback';
+      newErrors.mobile = 'Mobile must be a 10 digit number';
+    }
+    if (!formData.subject) {
+      newErrors.subjectClass = 'is-invalid';
+      newErrors.subjectMsgClass = 'invalid-feedback';
+      newErrors.subject = 'Subject is required';
+    }
+    if (!formData.content) {
+      newErrors.contentClass = 'is-invalid';
+      newErrors.contentMsgClass = 'invalid-feedback';
+      newErrors.content = 'Message is required';
+    } 
 
     return newErrors;
   };
@@ -269,71 +306,72 @@ export default function Contact() {
 
             <div className="row justify-content-center">
               <div className="col-lg-8">
-                <form noValidate validated={validated} onSubmit={handleContactFormSubmit}>
+                <form noValidate validated={validated.toString()} onSubmit={handleContactFormSubmit}>
                   <div className="row gy-3">
                     <div className="col-md-6">
                       <input
                         type="text"
                         name="name"
-                        className="form-control"
+                        className={"form-control " + errors.nameClass}
                         placeholder="Your Name"
                         required
                         value={formData.name}
-                        isInvalid={!!errors.name}
+                        onChange={handleChange}
                       />
-                      <span type="invalid">{errors.name}</span>
+                      <div className={errors.nameMsgClass}>{errors.name}</div>
                     </div>
 
                     <div className="col-md-6">
                       <input
                         type="email"
-                        className="form-control"
+                        className={"form-control " + errors.emailClass}
                         name="email"
                         placeholder="Your Email"
                         required
                         value={formData.email}
-                        isInvalid={!!errors.email}
+                        onChange={handleChange}
                       />
-                      <span type="invalid">{errors.email}</span>
+                      <div className={errors.emailMsgClass}>{errors.email}</div>
                     </div>
 
                     <div className="col-md-6">
                       <input
                         type="number"
-                        className="form-control"
+                        className={"form-control " + errors.mobileClass}
                         name="mobile"
-                        maxlength="10"
+                        maxLength="10"
                         placeholder="Your Mobile"
                         required
                         value={formData.mobile}
-                        isInvalid={!!errors.mobile}
+                        onChange={handleChange}
                       />
-                      <span type="invalid">{errors.mobile}</span>
+                      <div className={errors.mobileMsgClass}>{errors.mobile}</div>
                     </div>
 
                     <div className="col-md-12">
                       <input
                         type="text"
-                        className="form-control"
+                        className={"form-control " + errors.subjectClass}
                         name="subject"
                         placeholder="Subject"
                         required
                         value={formData.subject}
-                        isInvalid={!!errors.subject}
+                        onChange={handleChange}
                       />
-                      <span type="invalid">{errors.subject}</span>
+                      <div className={errors.subjectMsgClass}>{errors.subject}</div>
                     </div>
 
                     <div className="col-md-12">
                       <textarea
-                        className="form-control"
+                        className={"form-control " + errors.contentClass}
                         name="content"
                         rows="6"
                         placeholder="Your Message"
                         required
-                        isInvalid={!!errors.name}
+                        value={formData.content}
+                        onChange={handleChange}
                       >{formData.content}</textarea>
-                      <span type="invalid">{errors.content}</span>
+                      <div className={errors.contentMsgClass}>{errors.content}</div>
                     </div>
 
                     <div className="col-md-12 text-center">

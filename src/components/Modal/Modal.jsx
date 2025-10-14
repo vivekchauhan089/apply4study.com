@@ -168,6 +168,7 @@ const Modals = ({ show, onHide, type }) => {
                     type="text"
                     name="last_name"
                     value={formData.last_name}
+                    onChange={handleChange}
                     isInvalid={!!errors.last_name}
                   />
                   <Form.Control.Feedback type="invalid">{errors.last_name}</Form.Control.Feedback>
