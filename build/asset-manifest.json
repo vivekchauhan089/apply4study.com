@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.38a0d52e.css",
-    "main.js": "/static/js/main.e454b9c9.js",
+    "main.js": "/static/js/main.7aebce80.js",
     "static/js/453.515f97b7.chunk.js": "/static/js/453.515f97b7.chunk.js",
     "static/media/service_bg.jpg": "/static/media/service_bg.eb50987a354334cbf91b.jpg",
     "static/media/blog_bg.jpg": "/static/media/blog_bg.03e8c618ad7f0fc92c37.jpg",
@@ -34,6 +34,7 @@
     "static/media/blog-author-5.jpg": "/static/media/blog-author-5.9bfb89631c6162eff491.jpg",
     "static/media/subjectsTopics.png": "/static/media/subjectsTopics.5f0686a4b349894d5807.png",
     "static/media/blog-author-2.jpg": "/static/media/blog-author-2.8ab9c6fa334529721ca4.jpg",
+    "static/media/stripe.png": "/static/media/stripe.f1fcd7a6838508ddb81b.png",
     "static/media/exam.png": "/static/media/exam.76c892574deb9c4617d2.png",
     "static/media/takeQuize.png": "/static/media/takeQuize.712fb779e8e23af82e45.png",
     "static/media/student.png": "/static/media/student.98917214e275ab57224c.png",
@@ -45,11 +46,11 @@
     "static/media/mobile_mocup.png": "/static/media/mobile_mocup.ced9f6fb81f2a533c58f.png",
     "index.html": "/index.html",
     "main.38a0d52e.css.map": "/static/css/main.38a0d52e.css.map",
-    "main.e454b9c9.js.map": "/static/js/main.e454b9c9.js.map",
+    "main.7aebce80.js.map": "/static/js/main.7aebce80.js.map",
     "453.515f97b7.chunk.js.map": "/static/js/453.515f97b7.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.38a0d52e.css",
-    "static/js/main.e454b9c9.js"
+    "static/js/main.7aebce80.js"
   ]
 }

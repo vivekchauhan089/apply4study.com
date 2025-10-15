@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-
-const gateways = ["razorpay", "paytm", "paypal"];
+import PaymentModal from "../Modal/PaymentModal";
 
 const PricePlan = () => {
     const [activeTab, setActiveTab] = useState('student');
     const [plans, setPlans] = useState([]);
-    const [selectedGateway, setSelectedGateway] = useState("razorpay");
+    const [selectedPlan, setSelectedPlan] = useState(null);
+    const [showPaymentModal, setShowPaymentModal] = useState(false);
 
     useEffect(() => {
         const fetchPlans = async () => {
@@ -22,59 +22,8 @@ const PricePlan = () => {
 
     // 🧾 Handle Buy Now click
     const handleBuyNow = async (plan) => {
-        try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/payment/create`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  plan_id: plan.id,
-                  plan_name: plan.name,
-                  amount: plan.price,
-                  gateway: selectedGateway,
-                  user_id: localStorage.getItem("user_id") || "68ee304335de1390e819b82e",
-                }),
-            });
-
-            const data = await response.json();
-            if (!response.ok) throw new Error(data.message || "Payment initiation failed");
-
-            // Gateway Handling
-            if (selectedGateway === "razorpay") {
-                const options = {
-                  key: data.key,
-                  amount: data.amount,
-                  currency: data.currency,
-                  name: "Apply4Study",
-                  description: plan.name,
-                  order_id: data.order_id,
-                  handler: async (paymentResponse) => {
-                    await fetch(`${process.env.REACT_APP_API_URL}/payment/verify`, {
-                      method: "POST",
-                      headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify({
-                        gateway: "razorpay",
-                        plan_id: plan.id,
-                        user_id: localStorage.getItem("user_id") || "68ee304335de1390e819b82e",
-                        ...paymentResponse,
-                      }),
-                    });
-                    alert("✅ Payment successful!");
-                  },
-                };
-
-                const rzp = new window.Razorpay(options);
-                rzp.open();
-
-            } else if (selectedGateway === "paytm") {
-                window.location.href = data.redirect_url;
-            } else if (selectedGateway === "paypal") {
-                window.open(data.redirect_url, "_blank");
-            }
-
-        } catch (err) {
-            console.error(err);
-            alert("❌ Payment failed. Please try again.");
-        }
+        setSelectedPlan(plan);
+        setShowPaymentModal(true);
     };
 
     return (
@@ -100,22 +49,6 @@ const PricePlan = () => {
                     >
                         For Teachers
                     </button>
-                </div>
-
-                {/* Payment Gateway Selector */}
-                <div className="text-center mb-4">
-                  <label>Select Payment Gateway: </label>
-                  <select
-                    className="form-select w-auto d-inline ms-2"
-                    value={selectedGateway}
-                    onChange={(e) => setSelectedGateway(e.target.value)}
-                  >
-                    {gateways.map((g) => (
-                      <option key={g} value={g}>
-                        {g.toUpperCase()}
-                      </option>
-                    ))}
-                  </select>
                 </div>
 
                 <div className="row mt-3">
@@ -232,6 +165,14 @@ const PricePlan = () => {
                     )}
                 </div>
             </div>
+
+            {selectedPlan && (
+                <PaymentModal
+                  show={showPaymentModal}
+                  onHide={() => setShowPaymentModal(false)}
+                  plan={selectedPlan}
+                />
+            )}
         </section>
     );
 };
