@@ -1,7 +1,88 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
+const gateways = ["razorpay", "paytm", "paypal"];
 
 const PricePlan = () => {
     const [activeTab, setActiveTab] = useState('student');
+    const [plans, setPlans] = useState([]);
+    const [selectedGateway, setSelectedGateway] = useState("razorpay");
+
+    useEffect(() => {
+        const fetchPlans = async () => {
+          try {
+            const res = await fetch(`${process.env.REACT_APP_API_URL}/api/plans`);
+            const data = await res.json();
+            if (data.success) setPlans(data.data);
+          } catch (err) {
+            console.error("Error fetching plans:", err);
+          }
+        };
+        fetchPlans();
+    }, []);
+
+    // 🧾 Handle Buy Now click
+    const handleBuyNow = async (plan) => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/payment/create`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  plan_id: plan.id,
+                  plan_name: plan.name,
+                  amount: plan.price,
+                  gateway: selectedGateway,
+                  user_id: localStorage.getItem("user_id") || "guest",
+                }),
+            });
+
+            const data = await response.json();
+            if (!response.ok) throw new Error(data.message || "Payment initiation failed");
+
+            // Gateway Handling
+            if (selectedGateway === "razorpay") {
+                const options = {
+                  key: data.key,
+                  amount: data.amount,
+                  currency: data.currency,
+                  name: "Apply4Study",
+                  description: plan.name,
+                  order_id: data.order_id,
+                  handler: async (paymentResponse) => {
+                    await fetch(`${process.env.REACT_APP_API_URL}/payment/verify`, {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({
+                        gateway: "razorpay",
+                        plan_id: plan.id,
+                        user_id: localStorage.getItem("user_id") || "guest",
+                        ...paymentResponse,
+                      }),
+                    });
+                    alert("✅ Payment successful!");
+                  },
+                };
+
+                const rzp = new window.Razorpay(options);
+                rzp.open();
+
+            } else if (selectedGateway === "paytm") {
+                window.location.href = data.redirect_url;
+            } else if (selectedGateway === "paypal") {
+                window.open(data.redirect_url, "_blank");
+            }
+
+        } catch (err) {
+            console.error(err);
+            alert("❌ Payment failed. Please try again.");
+        }
+    };
+
+    /* 💳 Plan details
+    const plans = [
+        { name: "🆓 Free Plan", price: 19 },
+        { name: "💼 Starter Plan", price: 499 },
+        { name: "🚀 Pro Plan", price: 999 },
+    ];*/
 
     return (
         <section className="pricing section light-background">
@@ -28,14 +109,31 @@ const PricePlan = () => {
                     </button>
                 </div>
 
+                {/* Payment Gateway Selector */}
+                <div className="text-center mb-4">
+                  <label>Select Payment Gateway: </label>
+                  <select
+                    className="form-select w-auto d-inline ms-2"
+                    value={selectedGateway}
+                    onChange={(e) => setSelectedGateway(e.target.value)}
+                  >
+                    {gateways.map((g) => (
+                      <option key={g} value={g}>
+                        {g.toUpperCase()}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
                 <div className="row mt-3">
 
                     {activeTab === 'student' && (
                         <>
+                            {plans.map((plan) => (
                             <div className="col-lg-4">
                                 <div className="pricing-item">
-                                    <h3>🆓 Free Plan</h3>
-                                    <h4><sup>₹</sup>19<span>/month</span></h4>
+                                    <h3>{plan.name}</h3>
+                                    <h4><sup>₹</sup>{plan.price}<span>/month</span></h4>
                                     <h4><span className="na">Perfect for exploring</span></h4>
                                     <p className="text-description">Get started with essential learning tools at no cost.</p>
                                     <ul>
@@ -45,11 +143,14 @@ const PricePlan = () => {
                                         <li><i className="bi bi-check2-all"></i> Progress tracking tools</li>
                                         <li className="na"><i className="bi bi-check2"></i> <span>No certificates or full course access</span></li>
                                     </ul>
-                                    <a href="#" className="buy-btn">Buy Now</a>
+                                    <a className="buy-btn" 
+                                        onClick={() => handleBuyNow(plan)}
+                                      >Buy Now</a>
                                 </div>
                             </div>
+                            ))}
 
-                            <div className="col-lg-4 featured">
+                            {/*<div className="col-lg-4 featured">
                                 <div className="pricing-item">
                                     <h3>💼 Starter Plan</h3>
                                     <h4><sup>₹</sup>499<span>/month</span></h4>
@@ -84,7 +185,7 @@ const PricePlan = () => {
                                     </ul>
                                     <a href="#" className="buy-btn">Buy Now</a>
                                 </div>
-                            </div>
+                            </div>*/}
                         </>
                     )}
 

@@ -46,6 +46,7 @@
     "puppeteer": "^2.1.1",
     "qrcode": "^1.5.4",
     "random-number": "0.0.9",
+    "razorpay": "^2.9.6",
     "request": "^2.88.0",
     "sendgrid": "^5.2.3",
     "supertest": "^3.3.0",

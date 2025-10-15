@@ -292,4 +292,39 @@ router.post("/set_password", ApiMiddleware, ApiUserController.setPassword);
  */
 router.put("/update_user/:id", ApiMiddleware, ApiUserController.updateUser);
 
+
+const ApiPlanController = require("../controllers/api/ApiPlanController");
+
+/**
+ * @route POST /api/plan/fetchall
+ * @group Plan
+ * @param {object} body - { plan_id, plan_name, amount }
+ */
+router.get("/plan/fetchall", ApiPlanController.getAllPlans);
+
+/**
+ * @route POST /api/plan/create
+ * @group Plan
+ * @param {object} body - { plan_name, amount }
+ */
+router.post("/plan/create", ApiPlanController.createPlan);
+
+
+const ApiPaymentController = require("../controllers/api/ApiPaymentController");
+
+/**
+ * @route POST /api/payment/create
+ * @group Payment
+ * @param {object} body - { plan_name, amount, gateway }
+ */
+router.post("/payment/create", ApiPaymentController.createPayment);
+
+/**
+ * @route POST /api/payment/verify
+ * @group Payment
+ * @param {object} body - payment verification data
+ */
+router.post("/payment/verify", ApiPaymentController.verifyPayment);
+
+
 module.exports = router;        
