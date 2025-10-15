@@ -83,6 +83,8 @@ export default function Footer() {
                 <li><a href="/service">Services</a></li>
                 <li><a href="/terms-conditions">Terms of service</a></li>
                 <li><a href="/privacy-policy">Privacy policy</a></li>
+                <li><a href="/shipping-policy">Shipping policy</a></li>
+                <li><a href="/refund-policy">Refund policy</a></li>
               </ul>
             </div>
 

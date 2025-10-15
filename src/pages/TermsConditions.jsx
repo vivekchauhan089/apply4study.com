@@ -49,47 +49,56 @@ export default function TermsConditions() {
       {/* Content */}
       <section className="section light-background">
         <div className="container" data-aos="fade-up">
-          <h2>1. Acceptance of Terms</h2>
+          
           <p>
-            By accessing or using <strong>Apply4Study</strong>, you agree to comply with these Terms &
-            Conditions. If you do not agree, please discontinue using the platform.
+            Welcome to <strong>Apply4Study</strong>. By using our website and services, you agree to comply with the following terms and conditions. Please read them carefully before registering or making a purchase.
           </p>
 
-          <h2>2. Use of Our Services</h2>
-          <ul>
-            <li>You must be at least 13 years old to use Apply4Study.</li>
-            <li>You agree not to misuse the platform or engage in fraudulent activities.</li>
-            <li>All information provided during registration must be accurate and up to date.</li>
-          </ul>
-
-          <h2>3. Intellectual Property</h2>
+          <h5>1. Eligibility</h5>
           <p>
-            All course materials, graphics, and logos on Apply4Study are protected by copyright and intellectual property
-            laws. You may not copy, reproduce, or redistribute our content without prior permission.
+            Users must be at least 13 years old to create an account. By using our
+            services, you confirm that all information you provide is accurate and
+            current.
           </p>
 
-          <h2>4. Payments and Refunds</h2>
+          <h5>2. Account Responsibility</h5>
           <p>
-            Fees for paid courses or subscriptions must be paid in advance. Refunds are subject to course-specific terms,
-            which will be clearly mentioned at the time of purchase.
+            You are responsible for maintaining the confidentiality of your login
+            credentials and for all activities under your account.
           </p>
 
-          <h2>5. Limitation of Liability</h2>
+          <h5>3. Use of Services</h5>
           <p>
-            Apply4Study will not be liable for any direct or indirect damages arising from the use of our platform,
-            including technical errors or interruptions.
+            Our platform is intended solely for educational purposes. Any misuse,
+            including sharing of copyrighted material or unauthorized commercial use,
+            is strictly prohibited.
           </p>
 
-          <h2>6. Account Suspension</h2>
+          <h5>4. Payment Terms</h5>
           <p>
-            We reserve the right to suspend or terminate user accounts found violating our policies or engaging in
-            inappropriate conduct.
+            Payments are securely processed via Razorpay or other supported gateways.
+            Once a digital plan is activated, it is non-transferable and
+            non-refundable, except as stated in our{" "}
+            <a href="/refund-policy">Refund Policy</a>.
           </p>
 
-          <h2>7. Governing Law</h2>
+          <h5>5. Intellectual Property</h5>
           <p>
-            These Terms shall be governed by and construed under the laws of India. Any disputes will be subject to the
-            jurisdiction of New Delhi courts.
+            All course materials, content, and design are the intellectual property
+            of Apply4Study and its partners. Unauthorized copying or redistribution
+            is not permitted.
+          </p>
+
+          <h5>6. Termination</h5>
+          <p>
+            We reserve the right to suspend or terminate accounts that violate our
+            policies, engage in fraudulent activity, or misuse platform resources.
+          </p>
+
+          <h5>7. Governing Law</h5>
+          <p>
+            These terms are governed by the laws of India. Any disputes shall be
+            subject to the jurisdiction of the courts in Delhi, India.
           </p>
 
           <h2>8. Contact Us</h2>
@@ -98,6 +107,11 @@ export default function TermsConditions() {
             <strong>Email:</strong> support@apply4study.com<br />
             <strong>Address:</strong> A-108 Worldmark-2, Aerocity, New Delhi 110037, India
           </p>
+
+          <p className="mt-5 text-muted">
+            <em>Last updated: October 2025</em>
+          </p>
+
         </div>
       </section>
     </div>

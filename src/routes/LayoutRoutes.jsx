@@ -17,6 +17,8 @@ import GetStarted from '../pages/getStarted';
 import Contact from '../pages/Contact';
 import PrivacyPolicy from '../pages/PrivacyPolicy';
 import TermsConditions from '../pages/TermsConditions';
+import ShippingPolicy from '../pages/ShippingPolicy';
+import RefundPolicy from '../pages/RefundPolicy';
 
 const LayoutRoutes = () => (
   <Routes>
@@ -32,6 +34,8 @@ const LayoutRoutes = () => (
       <Route path='contact' element={<Contact />} />
       <Route path='privacy-policy' element={<PrivacyPolicy />} />
       <Route path='terms-conditions' element={<TermsConditions />} />
+      <Route path='shipping-policy' element={<ShippingPolicy />} />
+      <Route path='refund-policy' element={<RefundPolicy />} />
       {/* <Route path="/search" element={<SearchResults />} /> */}
     </Route>
   </Routes>

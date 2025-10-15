@@ -49,51 +49,62 @@ export default function PrivacyPolicy() {
       {/* Content */}
       <section className="section light-background">
         <div className="container" data-aos="fade-up">
-          <h2>1. Introduction</h2>
           <p>
-            At <strong>Apply4Study</strong>, we value your trust. This Privacy Policy explains how we
-            collect, use, and protect your personal information when you access our website or online learning platform.
+            <strong>Apply4Study</strong> values your privacy and is committed to protecting your personal data. This Privacy Policy explains how we collect, use, and safeguard your information when you use our website, mobile application, and services.
           </p>
 
-          <h2>2. Information We Collect</h2>
+          <h5>1. Information We Collect</h5>
           <p>
-            We may collect information you provide directly such as your name, email address,
-            phone number, and course preferences. We also collect limited technical data such as IP address and device
-            details to improve our services.
+            We collect information you provide directly (e.g., name, email, phone,
+            academic details), as well as data automatically gathered through
+            analytics tools, cookies, and third-party integrations such as Razorpay
+            for secure payments.
           </p>
 
-          <h2>3. How We Use Your Information</h2>
-          <ul>
-            <li>To create and manage your Apply4Study account.</li>
-            <li>To deliver courses, live sessions, and personalized content.</li>
-            <li>To communicate important updates or offers.</li>
-            <li>To enhance website functionality and user experience.</li>
-          </ul>
-
-          <h2>4. Data Protection & Security</h2>
+          <h5>2. How We Use Your Information</h5>
           <p>
-            We implement appropriate technical and organizational measures to safeguard your data against unauthorized
-            access, alteration, or disclosure. Your personal data is processed in accordance with applicable data
-            protection laws.
+            We use your data to:
+            <ul>
+              <li>Provide and personalize learning services</li>
+              <li>Process secure payments via Razorpay</li>
+              <li>Send updates, newsletters, and support messages</li>
+              <li>Improve user experience through analytics</li>
+            </ul>
           </p>
 
-          <h2>5. Third-Party Services</h2>
+          <h5>3. Data Security</h5>
           <p>
-            We may use trusted third-party tools for analytics, payments, or email services. These partners comply with
-            privacy standards and handle data only for agreed purposes.
+            We use SSL encryption, secure databases, and PCI-DSS-compliant payment
+            processing via Razorpay to safeguard all personal and financial data.
           </p>
 
-          <h2>6. Your Rights</h2>
+          <h5>4. Cookies & Tracking</h5>
           <p>
-            You have the right to access, modify, or delete your personal data. You can also withdraw consent for
-            communications anytime by contacting{" "}
-            <a href="mailto:support@apply4study.com">support@apply4study.com</a>.
+            Our platform uses cookies to improve site functionality and user
+            experience. You can modify cookie preferences via your browser settings.
           </p>
 
-          <h2>7. Policy Updates</h2>
+          <h5>5. Sharing of Information</h5>
           <p>
-            We may update this Privacy Policy periodically. The latest version will always be available on this page with
-            the revised effective date.
+            We never sell or rent your data. Information may only be shared with:
+            <ul>
+              <li>Authorized service providers (e.g., Razorpay, AWS, SendGrid)</li>
+              <li>Legal authorities, if required by law</li>
+            </ul>
+          </p>
+
+          <h5>6. Your Rights</h5>
+          <p>
+            You have the right to access, update, or delete your personal data.
+            Contact{" "}
+            <a href="mailto:privacy@apply4study.com">privacy@apply4study.com</a> for
+            assistance.
+          </p>
+
+          <h5>7. Updates to This Policy</h5>
+          <p>
+            This policy may be updated periodically. Changes will be reflected on
+            this page with the revised effective date.
           </p>
 
           <h2>8. Contact Us</h2>
@@ -102,6 +113,11 @@ export default function PrivacyPolicy() {
             <strong>Email:</strong> support@apply4study.com<br />
             <strong>Address:</strong> A-108 Worldmark-2, Aerocity, New Delhi 110037, India
           </p>
+
+          <p className="mt-5 text-muted">
+            <em>Last updated: October 2025</em>
+          </p>
+          
         </div>
       </section>
     </div>
