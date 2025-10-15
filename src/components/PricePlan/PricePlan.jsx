@@ -10,7 +10,7 @@ const PricePlan = () => {
     useEffect(() => {
         const fetchPlans = async () => {
           try {
-            const res = await fetch(`${process.env.REACT_APP_API_URL}/api/plans`);
+            const res = await fetch(`${process.env.REACT_APP_API_URL}/plan/fetchall`);
             const data = await res.json();
             if (data.success) setPlans(data.data);
           } catch (err) {

@@ -12,7 +12,7 @@ const s3Upload = require('../../lib/s3Upload');
 const Razorpay = require("razorpay");
 const Payment = require.main.require("./models/Payment");
 
-async function createOrder {
+async function createOrder (req, res) {
   try {
     const { plan_id, plan_name, amount, gateway, user_id } = req.body;
 

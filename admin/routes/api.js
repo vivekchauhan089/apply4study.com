@@ -317,7 +317,7 @@ const ApiPaymentController = require("../controllers/api/ApiPaymentController");
  * @group Payment
  * @param {object} body - { plan_name, amount, gateway }
  */
-router.post("/payment/create", ApiPaymentController.createPayment);
+router.post("/payment/create", ApiPaymentController.createOrder);
 
 /**
  * @route POST /api/payment/verify
