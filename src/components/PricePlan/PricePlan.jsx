@@ -31,7 +31,7 @@ const PricePlan = () => {
                   plan_name: plan.name,
                   amount: plan.price,
                   gateway: selectedGateway,
-                  user_id: localStorage.getItem("user_id") || "guest",
+                  user_id: localStorage.getItem("user_id") || "68ee304335de1390e819b82e",
                 }),
             });
 
@@ -54,7 +54,7 @@ const PricePlan = () => {
                       body: JSON.stringify({
                         gateway: "razorpay",
                         plan_id: plan.id,
-                        user_id: localStorage.getItem("user_id") || "guest",
+                        user_id: localStorage.getItem("user_id") || "68ee304335de1390e819b82e",
                         ...paymentResponse,
                       }),
                     });
@@ -76,13 +76,6 @@ const PricePlan = () => {
             alert("❌ Payment failed. Please try again.");
         }
     };
-
-    /* 💳 Plan details
-    const plans = [
-        { name: "🆓 Free Plan", price: 19 },
-        { name: "💼 Starter Plan", price: 499 },
-        { name: "🚀 Pro Plan", price: 999 },
-    ];*/
 
     return (
         <section className="pricing section light-background">

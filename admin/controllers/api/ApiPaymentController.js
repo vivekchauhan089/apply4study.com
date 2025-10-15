@@ -9,18 +9,20 @@ let notificationContent = require('../../lib/notificationContent');
 var request = require('request');
 const s3Upload = require('../../lib/s3Upload');
 
+const { ObjectId } = require('mongodb');
+
 const Razorpay = require("razorpay");
-const Payment = require.main.require("./models/Payment");
+const Payments = require.main.require("./models/Payment");
 
 async function createOrder (req, res) {
   try {
-    const { plan_id, plan_name, amount, gateway, user_id } = req.body;
+    var { plan_id, plan_name, amount, gateway, user_id } = req.body;
+    user_id = new ObjectId(user_id.toString());
 
     if (gateway === "razorpay") {
-
       const razorpay = new Razorpay({
-        key_id: process.env.RAZORPAY_KEY_ID,
-        key_secret: process.env.RAZORPAY_KEY_SECRET,
+        key_id: config.RAZORPAY_KEY_ID,
+        key_secret: config.RAZORPAY_KEY_SECRET,
       });
 
       const order = await razorpay.orders.create({
@@ -40,7 +42,7 @@ async function createOrder (req, res) {
       });
 
       data = {
-        key: process.env.RAZORPAY_KEY_ID,
+        key: config.RAZORPAY_KEY_ID,
         amount: order.amount,
         currency: order.currency,
         order_id: order.id,
@@ -61,13 +63,13 @@ async function createOrder (req, res) {
 
 async function verifyPayment (req, res) {
   try {
-    const { gateway, razorpay_order_id, razorpay_payment_id, razorpay_signature, plan_id, user_id } = req.body;
+    var { gateway, razorpay_order_id, razorpay_payment_id, razorpay_signature, plan_id, user_id } = req.body;
 
     if (gateway === "razorpay") {
       const payment = await Payments.findOne({ order_id: razorpay_order_id });
       if (!payment) res.status(404).json({ success: false, message: "Invalid order id" });
 
-      const hmac = crypto.createHmac("sha256", process.env.RAZORPAY_SECRET);
+      const hmac = crypto.createHmac("sha256", config.RAZORPAY_SECRET);
       hmac.update(razorpay_order_id + "|" + razorpay_payment_id);
       const generatedSignature = hmac.digest("hex");
 

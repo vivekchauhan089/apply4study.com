@@ -35,6 +35,8 @@ let config = function(){
             // phoneID: '',
             // METATK: '',
             GROQ_API_KEY: '',
+            RAZORPAY_KEY_ID: '',
+            RAZORPAY_KEY_SECRET: '',
             pagelimit: 10
         };
         // use for development environment
