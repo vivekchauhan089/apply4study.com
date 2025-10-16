@@ -343,7 +343,7 @@ export default function GetStarted() {
                       <ReCAPTCHA
                         ref={recaptchaRef}
                         sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
-                        style={{ transform: "scale(1.57)", transformOrigin: "0 14px" }}
+                        style={{ transform: "scale(1.32)", transformOrigin: "0 14px" }}
                         onChange={(value) => setToken(value)}
                         className={errors.captchaClass}
                       />

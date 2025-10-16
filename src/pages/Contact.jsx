@@ -180,7 +180,7 @@ export default function Contact() {
         },
         "sameAs": [
           "https://www.facebook.com/apply4study",
-          "https://www.twitter.com/apply4study",
+          "https://www.x.com/apply4study",
           "https://www.instagram.com/apply4study",
           "https://www.linkedin.com/company/apply4study",
           "https://www.pinterest.com/apply4study",
@@ -285,7 +285,7 @@ export default function Contact() {
 
                   <div className="social-links mt-3 mb-3">
                     <a href="https://www.facebook.com/apply4study" className="me-3"><i className="bi bi-facebook"></i></a>
-                    <a href="https://twitter.com/apply4study" className="me-3"><i className="bi bi-twitter-x"></i></a>
+                    <a href="https://x.com/apply4study" className="me-3"><i className="bi bi-twitter-x"></i></a>
                     <a href="https://www.instagram.com/apply4study" className="me-3"><i className="bi bi-instagram"></i></a>
                     <a href="https://www.linkedin.com/company/apply4study" className="me-3"><i className="bi bi-linkedin"></i></a>
                     <a href="https://www.pinterest.com/apply4study"><i className="bi bi-pinterest"></i></a>

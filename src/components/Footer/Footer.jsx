@@ -68,7 +68,7 @@ export default function Footer() {
               </div>
               <div className="social-links d-flex mt-4">
                 <a href="https://www.facebook.com/apply4study"><i className="bi bi-facebook"></i></a>
-                <a href="https://www.twitter.com/apply4study"><i className="bi bi-twitter-x"></i></a>
+                <a href="https://www.x.com/apply4study"><i className="bi bi-twitter-x"></i></a>
                 <a href="https://www.instagram.com/apply4study"><i className="bi bi-instagram"></i></a>
                 <a href="https://www.linkedin.com/company/apply4study"><i className="bi bi-linkedin"></i></a>
                 <a href="https://www.pinterest.com/apply4study"><i className="bi bi-pinterest"></i></a>

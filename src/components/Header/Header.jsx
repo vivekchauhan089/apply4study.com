@@ -136,7 +136,7 @@ export default function Header() {
             <a href="https://www.facebook.com/apply4study" className="social-link" aria-label="Facebook">
               <i className="bi bi-facebook"></i>
             </a>
-            <a href="https://twitter.com/apply4study" className="social-link" aria-label="Twitter">
+            <a href="https://x.com/apply4study" className="social-link" aria-label="Twitter">
               <i className="bi bi-twitter-x"></i>
             </a>
             <a href="https://www.instagram.com/apply4study/" className="social-link" aria-label="Instagram">
@@ -161,7 +161,7 @@ export default function Header() {
               <a href="https://www.facebook.com/apply4study" className="social-link" aria-label="Facebook">
                 <i className="bi bi-facebook"></i>
               </a>
-              <a href="https://twitter.com/apply4study" className="social-link" aria-label="Twitter">
+              <a href="https://x.com/apply4study" className="social-link" aria-label="Twitter">
                 <i className="bi bi-twitter-x"></i>
               </a>
               <a href="https://www.instagram.com/apply4study" className="social-link" aria-label="Instagram">

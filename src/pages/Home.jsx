@@ -132,7 +132,7 @@ export default function Home() {
       "logo": `${APP_URL}/assets/logo.png`,
       "sameAs": [
         "https://www.facebook.com/apply4study",
-        "https://twitter.com/apply4study",
+        "https://x.com/apply4study",
         "https://www.linkedin.com/company/apply4study"
       ]
     }
