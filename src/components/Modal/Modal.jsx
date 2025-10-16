@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form, Toast, ToastContainer } from 'react-bootstrap';
+import ReCAPTCHA from "react-google-recaptcha";
 
 const Modals = ({ show, onHide, type }) => {
   const [validated, setValidated] = useState(false);
@@ -9,6 +10,7 @@ const Modals = ({ show, onHide, type }) => {
     email: '',
     mobile: '',
     role: '',
+    recaptcha: '',
     termsAccepted: false,
   });
   const [errors, setErrors] = useState({});
@@ -17,6 +19,7 @@ const Modals = ({ show, onHide, type }) => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [token, setToken] = useState("");
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -71,6 +74,7 @@ const Modals = ({ show, onHide, type }) => {
             email: formData.email,
             mobile: formData.mobile,
             role: formData.role,
+            recaptcha: token,
             termsAccepted: formData.termsAccepted,
           }),
         });
@@ -86,6 +90,7 @@ const Modals = ({ show, onHide, type }) => {
             email: "",
             mobile: "",
             role: "",
+            token: "",
             termsAccepted: false,
           });
         } else {
@@ -196,6 +201,14 @@ const Modals = ({ show, onHide, type }) => {
                     isInvalid={!!errors.mobile}
                   />
                   <Form.Control.Feedback type="invalid">{errors.mobile}</Form.Control.Feedback>
+                </Form.Group>
+
+                <Form.Group className="mt-3">
+                  {/* Google reCAPTCHA */}
+                  <ReCAPTCHA
+                    sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
+                    onChange={(value) => setToken(value)}
+                  />
                 </Form.Group>
 
                 <Form.Group className="mt-3">

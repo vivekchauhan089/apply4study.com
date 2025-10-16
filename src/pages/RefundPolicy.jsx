@@ -12,15 +12,15 @@ export default function RefundPolicy() {
 
   useSEO({
     title: "Cancellation & Refund Policy — Apply4Study",
-    description:
-      "Read Apply4Study’s cancellation and refund policy for payments made via Razorpay. Understand eligibility, refund timelines, and support process.",
+    description: "Read Apply4Study’s cancellation and refund policy for payments made via Razorpay. Understand eligibility, refund timelines, and support process.",
     canonical: `${APP_URL}/cancellation-refund-policy`,
     schema: {
       "@context": "https://schema.org",
       "@type": "WebPage",
       "name": "Cancellation & Refund Policy - Apply4Study",
-      "description":
-        "Apply4Study’s policy describing refund eligibility and cancellation procedures for Razorpay transactions.",
+      "description": "Apply4Study’s policy describing refund eligibility and cancellation procedures for Razorpay transactions.",
+      "datePublished": "2025-10-01",
+      "dateModified": new Date().toISOString().split("T")[0],
       "publisher": {
         "@type": "Organization",
         "name": "Apply4Study",
@@ -115,6 +115,19 @@ export default function RefundPolicy() {
           <p className="mt-5 text-muted">
             <em>Last updated: October 2025</em>
           </p>
+
+          <hr className="my-4" />
+
+          <div className="related-links mt-4">
+            <h5>Related Policies</h5>
+            <ul>
+              <li><a href={`${APP_URL}/privacy-policy`}>Privacy Policy</a></li>
+              <li><a href={`${APP_URL}/terms-conditions`}>Terms & Conditions</a></li>
+              <li><a href={`${APP_URL}/shipping-policy`}>Shipping & Delivery Policy</a></li>
+              <li><a href={`${APP_URL}/contact`}>Contact Us</a></li>
+            </ul>
+          </div>
+
         </div>
       </section>
     </div>

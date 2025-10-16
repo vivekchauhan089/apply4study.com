@@ -12,21 +12,47 @@ export default function TermsConditions() {
 
   useSEO({
     title: "Terms & Conditions — Apply4Study",
-    description:
-      "Review Apply4Study’s Terms & Conditions to understand the rules and responsibilities of using our online learning platform.",
+    description: "Review Apply4Study’s Terms & Conditions to understand the rules and responsibilities of using our online learning platform.",
     canonical: `${APP_URL}/terms-conditions`,
     schema: {
       "@context": "https://schema.org",
-      "@type": "WebPage",
+      "@type": ["WebPage", "FAQPage"],
       "name": "Terms and Conditions - Apply4Study",
-      "description":
-        "These Terms & Conditions govern your access and use of Apply4Study's learning platform and services.",
+      "description": "These Terms & Conditions govern your access and use of Apply4Study's learning platform and services.",
+      "datePublished": "2025-10-01",
+      "dateModified": new Date().toISOString().split("T")[0],
       "publisher": {
         "@type": "Organization",
         "name": "Apply4Study",
         "url": APP_URL,
-        "logo": `${APP_URL}/assets/logo.png`
-      }
+        "logo": `${APP_URL}/assets/logo.png`,
+      },
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What are the terms of using Apply4Study?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "By using Apply4Study, you agree to comply with our platform guidelines, payment policies, and community standards."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I cancel my account anytime?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. You can cancel your account anytime by contacting our support team. Refunds depend on the selected plan and payment method."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does Apply4Study update its terms?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. We may update these terms periodically to reflect new features, services, or legal requirements."
+          }
+        }
+      ]
     }
   });
 
@@ -47,70 +73,80 @@ export default function TermsConditions() {
       </div>
 
       {/* Content */}
-      <section className="section light-background">
+      <section className="section light-background py-5">
         <div className="container" data-aos="fade-up">
           
-          <p>
-            Welcome to <strong>Apply4Study</strong>. By using our website and services, you agree to comply with the following terms and conditions. Please read them carefully before registering or making a purchase.
+          <p className="lead">
+            Welcome to <strong>Apply4Study</strong>. By accessing or using our website, mobile app, or any associated services,
+            you agree to the following Terms and Conditions. Please read them carefully before proceeding.
           </p>
 
-          <h5>1. Eligibility</h5>
+          <h5>1. Acceptance of Terms</h5>
           <p>
-            Users must be at least 13 years old to create an account. By using our
-            services, you confirm that all information you provide is accurate and
-            current.
+            By registering or using Apply4Study, you acknowledge that you have read, understood, and agree to
+            be bound by these Terms and Conditions, along with our Privacy Policy, Refund Policy, and any
+            additional guidelines posted on our platform.
           </p>
 
-          <h5>2. Account Responsibility</h5>
+          <h5>2. User Accounts</h5>
           <p>
-            You are responsible for maintaining the confidentiality of your login
-            credentials and for all activities under your account.
+            To access specific features, you must create an account with accurate and complete information. You
+            are responsible for maintaining the confidentiality of your login credentials and all activities under your account.
           </p>
 
-          <h5>3. Use of Services</h5>
+          <h5>3. Payment & Subscription</h5>
           <p>
-            Our platform is intended solely for educational purposes. Any misuse,
-            including sharing of copyrighted material or unauthorized commercial use,
-            is strictly prohibited.
+            Apply4Study offers various subscription plans for students and educators. By purchasing a plan, you
+            agree to provide accurate billing details and authorize Apply4Study (and its partners like Razorpay, Paytm,
+            or Stripe) to charge your account as per your selected plan.
           </p>
 
-          <h5>4. Payment Terms</h5>
+          <h5>4. Cancellation & Refunds</h5>
           <p>
-            Payments are securely processed via Razorpay or other supported gateways.
-            Once a digital plan is activated, it is non-transferable and
-            non-refundable, except as stated in our{" "}
-            <a href="/refund-policy">Refund Policy</a>.
+            Refund requests are processed according to our{" "}
+            <a href={`${APP_URL}/refund-policy`}>Cancellation & Refund Policy</a>. You may cancel your subscription anytime from your dashboard.
           </p>
 
-          <h5>5. Intellectual Property</h5>
+          <h5>5. Intellectual Property Rights</h5>
           <p>
-            All course materials, content, and design are the intellectual property
-            of Apply4Study and its partners. Unauthorized copying or redistribution
-            is not permitted.
+            All content, trademarks, and digital assets on Apply4Study remain the intellectual property of their
+            respective owners. Users may not reproduce, modify, or distribute platform content without prior consent.
           </p>
 
-          <h5>6. Termination</h5>
+          <h5>6. Limitation of Liability</h5>
           <p>
-            We reserve the right to suspend or terminate accounts that violate our
-            policies, engage in fraudulent activity, or misuse platform resources.
+            Apply4Study is not liable for any indirect, incidental, or consequential damages arising from the use
+            of our services. We make reasonable efforts to ensure platform accuracy but do not guarantee uninterrupted access.
           </p>
 
-          <h5>7. Governing Law</h5>
+          <h5>7. Updates to These Terms</h5>
           <p>
-            These terms are governed by the laws of India. Any disputes shall be
-            subject to the jurisdiction of the courts in Delhi, India.
+            These Terms may be updated periodically. Continued use of Apply4Study after updates constitutes your
+            acceptance of the revised terms. Last updated: October 14, 2025.
           </p>
 
-          <h2>8. Contact Us</h2>
+          <h5>8. Contact Us</h5>
           <p>
-            For any concerns about these Terms, please contact:<br />
-            <strong>Email:</strong> support@apply4study.com<br />
+            For questions or clarifications, reach out at<br />
+            <strong>Email:</strong> <a href="mailto:support@apply4study.com">support@apply4study.com</a><br />
             <strong>Address:</strong> A-108 Worldmark-2, Aerocity, New Delhi 110037, India
           </p>
 
           <p className="mt-5 text-muted">
             <em>Last updated: October 2025</em>
           </p>
+
+          <hr className="my-4" />
+
+          <div className="related-links mt-4">
+            <h5>Related Policies</h5>
+            <ul>
+              <li><a href={`${APP_URL}/privacy-policy`}>Privacy Policy</a></li>
+              <li><a href={`${APP_URL}/shipping-policy`}>Shipping Policy</a></li>
+              <li><a href={`${APP_URL}/refund-policy`}>Cancellation & Refund Policy</a></li>
+              <li><a href={`${APP_URL}/contact`}>Contact Us</a></li>
+            </ul>
+          </div>
 
         </div>
       </section>

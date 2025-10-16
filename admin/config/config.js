@@ -37,6 +37,7 @@ let config = function(){
             GROQ_API_KEY: '',
             RAZORPAY_KEY_ID: '',
             RAZORPAY_KEY_SECRET: '',
+            RECAPTCHA_SECRET_KEY: '',
             pagelimit: 10
         };
         // use for development environment

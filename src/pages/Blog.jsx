@@ -36,6 +36,8 @@ export default function Blog() {
     description: "Tips and strategies for succeeding in online classrooms.",
     canonical: `${APP_URL}/blog/online-learning-tips`,
     schema: {
+      "datePublished": "2025-10-01",
+      "dateModified": new Date().toISOString().split("T")[0],
       "@context": "https://schema.org",
       "@type": "Article",
       "headline": "How to Succeed in Online Learning",

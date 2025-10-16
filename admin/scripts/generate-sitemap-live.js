@@ -21,6 +21,8 @@ const queue = [
   '/contact',
   '/privacy-policy',
   '/terms-conditions',
+  '/shipping-policy',
+  '/refund-policy',
 ];
 
 // 🕷️ Crawl pages recursively

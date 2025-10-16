@@ -4,6 +4,7 @@ import "aos/dist/aos.css";
 import LazyImage from "../components/common/LazyImage";
 import contactImg from "../assets/img/about.jpg";
 import useSEO from "../hooks/useSEO";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export default function Contact() {
   const [validated, setValidated] = useState(false);
@@ -13,11 +14,13 @@ export default function Contact() {
     email: '',
     mobile: '',
     subject: '',
-    content: ''
+    content: '',
+    recaptcha: '',
   });
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [token, setToken] = useState("");
 
   useEffect(() => {
     AOS.init({ duration: 1000 });
@@ -102,7 +105,8 @@ export default function Contact() {
             mobile:  formData.mobile,
             subject: formData.subject,
             content: formData.content,
-            type:    "contact"
+            type:    "contact",
+            recaptcha: token,
           }),
         });
 
@@ -115,6 +119,7 @@ export default function Contact() {
             mobile: "",
             subject: "",
             content: "",
+            token: "",
           });
         } else {
           setMessage(data.message || "You are already subscribed.");
@@ -153,10 +158,11 @@ export default function Contact() {
 
   useSEO({
     title: "Contact Apply4Study — Get in Touch",
-    description:
-      "Have questions or need support? Contact Apply4Study for online learning assistance, business inquiries, or partnership opportunities.",
+    description: "Have questions or need support? Contact Apply4Study for online learning assistance, business inquiries, or partnership opportunities.",
     canonical: `${APP_URL}/contact`,
     schema: {
+      "datePublished": "2025-10-01",
+      "dateModified": new Date().toISOString().split("T")[0],
       "@context": "https://schema.org",
       "@type": "ContactPage",
       "mainEntity": {
@@ -374,10 +380,19 @@ export default function Contact() {
                       <div className={errors.contentMsgClass}>{errors.content}</div>
                     </div>
 
+                    <div className="col-md-12">
+                      {/* Google reCAPTCHA */}
+                      <ReCAPTCHA
+                        sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
+                        onChange={(value) => setToken(value)}
+                      />
+                    </div>
+
                     <div className="col-md-12 text-center">
                       <button
                         type="submit"
                         className="btn btn-primary rounded-pill px-4 py-2"
+                        disabled={!token}
                       >
                         Send Message
                       </button>

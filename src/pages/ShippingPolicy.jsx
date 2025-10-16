@@ -12,15 +12,15 @@ export default function ShippingPolicy() {
 
   useSEO({
     title: "Shipping Policy — Apply4Study",
-    description:
-      "Understand Apply4Study's shipping policy for physical or digital course materials. Learn about processing times, delivery methods, and support contact details.",
+    description: "Understand Apply4Study's shipping policy for physical or digital course materials. Learn about processing times, delivery methods, and support contact details.",
     canonical: `${APP_URL}/shipping-policy`,
     schema: {
       "@context": "https://schema.org",
       "@type": "WebPage",
       "name": "Shipping Policy - Apply4Study",
-      "description":
-        "Apply4Study outlines the terms and process for shipping digital or physical materials, including delivery timelines and handling.",
+      "description": "Apply4Study outlines the terms and process for shipping digital or physical materials, including delivery timelines and handling.",
+      "datePublished": "2025-10-01",
+      "dateModified": new Date().toISOString().split("T")[0],
       "publisher": {
         "@type": "Organization",
         "name": "Apply4Study",
@@ -83,6 +83,19 @@ export default function ShippingPolicy() {
           <p className="mt-5 text-muted">
             <em>Last updated: October 2025</em>
           </p>
+
+          <hr className="my-4" />
+          
+          <div className="related-links mt-4">
+            <h5>Related Policies</h5>
+            <ul>
+              <li><a href={`${APP_URL}/privacy-policy`}>Privacy Policy</a></li>
+              <li><a href={`${APP_URL}/terms-conditions`}>Terms & Conditions</a></li>
+              <li><a href={`${APP_URL}/refund-policy`}>Cancellation & Refund Policy</a></li>
+              <li><a href={`${APP_URL}/contact`}>Contact Us</a></li>
+            </ul>
+          </div>
+
         </div>
       </section>
     </div>

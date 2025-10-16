@@ -20,6 +20,8 @@ export default function Price() {
       "@context": "https://schema.org",
       "@type": "Offer",
       "name": "Apply4Study Course Subscription",
+      "datePublished": "2025-10-01",
+      "dateModified": new Date().toISOString().split("T")[0],
       "price": "4999",
       "priceCurrency": "INR",
       "availability": "https://schema.org/InStock",

@@ -10,6 +10,7 @@ import 'aos/dist/aos.css';
 // import getStartedImg from '../assets/img/getStarted.png';
 import LazyImage from '../components/common/LazyImage';
 import useSEO from "../hooks/useSEO";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const testimonials = [
   {
@@ -63,12 +64,14 @@ export default function GetStarted() {
     email: '',
     mobile: '',
     role: '',
+    recaptcha: '',
     termsAccepted: false,
   });
   const [errors, setErrors] = useState({});
 
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [token, setToken] = useState("");
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -145,6 +148,7 @@ export default function GetStarted() {
             email: formData.email,
             mobile: formData.mobile,
             role: formData.role,
+            recaptcha: token,
             termsAccepted: formData.termsAccepted,
           }),
         });
@@ -158,6 +162,7 @@ export default function GetStarted() {
             email: "",
             mobile: "",
             role: "",
+            recaptcha: "",
             termsAccepted: false,
           });
         } else {
@@ -192,6 +197,8 @@ export default function GetStarted() {
       "name": "Get Started with Apply4Study",
       "url": `${APP_URL}/get-started`,
       "description": "Sign up for Apply4Study and access online courses, classrooms, and digital learning resources.",
+      "datePublished": "2025-10-01",
+      "dateModified": new Date().toISOString().split("T")[0],
       "publisher": {
         "@type": "Organization",
         "name": "Apply4Study",
@@ -308,6 +315,14 @@ export default function GetStarted() {
                         <option value="other">Other</option>
                       </select>
                       <div className={errors.roleMsgClass}>{errors.role}</div>
+                    </div>
+
+                    <div className="mb-3">
+                      {/* Google reCAPTCHA */}
+                      <ReCAPTCHA
+                        sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
+                        onChange={(value) => setToken(value)}
+                      />
                     </div>
 
                     <div className="form-check mb-3">

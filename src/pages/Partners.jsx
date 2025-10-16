@@ -66,6 +66,8 @@ export default function Partners() {
       "@context": "https://schema.org",
       "@type": "Organization",
       "name": "Apply4Study Partners",
+      "datePublished": "2025-10-01",
+      "dateModified": new Date().toISOString().split("T")[0],
       "url": `${APP_URL}/partners`,
       "logo": `${APP_URL}/assets/logo.png`,
       "brand": [

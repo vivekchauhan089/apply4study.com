@@ -21,6 +21,8 @@ export default function About() {
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
       "name": "Apply4Study",
+      "datePublished": "2025-10-01",
+      "dateModified": new Date().toISOString().split("T")[0],
       "image": `${APP_URL}/assets/logo.png`,
       "url": `${APP_URL}/`,
       "telephone": "+91-9876543210",

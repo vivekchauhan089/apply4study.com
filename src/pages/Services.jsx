@@ -32,6 +32,8 @@ export default function Services() {
         "@type": "Country",
         "name": "India"
       },
+      "datePublished": "2025-10-01",
+      "dateModified": new Date().toISOString().split("T")[0],
       "description": "Apply4Study provides online learning services including interactive courses, virtual classrooms, and live sessions."
     }
   });

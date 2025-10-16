@@ -6,8 +6,8 @@ let crypto = require("crypto");
 let sendgridemail = require('../../lib/email');
 let rn = require('random-number');
 let notificationContent = require('../../lib/notificationContent');
-var request = require('request');
-const s3Upload = require('../../lib/s3Upload');
+let s3Upload = require('../../lib/s3Upload');
+let reCAPTCHA = require('../../lib/reCAPTCHA');
 
 const Users = require.main.require("./models/Users"); // adjust path as needed
 
@@ -16,10 +16,16 @@ const Users = require.main.require("./models/Users"); // adjust path as needed
 // ===============================
 async function register (req, res) {
   try {
-    const { first_name, last_name, email, mobile_number, password="Study2025", role } = req.body;
+    const { first_name, last_name, email, mobile_number, password="Study2025", role, recaptcha } = req.body;
 
-    if (!first_name || !email || !password) {
-      return res.status(400).json({ message: "Missing required fields" });
+    if (!first_name || !email || !password || !recaptcha) {
+      res.status(400).json({ message: "Missing required fields" });
+    }
+
+    // 🔐 Verify reCAPTCHA
+    const isValidCaptcha = await verifyRecaptcha(recaptcha);
+    if (!isValidCaptcha) {
+      res.status(400).json({ success: false, message: "reCAPTCHA Verification failed" });
     }
 
     const existingUser = await Users.findOne({ email });

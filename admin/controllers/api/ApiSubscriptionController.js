@@ -9,11 +9,24 @@ const Subscription = require.main.require('./models/Subscription');
 // Subscribe (POST)
 async function subscribe (req, res) {
   try {
-    const { contact, type="updates", mobile="", subject="", content="" } = req.body;
+    const { contact, type="updates", mobile="", subject="", content="", recaptcha="" } = req.body;
 
     if (!contact) {
       res.status(400).json({ message: "Please enter your email or mobile number" });
       return;
+    }
+
+    if(type == "contact") {
+      if (!recaptcha) {
+        res.status(400).json({ message: "Please verify your identity by Google Captcha" });
+        return;
+      }
+
+      // 🔐 Verify reCAPTCHA
+      const isValidCaptcha = await verifyRecaptcha(recaptcha);
+      if (!isValidCaptcha) {
+        res.status(400).json({ success: false, message: "reCAPTCHA Verification failed" });
+      }
     }
 
     // Check existing subscription

@@ -19,6 +19,8 @@ export default function Courses() {
     description: "Browse Apply4Study’s collection of online courses designed to enhance your learning journey.",
     canonical: `${APP_URL}/courses`,
     schema: {
+      "datePublished": "2025-10-01",
+      "dateModified": new Date().toISOString().split("T")[0],
       "@context": "https://schema.org",
       "@type": "ItemList",
       "itemListElement": [

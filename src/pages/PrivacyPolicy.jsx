@@ -12,15 +12,15 @@ export default function PrivacyPolicy() {
 
   useSEO({
     title: "Privacy Policy — Apply4Study",
-    description:
-      "Learn how Apply4Study protects your privacy and personal information while delivering secure and trusted online learning experiences.",
+    description: "Learn how Apply4Study protects your privacy and personal information while delivering secure and trusted online learning experiences.",
     canonical: `${APP_URL}/privacy-policy`,
     schema: {
       "@context": "https://schema.org",
       "@type": "WebPage",
       "name": "Privacy Policy - Apply4Study",
-      "description":
-        "Apply4Study respects your privacy and ensures transparency in how your personal data is collected and used.",
+      "description": "Apply4Study respects your privacy and ensures transparency in how your personal data is collected and used.",
+      "datePublished": "2025-10-01",
+      "dateModified": new Date().toISOString().split("T")[0],
       "publisher": {
         "@type": "Organization",
         "name": "Apply4Study",
@@ -107,7 +107,7 @@ export default function PrivacyPolicy() {
             this page with the revised effective date.
           </p>
 
-          <h2>8. Contact Us</h2>
+          <h5>8. Contact Us</h5>
           <p>
             For privacy-related questions, contact us at:<br />
             <strong>Email:</strong> support@apply4study.com<br />
@@ -117,6 +117,18 @@ export default function PrivacyPolicy() {
           <p className="mt-5 text-muted">
             <em>Last updated: October 2025</em>
           </p>
+
+          <hr className="my-4" />
+          
+          <div className="related-links mt-4">
+            <h5>Related Policies</h5>
+            <ul>
+              <li><a href={`${APP_URL}/terms-conditions`}>Terms & Conditions</a></li>
+              <li><a href={`${APP_URL}/shipping-policy`}>Shipping & Delivery Policy</a></li>
+              <li><a href={`${APP_URL}/refund-policy`}>Cancellation & Refund Policy</a></li>
+              <li><a href={`${APP_URL}/contact`}>Contact Us</a></li>
+            </ul>
+          </div>
           
         </div>
       </section>
