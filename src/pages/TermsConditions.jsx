@@ -129,7 +129,7 @@ export default function TermsConditions() {
           <p>
             For questions or clarifications, reach out at<br />
             <strong>Email:</strong> <a href="mailto:support@apply4study.com">support@apply4study.com</a><br />
-            <strong>Address:</strong> A-108 Worldmark-2, Aerocity, New Delhi 110037, India
+            <strong>Address:</strong> Unit 307 Worldmark 1, Aerocity, New Delhi 110037, India
           </p>
 
           <p className="mt-5 text-muted">

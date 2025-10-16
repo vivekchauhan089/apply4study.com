@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Modal, Button, Form, Toast, ToastContainer } from 'react-bootstrap';
 import ReCAPTCHA from "react-google-recaptcha";
 
@@ -19,6 +19,7 @@ const Modals = ({ show, onHide, type }) => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const recaptchaRef = useRef();
   const [token, setToken] = useState("");
 
   const handleChange = (e) => {
@@ -40,6 +41,10 @@ const Modals = ({ show, onHide, type }) => {
       else if (!/^\d{10}$/.test(formData.mobile)) newErrors.mobile = 'Mobile must be a 10 digit number';
       if (!formData.role) newErrors.role = 'Please select a role';
       if (!formData.termsAccepted) newErrors.termsAccepted = 'You must agree to terms';
+
+      const token = recaptchaRef.current.getValue();
+      if (!token) newErrors.captcha = 'Please verify your identity at Apply4Study';
+
     } else if (type === 'subscribe') {
       if (!formData.email) newErrors.email = 'Email or mobile number is required';
     }
@@ -204,14 +209,6 @@ const Modals = ({ show, onHide, type }) => {
                 </Form.Group>
 
                 <Form.Group className="mt-3">
-                  {/* Google reCAPTCHA */}
-                  <ReCAPTCHA
-                    sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
-                    onChange={(value) => setToken(value)}
-                  />
-                </Form.Group>
-
-                <Form.Group className="mt-3">
                   <Form.Label>I am a:</Form.Label>
                   <Form.Select
                     name="role"
@@ -236,13 +233,25 @@ const Modals = ({ show, onHide, type }) => {
                     onChange={handleChange}
                     label={
                       <>
-                        I agree to the <a href="/terms" target="_blank" rel="noreferrer">Terms & Conditions</a>
+                        I agree to the <a href="/terms-conditions" target="_blank" rel="noreferrer">Terms & Conditions</a>
                       </>
                     }
                     isInvalid={!!errors.termsAccepted}
                     feedback={errors.termsAccepted}
                     feedbackType="invalid"
                   />
+                </Form.Group>
+
+                <Form.Group className="mt-3">
+                  {/* Google reCAPTCHA */}
+                  <ReCAPTCHA
+                    ref={recaptchaRef}
+                    sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
+                    className={errors.captcha ? 'is-invalid' : ''}
+                    style={{ transform: "scale(0.87)", transformOrigin: "0 0" }}
+                    onChange={(value) => setToken(value)}
+                  />
+                  <Form.Control.Feedback type="invalid">{errors.captcha}</Form.Control.Feedback>
                 </Form.Group>
 
                 <Button type="submit" className="mt-3 w-100" variant="primary">Register</Button>

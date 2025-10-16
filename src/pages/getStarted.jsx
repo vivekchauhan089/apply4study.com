@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 
@@ -71,6 +71,7 @@ export default function GetStarted() {
 
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const recaptchaRef = useRef();
   const [token, setToken] = useState("");
 
   const handleChange = (e) => {
@@ -116,6 +117,13 @@ export default function GetStarted() {
       newErrors.termsClass = 'is-invalid';
       newErrors.termsMsgClass = 'invalid-feedback';
       newErrors.termsAccepted = 'You must agree to terms';
+    }
+
+    const token = recaptchaRef.current.getValue();
+    if (!token) {
+      newErrors.captchaClass = 'is-invalid';
+      newErrors.captchaMsgClass = 'invalid-feedback';
+      newErrors.captcha = 'Please verify your identity at Apply4Study';
     }
 
     return newErrors;
@@ -317,30 +325,29 @@ export default function GetStarted() {
                       <div className={errors.roleMsgClass}>{errors.role}</div>
                     </div>
 
-                    <div className="mb-3">
-                      {/* Google reCAPTCHA */}
-                      <ReCAPTCHA
-                        sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
-                        onChange={(value) => setToken(value)}
-                      />
-                    </div>
-
                     <div className="form-check mb-3">
                       <input type="checkbox"
                         name="termsAccepted"
                         checked={formData.termsAccepted}
                         onChange={handleChange}
-                        label={
-                          <>
-                            I agree to the <a href="/terms" target="_blank" rel="noreferrer">Terms & Conditions</a>
-                          </>
-                        }
                         required 
                         className={"form-check-input " + errors.termsClass} />
                       <label htmlFor="agree" className="form-check-label">
-                        I agree to the <a href="/terms" target="_blank">Terms & Conditions</a>
+                        I agree to the <a href="/terms-conditions" target="_blank">Terms & Conditions</a>
                       </label>
                       <div className={errors.termsMsgClass}>{errors.termsAccepted}</div>
+                    </div>
+
+                    <div className="mb-3">
+                      {/* Google reCAPTCHA */}
+                      <ReCAPTCHA
+                        ref={recaptchaRef}
+                        sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
+                        style={{ transform: "scale(1.57)", transformOrigin: "0 14px" }}
+                        onChange={(value) => setToken(value)}
+                        className={errors.captchaClass}
+                      />
+                      <div className={errors.captchaMsgClass} style={{marginTop: "40px"}}>{errors.captcha}</div>
                     </div>
 
                     <button type="submit" className="btn btn-primary w-100">Create Free Account</button>

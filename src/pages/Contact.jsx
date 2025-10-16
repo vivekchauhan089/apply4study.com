@@ -250,7 +250,7 @@ export default function Contact() {
                 >
                   <iframe
                     title="Apply4Study Location"
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3503.065210785168!2d77.209021175504!3d28.612912175685023!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce31c14a22b8f%3A0x3f63b725a2e693c!2sConnaught%20Place%2C%20New%20Delhi%2C%20Delhi!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2833.2439050208177!2d77.11876935397093!3d28.550038263090855!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d1c6bceebb54f%3A0xc96f5b857b627282!2sWorldmark%201%2C%20Aerocity%2C%20New%20Delhi!5e0!3m2!1sen!2sin!4v1760641410781!5m2!1sen!2sin"
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}
@@ -265,7 +265,7 @@ export default function Contact() {
                   <ul className="list-unstyled">
                     <li>
                       <i className="bi bi-geo-alt"></i>{" "}
-                      <strong>Address:</strong> A-108 Worldmark-2, Aerocity, New Delhi 110037
+                      <strong>Address:</strong> Unit 307 Worldmark 1, Aerocity, New Delhi 110037
                     </li>
                     <li>
                       <i className="bi bi-telephone"></i>{" "}

@@ -61,7 +61,7 @@ export default function Footer() {
                 <LazyImage src={logo} alt="logo" className="img-fluid" loading='lazy' />
               </Link>
               <div className="footer-contact pt-3">
-                <p>A-108 Worldmark-2</p>
+                <p>Unit 307 Worldmark 1</p>
                 <p>Aerocity, New Delhi 110037</p>
                 <p className="mt-3"><strong>Phone:</strong> <span>+91 9716003265</span></p>
                 <p><strong>Email:</strong> <span>info@Apply4Study.com</span></p>
