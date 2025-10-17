@@ -196,7 +196,7 @@ export default function Header() {
                       {label}
                     </NavLink>
                   </li>
-                ) : (
+                ) : (path != "/get-started" && (
                   <li key={label}>
                     <NavLink
                       to={path}
@@ -207,7 +207,7 @@ export default function Header() {
                       {label}
                     </NavLink>
                   </li>
-                )
+                ))
               ))}              
             </ul>
             <i className="d-xl-none bi bi-list mobile-nav-toggle"></i>
