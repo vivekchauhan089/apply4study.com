@@ -16,7 +16,7 @@ const navLinks = [
   { path: '/blog', label: 'Blog' },
   { path: '/partners', label: 'Partners' },
   { path: '/contact', label: 'Contact Us' },
-  // { path: '/get-started', label: 'Get Started' }, 
+  { path: '/get-started', label: 'Get Started' }, 
   // { path: '/join', label: 'Join Us' },
 ];
 
@@ -185,17 +185,30 @@ export default function Header() {
           <nav id="navmenu" className={`${styles.navmenu} navmenu`}>
             <ul>
               {navLinks.map(({ path, label }) => (
-                <li key={label}>
-                  <NavLink
-                    to={path}
-                    className={({ isActive }) =>
-                      isActive ? `${styles.active} active nav-link` : 'nav-link'
-                    }
-                  >
-                    {label}
-                  </NavLink>
-                </li>
-              ))}
+                path === "/get-started" && isMobile ? (
+                  <li key={label}>
+                    <NavLink
+                      to={path}
+                      className={({ isActive }) =>
+                        isActive ? `${styles.active} active nav-link` : 'nav-link'
+                      }
+                    >
+                      {label}
+                    </NavLink>
+                  </li>
+                ) : (
+                  <li key={label}>
+                    <NavLink
+                      to={path}
+                      className={({ isActive }) =>
+                        isActive ? `${styles.active} active nav-link` : 'nav-link'
+                      }
+                    >
+                      {label}
+                    </NavLink>
+                  </li>
+                )
+              ))}              
             </ul>
             <i className="d-xl-none bi bi-list mobile-nav-toggle"></i>
 
@@ -203,7 +216,7 @@ export default function Header() {
           {!isMobile && (
             <div className='d-flex align-items-center justify-content-start col-lg-2 pt-1'>
               <SearchResults />
-              <Link to='/get-started' className="btn ms-2 glossy-button--blue joinBtn py-1">Join Us</Link>
+              <Link to='/get-started' className="btn ms-2 glossy-button--blue joinBtn py-1">Get Started</Link>
             </div>
           )}
         </div>
