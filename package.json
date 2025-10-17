@@ -32,7 +32,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "cross-env NODE_ENV=production react-scripts build && npx react-snap && npx postcss ./src/**/*.css -o ./build/main.css && node ./inject-preload.js",
+    "build": "cross-env NODE_ENV=production react-scripts build && npx postcss ./src/**/*.css -o ./build/main.css && node ./inject-preload.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
