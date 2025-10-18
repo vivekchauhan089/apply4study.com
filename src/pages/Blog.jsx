@@ -53,8 +53,6 @@ export default function Blog() {
           "url": `${APP_URL}/assets/logo.png`
         }
       },
-      "datePublished": "2025-10-01",
-      "dateModified": "2025-10-02",
       "image": `${APP_URL}/assets/blog/online-learning.jpg`
     }
   });

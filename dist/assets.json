@@ -1,0 +1,497 @@
+{
+  "_chunk-2ch3ySXF.js": {
+    "file": "assets/chunks/chunk-2ch3ySXF.js",
+    "name": "about",
+    "assets": [
+      "assets/static/about.CftVUcgQ.jpg"
+    ]
+  },
+  "_chunk-5BALEpFB.js": {
+    "file": "assets/chunks/chunk-5BALEpFB.js",
+    "name": "LazyImage",
+    "imports": [
+      "_chunk-YN4sDS3B.js"
+    ]
+  },
+  "_chunk-BA3DnruB.js": {
+    "file": "assets/chunks/chunk-BA3DnruB.js",
+    "name": "index",
+    "imports": [
+      "_chunk-YN4sDS3B.js"
+    ]
+  },
+  "_chunk-BR_m3kPN.js": {
+    "file": "assets/chunks/chunk-BR_m3kPN.js",
+    "name": "useSEO",
+    "imports": [
+      "_chunk-YN4sDS3B.js"
+    ],
+    "css": [
+      "assets/static/useSEO.DvB2Xm2x.css"
+    ]
+  },
+  "_chunk-C9ihuh9V.js": {
+    "file": "assets/chunks/chunk-C9ihuh9V.js",
+    "name": "recaptcha-wrapper",
+    "imports": [
+      "_chunk-YN4sDS3B.js",
+      "_chunk-BA3DnruB.js"
+    ]
+  },
+  "_chunk-CGJver67.js": {
+    "file": "assets/chunks/chunk-CGJver67.js",
+    "name": "index",
+    "imports": [
+      "_chunk-YN4sDS3B.js",
+      "_chunk-D6A2kfx1.js"
+    ]
+  },
+  "_chunk-CL-tWuRA.js": {
+    "file": "assets/chunks/chunk-CL-tWuRA.js",
+    "name": "executeOnRenderClientHook"
+  },
+  "_chunk-CRj3mV34.js": {
+    "file": "assets/chunks/chunk-CRj3mV34.js",
+    "name": "Newsletter",
+    "imports": [
+      "_chunk-YN4sDS3B.js"
+    ]
+  },
+  "_chunk-CsuOccOB.js": {
+    "file": "assets/chunks/chunk-CsuOccOB.js",
+    "name": "pagination",
+    "imports": [
+      "_chunk-YN4sDS3B.js"
+    ],
+    "css": [
+      "assets/static/pagination.CHnJsdj7.css"
+    ]
+  },
+  "_chunk-D6A2kfx1.js": {
+    "file": "assets/chunks/chunk-D6A2kfx1.js",
+    "name": "index",
+    "imports": [
+      "_chunk-YN4sDS3B.js"
+    ]
+  },
+  "_chunk-Dk--RB-7.js": {
+    "file": "assets/chunks/chunk-Dk--RB-7.js",
+    "name": "AvailableCourses",
+    "imports": [
+      "_chunk-YN4sDS3B.js",
+      "_chunk-CGJver67.js"
+    ]
+  },
+  "_chunk-Dm8Yy_jB.js": {
+    "file": "assets/chunks/chunk-Dm8Yy_jB.js",
+    "name": "autoplay",
+    "imports": [
+      "_chunk-CsuOccOB.js"
+    ]
+  },
+  "_chunk-YN4sDS3B.js": {
+    "file": "assets/chunks/chunk-YN4sDS3B.js",
+    "name": "index"
+  },
+  "_pagination.CHnJsdj7.css": {
+    "file": "assets/static/pagination.CHnJsdj7.css",
+    "src": "_pagination.CHnJsdj7.css"
+  },
+  "_useSEO.DvB2Xm2x.css": {
+    "file": "assets/static/useSEO.DvB2Xm2x.css",
+    "src": "_useSEO.DvB2Xm2x.css"
+  },
+  "node_modules/vite-plugin-ssr/dist/esm/client/client-routing-runtime/entry.js": {
+    "file": "assets/entries/entry-client-routing.FRZk-q4_.js",
+    "name": "entries/entry-client-routing",
+    "src": "node_modules/vite-plugin-ssr/dist/esm/client/client-routing-runtime/entry.js",
+    "isEntry": true,
+    "imports": [
+      "_chunk-CL-tWuRA.js"
+    ],
+    "dynamicImports": [
+      "pages/About.page.jsx",
+      "pages/Blog.page.jsx",
+      "pages/Contact.page.jsx",
+      "pages/Courses.page.jsx",
+      "pages/Home.page.jsx",
+      "pages/Partners.page.jsx",
+      "pages/Price.page.jsx",
+      "pages/PrivacyPolicy.page.jsx",
+      "pages/Python.page.jsx",
+      "pages/RefundPolicy.page.jsx",
+      "pages/SearchResults.page.jsx",
+      "pages/Services.page.jsx",
+      "pages/ShippingPolicy.page.jsx",
+      "pages/TermsConditions.page.jsx",
+      "pages/getStarted.page.jsx",
+      "renderer/_default.page.client.jsx",
+      "renderer/_default.page.server.jsx?extractAssets&lang.jsx"
+    ]
+  },
+  "node_modules/vite-plugin-ssr/dist/esm/client/server-routing-runtime/entry.js": {
+    "file": "assets/entries/entry-server-routing.BgENQUKr.js",
+    "name": "entries/entry-server-routing",
+    "src": "node_modules/vite-plugin-ssr/dist/esm/client/server-routing-runtime/entry.js",
+    "isEntry": true,
+    "imports": [
+      "_chunk-CL-tWuRA.js"
+    ],
+    "dynamicImports": [
+      "pages/About.page.jsx",
+      "pages/Blog.page.jsx",
+      "pages/Contact.page.jsx",
+      "pages/Courses.page.jsx",
+      "pages/Home.page.jsx",
+      "pages/Partners.page.jsx",
+      "pages/Price.page.jsx",
+      "pages/PrivacyPolicy.page.jsx",
+      "pages/Python.page.jsx",
+      "pages/RefundPolicy.page.jsx",
+      "pages/SearchResults.page.jsx",
+      "pages/Services.page.jsx",
+      "pages/ShippingPolicy.page.jsx",
+      "pages/TermsConditions.page.jsx",
+      "pages/getStarted.page.jsx",
+      "renderer/_default.page.client.jsx",
+      "renderer/_default.page.server.jsx?extractAssets&lang.jsx"
+    ]
+  },
+  "pages/About.page.jsx": {
+    "file": "assets/entries/pages_About.page.Dcx3KK57.js",
+    "name": "entries/pages/About.page",
+    "src": "pages/About.page.jsx",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_chunk-YN4sDS3B.js",
+      "_chunk-BR_m3kPN.js",
+      "_chunk-2ch3ySXF.js",
+      "_chunk-5BALEpFB.js"
+    ]
+  },
+  "pages/Blog.page.jsx": {
+    "file": "assets/entries/pages_Blog.page.08jDhT3F.js",
+    "name": "entries/pages/Blog.page",
+    "src": "pages/Blog.page.jsx",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_chunk-YN4sDS3B.js",
+      "_chunk-BR_m3kPN.js",
+      "_chunk-5BALEpFB.js",
+      "_chunk-CRj3mV34.js"
+    ],
+    "assets": [
+      "assets/static/blog-1.DQJ1aK4z.jpg",
+      "assets/static/blog-2.DnNSsc1U.jpg",
+      "assets/static/blog-3.CmEtnaLm.jpg",
+      "assets/static/blog-4.BlsvisbT.jpg",
+      "assets/static/blog-5.DG4x4bYY.jpg",
+      "assets/static/blog-6.ioLCgBek.jpg",
+      "assets/static/blog-author-2.BMx85-dU.jpg",
+      "assets/static/blog-author-3.0_5LQ10O.jpg",
+      "assets/static/blog-author-4.5HCWg8e2.jpg",
+      "assets/static/blog-author-5.DkHsm2MD.jpg",
+      "assets/static/blog-author-6.33Yuu0le.jpg"
+    ]
+  },
+  "pages/Contact.page.jsx": {
+    "file": "assets/entries/pages_Contact.page.DNHr3XKd.js",
+    "name": "entries/pages/Contact.page",
+    "src": "pages/Contact.page.jsx",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_chunk-YN4sDS3B.js",
+      "_chunk-BR_m3kPN.js",
+      "_chunk-5BALEpFB.js",
+      "_chunk-2ch3ySXF.js",
+      "_chunk-C9ihuh9V.js",
+      "_chunk-BA3DnruB.js"
+    ]
+  },
+  "pages/Courses.page.jsx": {
+    "file": "assets/entries/pages_Courses.page.Cnc386I_.js",
+    "name": "entries/pages/Courses.page",
+    "src": "pages/Courses.page.jsx",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_chunk-YN4sDS3B.js",
+      "_chunk-BR_m3kPN.js",
+      "_chunk-Dk--RB-7.js",
+      "_chunk-CRj3mV34.js",
+      "_chunk-CGJver67.js",
+      "_chunk-D6A2kfx1.js"
+    ]
+  },
+  "pages/Home.page.jsx": {
+    "file": "assets/entries/pages_Home.page.B7krpXwC.js",
+    "name": "entries/pages/Home.page",
+    "src": "pages/Home.page.jsx",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_chunk-YN4sDS3B.js",
+      "_chunk-CsuOccOB.js",
+      "_chunk-Dm8Yy_jB.js",
+      "_chunk-BR_m3kPN.js",
+      "_chunk-5BALEpFB.js",
+      "_chunk-CRj3mV34.js"
+    ],
+    "css": [
+      "assets/static/Home.DGynXthJ.css"
+    ],
+    "assets": [
+      "assets/static/hero-img-1.CZNMGEcn.jpg",
+      "assets/static/quiz_img.CfRIyEjq.jpg",
+      "assets/static/progress_tracking_img.RRYZUzBq.jpg",
+      "assets/static/study.aw7TMiKc.jpg",
+      "assets/static/subjectsTopics.lPC2RYIA.png",
+      "assets/static/addNotes.d1Xpg_Gw.jpg",
+      "assets/static/takeQuize.DnApb-6D.png",
+      "assets/static/student.DqbV0I-6.png",
+      "assets/static/teachers.CbKvP82B.png",
+      "assets/static/exam.2ypn7TPz.png"
+    ]
+  },
+  "pages/Partners.page.jsx": {
+    "file": "assets/entries/pages_Partners.page.DrOjHi6a.js",
+    "name": "entries/pages/Partners.page",
+    "src": "pages/Partners.page.jsx",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_chunk-YN4sDS3B.js",
+      "_chunk-CsuOccOB.js",
+      "_chunk-Dm8Yy_jB.js",
+      "_chunk-BR_m3kPN.js",
+      "_chunk-5BALEpFB.js"
+    ]
+  },
+  "pages/Price.page.jsx": {
+    "file": "assets/entries/pages_Price.page.BpgNaCgl.js",
+    "name": "entries/pages/Price.page",
+    "src": "pages/Price.page.jsx",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_chunk-YN4sDS3B.js",
+      "_chunk-BR_m3kPN.js",
+      "_chunk-CGJver67.js",
+      "_chunk-BA3DnruB.js",
+      "_chunk-CRj3mV34.js",
+      "_chunk-D6A2kfx1.js"
+    ],
+    "assets": [
+      "assets/static/stripe.Chh-eKZo.png"
+    ]
+  },
+  "pages/PrivacyPolicy.page.jsx": {
+    "file": "assets/entries/pages_PrivacyPolicy.page.G3IfHlQn.js",
+    "name": "entries/pages/PrivacyPolicy.page",
+    "src": "pages/PrivacyPolicy.page.jsx",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_chunk-YN4sDS3B.js",
+      "_chunk-BR_m3kPN.js"
+    ]
+  },
+  "pages/Python.page.jsx": {
+    "file": "assets/entries/pages_Python.page.BtcPeODD.js",
+    "name": "entries/pages/Python.page",
+    "src": "pages/Python.page.jsx",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_chunk-YN4sDS3B.js",
+      "_chunk-BR_m3kPN.js",
+      "_chunk-Dk--RB-7.js",
+      "_chunk-CRj3mV34.js",
+      "_chunk-CGJver67.js",
+      "_chunk-D6A2kfx1.js"
+    ]
+  },
+  "pages/RefundPolicy.page.jsx": {
+    "file": "assets/entries/pages_RefundPolicy.page.BmlCpvsg.js",
+    "name": "entries/pages/RefundPolicy.page",
+    "src": "pages/RefundPolicy.page.jsx",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_chunk-YN4sDS3B.js",
+      "_chunk-BR_m3kPN.js"
+    ]
+  },
+  "pages/SearchResults.page.jsx": {
+    "file": "assets/entries/pages_SearchResults.page.CgXJhcyq.js",
+    "name": "entries/pages/SearchResults.page",
+    "src": "pages/SearchResults.page.jsx",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_chunk-YN4sDS3B.js"
+    ]
+  },
+  "pages/Services.page.jsx": {
+    "file": "assets/entries/pages_Services.page.44gdy7oQ.js",
+    "name": "entries/pages/Services.page",
+    "src": "pages/Services.page.jsx",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_chunk-YN4sDS3B.js",
+      "_chunk-BR_m3kPN.js",
+      "_chunk-5BALEpFB.js",
+      "_chunk-2ch3ySXF.js"
+    ]
+  },
+  "pages/ShippingPolicy.page.jsx": {
+    "file": "assets/entries/pages_ShippingPolicy.page.Dxe606gf.js",
+    "name": "entries/pages/ShippingPolicy.page",
+    "src": "pages/ShippingPolicy.page.jsx",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_chunk-YN4sDS3B.js",
+      "_chunk-BR_m3kPN.js"
+    ]
+  },
+  "pages/TermsConditions.page.jsx": {
+    "file": "assets/entries/pages_TermsConditions.page.CigK8VGi.js",
+    "name": "entries/pages/TermsConditions.page",
+    "src": "pages/TermsConditions.page.jsx",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_chunk-YN4sDS3B.js",
+      "_chunk-BR_m3kPN.js"
+    ]
+  },
+  "pages/getStarted.page.jsx": {
+    "file": "assets/entries/pages_getStarted.page.BcIkfo4e.js",
+    "name": "entries/pages/getStarted.page",
+    "src": "pages/getStarted.page.jsx",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_chunk-YN4sDS3B.js",
+      "_chunk-CsuOccOB.js",
+      "_chunk-BR_m3kPN.js",
+      "_chunk-C9ihuh9V.js",
+      "_chunk-BA3DnruB.js"
+    ]
+  },
+  "renderer/_default.page.client.jsx": {
+    "file": "assets/entries/renderer_default.page.client.B_F-Dj7t.js",
+    "name": "entries/renderer/_default.page.client",
+    "src": "renderer/_default.page.client.jsx",
+    "isEntry": true,
+    "isDynamicEntry": true,
+    "imports": [
+      "_chunk-YN4sDS3B.js",
+      "_chunk-D6A2kfx1.js"
+    ]
+  },
+  "renderer/_default.page.server.jsx?extractAssets&lang.jsx": {
+    "file": "assets/entries/renderer_default.page.server.extractAssets.l0sNRNKZ.js",
+    "name": "entries/renderer/_default.page.server.jsx_extractAssets_lang",
+    "src": "renderer/_default.page.server.jsx?extractAssets&lang.jsx",
+    "isEntry": true,
+    "isDynamicEntry": true
+  },
+  "src/assets/img/about.jpg": {
+    "file": "assets/static/about.CftVUcgQ.jpg",
+    "src": "src/assets/img/about.jpg"
+  },
+  "src/assets/img/addNotes.jpg": {
+    "file": "assets/static/addNotes.d1Xpg_Gw.jpg",
+    "src": "src/assets/img/addNotes.jpg"
+  },
+  "src/assets/img/blog/blog-1.jpg": {
+    "file": "assets/static/blog-1.DQJ1aK4z.jpg",
+    "src": "src/assets/img/blog/blog-1.jpg"
+  },
+  "src/assets/img/blog/blog-2.jpg": {
+    "file": "assets/static/blog-2.DnNSsc1U.jpg",
+    "src": "src/assets/img/blog/blog-2.jpg"
+  },
+  "src/assets/img/blog/blog-3.jpg": {
+    "file": "assets/static/blog-3.CmEtnaLm.jpg",
+    "src": "src/assets/img/blog/blog-3.jpg"
+  },
+  "src/assets/img/blog/blog-4.jpg": {
+    "file": "assets/static/blog-4.BlsvisbT.jpg",
+    "src": "src/assets/img/blog/blog-4.jpg"
+  },
+  "src/assets/img/blog/blog-5.jpg": {
+    "file": "assets/static/blog-5.DG4x4bYY.jpg",
+    "src": "src/assets/img/blog/blog-5.jpg"
+  },
+  "src/assets/img/blog/blog-6.jpg": {
+    "file": "assets/static/blog-6.ioLCgBek.jpg",
+    "src": "src/assets/img/blog/blog-6.jpg"
+  },
+  "src/assets/img/blog/blog-author-2.jpg": {
+    "file": "assets/static/blog-author-2.BMx85-dU.jpg",
+    "src": "src/assets/img/blog/blog-author-2.jpg"
+  },
+  "src/assets/img/blog/blog-author-3.jpg": {
+    "file": "assets/static/blog-author-3.0_5LQ10O.jpg",
+    "src": "src/assets/img/blog/blog-author-3.jpg"
+  },
+  "src/assets/img/blog/blog-author-4.jpg": {
+    "file": "assets/static/blog-author-4.5HCWg8e2.jpg",
+    "src": "src/assets/img/blog/blog-author-4.jpg"
+  },
+  "src/assets/img/blog/blog-author-5.jpg": {
+    "file": "assets/static/blog-author-5.DkHsm2MD.jpg",
+    "src": "src/assets/img/blog/blog-author-5.jpg"
+  },
+  "src/assets/img/blog/blog-author-6.jpg": {
+    "file": "assets/static/blog-author-6.33Yuu0le.jpg",
+    "src": "src/assets/img/blog/blog-author-6.jpg"
+  },
+  "src/assets/img/exam.png": {
+    "file": "assets/static/exam.2ypn7TPz.png",
+    "src": "src/assets/img/exam.png"
+  },
+  "src/assets/img/hero-img-1.jpg": {
+    "file": "assets/static/hero-img-1.CZNMGEcn.jpg",
+    "src": "src/assets/img/hero-img-1.jpg"
+  },
+  "src/assets/img/payments/stripe.png": {
+    "file": "assets/static/stripe.Chh-eKZo.png",
+    "src": "src/assets/img/payments/stripe.png"
+  },
+  "src/assets/img/progress_tracking_img.jpg": {
+    "file": "assets/static/progress_tracking_img.RRYZUzBq.jpg",
+    "src": "src/assets/img/progress_tracking_img.jpg"
+  },
+  "src/assets/img/quiz_img.jpg": {
+    "file": "assets/static/quiz_img.CfRIyEjq.jpg",
+    "src": "src/assets/img/quiz_img.jpg"
+  },
+  "src/assets/img/student.png": {
+    "file": "assets/static/student.DqbV0I-6.png",
+    "src": "src/assets/img/student.png"
+  },
+  "src/assets/img/study.jpg": {
+    "file": "assets/static/study.aw7TMiKc.jpg",
+    "src": "src/assets/img/study.jpg"
+  },
+  "src/assets/img/subjectsTopics.png": {
+    "file": "assets/static/subjectsTopics.lPC2RYIA.png",
+    "src": "src/assets/img/subjectsTopics.png"
+  },
+  "src/assets/img/takeQuize.png": {
+    "file": "assets/static/takeQuize.DnApb-6D.png",
+    "src": "src/assets/img/takeQuize.png"
+  },
+  "src/assets/img/teachers.png": {
+    "file": "assets/static/teachers.CbKvP82B.png",
+    "src": "src/assets/img/teachers.png"
+  }
+}
