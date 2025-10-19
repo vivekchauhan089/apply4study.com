@@ -3,7 +3,7 @@ import React from "react";
 import Component from "../src/pages/ShippingPolicy.jsx";
 
 // Route used by Vike
-export const route = "/shippingpolicy";
+export const route = "/shipping-policy";
 
 // documentProps for Vike
 export const documentProps = {

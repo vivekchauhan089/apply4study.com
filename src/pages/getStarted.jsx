@@ -17,7 +17,11 @@ import img5 from '../assets/img/testimonials/testimonials-5.jpg';
 
 import LazyImage from '../components/common/LazyImage';
 import useSEO from "../hooks/useSEO";
-import ReCAPTCHA from "react-google-recaptcha";
+
+let ReCAPTCHA = null;
+if (typeof window !== "undefined") {
+  ReCAPTCHA = require("react-google-recaptcha").default;
+}
 
 const testimonials = [
   {
@@ -345,6 +349,7 @@ export default function GetStarted() {
                       <div className={errors.termsMsgClass}>{errors.termsAccepted}</div>
                     </div>
 
+                    {ReCAPTCHA && (
                     <div className="mb-3">
                       {/* Google reCAPTCHA */}
                       <ReCAPTCHA
@@ -356,6 +361,7 @@ export default function GetStarted() {
                       />
                       <div className={errors.captchaMsgClass} style={{marginTop: "40px"}}>{errors.captcha}</div>
                     </div>
+                    )}
 
                     <button type="submit" className="btn btn-primary w-100">Create Free Account</button>
                   </form>

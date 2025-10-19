@@ -3,7 +3,7 @@ import React from "react";
 import Component from "../src/pages/Home.jsx";
 
 // Route used by Vike
-export const route = "/home";
+export const route = "/";
 
 // documentProps for Vike
 export const documentProps = {

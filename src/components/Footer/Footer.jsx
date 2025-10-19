@@ -57,9 +57,9 @@ export default function Footer() {
         <div className="container footer-top">
           <div className="row gy-4">
             <div className="col-lg-4 col-md-6 footer-about">
-              <Link to='/' className="logo d-flex align-items-center">
+              <a href='/' className="logo d-flex align-items-center">
                 <LazyImage src={logo} alt="logo" className="img-fluid" loading='lazy' />
-              </Link>
+              </a>
               <div className="footer-contact pt-3">
                 <p>Unit 307 Worldmark 1</p>
                 <p>Aerocity, New Delhi 110037</p>

@@ -9,6 +9,7 @@ export default defineConfig({
     react(),
     vike() // no prerender or routing here anymore
   ],
+  base: '/', // or '/subfolder/' if hosting in a subpath
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),

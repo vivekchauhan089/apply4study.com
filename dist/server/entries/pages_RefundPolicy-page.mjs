@@ -112,7 +112,7 @@ function RefundPolicy() {
   ] });
 }
 /*! pages/RefundPolicy.page.jsx [vike:pluginModuleBanner] */
-const route = "/refundpolicy";
+const route = "/refund-policy";
 const documentProps = {
   title: {
     default: "RefundPolicy",

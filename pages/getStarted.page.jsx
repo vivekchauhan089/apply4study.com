@@ -3,7 +3,7 @@ import React from "react";
 import Component from "../src/pages/GetStarted.jsx";
 
 // Route used by Vike
-export const route = "/getstarted";
+export const route = "/get-started";
 
 // documentProps for Vike
 export const documentProps = {

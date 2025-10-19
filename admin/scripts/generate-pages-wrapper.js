@@ -17,19 +17,19 @@ const ASSETS_DEST = path.join(ROOT_DIR, "dist/assets");
 
 // route mapping: filename -> URL
 const routeMap = {
-  // 'Home.jsx': '/',
+  'Home.jsx': '/',
   'About.jsx': '/about',
-  // 'Courses.jsx': '/courses',
-  // 'Services.jsx': '/services',
-  // 'Price.jsx': '/pricing',
-  // 'GetStarted.jsx': '/get-started',
-  // 'Blog.jsx': '/blog',
-  // 'Partners.jsx': '/partners',
-  // 'Contact.jsx': '/contact',
-  // 'PrivacyPolicy.jsx': '/privacy-policy',
-  // 'TermsConditions.jsx': '/terms-conditions',
-  // 'ShippingPolicy.jsx': '/shipping-policy',
-  // 'RefundPolicy.jsx': '/refund-policy',
+  'Courses.jsx': '/courses',
+  'Services.jsx': '/services',
+  'Price.jsx': '/pricing',
+  'GetStarted.jsx': '/get-started',
+  'Blog.jsx': '/blog',
+  'Partners.jsx': '/partners',
+  'Contact.jsx': '/contact',
+  'PrivacyPolicy.jsx': '/privacy-policy',
+  'TermsConditions.jsx': '/terms-conditions',
+  'ShippingPolicy.jsx': '/shipping-policy',
+  'RefundPolicy.jsx': '/refund-policy',
   // add more here
 };
 

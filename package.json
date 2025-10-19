@@ -29,7 +29,7 @@
     "dev": "vite",
     "start": "react-scripts start",
     "build": "vite build && vike prerender",
-    "preview": "vite preview",
+    "preview": "NODE_ENV=production node dist/server/entry.mjs",
     "prerender": "vike prerender"
   },
   "browserslist": {

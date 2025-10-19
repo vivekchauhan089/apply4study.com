@@ -8,8 +8,11 @@ import "swiper/modules";
 import AOS from "aos";
 /* empty css                       */
 import { u as useSEO } from "../chunks/chunk-C9YAkDoO.js";
-import ReCAPTCHA from "react-google-recaptcha";
 /*! src/pages/GetStarted.jsx [vike:pluginModuleBanner] */
+let ReCAPTCHA = null;
+if (typeof window !== "undefined") {
+  ReCAPTCHA = require("react-google-recaptcha").default;
+}
 function GetStarted() {
   useEffect(() => {
     AOS.init({ duration: 1e3 });
@@ -292,7 +295,7 @@ function GetStarted() {
             ] }),
             /* @__PURE__ */ jsx("div", { className: errors.termsMsgClass, children: errors.termsAccepted })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "mb-3", children: [
+          ReCAPTCHA && /* @__PURE__ */ jsxs("div", { className: "mb-3", children: [
             /* @__PURE__ */ jsx(
               ReCAPTCHA,
               {
@@ -327,7 +330,7 @@ function GetStarted() {
   ] }) });
 }
 /*! pages/GetStarted.page.jsx [vike:pluginModuleBanner] */
-const route = "/getstarted";
+const route = "/get-started";
 const documentProps = {
   title: {
     default: "GetStarted",

@@ -3,7 +3,7 @@ import React from "react";
 import Component from "../src/pages/RefundPolicy.jsx";
 
 // Route used by Vike
-export const route = "/refundpolicy";
+export const route = "/refund-policy";
 
 // documentProps for Vike
 export const documentProps = {

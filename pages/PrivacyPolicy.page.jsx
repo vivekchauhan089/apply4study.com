@@ -3,7 +3,7 @@ import React from "react";
 import Component from "../src/pages/PrivacyPolicy.jsx";
 
 // Route used by Vike
-export const route = "/privacypolicy";
+export const route = "/privacy-policy";
 
 // documentProps for Vike
 export const documentProps = {

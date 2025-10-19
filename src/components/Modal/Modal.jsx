@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Modal, Button, Form, Toast, ToastContainer } from 'react-bootstrap';
-import ReCAPTCHA from "react-google-recaptcha";
+
+let ReCAPTCHA = null;
+if (typeof window !== "undefined") {
+  ReCAPTCHA = require("react-google-recaptcha").default;
+}
 
 const Modals = ({ show, onHide, type }) => {
   const [validated, setValidated] = useState(false);
@@ -242,6 +246,7 @@ const Modals = ({ show, onHide, type }) => {
                   />
                 </Form.Group>
 
+                {ReCAPTCHA && (
                 <Form.Group className="mt-3">
                   {/* Google reCAPTCHA */}
                   <ReCAPTCHA
@@ -253,6 +258,7 @@ const Modals = ({ show, onHide, type }) => {
                   />
                   <Form.Control.Feedback type="invalid">{errors.captcha}</Form.Control.Feedback>
                 </Form.Group>
+                )}
 
                 <Button type="submit" className="mt-3 w-100" variant="primary">Register</Button>
               </>

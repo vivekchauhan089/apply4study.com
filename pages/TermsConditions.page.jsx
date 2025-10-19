@@ -3,7 +3,7 @@ import React from "react";
 import Component from "../src/pages/TermsConditions.jsx";
 
 // Route used by Vike
-export const route = "/termsconditions";
+export const route = "/terms-conditions";
 
 // documentProps for Vike
 export const documentProps = {

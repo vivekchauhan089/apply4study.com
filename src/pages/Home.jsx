@@ -167,7 +167,7 @@ export default function Home() {
                         <h2 className="my-3">{slide.heading}</h2>
                         <p className='m-0 d-lg-block d-none'>{slide.subText}</p>
                         {!isMobile && (
-                          <Link to="/get-started" className="btn-get-started mx-auto mx-lg-0">Get Started Free</Link>
+                          <a href="/get-started" className="btn-get-started mx-auto mx-lg-0">Get Started Free</a>
                         )}
                       </div>
                       <div className="col-md-5 col-12 borderBottomEffect">

@@ -147,14 +147,6 @@ const virtualFileExportsGlobalEntry = /* @__PURE__ */ Object.freeze(/* @__PURE__
       "assets/static/about.CftVUcgQ.jpg"
     ]
   },
-  "_chunk-BFiW7yMW.js": {
-    "file": "assets/chunks/chunk-BFiW7yMW.js",
-    "name": "recaptcha-wrapper",
-    "imports": [
-      "_chunk-C2d9lkPd.js",
-      "_chunk-JbO7Unuk.js"
-    ]
-  },
   "_chunk-BVvAWEZ2.js": {
     "file": "assets/chunks/chunk-BVvAWEZ2.js",
     "name": "useSEO",
@@ -220,13 +212,6 @@ const virtualFileExportsGlobalEntry = /* @__PURE__ */ Object.freeze(/* @__PURE__
     "file": "assets/chunks/chunk-DEf_yE0x.js",
     "name": "preload-helper"
   },
-  "_chunk-JbO7Unuk.js": {
-    "file": "assets/chunks/chunk-JbO7Unuk.js",
-    "name": "index",
-    "imports": [
-      "_chunk-C2d9lkPd.js"
-    ]
-  },
   "_src_components_SearchSection_SearchSection-399b3b7f.CW48QMpE.css": {
     "file": "assets/static/src_components_SearchSection_SearchSection-399b3b7f.CW48QMpE.css",
     "src": "_src_components_SearchSection_SearchSection-399b3b7f.CW48QMpE.css"
@@ -248,7 +233,7 @@ const virtualFileExportsGlobalEntry = /* @__PURE__ */ Object.freeze(/* @__PURE__
     "src": "_swiper-facb96ae.DQzmXbEx.css"
   },
   "node_modules/vike/dist/esm/client/runtime-client-routing/entry.js": {
-    "file": "assets/entries/entry-client-routing.DpKgm5zW.js",
+    "file": "assets/entries/entry-client-routing.891lfGdN.js",
     "name": "entries/entry-client-routing",
     "src": "node_modules/vike/dist/esm/client/runtime-client-routing/entry.js",
     "isEntry": true,
@@ -274,7 +259,7 @@ const virtualFileExportsGlobalEntry = /* @__PURE__ */ Object.freeze(/* @__PURE__
     ]
   },
   "node_modules/vike/dist/esm/client/runtime-server-routing/entry.js": {
-    "file": "assets/entries/entry-server-routing.Dv_FNweT.js",
+    "file": "assets/entries/entry-server-routing.CKDkj0bZ.js",
     "name": "entries/entry-server-routing",
     "src": "node_modules/vike/dist/esm/client/runtime-server-routing/entry.js",
     "isEntry": true,
@@ -345,7 +330,7 @@ const virtualFileExportsGlobalEntry = /* @__PURE__ */ Object.freeze(/* @__PURE__
     ]
   },
   "pages/Contact.page.jsx": {
-    "file": "assets/entries/pages_Contact.page.CqTipli7.js",
+    "file": "assets/entries/pages_Contact.page.B3AFiCoD.js",
     "name": "entries/pages/Contact.page",
     "src": "pages/Contact.page.jsx",
     "isEntry": true,
@@ -354,9 +339,7 @@ const virtualFileExportsGlobalEntry = /* @__PURE__ */ Object.freeze(/* @__PURE__
       "_chunk-C2d9lkPd.js",
       "_chunk-BVvAWEZ2.js",
       "_chunk-Bv1zkJOX.js",
-      "_chunk-2ch3ySXF.js",
-      "_chunk-BFiW7yMW.js",
-      "_chunk-JbO7Unuk.js"
+      "_chunk-2ch3ySXF.js"
     ],
     "css": [
       "assets/static/aos-ec993446.DvB2Xm2x.css"
@@ -380,7 +363,7 @@ const virtualFileExportsGlobalEntry = /* @__PURE__ */ Object.freeze(/* @__PURE__
     ]
   },
   "pages/GetStarted.page.jsx": {
-    "file": "assets/entries/pages_GetStarted.page.BuYsbMc8.js",
+    "file": "assets/entries/pages_GetStarted.page.BzX1ewWJ.js",
     "name": "entries/pages/GetStarted.page",
     "src": "pages/GetStarted.page.jsx",
     "isEntry": true,
@@ -388,9 +371,7 @@ const virtualFileExportsGlobalEntry = /* @__PURE__ */ Object.freeze(/* @__PURE__
     "imports": [
       "_chunk-C2d9lkPd.js",
       "_chunk-BjFrFrD0.js",
-      "_chunk-BVvAWEZ2.js",
-      "_chunk-BFiW7yMW.js",
-      "_chunk-JbO7Unuk.js"
+      "_chunk-BVvAWEZ2.js"
     ],
     "css": [
       "assets/static/swiper-2a04c68e.DHBATib1.css",
@@ -400,7 +381,7 @@ const virtualFileExportsGlobalEntry = /* @__PURE__ */ Object.freeze(/* @__PURE__
     ]
   },
   "pages/Home.page.jsx": {
-    "file": "assets/entries/pages_Home.page.7rVB8JK3.js",
+    "file": "assets/entries/pages_Home.page.D--bX14w.js",
     "name": "entries/pages/Home.page",
     "src": "pages/Home.page.jsx",
     "isEntry": true,
@@ -455,7 +436,7 @@ const virtualFileExportsGlobalEntry = /* @__PURE__ */ Object.freeze(/* @__PURE__
     ]
   },
   "pages/Price.page.jsx": {
-    "file": "assets/entries/pages_Price.page.BHi7GYFD.js",
+    "file": "assets/entries/pages_Price.page.CihiEJGQ.js",
     "name": "entries/pages/Price.page",
     "src": "pages/Price.page.jsx",
     "isEntry": true,
@@ -464,7 +445,6 @@ const virtualFileExportsGlobalEntry = /* @__PURE__ */ Object.freeze(/* @__PURE__
       "_chunk-C2d9lkPd.js",
       "_chunk-BVvAWEZ2.js",
       "_chunk-CDigAZVg.js",
-      "_chunk-JbO7Unuk.js",
       "_chunk-CZD2lAUx.js",
       "_chunk-Btpf6lvy.js"
     ],
@@ -476,7 +456,7 @@ const virtualFileExportsGlobalEntry = /* @__PURE__ */ Object.freeze(/* @__PURE__
     ]
   },
   "pages/PrivacyPolicy.page.jsx": {
-    "file": "assets/entries/pages_PrivacyPolicy.page.CRa65Ng4.js",
+    "file": "assets/entries/pages_PrivacyPolicy.page.lfZ3fCus.js",
     "name": "entries/pages/PrivacyPolicy.page",
     "src": "pages/PrivacyPolicy.page.jsx",
     "isEntry": true,
@@ -490,7 +470,7 @@ const virtualFileExportsGlobalEntry = /* @__PURE__ */ Object.freeze(/* @__PURE__
     ]
   },
   "pages/RefundPolicy.page.jsx": {
-    "file": "assets/entries/pages_RefundPolicy.page.BP6tsAjb.js",
+    "file": "assets/entries/pages_RefundPolicy.page.Bqll66sU.js",
     "name": "entries/pages/RefundPolicy.page",
     "src": "pages/RefundPolicy.page.jsx",
     "isEntry": true,
@@ -520,7 +500,7 @@ const virtualFileExportsGlobalEntry = /* @__PURE__ */ Object.freeze(/* @__PURE__
     ]
   },
   "pages/ShippingPolicy.page.jsx": {
-    "file": "assets/entries/pages_ShippingPolicy.page.D2VOpiLR.js",
+    "file": "assets/entries/pages_ShippingPolicy.page.BFxHTUkB.js",
     "name": "entries/pages/ShippingPolicy.page",
     "src": "pages/ShippingPolicy.page.jsx",
     "isEntry": true,
@@ -534,7 +514,7 @@ const virtualFileExportsGlobalEntry = /* @__PURE__ */ Object.freeze(/* @__PURE__
     ]
   },
   "pages/TermsConditions.page.jsx": {
-    "file": "assets/entries/pages_TermsConditions.page.Vma4XvKf.js",
+    "file": "assets/entries/pages_TermsConditions.page.DANr1R5l.js",
     "name": "entries/pages/TermsConditions.page",
     "src": "pages/TermsConditions.page.jsx",
     "isEntry": true,
@@ -686,7 +666,7 @@ const virtualFileExportsGlobalEntry = /* @__PURE__ */ Object.freeze(/* @__PURE__
       "build": {
         "outDir": "E:/Projects/apply4study.com/dist/"
       },
-      "_baseViteOriginal": "/__UNSET__",
+      "_baseViteOriginal": "/",
       "vitePluginServerEntry": {}
     }
   };

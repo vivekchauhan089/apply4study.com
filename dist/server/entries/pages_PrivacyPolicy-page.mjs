@@ -101,7 +101,7 @@ function PrivacyPolicy() {
   ] });
 }
 /*! pages/PrivacyPolicy.page.jsx [vike:pluginModuleBanner] */
-const route = "/privacypolicy";
+const route = "/privacy-policy";
 const documentProps = {
   title: {
     default: "PrivacyPolicy",

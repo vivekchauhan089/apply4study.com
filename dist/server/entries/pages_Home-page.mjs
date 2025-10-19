@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { jsx, jsxs, Fragment } from "react/jsx-runtime";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
-import { Link } from "react-router-dom";
 /* empty css                       */
 /* empty css                       */
 /* empty css                       */
@@ -314,7 +313,7 @@ function Home() {
           /* @__PURE__ */ jsxs("div", { className: "col-md-6 col-12 text-lg-start text-center", children: [
             /* @__PURE__ */ jsx("h2", { className: "my-3", children: slide.heading }),
             /* @__PURE__ */ jsx("p", { className: "m-0 d-lg-block d-none", children: slide.subText }),
-            !isMobile && /* @__PURE__ */ jsx(Link, { to: "/get-started", className: "btn-get-started mx-auto mx-lg-0", children: "Get Started Free" })
+            !isMobile && /* @__PURE__ */ jsx("a", { href: "/get-started", className: "btn-get-started mx-auto mx-lg-0", children: "Get Started Free" })
           ] }),
           /* @__PURE__ */ jsx("div", { className: "col-md-5 col-12 borderBottomEffect", children: /* @__PURE__ */ jsx("div", { className: "slider_img pt-lg-4 text-center", children: /* @__PURE__ */ jsx(
             LazyImage,
@@ -441,7 +440,7 @@ function Home() {
   ] });
 }
 /*! pages/Home.page.jsx [vike:pluginModuleBanner] */
-const route = "/home";
+const route = "/";
 const documentProps = {
   title: {
     default: "Home",

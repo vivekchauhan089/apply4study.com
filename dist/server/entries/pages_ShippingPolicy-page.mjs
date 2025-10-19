@@ -73,7 +73,7 @@ function ShippingPolicy() {
   ] });
 }
 /*! pages/ShippingPolicy.page.jsx [vike:pluginModuleBanner] */
-const route = "/shippingpolicy";
+const route = "/shipping-policy";
 const documentProps = {
   title: {
     default: "ShippingPolicy",

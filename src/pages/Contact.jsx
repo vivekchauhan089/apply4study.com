@@ -4,7 +4,11 @@ import "aos/dist/aos.css";
 import LazyImage from "../components/common/LazyImage";
 import contactImg from "../assets/img/about.jpg";
 import useSEO from "../hooks/useSEO";
-import ReCAPTCHA from "react-google-recaptcha";
+
+let ReCAPTCHA = null;
+if (typeof window !== "undefined") {
+  ReCAPTCHA = require("react-google-recaptcha").default;
+}
 
 export default function Contact() {
   const [validated, setValidated] = useState(false);
@@ -381,6 +385,7 @@ export default function Contact() {
                       <div className={errors.contentMsgClass}>{errors.content}</div>
                     </div>
 
+                    {ReCAPTCHA && (
                     <div className="col-md-12">
                       {/* Google reCAPTCHA */}
                       <ReCAPTCHA
@@ -388,6 +393,7 @@ export default function Contact() {
                         onChange={(value) => setToken(value)}
                       />
                     </div>
+                    )}
 
                     <div className="col-md-12 text-center">
                       <button

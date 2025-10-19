@@ -114,7 +114,7 @@ function TermsConditions() {
   ] });
 }
 /*! pages/TermsConditions.page.jsx [vike:pluginModuleBanner] */
-const route = "/termsconditions";
+const route = "/terms-conditions";
 const documentProps = {
   title: {
     default: "TermsConditions",

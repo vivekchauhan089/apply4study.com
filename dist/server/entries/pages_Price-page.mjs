@@ -386,7 +386,7 @@ function Price() {
   ] }) });
 }
 /*! pages/Price.page.jsx [vike:pluginModuleBanner] */
-const route = "/price";
+const route = "/pricing";
 const documentProps = {
   title: {
     default: "Price",

@@ -5,9 +5,12 @@ import AOS from "aos";
 import { L as LazyImage } from "../chunks/chunk-wLlExif_.js";
 import { a as aboutImg1 } from "../chunks/chunk-BCNmD0kc.js";
 import { u as useSEO } from "../chunks/chunk-C9YAkDoO.js";
-import ReCAPTCHA from "react-google-recaptcha";
 import "react-intersection-observer";
 /*! src/pages/Contact.jsx [vike:pluginModuleBanner] */
+let ReCAPTCHA = null;
+if (typeof window !== "undefined") {
+  ReCAPTCHA = require("react-google-recaptcha").default;
+}
 function Contact() {
   const [validated, setValidated] = useState(false);
   const [IsMobile, setIsMobile] = useState(false);
@@ -371,7 +374,7 @@ function Contact() {
                 ),
                 /* @__PURE__ */ jsx("div", { className: errors.contentMsgClass, children: errors.content })
               ] }),
-              /* @__PURE__ */ jsx("div", { className: "col-md-12", children: /* @__PURE__ */ jsx(
+              ReCAPTCHA && /* @__PURE__ */ jsx("div", { className: "col-md-12", children: /* @__PURE__ */ jsx(
                 ReCAPTCHA,
                 {
                   sitekey: process.env.REACT_APP_RECAPTCHA_SITE_KEY,
