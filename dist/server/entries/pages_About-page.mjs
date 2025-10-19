@@ -1,10 +1,12 @@
-import { jsx, Fragment, jsxs } from "react/jsx-runtime";
 import { useEffect } from "react";
+import { jsx, Fragment, jsxs } from "react/jsx-runtime";
 import AOS from "aos";
-import { u as useSEO } from "../chunks/chunk-BzfYDzQ6.js";
-import { a as aboutImg1 } from "../chunks/chunk-CsZW0ICH.js";
-import { L as LazyImage } from "../chunks/chunk-DZmpAonr.js";
+/* empty css                       */
+import { a as aboutImg1 } from "../chunks/chunk-BCNmD0kc.js";
+import { L as LazyImage } from "../chunks/chunk-wLlExif_.js";
+import { u as useSEO } from "../chunks/chunk-C9YAkDoO.js";
 import "react-intersection-observer";
+/*! src/pages/About.jsx [vike:pluginModuleBanner] */
 function About() {
   useEffect(() => {
     AOS.init({ duration: 1e3 });
@@ -210,14 +212,26 @@ function About() {
     ] }) }) })
   ] }) });
 }
+/*! pages/About.page.jsx [vike:pluginModuleBanner] */
+const route = "/about";
 const documentProps = {
-  title: "About | Apply4Study",
-  description: "About page"
+  title: {
+    default: "About",
+    template: "%s — Apply4Study",
+    config: {}
+  },
+  description: {
+    default: "About page",
+    config: {}
+  }
 };
-function Page() {
-  return /* @__PURE__ */ jsx(About, {});
-}
-export {
-  Page,
+const About_page = {
+  Page: About,
+  route,
   documentProps
+};
+export {
+  About_page as default,
+  documentProps,
+  route
 };

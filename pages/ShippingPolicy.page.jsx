@@ -2,12 +2,25 @@
 import React from "react";
 import Component from "../src/pages/ShippingPolicy.jsx";
 
-export { Page }
+// Route used by Vike
+export const route = "/shippingpolicy";
+
+// documentProps for Vike
 export const documentProps = {
-  title: "ShippingPolicy | Apply4Study",
-  description: "ShippingPolicy page"
+  title: {
+    default: "ShippingPolicy",
+    template: "%s — Apply4Study",
+    config: {}
+  },
+  description: {
+    default: "ShippingPolicy page",
+    config: {}
+  }
 };
 
-function Page() {
-  return <Component />;
-}
+// ✅ V1-compatible default export
+export default {
+  Page: Component,
+  route,
+  documentProps
+};

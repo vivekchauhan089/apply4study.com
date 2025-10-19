@@ -1,7 +1,9 @@
-import { jsxs, jsx } from "react/jsx-runtime";
 import { useEffect } from "react";
+import { jsxs, jsx } from "react/jsx-runtime";
 import AOS from "aos";
-import { u as useSEO } from "../chunks/chunk-BzfYDzQ6.js";
+/* empty css                       */
+import { u as useSEO } from "../chunks/chunk-C9YAkDoO.js";
+/*! src/pages/RefundPolicy.jsx [vike:pluginModuleBanner] */
 function RefundPolicy() {
   useEffect(() => {
     AOS.init({ duration: 1e3 });
@@ -109,14 +111,26 @@ function RefundPolicy() {
     ] }) })
   ] });
 }
+/*! pages/RefundPolicy.page.jsx [vike:pluginModuleBanner] */
+const route = "/refundpolicy";
 const documentProps = {
-  title: "RefundPolicy | Apply4Study",
-  description: "RefundPolicy page"
+  title: {
+    default: "RefundPolicy",
+    template: "%s — Apply4Study",
+    config: {}
+  },
+  description: {
+    default: "RefundPolicy page",
+    config: {}
+  }
 };
-function Page() {
-  return /* @__PURE__ */ jsx(RefundPolicy, {});
-}
-export {
-  Page,
+const RefundPolicy_page = {
+  Page: RefundPolicy,
+  route,
   documentProps
+};
+export {
+  RefundPolicy_page as default,
+  documentProps,
+  route
 };

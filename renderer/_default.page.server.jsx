@@ -1,14 +1,14 @@
 import React from 'react'
 import ReactDOMServer from 'react-dom/server'
-import { escapeInject, dangerouslySkipEscape } from 'vite-plugin-ssr/server'
+import { escapeInject, dangerouslySkipEscape } from 'vike'
 import { PageShell } from './PageShell.jsx'
 
-export { render }
+// export { render }
 
-function render(pageContext) {
-  const { Page, documentProps } = pageContext
-  const title = documentProps?.title || 'Apply4Study'
-  const desc = documentProps?.description || 'Study abroad portal'
+export async function render(pageContext) {
+  const { Page, exports } = pageContext
+  const title = exports?.documentProps?.title?.default || 'Apply4Study'
+  const desc = exports?.documentProps?.description?.default || 'Study abroad portal'
 
   const pageHtml = ReactDOMServer.renderToString(
     <PageShell pageContext={pageContext}>

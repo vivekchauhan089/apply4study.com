@@ -2,12 +2,25 @@
 import React from "react";
 import Component from "../src/pages/Blog.jsx";
 
-export { Page }
+// Route used by Vike
+export const route = "/blog";
+
+// documentProps for Vike
 export const documentProps = {
-  title: "Blog | Apply4Study",
-  description: "Blog page"
+  title: {
+    default: "Blog",
+    template: "%s — Apply4Study",
+    config: {}
+  },
+  description: {
+    default: "Blog page",
+    config: {}
+  }
 };
 
-function Page() {
-  return <Component />;
-}
+// ✅ V1-compatible default export
+export default {
+  Page: Component,
+  route,
+  documentProps
+};

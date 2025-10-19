@@ -21,15 +21,16 @@
     "replace-in-file": "^8.3.0",
     "sass": "^1.89.1",
     "swiper": "^11.2.6",
+    "vike": "^0.4.242",
     "vite": "^7.1.10",
-    "vite-plugin-ssr": "^0.4.142",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "dev": "vite",
     "start": "react-scripts start",
-    "build": "vite build && npx vite-plugin-ssr prerender",
-    "preview": "vite preview"
+    "build": "vite build && vike prerender",
+    "preview": "vite preview",
+    "prerender": "vike prerender"
   },
   "browserslist": {
     "production": [

@@ -1,16 +1,16 @@
 import { jsx } from "react/jsx-runtime";
 import React from "react";
 import ReactDOMServer from "react-dom/server";
-import { dangerouslySkipEscape, escapeInject } from "vite-plugin-ssr/server";
+import { dangerouslySkipEscape, escapeInject } from "vike";
+/*! renderer/PageShell.jsx [vike:pluginModuleBanner] */
 function PageShell({ children, pageContext }) {
-  pageContext?.documentProps?.title || "Apply4Study";
-  pageContext?.documentProps?.description || "Study abroad portal";
   return /* @__PURE__ */ jsx(React.StrictMode, { children: /* @__PURE__ */ jsx("div", { id: "page-view", children }) });
 }
-function render(pageContext) {
-  const { Page, documentProps } = pageContext;
-  const title = documentProps?.title || "Apply4Study";
-  const desc = documentProps?.description || "Study abroad portal";
+/*! renderer/_default.page.server.jsx [vike:pluginModuleBanner] */
+async function render(pageContext) {
+  const { Page, exports } = pageContext;
+  const title = exports?.documentProps?.title?.default || "Apply4Study";
+  const desc = exports?.documentProps?.description?.default || "Study abroad portal";
   const pageHtml = ReactDOMServer.renderToString(
     /* @__PURE__ */ jsx(PageShell, { pageContext, children: /* @__PURE__ */ jsx(Page, {}) })
   );

@@ -21,6 +21,7 @@ export default function Contact() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState("");
+  const [yoContent, setYoContent] = useState("");
 
   useEffect(() => {
     AOS.init({ duration: 1000 });
@@ -69,7 +70,7 @@ export default function Contact() {
       newErrors.subjectMsgClass = 'invalid-feedback';
       newErrors.subject = 'Subject is required';
     }
-    if (!formData.content) {
+    if (!yoContent) {
       newErrors.contentClass = 'is-invalid';
       newErrors.contentMsgClass = 'invalid-feedback';
       newErrors.content = 'Message is required';
@@ -374,9 +375,9 @@ export default function Contact() {
                         rows="6"
                         placeholder="Your Message"
                         required
-                        value={formData.content}
-                        onChange={handleChange}
-                      >{formData.content}</textarea>
+                        value={yoContent}
+                        onChange={(e) => setYoContent(e.target.value)}
+                      />
                       <div className={errors.contentMsgClass}>{errors.content}</div>
                     </div>
 

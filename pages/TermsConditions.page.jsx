@@ -2,12 +2,25 @@
 import React from "react";
 import Component from "../src/pages/TermsConditions.jsx";
 
-export { Page }
+// Route used by Vike
+export const route = "/termsconditions";
+
+// documentProps for Vike
 export const documentProps = {
-  title: "TermsConditions | Apply4Study",
-  description: "TermsConditions page"
+  title: {
+    default: "TermsConditions",
+    template: "%s — Apply4Study",
+    config: {}
+  },
+  description: {
+    default: "TermsConditions page",
+    config: {}
+  }
 };
 
-function Page() {
-  return <Component />;
-}
+// ✅ V1-compatible default export
+export default {
+  Page: Component,
+  route,
+  documentProps
+};

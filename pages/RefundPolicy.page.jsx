@@ -2,12 +2,25 @@
 import React from "react";
 import Component from "../src/pages/RefundPolicy.jsx";
 
-export { Page }
+// Route used by Vike
+export const route = "/refundpolicy";
+
+// documentProps for Vike
 export const documentProps = {
-  title: "RefundPolicy | Apply4Study",
-  description: "RefundPolicy page"
+  title: {
+    default: "RefundPolicy",
+    template: "%s — Apply4Study",
+    config: {}
+  },
+  description: {
+    default: "RefundPolicy page",
+    config: {}
+  }
 };
 
-function Page() {
-  return <Component />;
-}
+// ✅ V1-compatible default export
+export default {
+  Page: Component,
+  route,
+  documentProps
+};

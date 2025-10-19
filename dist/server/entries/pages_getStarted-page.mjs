@@ -1,43 +1,15 @@
-import { jsx, Fragment, jsxs } from "react/jsx-runtime";
 import { useEffect, useState, useRef } from "react";
+import { jsx, Fragment, jsxs } from "react/jsx-runtime";
 import "swiper/react";
 import "swiper/modules";
 /* empty css                       */
+/* empty css                       */
+/* empty css                       */
 import AOS from "aos";
-import { u as useSEO } from "../chunks/chunk-BzfYDzQ6.js";
+/* empty css                       */
+import { u as useSEO } from "../chunks/chunk-C9YAkDoO.js";
 import ReCAPTCHA from "react-google-recaptcha";
-[
-  {
-    img: require("../assets/img/testimonials/testimonials-1.jpg"),
-    name: "Saul Goodman",
-    role: "Ceo & Founder",
-    quote: "Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id..."
-  },
-  {
-    img: require("../assets/img/testimonials/testimonials-2.jpg"),
-    name: "Sara Wilsson",
-    role: "Designer",
-    quote: "Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis..."
-  },
-  {
-    img: require("../assets/img/testimonials/testimonials-3.jpg"),
-    name: "Jena Karlis",
-    role: "Store Owner",
-    quote: "Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis..."
-  },
-  {
-    img: require("../assets/img/testimonials/testimonials-4.jpg"),
-    name: "Matt Brandon",
-    role: "Freelancer",
-    quote: "Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit..."
-  },
-  {
-    img: require("../assets/img/testimonials/testimonials-5.jpg"),
-    name: "John Larson",
-    role: "Entrepreneur",
-    quote: "Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam..."
-  }
-];
+/*! src/pages/GetStarted.jsx [vike:pluginModuleBanner] */
 function GetStarted() {
   useEffect(() => {
     AOS.init({ duration: 1e3 });
@@ -354,14 +326,26 @@ function GetStarted() {
     ] }) }) })
   ] }) });
 }
+/*! pages/GetStarted.page.jsx [vike:pluginModuleBanner] */
+const route = "/getstarted";
 const documentProps = {
-  title: "getStarted | Apply4Study",
-  description: "getStarted page"
+  title: {
+    default: "GetStarted",
+    template: "%s — Apply4Study",
+    config: {}
+  },
+  description: {
+    default: "GetStarted page",
+    config: {}
+  }
 };
-function Page() {
-  return /* @__PURE__ */ jsx(GetStarted, {});
-}
-export {
-  Page,
+const GetStarted_page = {
+  Page: GetStarted,
+  route,
   documentProps
+};
+export {
+  GetStarted_page as default,
+  documentProps,
+  route
 };

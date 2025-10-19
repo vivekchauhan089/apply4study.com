@@ -1,39 +1,44 @@
-import { jsx, Fragment, jsxs } from "react/jsx-runtime";
 import { useEffect } from "react";
+import { jsx, Fragment, jsxs } from "react/jsx-runtime";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
 /* empty css                       */
+/* empty css                       */
+/* empty css                       */
 import AOS from "aos";
-import { u as useSEO } from "../chunks/chunk-BzfYDzQ6.js";
-import { L as LazyImage } from "../chunks/chunk-DZmpAonr.js";
+/* empty css                       */
+import { i as img1, a as img2, b as img3, c as img4, d as img5 } from "../chunks/chunk-BlH4OGEP.js";
+import { L as LazyImage } from "../chunks/chunk-wLlExif_.js";
+import { u as useSEO } from "../chunks/chunk-C9YAkDoO.js";
 import "react-intersection-observer";
+/*! src/pages/Partners.jsx [vike:pluginModuleBanner] */
 const testimonials = [
   {
-    img: require("../assets/img/testimonials/testimonials-1.jpg"),
+    img: img1,
     name: "Saul Goodman",
     role: "Ceo & Founder",
     quote: "Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id..."
   },
   {
-    img: require("../assets/img/testimonials/testimonials-2.jpg"),
+    img: img2,
     name: "Sara Wilsson",
     role: "Designer",
     quote: "Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis..."
   },
   {
-    img: require("../assets/img/testimonials/testimonials-3.jpg"),
+    img: img3,
     name: "Jena Karlis",
     role: "Store Owner",
     quote: "Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis..."
   },
   {
-    img: require("../assets/img/testimonials/testimonials-4.jpg"),
+    img: img4,
     name: "Matt Brandon",
     role: "Freelancer",
     quote: "Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit..."
   },
   {
-    img: require("../assets/img/testimonials/testimonials-5.jpg"),
+    img: img5,
     name: "John Larson",
     role: "Entrepreneur",
     quote: "Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam..."
@@ -223,14 +228,26 @@ function Partners() {
     ] }) })
   ] }) });
 }
+/*! pages/Partners.page.jsx [vike:pluginModuleBanner] */
+const route = "/partners";
 const documentProps = {
-  title: "Partners | Apply4Study",
-  description: "Partners page"
+  title: {
+    default: "Partners",
+    template: "%s — Apply4Study",
+    config: {}
+  },
+  description: {
+    default: "Partners page",
+    config: {}
+  }
 };
-function Page() {
-  return /* @__PURE__ */ jsx(Partners, {});
-}
-export {
-  Page,
+const Partners_page = {
+  Page: Partners,
+  route,
   documentProps
+};
+export {
+  Partners_page as default,
+  documentProps,
+  route
 };

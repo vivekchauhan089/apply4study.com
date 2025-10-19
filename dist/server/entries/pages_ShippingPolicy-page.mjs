@@ -1,7 +1,9 @@
-import { jsxs, jsx } from "react/jsx-runtime";
 import { useEffect } from "react";
+import { jsxs, jsx } from "react/jsx-runtime";
 import AOS from "aos";
-import { u as useSEO } from "../chunks/chunk-BzfYDzQ6.js";
+/* empty css                       */
+import { u as useSEO } from "../chunks/chunk-C9YAkDoO.js";
+/*! src/pages/ShippingPolicy.jsx [vike:pluginModuleBanner] */
 function ShippingPolicy() {
   useEffect(() => {
     AOS.init({ duration: 1e3 });
@@ -70,14 +72,26 @@ function ShippingPolicy() {
     ] }) })
   ] });
 }
+/*! pages/ShippingPolicy.page.jsx [vike:pluginModuleBanner] */
+const route = "/shippingpolicy";
 const documentProps = {
-  title: "ShippingPolicy | Apply4Study",
-  description: "ShippingPolicy page"
+  title: {
+    default: "ShippingPolicy",
+    template: "%s — Apply4Study",
+    config: {}
+  },
+  description: {
+    default: "ShippingPolicy page",
+    config: {}
+  }
 };
-function Page() {
-  return /* @__PURE__ */ jsx(ShippingPolicy, {});
-}
-export {
-  Page,
+const ShippingPolicy_page = {
+  Page: ShippingPolicy,
+  route,
   documentProps
+};
+export {
+  ShippingPolicy_page as default,
+  documentProps,
+  route
 };

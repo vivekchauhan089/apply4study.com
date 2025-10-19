@@ -2,12 +2,25 @@
 import React from "react";
 import Component from "../src/pages/PrivacyPolicy.jsx";
 
-export { Page }
+// Route used by Vike
+export const route = "/privacypolicy";
+
+// documentProps for Vike
 export const documentProps = {
-  title: "PrivacyPolicy | Apply4Study",
-  description: "PrivacyPolicy page"
+  title: {
+    default: "PrivacyPolicy",
+    template: "%s — Apply4Study",
+    config: {}
+  },
+  description: {
+    default: "PrivacyPolicy page",
+    config: {}
+  }
 };
 
-function Page() {
-  return <Component />;
-}
+// ✅ V1-compatible default export
+export default {
+  Page: Component,
+  route,
+  documentProps
+};

@@ -1,21 +1,34 @@
-import { jsx, Fragment, jsxs } from "react/jsx-runtime";
 import { useEffect } from "react";
+import { jsx, Fragment, jsxs } from "react/jsx-runtime";
 import AOS from "aos";
-import { u as useSEO } from "../chunks/chunk-BzfYDzQ6.js";
-import { L as LazyImage } from "../chunks/chunk-DZmpAonr.js";
-import { N as Newsletter } from "../chunks/chunk-Z5B-vSN6.js";
+/* empty css                       */
+import { L as LazyImage } from "../chunks/chunk-wLlExif_.js";
+import { u as useSEO } from "../chunks/chunk-C9YAkDoO.js";
+import { N as Newsletter } from "../chunks/chunk-C070Suwd.js";
 import "react-intersection-observer";
+/*! src/assets/img/blog/blog-1.jpg [vike:pluginModuleBanner] */
 const blog1 = "/assets/static/blog-1.DQJ1aK4z.jpg";
+/*! src/assets/img/blog/blog-2.jpg [vike:pluginModuleBanner] */
 const blog2 = "/assets/static/blog-2.DnNSsc1U.jpg";
+/*! src/assets/img/blog/blog-3.jpg [vike:pluginModuleBanner] */
 const blog3 = "/assets/static/blog-3.CmEtnaLm.jpg";
+/*! src/assets/img/blog/blog-4.jpg [vike:pluginModuleBanner] */
 const blog4 = "/assets/static/blog-4.BlsvisbT.jpg";
+/*! src/assets/img/blog/blog-5.jpg [vike:pluginModuleBanner] */
 const blog5 = "/assets/static/blog-5.DG4x4bYY.jpg";
+/*! src/assets/img/blog/blog-6.jpg [vike:pluginModuleBanner] */
 const blog6 = "/assets/static/blog-6.ioLCgBek.jpg";
+/*! src/assets/img/blog/blog-author-2.jpg [vike:pluginModuleBanner] */
 const blogAuth2 = "/assets/static/blog-author-2.BMx85-dU.jpg";
+/*! src/assets/img/blog/blog-author-3.jpg [vike:pluginModuleBanner] */
 const blogAuth3 = "/assets/static/blog-author-3.0_5LQ10O.jpg";
+/*! src/assets/img/blog/blog-author-4.jpg [vike:pluginModuleBanner] */
 const blogAuth4 = "/assets/static/blog-author-4.5HCWg8e2.jpg";
+/*! src/assets/img/blog/blog-author-5.jpg [vike:pluginModuleBanner] */
 const blogAuth5 = "/assets/static/blog-author-5.DkHsm2MD.jpg";
+/*! src/assets/img/blog/blog-author-6.jpg [vike:pluginModuleBanner] */
 const blogAuth6 = "/assets/static/blog-author-6.33Yuu0le.jpg";
+/*! src/pages/Blog.jsx [vike:pluginModuleBanner] */
 function Blog() {
   useEffect(() => {
     AOS.init({ duration: 1e3 });
@@ -170,14 +183,26 @@ function Blog() {
     /* @__PURE__ */ jsx(Newsletter, {})
   ] }) });
 }
+/*! pages/Blog.page.jsx [vike:pluginModuleBanner] */
+const route = "/blog";
 const documentProps = {
-  title: "Blog | Apply4Study",
-  description: "Blog page"
+  title: {
+    default: "Blog",
+    template: "%s — Apply4Study",
+    config: {}
+  },
+  description: {
+    default: "Blog page",
+    config: {}
+  }
 };
-function Page() {
-  return /* @__PURE__ */ jsx(Blog, {});
-}
-export {
-  Page,
+const Blog_page = {
+  Page: Blog,
+  route,
   documentProps
+};
+export {
+  Blog_page as default,
+  documentProps,
+  route
 };

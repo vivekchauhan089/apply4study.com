@@ -1,10 +1,12 @@
-import { jsx, Fragment, jsxs } from "react/jsx-runtime";
 import { useEffect } from "react";
+import { jsx, Fragment, jsxs } from "react/jsx-runtime";
 import AOS from "aos";
-import { u as useSEO } from "../chunks/chunk-BzfYDzQ6.js";
-import { L as LazyImage } from "../chunks/chunk-DZmpAonr.js";
-import { a as aboutImg1 } from "../chunks/chunk-CsZW0ICH.js";
+/* empty css                       */
+import { L as LazyImage } from "../chunks/chunk-wLlExif_.js";
+import { a as aboutImg1 } from "../chunks/chunk-BCNmD0kc.js";
+import { u as useSEO } from "../chunks/chunk-C9YAkDoO.js";
 import "react-intersection-observer";
+/*! src/pages/Services.jsx [vike:pluginModuleBanner] */
 function Services() {
   useEffect(() => {
     AOS.init({ duration: 1e3 });
@@ -260,14 +262,26 @@ function Services() {
     ] }) })
   ] }) });
 }
+/*! pages/Services.page.jsx [vike:pluginModuleBanner] */
+const route = "/services";
 const documentProps = {
-  title: "Services | Apply4Study",
-  description: "Services page"
+  title: {
+    default: "Services",
+    template: "%s — Apply4Study",
+    config: {}
+  },
+  description: {
+    default: "Services page",
+    config: {}
+  }
 };
-function Page() {
-  return /* @__PURE__ */ jsx(Services, {});
-}
-export {
-  Page,
+const Services_page = {
+  Page: Services,
+  route,
   documentProps
+};
+export {
+  Services_page as default,
+  documentProps,
+  route
 };

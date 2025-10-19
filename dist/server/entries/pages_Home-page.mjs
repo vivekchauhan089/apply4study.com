@@ -1,15 +1,22 @@
-import { jsx, jsxs, Fragment } from "react/jsx-runtime";
 import { useState, useEffect } from "react";
+import { jsx, jsxs, Fragment } from "react/jsx-runtime";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { Link } from "react-router-dom";
 /* empty css                       */
+/* empty css                       */
+/* empty css                       */
 import AOS from "aos";
-import { u as useSEO } from "../chunks/chunk-BzfYDzQ6.js";
-import { L as LazyImage } from "../chunks/chunk-DZmpAonr.js";
+/* empty css                       */
+import { L as LazyImage } from "../chunks/chunk-wLlExif_.js";
+import { u as useSEO } from "../chunks/chunk-C9YAkDoO.js";
+import { i as img1, a as img2, b as img3, c as img4, d as img5 } from "../chunks/chunk-BlH4OGEP.js";
+/* empty css                       */
+/* empty css                       */
 import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";
-import { N as Newsletter } from "../chunks/chunk-Z5B-vSN6.js";
+import { N as Newsletter } from "../chunks/chunk-C070Suwd.js";
+/*! src/components/AddDownloadPromo/AddDownloadPromo.jsx [vike:pluginModuleBanner] */
 const AppDownloadPromo = () => {
   return /* @__PURE__ */ jsx("div", { className: "section light-background py-0", children: /* @__PURE__ */ jsx("div", { className: "mockup_img text-center py-5", children: /* @__PURE__ */ jsxs("div", { className: "my-3 app_download", children: [
     /* @__PURE__ */ jsx("h3", { className: "mb-3", children: "Mobile App Promo" }),
@@ -51,6 +58,7 @@ const AppDownloadPromo = () => {
     )
   ] }) }) });
 };
+/*! src/components/FAQ/FAQ.jsx [vike:pluginModuleBanner] */
 const FaqSection = () => {
   const [activeIndex, setActiveIndex] = useState(null);
   const toggleItem = (index) => {
@@ -104,16 +112,27 @@ const FaqSection = () => {
     )) })
   ] }) }) });
 };
+/*! src/assets/img/hero-img-1.jpg [vike:pluginModuleBanner] */
 const hero1 = "/assets/static/hero-img-1.CZNMGEcn.jpg";
+/*! src/assets/img/quiz_img.jpg [vike:pluginModuleBanner] */
 const quize1 = "/assets/static/quiz_img.CfRIyEjq.jpg";
+/*! src/assets/img/progress_tracking_img.jpg [vike:pluginModuleBanner] */
 const quize2 = "/assets/static/progress_tracking_img.RRYZUzBq.jpg";
+/*! src/assets/img/study.jpg [vike:pluginModuleBanner] */
 const quize3 = "/assets/static/study.aw7TMiKc.jpg";
+/*! src/assets/img/subjectsTopics.png [vike:pluginModuleBanner] */
 const worksImg1 = "/assets/static/subjectsTopics.lPC2RYIA.png";
+/*! src/assets/img/addNotes.jpg [vike:pluginModuleBanner] */
 const worksImg2 = "/assets/static/addNotes.d1Xpg_Gw.jpg";
+/*! src/assets/img/takeQuize.png [vike:pluginModuleBanner] */
 const worksImg3 = "/assets/static/takeQuize.DnApb-6D.png";
+/*! src/assets/img/student.png [vike:pluginModuleBanner] */
 const student1 = "/assets/static/student.DqbV0I-6.png";
+/*! src/assets/img/teachers.png [vike:pluginModuleBanner] */
 const student2 = "/assets/static/teachers.CbKvP82B.png";
+/*! src/assets/img/exam.png [vike:pluginModuleBanner] */
 const student3 = "/assets/static/exam.2ypn7TPz.png";
+/*! src/components/SearchSection/HomeSearchSection.jsx [vike:pluginModuleBanner] */
 const SearchSection = () => {
   return /* @__PURE__ */ jsx("section", { className: "about", children: /* @__PURE__ */ jsx("div", { className: "container", children: /* @__PURE__ */ jsx("div", { className: "row gy-4", children: /* @__PURE__ */ jsxs("div", { className: "search-container", children: [
     /* @__PURE__ */ jsxs("h3", { className: "text-white text-center search-title", children: [
@@ -137,6 +156,7 @@ const SearchSection = () => {
     ] })
   ] }) }) }) });
 };
+/*! src/components/StatsSection/StatsSection.jsx [vike:pluginModuleBanner] */
 const statsData = [
   {
     icon: "bi-mortarboard",
@@ -192,6 +212,7 @@ const StatsSection = () => {
     ] }, idx)) })
   ] });
 };
+/*! src/pages/Home.jsx [vike:pluginModuleBanner] */
 const sliderData = [
   {
     heading: "Master Any Subject Faster with Smarter Study Tools",
@@ -201,31 +222,31 @@ const sliderData = [
 ];
 const testimonials = [
   {
-    img: require("../assets/img/testimonials/testimonials-1.jpg"),
+    img: img1,
     name: "Saul Goodman",
     role: "Ceo & Founder",
     quote: "Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id..."
   },
   {
-    img: require("../assets/img/testimonials/testimonials-2.jpg"),
+    img: img2,
     name: "Sara Wilsson",
     role: "Designer",
     quote: "Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis..."
   },
   {
-    img: require("../assets/img/testimonials/testimonials-3.jpg"),
+    img: img3,
     name: "Jena Karlis",
     role: "Store Owner",
     quote: "Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis..."
   },
   {
-    img: require("../assets/img/testimonials/testimonials-4.jpg"),
+    img: img4,
     name: "Matt Brandon",
     role: "Freelancer",
     quote: "Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit..."
   },
   {
-    img: require("../assets/img/testimonials/testimonials-5.jpg"),
+    img: img5,
     name: "John Larson",
     role: "Entrepreneur",
     quote: "Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam..."
@@ -419,14 +440,26 @@ function Home() {
     /* @__PURE__ */ jsx(Newsletter, {})
   ] });
 }
+/*! pages/Home.page.jsx [vike:pluginModuleBanner] */
+const route = "/home";
 const documentProps = {
-  title: "Home | Apply4Study",
-  description: "Home page"
+  title: {
+    default: "Home",
+    template: "%s — Apply4Study",
+    config: {}
+  },
+  description: {
+    default: "Home page",
+    config: {}
+  }
 };
-function Page() {
-  return /* @__PURE__ */ jsx(Home, {});
-}
-export {
-  Page,
+const Home_page = {
+  Page: Home,
+  route,
   documentProps
+};
+export {
+  Home_page as default,
+  documentProps,
+  route
 };

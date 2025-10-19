@@ -8,41 +8,48 @@ import 'swiper/css/pagination';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 // import getStartedImg from '../assets/img/getStarted.png';
+
+import img1 from '../assets/img/testimonials/testimonials-1.jpg';
+import img2 from '../assets/img/testimonials/testimonials-2.jpg';
+import img3 from '../assets/img/testimonials/testimonials-3.jpg';
+import img4 from '../assets/img/testimonials/testimonials-4.jpg';
+import img5 from '../assets/img/testimonials/testimonials-5.jpg';
+
 import LazyImage from '../components/common/LazyImage';
 import useSEO from "../hooks/useSEO";
 import ReCAPTCHA from "react-google-recaptcha";
 
 const testimonials = [
   {
-    img: require('../assets/img/testimonials/testimonials-1.jpg'),
+    img: img1,
     name: 'Saul Goodman',
     role: 'Ceo & Founder',
     quote:
       'Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id...',
   },
   {
-    img: require('../assets/img/testimonials/testimonials-2.jpg'),
+    img: img2,
     name: 'Sara Wilsson',
     role: 'Designer',
     quote:
       'Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis...',
   },
   {
-    img: require('../assets/img/testimonials/testimonials-3.jpg'),
+    img: img3,
     name: 'Jena Karlis',
     role: 'Store Owner',
     quote:
       'Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis...',
   },
   {
-    img: require('../assets/img/testimonials/testimonials-4.jpg'),
+    img: img4,
     name: 'Matt Brandon',
     role: 'Freelancer',
     quote:
       'Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit...',
   },
   {
-    img: require('../assets/img/testimonials/testimonials-5.jpg'),
+    img: img5,
     name: 'John Larson',
     role: 'Entrepreneur',
     quote:

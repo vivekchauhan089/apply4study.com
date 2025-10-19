@@ -1,11 +1,13 @@
-import { jsx, Fragment, jsxs } from "react/jsx-runtime";
 import { useState, useEffect } from "react";
+import { jsx, Fragment, jsxs } from "react/jsx-runtime";
 import AOS from "aos";
-import { u as useSEO } from "../chunks/chunk-BzfYDzQ6.js";
-import { L as LazyImage } from "../chunks/chunk-DZmpAonr.js";
-import { a as aboutImg1 } from "../chunks/chunk-CsZW0ICH.js";
+/* empty css                       */
+import { L as LazyImage } from "../chunks/chunk-wLlExif_.js";
+import { a as aboutImg1 } from "../chunks/chunk-BCNmD0kc.js";
+import { u as useSEO } from "../chunks/chunk-C9YAkDoO.js";
 import ReCAPTCHA from "react-google-recaptcha";
 import "react-intersection-observer";
+/*! src/pages/Contact.jsx [vike:pluginModuleBanner] */
 function Contact() {
   const [validated, setValidated] = useState(false);
   const [IsMobile, setIsMobile] = useState(false);
@@ -21,6 +23,7 @@ function Contact() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState("");
+  const [yoContent, setYoContent] = useState("");
   useEffect(() => {
     AOS.init({ duration: 1e3 });
   }, []);
@@ -64,7 +67,7 @@ function Contact() {
       newErrors.subjectMsgClass = "invalid-feedback";
       newErrors.subject = "Subject is required";
     }
-    if (!formData.content) {
+    if (!yoContent) {
       newErrors.contentClass = "is-invalid";
       newErrors.contentMsgClass = "invalid-feedback";
       newErrors.content = "Message is required";
@@ -362,9 +365,8 @@ function Contact() {
                     rows: "6",
                     placeholder: "Your Message",
                     required: true,
-                    value: formData.content,
-                    onChange: handleChange,
-                    children: formData.content
+                    value: yoContent,
+                    onChange: (e) => setYoContent(e.target.value)
                   }
                 ),
                 /* @__PURE__ */ jsx("div", { className: errors.contentMsgClass, children: errors.content })
@@ -396,14 +398,26 @@ function Contact() {
     )
   ] }) });
 }
+/*! pages/Contact.page.jsx [vike:pluginModuleBanner] */
+const route = "/contact";
 const documentProps = {
-  title: "Contact | Apply4Study",
-  description: "Contact page"
+  title: {
+    default: "Contact",
+    template: "%s — Apply4Study",
+    config: {}
+  },
+  description: {
+    default: "Contact page",
+    config: {}
+  }
 };
-function Page() {
-  return /* @__PURE__ */ jsx(Contact, {});
-}
-export {
-  Page,
+const Contact_page = {
+  Page: Contact,
+  route,
   documentProps
+};
+export {
+  Contact_page as default,
+  documentProps,
+  route
 };

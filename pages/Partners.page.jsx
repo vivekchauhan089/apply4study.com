@@ -2,12 +2,25 @@
 import React from "react";
 import Component from "../src/pages/Partners.jsx";
 
-export { Page }
+// Route used by Vike
+export const route = "/partners";
+
+// documentProps for Vike
 export const documentProps = {
-  title: "Partners | Apply4Study",
-  description: "Partners page"
+  title: {
+    default: "Partners",
+    template: "%s — Apply4Study",
+    config: {}
+  },
+  description: {
+    default: "Partners page",
+    config: {}
+  }
 };
 
-function Page() {
-  return <Component />;
-}
+// ✅ V1-compatible default export
+export default {
+  Page: Component,
+  route,
+  documentProps
+};
