@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SearchResults — Apply4Study</title>
+  <meta name="description" content="SearchResults page" />
+</head>
+<body>
+  <div id="root"><div class="search-box col"><div class="position-relative"><i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ps-2 text-muted"></i><input type="text" class="form-control" style="padding:.250rem .75rem 0.1rem 2rem" placeholder="Search..." value=""/></div></div></div>
+  <script type="module">
+    import React from '/node_modules/react/index.js';
+    import ReactDOM from '/node_modules/react-dom/client.js';
+    import Page from './src/pages/SearchResults.jsx';
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.hydrate(React.createElement(Page));
+  </script>
+</body>
+</html>

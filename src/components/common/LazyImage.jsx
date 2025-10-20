@@ -1,5 +1,5 @@
 import { useInView } from 'react-intersection-observer';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function LazyImage({ src, alt, className, fetchPriority="low" }) {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });

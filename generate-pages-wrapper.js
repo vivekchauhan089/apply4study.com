@@ -2,6 +2,7 @@
 import fs from 'fs';
 import path from 'path';
 import glob from 'glob';
+import 'ignore-styles'; // ✅ Ignore CSS/SCSS import
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { fileURLToPath, pathToFileURL } from 'url';
@@ -46,7 +47,20 @@ const files = fs.readdirSync(SRC_DIR).filter(f => f.endsWith('.jsx'));
 for (const file of files) {
   const filePath = path.join(SRC_DIR, file);
   const pageModule = require(filePath); // Babel will transpile .jsx automatically
-  const Page = pageModule.default;
+  
+  // Normalize the default export to a React component
+  let Page = pageModule?.default || pageModule;
+  if (typeof Page !== 'function' && typeof Page !== 'object') {
+    throw new Error(`Invalid React component in ${file}`);
+  }
+
+  // If React is undefined in SSR (CRA auto JSX runtime), wrap with React
+  if (!Page.prototype && typeof Page === 'function') {
+    const originalPage = Page;
+    Page = function SSRPage(props) {
+      return React.createElement(originalPage, props);
+    };
+  }
 
   const pageName = path.basename(file, '.jsx');
   const outputFile = path.join(DIST_DIR, routeMap[pageName] || `${pageName.toLowerCase()}.html`);

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { MessageCircle } from 'lucide-react'; // icon
 import whatsappIcon from '../../assets/img/whatsapp.png'; 
 

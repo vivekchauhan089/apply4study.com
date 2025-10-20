@@ -83,6 +83,8 @@ const testimonials = [
   },
 ];
 
+const isBrowser = typeof window !== "undefined";
+
 export default function Home() {
 
   const [isMobile, setIsMobile] = useState(false);
@@ -188,11 +190,14 @@ export default function Home() {
               </SwiperSlide>
             ))}
           </Swiper>
+          
         </div>
       </section>
 
       <SearchSection />
-      <StatsSection />
+      {isBrowser && (
+        <StatsSection />
+      )}
 
       <section id="featured-services" className="featured-services section">
 

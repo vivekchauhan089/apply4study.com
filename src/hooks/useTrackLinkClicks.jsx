@@ -1,5 +1,5 @@
 // hooks/useTrackLinkClicks.js
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import ReactGA from "react-ga4";
 
 // ✅ Initialize GA only once (outside the hook)
