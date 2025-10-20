@@ -4,11 +4,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/core": "^7.23.0",
+    "@babel/preset-env": "^7.28.3",
+    "@babel/preset-react": "^7.27.1",
+    "@babel/register": "^7.28.3",
     "@vitejs/plugin-react": "^5.0.4",
     "aos": "^2.3.4",
     "bootstrap": "^5.3.0",
     "bootstrap-icons": "^1.13.1",
     "cross-env": "^10.1.0",
+    "glob": "^8.1.0",
     "lucide-react": "^0.511.0",
     "react": "^19.2.0",
     "react-bootstrap": "^2.10.10",
@@ -28,9 +33,12 @@
   "scripts": {
     "dev": "vite",
     "start": "react-scripts start",
-    "build": "vite build && vike prerender",
-    "preview": "NODE_ENV=production node dist/server/entry.mjs",
-    "prerender": "vike prerender"
+    "buildV": "cross-env NODE_ENV=production vite build && vike prerender",
+    "preview": "cross-env NODE_ENV=production node dist/server/entry.mjs",
+    "prerender": "vike prerender",
+    "build": "cross-env NODE_ENV=production react-scripts build && node generate-pages-wrapper.js",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "browserslist": {
     "production": [
