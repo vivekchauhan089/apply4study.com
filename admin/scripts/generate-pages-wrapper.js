@@ -6,15 +6,56 @@ import React from "react";
 import ReactDOMServer from "react-dom/server";
 import { pathToFileURL } from "url";
 
-const ROOT_DIR = process.cwd();
-const SRC_DIR = path.join(ROOT_DIR, "src/pages");
-const DIST_DIR = path.join(ROOT_DIR, "dist");
-const ASSETS_SRC = path.join(ROOT_DIR, "src/assets");
+import * as babel from "@babel/register";
+import fsExtra from "fs-extra";
+
+import { minify } from 'html-minifier-terser';
+
+const ROOT = process.cwd();
+const SRC_DIR = path.join(ROOT, "src/pages");
+const BUILD_DIR = path.join(ROOT, "build");
+const DIST_DIR = path.join(ROOT, "dist");
+const PUBLIC_DIR = path.join(ROOT, "public");
+const ASSETS_SRC = path.join(ROOT, "src/assets");
 const ASSETS_DEST = path.join(DIST_DIR, "assets");
+
+// Transpile JSX files for Node.js
+babel.default({
+  extensions: [".js", ".jsx"],
+  presets: ["@babel/preset-env", "@babel/preset-react"],
+  ignore: [/node_modules/],
+});
 
 // Ensure directories exist
 if (!fs.existsSync(DIST_DIR)) fs.mkdirSync(DIST_DIR, { recursive: true });
 if (!fs.existsSync(ASSETS_DEST)) fs.mkdirSync(ASSETS_DEST, { recursive: true });
+
+// ✅ Copy assets and public files
+if (fs.existsSync(PUBLIC_DIR)) {
+  fsExtra.copySync(PUBLIC_DIR, DIST_DIR, { overwrite: true });
+  console.log("📦 Copied public → dist");
+}
+if (fs.existsSync(ASSETS_SRC)) {
+  fsExtra.copySync(ASSETS_SRC, ASSETS_DEST, { overwrite: true });
+  console.log("📦 Copied src/assets → dist/assets");
+}
+
+// ✅ Detect CSS and JS bundles from CRA build
+let cssLinks = [];
+let jsScripts = [];
+const staticCssDir = path.join(BUILD_DIR, "static/css");
+const staticJsDir = path.join(BUILD_DIR, "static/js");
+
+if (fs.existsSync(staticCssDir)) {
+  const cssFiles = fs.readdirSync(staticCssDir).filter((f) => f.endsWith(".css"));
+  cssLinks = cssFiles.map((file) => `<link rel="stylesheet" href="../build/static/css/${file}">`);
+}
+
+if (fs.existsSync(staticJsDir)) {
+  const jsFiles = fs.readdirSync(staticJsDir).filter((f) => f.endsWith(".js"));
+  jsScripts = jsFiles.map((file) => `<script src="../build/static/js/${file}" defer></script>`);
+}
+console.log(`🧩 Detected ${cssLinks.length} CSS and ${jsScripts.length} JS assets from build/static`);
 
 // Route map: filename -> URL
 const routeMap = {
@@ -52,18 +93,20 @@ for (const file of files) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${pageName} — Apply4Study</title>
   <meta name="description" content="${pageName} page" />
+  ${cssLinks.join("\n  ")}
 </head>
 <body>
   <div id="root">${htmlContent}</div>
-  <script type="module">
-    import React from '/node_modules/react/index.js';
-    import ReactDOM from '/node_modules/react-dom/client.js';
-    import Page from './src/pages/${file}';
-    const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.hydrate(<Page />);
-  </script>
+  ${jsScripts.join("\n  ")}
 </body>
 </html>`;
+
+  const html = await minify(fullHtml, {
+    collapseWhitespace: true,
+    removeComments: true,
+    minifyCSS: true,
+    minifyJS: true,
+  });
 
   fs.writeFileSync(outputFile, fullHtml, "utf8");
   console.log("✅ Generated HTML:", outputFile);
@@ -82,4 +125,4 @@ glob(`${ASSETS_SRC}/**/*`, { nodir: true }, (err, files) => {
   console.log("✅ Copied all assets to dist/assets");
 });
 
-console.log("\n✨ All pages generated successfully!");
+console.log("\n✨ All pages prerendered successfully with CSS & JS bundles injected!");
