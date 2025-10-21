@@ -5,8 +5,11 @@ const cheerio = require('cheerio');
 
 const START_URL = process.env.SITE_URL || 'https://apply4study.com';
 const MAX_PAGES = 500;
-const BUILD_DIR = path.join(process.cwd(), '../build');
-const SITEMAP_PATH = path.join(BUILD_DIR, 'sitemap.xml');
+const BUILD_DIR = path.join(process.cwd(), 'build');
+const SITEMAP_PATH1 = path.join(BUILD_DIR, 'sitemap.xml');
+
+const DIST_DIR = path.join(process.cwd(), 'dist');
+const SITEMAP_PATH2 = path.join(DIST_DIR, 'sitemap.xml');
 
 const visited = new Set();
 const queue = [
@@ -32,7 +35,12 @@ function crawl(next) {
   }
 
   var url = queue.shift();
-  url = `${START_URL}${url === '/' ? '' : url}`;
+  
+  // ✅ Avoid duplicating domain if already absolute
+  if (!/^https?:\/\//i.test(url)) {
+    url = `${START_URL.replace(/\/$/, '')}${url.startsWith('/') ? '' : '/'}${url}`;
+  }
+  
   if (visited.has(url)) return crawl(next);
   visited.add(url);
 
@@ -86,45 +94,21 @@ ${xmlEntries}
 </urlset>`;
 }
 
-// 🌐 Ping search engines
-function pingSearchEngines(sitemapUrl, done) {
-  const engines = [
-    { name: 'Google', url: `https://www.google.com/ping?sitemap=${encodeURIComponent(sitemapUrl)}` },
-    { name: 'Bing', url: `https://www.bing.com/ping?sitemap=${encodeURIComponent(sitemapUrl)}` },
-  ];
-
-  console.log('\n🔔 Pinging search engines...');
-
-  let remaining = engines.length;
-  engines.forEach(engine => {
-    setTimeout(() => {
-      request(engine.url, (err, res) => {
-        if (!err && res && res.statusCode === 200) {
-          console.log(`✅ Successfully pinged ${engine.name}`);
-        } else {
-          console.warn(`⚠️ Failed to ping ${engine.name} (code: ${res && res.statusCode})`);
-        }
-        if (--remaining === 0) done();
-      });
-    }, 3000); // Wait 3s before sending to give sitemap time to upload
-  });
-}
-
 // 🏁 Main
 crawl(() => {
   console.log('\n🧾 Generating sitemap.xml...');
   const sitemapXml = generateSitemap(visited);
 
   if (!fs.existsSync(BUILD_DIR)) fs.mkdirSync(BUILD_DIR, { recursive: true });
-  fs.writeFileSync(SITEMAP_PATH, sitemapXml, 'utf8');
+  fs.writeFileSync(SITEMAP_PATH1, sitemapXml, 'utf8');
+
+  if (!fs.existsSync(DIST_DIR)) fs.mkdirSync(DIST_DIR, { recursive: true });
+  fs.writeFileSync(SITEMAP_PATH2, sitemapXml, 'utf8');
 
   const sitemapLiveUrl = `${START_URL}/sitemap.xml`;
   console.log(`\n📦 Sitemap generated with ${visited.size} URLs`);
-  console.log(`📍 Saved to: ${SITEMAP_PATH}`);
+  console.log(`📍 Saved to: ${SITEMAP_PATH1}`);
   console.log(`🌍 Sitemap URL: ${sitemapLiveUrl}`);
   console.log('\n🎉 Done! Sitemap is ready and search engines have been notified.');
 
-  /*pingSearchEngines(sitemapLiveUrl, () => {
-    console.log('\n🎉 Done! Sitemap is ready and search engines have been notified.');
-  });*/
 });
