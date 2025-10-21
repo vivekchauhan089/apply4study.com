@@ -5,12 +5,12 @@ import { Link } from 'react-router-dom';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import AppDownloadPromo from '../components/AddDownloadPromo/AddDownloadPromo';
+import AppDownloadPromo from '../components/AddDownloadPromo/AddDownloadPromo.jsx';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import FaqSection from '../components/FAQ/FAQ';
-import LazyImage from '../components/common/LazyImage';
-import useSEO from "../hooks/useSEO";
+import FaqSection from '../components/FAQ/FAQ.jsx';
+import LazyImage from '../components/common/LazyImage.jsx';
+import useSEO from "../hooks/useSEO.jsx";
 
 import hero1 from '../assets/img/hero-img-1.jpg';
 import quize1 from '../assets/img/quiz_img.jpg';
@@ -32,9 +32,9 @@ import img3 from '../assets/img/testimonials/testimonials-3.jpg';
 import img4 from '../assets/img/testimonials/testimonials-4.jpg';
 import img5 from '../assets/img/testimonials/testimonials-5.jpg';
 
-import SearchSection from '../components/SearchSection/HomeSearchSection';
-import StatsSection from '../components/StatsSection/StatsSection';
-import Newsletter from '../components/common/Newsletter';
+import SearchSection from '../components/SearchSection/HomeSearchSection.jsx';
+import StatsSection from '../components/StatsSection/StatsSection.jsx';
+import Newsletter from '../components/common/Newsletter.jsx';
 
 const sliderData = [
   {

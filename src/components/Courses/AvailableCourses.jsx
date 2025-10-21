@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import CoursePlayer from "./CoursePlayer";
+import CoursePlayer from "./CoursePlayer.jsx";
 
 const AvailableCourses = () => {
   const [activeTab, setActiveTab] = useState('popular');

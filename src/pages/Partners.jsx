@@ -17,8 +17,8 @@ import img3 from '../assets/img/testimonials/testimonials-3.jpg';
 import img4 from '../assets/img/testimonials/testimonials-4.jpg';
 import img5 from '../assets/img/testimonials/testimonials-5.jpg';
 
-import LazyImage from '../components/common/LazyImage';
-import useSEO from "../hooks/useSEO";
+import LazyImage from '../components/common/LazyImage.jsx';
+import useSEO from "../hooks/useSEO.jsx";
 
 const testimonials = [
   {

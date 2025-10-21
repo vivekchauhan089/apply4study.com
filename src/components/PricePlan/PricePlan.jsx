@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import PaymentModal from "../Modal/PaymentModal";
+import PaymentModal from "../Modal/PaymentModal.jsx";
 
 const PricePlan = () => {
     const [activeTab, setActiveTab] = useState('student');

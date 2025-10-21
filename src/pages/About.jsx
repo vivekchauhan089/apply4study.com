@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import img1 from '../assets/img/about.jpg';
-import LazyImage from '../components/common/LazyImage';
+import LazyImage from '../components/common/LazyImage.jsx';
 
-import useSEO from "../hooks/useSEO";
+import useSEO from "../hooks/useSEO.jsx";
 
 export default function About() {
   useEffect(() => {

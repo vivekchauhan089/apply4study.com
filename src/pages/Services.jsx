@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import LazyImage from '../components/common/LazyImage';
+import LazyImage from '../components/common/LazyImage.jsx';
 import aboutImg1 from '../assets/img/about.jpg';
 import aboutImg2 from '../assets/img/about.jpg';
 import aboutImg3 from '../assets/img/about.jpg';
 
-import useSEO from "../hooks/useSEO";
+import useSEO from "../hooks/useSEO.jsx";
 
 export default function Services() {
   useEffect(() => {

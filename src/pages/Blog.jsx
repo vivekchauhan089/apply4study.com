@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-import LazyImage from '../components/common/LazyImage';
-import useSEO from "../hooks/useSEO";
-import Newsletter from '../components/common/Newsletter';
+import LazyImage from '../components/common/LazyImage.jsx';
+import useSEO from "../hooks/useSEO.jsx";
+import Newsletter from '../components/common/Newsletter.jsx';
 
 import blog1 from '../assets/img/blog/blog-1.jpg';
 import blog2 from '../assets/img/blog/blog-2.jpg';
