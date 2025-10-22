@@ -9,6 +9,7 @@ import fsExtra from "fs-extra";
 import { minify } from "html-minifier-terser";
 import zlib from "zlib";
 import crypto from "crypto";
+import seoConfig from "../lib/seoConfig.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -159,6 +160,34 @@ async function importJSX(pageName) {
   return await import(pathToFileURL(tempFile).href);
 }
 
+async function generateSEO(seoData = {}) {
+  const { title, description, canonical, keywords, og = {}, twitter = {}, schema = {} } = seoData;
+
+  const ogMeta = Object.entries(og || {}).map(
+    ([property, content]) => `<meta property="${property}" content="${content}" />`
+  );
+
+  const twitterMeta = Object.entries(twitter || {}).map(
+    ([name, content]) => `<meta name="${name}" content="${content}" />`
+  );
+
+  const schemaJson =
+    schema && Object.keys(schema).length
+      ? `<script type="application/ld+json">${JSON.stringify(schema)}</script>`
+      : "";
+
+  return `
+    <title>${title || ""}</title>
+    ${description ? `<meta name="description" content="${description}" />` : ""}
+    ${keywords ? `<meta name="keywords" content="${keywords}" />` : ""}
+    ${canonical ? `<link rel="canonical" href="${canonical}" />` : ""}
+    ${ogMeta.join("\n")}
+    ${twitterMeta.join("\n")}
+    ${schemaJson}
+  `;
+}
+
+
 // Wrap the whole prerender in an async IIFE
 (async () => {
   try {
@@ -241,6 +270,11 @@ async function importJSX(pageName) {
         for (const file of pageFiles) {
           const pageName = path.basename(file, ".jsx");
           try {
+
+            const pageSeo = seoConfig[pageName];
+            // console.log("seo config ", pageSeo);
+            const pageSeoHtml = await generateSEO(pageSeo);
+
             const pageModule = await importJSX(pageName);
             let Page = pageModule?.default || pageModule;
 
@@ -256,8 +290,7 @@ async function importJSX(pageName) {
       <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>${pageName} — Apply4Study</title>
-      <meta name="description" content="${pageName} page" />
+      ${pageSeoHtml}
       ${cssLinks.join("\n")}
       </head>
       <body>
