@@ -230,6 +230,7 @@ async function generateSEO(seoData = {}) {
       const rel = path.relative(DIST_DIR, f).replace(/\\/g, "/");
       return `<script src="${rel}" defer></script>`;
     });
+    jsScripts.push(`<script src="https://checkout.razorpay.com/v1/checkout.js" defer></script>`);
 
     console.log(`🧩 Detected ${cssFiles.length} CSS and ${jsFiles.length} JS assets from build/static`);
 
@@ -281,10 +282,6 @@ async function generateSEO(seoData = {}) {
             const pageSeo = seoConfig[pageName];
             // console.log("seo config ", pageSeo);
             const pageSeoHtml = await generateSEO(pageSeo);
-
-            if (["Price"].includes(pageName)) {
-              jsScripts.push(`<script src="https://checkout.razorpay.com/v1/checkout.js" defer></script>`);
-            }
 
             const outputFile = path.join(DIST_DIR, routeMap[pageName] || `${pageName.toLowerCase()}.html`);
             const htmlContent = ReactDOMServer.renderToString(React.createElement(Page));
