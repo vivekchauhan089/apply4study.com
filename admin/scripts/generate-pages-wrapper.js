@@ -12,7 +12,6 @@ import crypto from "crypto";
 import seoConfig from "../lib/seoConfig.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const APP_URL = process.env.REACT_APP_URL || "https://www.apply4study.com";
 
 const ROOT = process.cwd();
 const SRC_DIR = path.join(ROOT, "src");
@@ -284,7 +283,7 @@ async function generateSEO(seoData = {}) {
             const pageSeoHtml = await generateSEO(pageSeo);
 
             if (["Price"].includes(pageName)) {
-              jsScripts.push(`<script src="${APP_URL}/checkout.razorpay.min.js"></script>`);
+              jsScripts.push(`<script src="https://checkout.razorpay.com/v1/checkout.js" defer></script>`);
             }
 
             const outputFile = path.join(DIST_DIR, routeMap[pageName] || `${pageName.toLowerCase()}.html`);
