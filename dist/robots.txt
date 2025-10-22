@@ -1,6 +1,47 @@
-# robots.txt generated on 2025-10-11T08:05:40.128Z
+# ==============================
+# 🤖 Robots.txt — Apply4Study
+# ==============================
+
+# Allow all search engines and AI crawlers
 User-agent: *
 Allow: /
 
+# Optional: disallow private areas
+Disallow: /admin/
+Disallow: /api/
+Disallow: /dashboard/
+Disallow: /profile/
+
+# Explicitly allow AI crawlers (optional but good for visibility)
+# Google Search + Gemini AI
+User-agent: Googlebot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# Bing + Copilot
+User-agent: Bingbot
+Allow: /
+
+User-agent: BingPreview
+Allow: /
+
+# OpenAI ChatGPT / GPTBot
+User-agent: GPTBot
+Allow: /
+
+# Anthropic Claude
+User-agent: ClaudeBot
+Allow: /
+
+# Perplexity AI
+User-agent: PerplexityBot
+Allow: /
+
+# You.com
+User-agent: YouBot
+Allow: /
+
+# Sitemap
 Sitemap: https://apply4study.com/sitemap.xml
-Host: https://apply4study.com
