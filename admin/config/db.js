@@ -5,8 +5,7 @@ global.url = "mongodb+srv://lmsuser:Phph73g9d5sjWiTf@ev.hfsqrfg.mongodb.net/lms?
 // Connecting to the database
 mongoose.connect(url, {
     useNewUrlParser: true,
-    ssl: true,
-    tlsAllowInvalidCertificates: false // true only for testing self-signed
+    ssl: true
 }).then(() => {
     console.log("Successfully connected to the database");    
 }).catch(err => {
