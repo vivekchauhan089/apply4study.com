@@ -12,6 +12,7 @@ import crypto from "crypto";
 import seoConfig from "../lib/seoConfig.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const APP_URL = process.env.REACT_APP_URL || "https://www.apply4study.com";
 
 const ROOT = process.cwd();
 const SRC_DIR = path.join(ROOT, "src");
@@ -271,15 +272,19 @@ async function generateSEO(seoData = {}) {
           const pageName = path.basename(file, ".jsx");
           try {
 
-            const pageSeo = seoConfig[pageName];
-            // console.log("seo config ", pageSeo);
-            const pageSeoHtml = await generateSEO(pageSeo);
-
             const pageModule = await importJSX(pageName);
             let Page = pageModule?.default || pageModule;
 
             if (!Page || (typeof Page !== "function" && typeof Page !== "object")) {
               throw new Error(`Invalid React component in ${file}`);
+            }
+
+            const pageSeo = seoConfig[pageName];
+            // console.log("seo config ", pageSeo);
+            const pageSeoHtml = await generateSEO(pageSeo);
+
+            if (["Price"].includes(pageName)) {
+              jsScripts.push(`<script src="${APP_URL}/checkout.razorpay.min.js"></script>`);
             }
 
             const outputFile = path.join(DIST_DIR, routeMap[pageName] || `${pageName.toLowerCase()}.html`);
