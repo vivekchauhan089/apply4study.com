@@ -12,20 +12,20 @@ function getSeoConfig() {
         default:
             return {
                 Home: {
-                    title: "Apply4Study — Online Learning Platform",
-                    description: "Join Apply4Study to access interactive e-learning, online classrooms, and flexible study options.",
+                    title: "Apply4Study — Apply Online for eLearning & Classroom Courses",
+                    description: "Apply4Study helps students apply online for top university classroom programs and eLearning courses. Compare programs, enroll, and track progress with ease.",
                     canonical: `${APP_URL}/`,
                     keywords: "elearning, online classroom, virtual study, apply4study",
                     og: {
-                        "og:title": "Apply4Study — Online Learning Platform",
-                        "og:description": "Learn smarter with Apply4Study. Online classrooms, live lectures, and flexible e-learning options.",
+                        "og:title": "Apply4Study — Apply Online for eLearning & Classroom Courses",
+                        "og:description": "Find and apply to online and classroom courses from top universities worldwide with Apply4Study.",
                         "og:type": "website",
                         "og:url": `${APP_URL}/`,
                         "og:image": `${APP_URL}/assets/og-banner.jpg`,
                     },
                     twitter: {
                         "twitter:card": "summary_large_image",
-                        "twitter:title": "Apply4Study — Online Learning Platform",
+                        "twitter:title": "Apply4Study — Apply Online for eLearning & Classroom Courses",
                         "twitter:description": "Access interactive online courses with Apply4Study.",
                         "twitter:image": `${APP_URL}/assets/og-banner.jpg`,
                     },
@@ -33,6 +33,7 @@ function getSeoConfig() {
                         "@context": "https://schema.org",
                         "@type": "Organization",
                         "name": "Apply4Study",
+                        "description": "Apply4Study helps students apply online for top university classroom programs and eLearning courses. Compare programs, enroll, and track progress with ease.",
                         "datePublished": "2025-10-01",
                         "dateModified": new Date().toISOString().split("T")[0],
                         "url": `${APP_URL}/`,
