@@ -243,7 +243,7 @@ export default function Home() {
                           <LazyImage src={quize3} className="img-fluid rounded-circle" loading="lazy" alt="Study planner tool for university students" />
                         </div>
                         <h3>Smart Study Planner</h3>
-                        <p>Plan your study sessions efficiently with AI-assisted scheduling that adapts to your goals and learning pace. Ideal for <a href="/programs" title="University Classroom Programs">university classroom programs</a> and eLearning alike.</p>
+                        <p>Plan your study sessions efficiently with AI-assisted scheduling that adapts to your goals and learning pace. Ideal for <a href="/programs" title="University Classroom Programs">university classroom programs.</a></p>
                       </div>
                     </div>
                   </div>
@@ -292,7 +292,7 @@ export default function Home() {
                           <LazyImage src={worksImg3} className="img-fluid rounded-circle" alt="Take quizzes and track progress" loading="lazy" />
                         </div>
                         <h3>Take Quizzes & Track Progress</h3>
-                        <p>Test your understanding through interactive quizzes and automatically track progress across all your <a href="/courses/online" title="Online Courses">online courses</a> and lessons.</p>
+                        <p>Test your understanding through interactive quizzes and automatically track progress across all.</p>
                       </div>
                     </div>
                   </div>
