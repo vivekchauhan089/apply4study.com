@@ -397,7 +397,7 @@ export async function generateBlogPages(cssLinks, jsScripts) {
     // 5️⃣ Generate HTML for each blog
     for (const blog of blogs) {
       const slug = blog.slug.replace(/[^a-zA-Z0-9-_]/g, "");
-      const outputFile = path.join(BLOG_DIR, `${slug}.html`);
+      const outputFile = path.join(BLOG_DIR, `${slug}/index.html`);
 
       await fsExtra.ensureDir(path.dirname(outputFile));
 
