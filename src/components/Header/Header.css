@@ -201,7 +201,7 @@ header#header {
     color: var(--nav-color);
     padding: 18px 15px;
     font-size: 18px;
-    font-weight: 400;
+    font-weight: 600;
     display: flex;
     align-items: center;
     justify-content: space-between;

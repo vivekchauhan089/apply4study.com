@@ -21,13 +21,14 @@ function getSeoConfig() {
                         "og:description": "Find and apply to online and classroom courses from top universities worldwide with Apply4Study.",
                         "og:type": "website",
                         "og:url": `${APP_URL}/`,
-                        "og:image": `${APP_URL}/assets/og-banner.jpg`,
+                        "og:image": `${APP_URL}/assets/img/mobile_mocup.png`,
+                        "og:site_name": "Apply4Study",
                     },
                     twitter: {
                         "twitter:card": "summary_large_image",
                         "twitter:title": "Apply4Study — Apply Online for eLearning & Classroom Courses",
                         "twitter:description": "Access interactive online courses with Apply4Study.",
-                        "twitter:image": `${APP_URL}/assets/og-banner.jpg`,
+                        "twitter:image": `${APP_URL}/assets/img/mobile_mocup.png`,
                     },
                     schema: {
                         "@context": "https://schema.org",
@@ -37,7 +38,7 @@ function getSeoConfig() {
                         "datePublished": "2025-10-01",
                         "dateModified": new Date().toISOString().split("T")[0],
                         "url": `${APP_URL}/`,
-                        "logo": `${APP_URL}/assets/logo.png`,
+                        "logo": `${APP_URL}/assets/img/apply4study_logo.png`,
                         "sameAs": [
                             "https://www.facebook.com/apply4study",
                             "https://x.com/apply4study",
@@ -55,7 +56,7 @@ function getSeoConfig() {
                         "name": "Apply4Study",
                         "datePublished": "2025-10-01",
                         "dateModified": new Date().toISOString().split("T")[0],
-                        "image": `${APP_URL}/assets/logo.png`,
+                        "image": `${APP_URL}/assets/img/apply4study_logo.png`,
                         "url": `${APP_URL}/`,
                         "telephone": "+91-9876543210",
                         "email": "support@apply4study.com",
@@ -93,7 +94,7 @@ function getSeoConfig() {
                             "name": "Apply4Study",
                             "logo": {
                               "@type": "ImageObject",
-                              "url": `${APP_URL}/assets/logo.png`
+                              "url": `${APP_URL}/assets/img/apply4study_logo.png`
                             }
                         },
                         "image": `${APP_URL}/assets/blog/online-learning.jpg`
@@ -112,7 +113,7 @@ function getSeoConfig() {
                             "@type": "Organization",
                             "name": "Apply4Study",
                             "url": `${APP_URL}/`,
-                            "logo": `${APP_URL}/assets/logo.png`,
+                            "logo": `${APP_URL}/assets/img/apply4study_logo.png`,
                             "contactPoint": {
                                 "@type": "ContactPoint",
                                 "telephone": "+91-9716003265",
@@ -179,7 +180,7 @@ function getSeoConfig() {
                             "name": "Apply4Study",
                             "logo": {
                                 "@type": "ImageObject",
-                                "url": `${APP_URL}/assets/logo.png`
+                                "url": `${APP_URL}/assets/img/apply4study_logo.png`
                             }
                         }
                     }
@@ -195,7 +196,7 @@ function getSeoConfig() {
                       "datePublished": "2025-10-01",
                       "dateModified": new Date().toISOString().split("T")[0],
                       "url": `${APP_URL}/partners`,
-                      "logo": `${APP_URL}/assets/logo.png`,
+                      "logo": `${APP_URL}/assets/img/apply4study_logo.png`,
                       "brand": [
                             {
                               "@type": "Brand",
@@ -250,7 +251,7 @@ function getSeoConfig() {
                             "@type": "Organization",
                             "name": "Apply4Study",
                             "url": APP_URL,
-                            "logo": `${APP_URL}/assets/logo.png`
+                            "logo": `${APP_URL}/assets/img/apply4study_logo.png`
                         }
                     }
                 },
@@ -306,7 +307,7 @@ function getSeoConfig() {
                             "@type": "Organization",
                             "name": "Apply4Study",
                             "url": APP_URL,
-                            "logo": `${APP_URL}/assets/logo.png`
+                            "logo": `${APP_URL}/assets/img/apply4study_logo.png`
                         },
                         "mainEntity": {
                             "@type": "FAQPage",
@@ -368,7 +369,7 @@ function getSeoConfig() {
                             "@type": "Organization",
                             "name": "Apply4Study",
                             "url": APP_URL,
-                            "logo": `${APP_URL}/assets/logo.png`
+                            "logo": `${APP_URL}/assets/img/apply4study_logo.png`
                         }
                     }
                 },
@@ -387,7 +388,7 @@ function getSeoConfig() {
                             "@type": "Organization",
                             "name": "Apply4Study",
                             "url": APP_URL,
-                            "logo": `${APP_URL}/assets/logo.png`,
+                            "logo": `${APP_URL}/assets/img/apply4study_logo.png`,
                         },
                         "mainEntity": [
                             {

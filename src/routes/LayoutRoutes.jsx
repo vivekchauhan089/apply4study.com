@@ -7,8 +7,9 @@ import Pricing from '../pages/Price';
 import Services from '../pages/Services';
 import Courses from '../pages/Courses';
 import Blog from '../pages/Blog';
+import BlogDetail from '../pages/BlogDetail';
 import Partners from '../pages/Partners';
-// import SearchResults from '../pages/SearchResults';
+import SearchResults from '../pages/SearchResults';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -28,6 +29,7 @@ const LayoutRoutes = () => (
       <Route path='pricing' element={<Pricing />} />
       <Route path='services' element={<Services />} />
       <Route path='blog' element={<Blog />} />
+      <Route path="blog/:slug" element={<BlogDetail />} />
       <Route path='courses' element={<Courses />} />
       <Route path='partners' element={<Partners />} />
       <Route path='get-started' element={<GetStarted />} />
@@ -36,7 +38,7 @@ const LayoutRoutes = () => (
       <Route path='terms-conditions' element={<TermsConditions />} />
       <Route path='shipping-policy' element={<ShippingPolicy />} />
       <Route path='refund-policy' element={<RefundPolicy />} />
-      {/* <Route path="/search" element={<SearchResults />} /> */}
+      <Route path="search" element={<SearchResults />} />
     </Route>
   </Routes>
 );

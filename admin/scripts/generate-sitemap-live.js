@@ -1,9 +1,12 @@
+const dotenv = require("dotenv");
+dotenv.config();
+
 const fs = require('fs');
 const path = require('path');
 const request = require('request');
 const cheerio = require('cheerio');
 
-const START_URL = process.env.SITE_URL || 'https://apply4study.com';
+const START_URL = process.env.REACT_APP_URL || 'https://www.apply4study.com';
 const MAX_PAGES = 500;
 const BUILD_DIR = path.join(process.cwd(), 'build');
 const SITEMAP_PATH1 = path.join(BUILD_DIR, 'sitemap.xml');
@@ -19,13 +22,13 @@ const queue = [
   '/services',
   '/pricing',
   '/get-started',
-  '/blog',
   '/partners',
   '/contact',
   '/privacy-policy',
   '/terms-conditions',
   '/shipping-policy',
   '/refund-policy',
+  '/blog',
 ];
 
 // 🕷️ Crawl pages recursively
@@ -75,9 +78,61 @@ function crawl(next) {
   );
 }
 
+const formatDate = (date) => {
+  const d = new Date(date);
+
+  const options = { year: "numeric", month: "short", day: "numeric" };
+
+  return {
+    readable: d.toLocaleDateString("en-US", options), // Jan 1, 2022
+    ymd: d.toISOString().split("T")[0],               // 2022-01-01
+    iso: d.toISOString()                              // 2025-10-25T11:21:32.487Z
+  };
+};
+
 // 🧩 Generate XML sitemap
-function generateSitemap(urls) {
+async function generateSitemap(urls) {
   const now = new Date().toISOString();
+
+  // 2️⃣ Fetch all blogs
+  const blogRes = await fetch(`${process.env.REACT_APP_API_URL}/blog/fetchall`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMjM0LCJ1c2VyX3R5cGVfaWQiOjAsInJvbGUiOiJndWVzdCIsImlhdCI6MTc1ODg4NDcwOCwiZXhwIjoxNzY0MDY4NzA4fQ.zWg19kpqcRf0sxKzrioWP_HzogoC5fHQPeGHTE6nZpc"
+    },
+    body: JSON.stringify({ user_id: "68d27fa20a1b391f84d652ba" }),
+  });
+
+  const blogData = await blogRes.json();
+  if (!blogData?.data || !Array.isArray(blogData.data)) {
+    console.error("❌ Invalid blog API response");
+    return;
+  }
+
+  const blogs = blogData.data;
+
+  // 2️⃣ Blog pages
+  const blogEntriesArr = blogs.map((b) => ({
+    loc: `${START_URL}/blog/${b.slug}`,
+    lastmod: formatDate(b.updatedAt || b.publishDate || new Date()).iso,
+    changefreq: "weekly",
+    priority: "0.7",
+  }));
+
+  // blog entries
+  const blogEntries = blogEntriesArr
+    .map(
+      (e) => `
+  <url>
+    <loc>${e.loc}</loc>
+    <lastmod>${e.lastmod}</lastmod>
+    <changefreq>${e.changefreq}</changefreq>
+    <priority>${e.priority}</priority>
+  </url>`
+    )
+    .join("\n");
+
   const xmlEntries = Array.from(urls)
     .map(url => `
   <url>
@@ -91,13 +146,14 @@ function generateSitemap(urls) {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${xmlEntries}
+${blogEntries}
 </urlset>`;
 }
 
 // 🏁 Main
-crawl(() => {
+crawl(async () => {
   console.log('\n🧾 Generating sitemap.xml...');
-  const sitemapXml = generateSitemap(visited);
+  const sitemapXml = await generateSitemap(visited);
 
   if (!fs.existsSync(BUILD_DIR)) fs.mkdirSync(BUILD_DIR, { recursive: true });
   fs.writeFileSync(SITEMAP_PATH1, sitemapXml, 'utf8');

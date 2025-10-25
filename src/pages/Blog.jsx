@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
@@ -25,11 +25,88 @@ export default function Blog() {
   }, []);
 
   const APP_URL = process.env.REACT_APP_URL;
+  const [blogs, setBlogs] = useState([]);
+
+  const API_URL = process.env.REACT_APP_API_URL;
+
+  useEffect(() => {
+    fetch(`${API_URL}/blog/fetchall`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMjM0LCJ1c2VyX3R5cGVfaWQiOjAsInJvbGUiOiJndWVzdCIsImlhdCI6MTc1ODg4NDcwOCwiZXhwIjoxNzY0MDY4NzA4fQ.zWg19kpqcRf0sxKzrioWP_HzogoC5fHQPeGHTE6nZpc"
+      },
+      body: JSON.stringify({
+        "user_id": "68d27fa20a1b391f84d652ba",
+        "source": "Livguard"
+      })
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.data) {
+          setBlogs(data.data);
+        } else {
+          console.error("Error:", data.error);
+        }
+      })
+      .catch(err => console.error(err));
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     alert('Thank you for subscribing!');
   };
+
+  const chunkArray = (arr, size) => {
+    const result = [];
+    for (let i = 0; i < arr.length; i += size) {
+      result.push(arr.slice(i, i + size));
+    }
+    return result;
+  };
+
+  const formatDate = (date) => {
+    const d = new Date(date);
+    const options = { year: "numeric", month: "short", day: "numeric" };
+    return {
+      readable: d.toLocaleDateString("en-US", options), // Jan 1, 2022
+      ymd: d.toISOString().split("T")[0]                // 2022-01-01
+    };
+  };
+
+  let currentIndex = 0;
+  function getSequentialImage(images) {
+    if (!images || images.length === 0) return null;
+    const image = images[currentIndex];
+    currentIndex = (currentIndex + 1) % images.length;
+    return image;
+  }
+
+  let currentAIndex = 0;
+  function getSequentialAImage(images) {
+    if (!images || images.length === 0) return null;
+    const image = images[currentAIndex];
+    currentAIndex = (currentAIndex + 1) % images.length;
+    return image;
+  }
+
+  const blogImages = [
+    blog1,
+    blog2,
+    blog3,
+    blog4,
+    blog5,
+    blog6,
+  ];
+
+  const authorImages = [
+    blogAuth1,
+    blogAuth2,
+    blogAuth3,
+    blogAuth4,
+    blogAuth5,
+    blogAuth6,
+  ];
 
   useSEO({
     title: "How to Succeed in Online Learning — Apply4Study Blog",
@@ -88,168 +165,32 @@ export default function Blog() {
           </div>
 
           <div className="container">
-            <div className="row gy-4">
-
+            <div className="row gy-4">            
+              {blogs.map(blog => (
               <div className="col-lg-4">
                 <article>
-
                   <div className="post-img">
-                    <LazyImage src={blog1} alt="" className="img-fluid" />
+                    <LazyImage src={getSequentialImage(blogImages)} alt={blog.title} loading="lazy" className="img-fluid" />
                   </div>
-
-                  <p className="post-category"> Study Tips</p>
-
+                  <p className="post-category">{blog.category}</p>
                   <h2 className="title mb-2">
-                    <a href="blog-details.html">5 Online Learning Habits That Lead to Success</a>
+                    <a href={`/blog/${blog.slug}`}>{blog.title}</a>
                   </h2>
-
-                  <p className="post-category">Discover proven study habits that help online learners stay motivated, organized, and ahead of the curve.</p>
-
+                  <p className="post-category">{blog.summary}</p>
                   <div className="d-flex align-items-center">
-                    <LazyImage src={blogAuth1} alt="" className="img-fluid post-author-img flex-shrink-0" />
+                    <LazyImage src={getSequentialAImage(authorImages)} alt={blog.author.name} className="img-fluid post-author-img flex-shrink-0" />
                     <div className="post-meta">
-                      <p className="post-author">Maria Doe</p>
+                      <p className="post-author">{blog.author.name}</p>
                       <p className="post-date">
-                        <time dateTime="2022-01-01">Jan 1, 2022</time>
+                        <time dateTime={formatDate(blog.publishDate).ymd}>{formatDate(blog.publishDate).readable}</time>
                       </p>
                     </div>
                   </div>
-
                 </article>
               </div>
-
-              <div className="col-lg-4">
-                <article>
-
-                  <div className="post-img">
-                    <LazyImage src={blog2} alt="" className="img-fluid" />
-                  </div>
-                  <p className="post-category">Test Prep</p>
-                  <h2 className="title">
-                    <a href="blog-details.html">IELTS vs PTE: Which Test is Right for You?</a>
-                  </h2>
-                  <p className="post-category">Confused between IELTS and PTE? We break down the differences, scoring systems, and ideal candidate profiles.</p>
-
-                  <div className="d-flex align-items-center">
-                    <LazyImage src={blogAuth2} alt="" className="img-fluid post-author-img flex-shrink-0" />
-                    <div className="post-meta">
-                      <p className="post-author">Allisa Mayer</p>
-                      <p className="post-date">
-                        <time dateTime="2022-01-01">Jun 5, 2022</time>
-                      </p>
-                    </div>
-                  </div>
-
-                </article>
-              </div>
-
-              <div className="col-lg-4">
-                <article>
-
-                  <div className="post-img">
-                    <LazyImage src={blog3} alt="" className="img-fluid" />
-                  </div>
-                  <p className="post-category">E-learning Trends</p>
-
-                  <h2 className="title">
-                    <a href="blog-details.html">The Rise of Microlearning: Is It the Future of Online Education?</a>
-                  </h2>
-                  <p className="post-category">Short, focused lessons are changing how we learn. Here's why microlearning might be perfect for your schedule.</p>
-
-                  <div className="d-flex align-items-center">
-                    <LazyImage src={blogAuth3} alt="" className="img-fluid post-author-img flex-shrink-0" />
-                    <div className="post-meta">
-                      <p className="post-author">Mark Dower</p>
-                      <p className="post-date">
-                        <time dateTime="2022-01-01">Jun 22, 2022</time>
-                      </p>
-                    </div>
-                  </div>
-
-                </article>
-              </div>
-
-              <div className="col-lg-4">
-                <article>
-
-                  <div className="post-img">
-                    <LazyImage src={blog4} alt="" className="img-fluid" />
-                  </div>
-                  <p className="post-category"> Productivity</p>
-
-                  <h2 className="title">
-                    <a href="blog-details.html">How to Stay Focused in Online Classes (Even When You're Home)</a>
-                  </h2>
-                  <p className="post-category">Simple ways to beat distractions, stay productive, and make the most of your virtual classroom.</p>
-
-                  <div className="d-flex align-items-center">
-                    <LazyImage src={blogAuth4} alt="" className="img-fluid post-author-img flex-shrink-0" />
-                    <div className="post-meta">
-                      <p className="post-author">Lisa Neymar</p>
-                      <p className="post-date">
-                        <time dateTime="2022-01-01">Jun 30, 2022</time>
-                      </p>
-                    </div>
-                  </div>
-
-                </article>
-              </div>
-
-              <div className="col-lg-4">
-                <article>
-
-                  <div className="post-img">
-                    <LazyImage src={blog5} alt="" className="img-fluid" />
-                  </div>
-
-                  <p className="post-category">Tools & Resources</p>
-                  <h2 className="title">
-                    <a href="blog-details.html">Top 10 Free Tools Every Online Student Should Use</a>
-                  </h2>
-                  <p className="post-category">From note-taking apps to time trackers, here are the tools our students swear by.</p>
-
-                  <div className="d-flex align-items-center">
-                    <LazyImage src={blogAuth5} alt="" className="img-fluid post-author-img flex-shrink-0" />
-                    <div className="post-meta">
-                      <p className="post-author">Denis Peterson</p>
-                      <p className="post-date">
-                        <time dateTime="2022-01-01">Jan 30, 2022</time>
-                      </p>
-                    </div>
-                  </div>
-
-                </article>
-              </div>
-
-              <div className="col-lg-4">
-                <article>
-
-                  <div className="post-img">
-                    <LazyImage src={blog6} alt="" className="img-fluid" />
-                  </div>
-
-                  <p className="post-category">Entertainment</p>
-
-                  <h2 className="title">
-                    <a href="blog-details.html">Distinctio provident quibusdam numquam aperiam aut</a>
-                  </h2>
-
-                  <div className="d-flex align-items-center">
-                    <LazyImage src={blogAuth6} alt="" className="img-fluid post-author-img flex-shrink-0" />
-                    <div className="post-meta">
-                      <p className="post-author">Mika Lendon</p>
-                      <p className="post-date">
-                        <time dateTime="2022-01-01">Feb 14, 2022</time>
-                      </p>
-                    </div>
-                  </div>
-
-                </article>
-              </div>
-
+              ))}
             </div>
           </div>
-
         </section>
 
         <section className="stats section mb-3">

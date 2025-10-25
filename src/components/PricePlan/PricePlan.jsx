@@ -55,8 +55,8 @@ const PricePlan = () => {
 
                     {activeTab === 'student' && (
                         <>
-                            {plans.map((plan) => (
-                            <div className="col-lg-4">
+                            {plans.map((plan, index) => (
+                            <div className={index === 1 ? "col-lg-4 featured" : "col-lg-4"}>
                                 <div className="pricing-item">
                                     <h3>{plan.name}</h3>
                                     <h4><sup>₹</sup>{plan.price}<span>/month</span></h4>

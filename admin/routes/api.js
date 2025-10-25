@@ -21,7 +21,7 @@ const limiter = rateLimit({
 	headers: true, // Sends rate limit info in response headers
 });
 
-var ApiController = require('../controllers/api/ApiController');
+var LoginController = require('../controllers/api/LoginController');
 var ApiMiddleware = require('../middleware/ApiMiddleware');
 
 /** Routes for Frontend & App Users  */
@@ -34,7 +34,7 @@ var ApiMiddleware = require('../middleware/ApiMiddleware');
  * @returns {object} 200 - { success: true, token: "JWT_TOKEN" }
  * @returns {Error} 401 - Invalid credentials
  */    
-router.post('/login', limiter, ApiController.login);     
+router.post('/login', limiter, LoginController.login);     
 //router.post('/dashboard', limiter, ApiMiddleware, ApiStudentController.dashboard);  
 
 /**
@@ -43,10 +43,10 @@ router.post('/login', limiter, ApiController.login);
  * @security JWT
  * @returns {object} 200 - { success: true, message: "Logged out successfully" }
  */
-router.post('/logout', limiter, ApiController.logout);
+router.post('/logout', limiter, LoginController.logout);
 
 
-var courseController = require('../controllers/api/ApiCourseController');
+var courseController = require('../controllers/api/CourseController');
 
 /**
  * @typedef Course
@@ -193,7 +193,7 @@ router.get('/version_check', function(req, res, next) {
 })
 
 
-var ApiChatController = require('../controllers/api/ApiChatController');
+var ApiChatController = require('../controllers/api/ChatController');
 /**
  * @typedef Chat
  * @property {string} query.required - User message text
@@ -209,7 +209,7 @@ var ApiChatController = require('../controllers/api/ApiChatController');
  */
 router.post('/chat', ApiMiddleware, ApiChatController.createReply);
 
-const ApiSubscriptionController = require("../controllers/api/ApiSubscriptionController");
+const ApiSubscriptionController = require("../controllers/api/SubscriptionController");
 
 /**
  * @typedef Subscription
@@ -237,7 +237,7 @@ router.post("/subscribe", ApiSubscriptionController.subscribe);
 router.delete("/unsubscribe/:contact", ApiSubscriptionController.unsubscribe);
 
 
-const ApiUserController = require("../controllers/api/ApiUserController");
+const ApiUserController = require("../controllers/api/UserController");
 
 /**
  * @typedef User
@@ -293,7 +293,7 @@ router.post("/set_password", ApiMiddleware, ApiUserController.setPassword);
 router.put("/update_user/:id", ApiMiddleware, ApiUserController.updateUser);
 
 
-const ApiPlanController = require("../controllers/api/ApiPlanController");
+const ApiPlanController = require("../controllers/api/PlanController");
 
 /**
  * @route POST /api/plan/fetchall
@@ -310,7 +310,7 @@ router.get("/plan/fetchall", ApiPlanController.getAllPlans);
 router.post("/plan/create", ApiPlanController.createPlan);
 
 
-const ApiPaymentController = require("../controllers/api/ApiPaymentController");
+const ApiPaymentController = require("../controllers/api/PaymentController");
 
 /**
  * @route POST /api/payment/create
@@ -325,6 +325,31 @@ router.post("/payment/create", ApiPaymentController.createOrder);
  * @param {object} body - payment verification data
  */
 router.post("/payment/verify", ApiPaymentController.verifyPayment);
+
+
+const ApiBlogController = require("../controllers/api/BlogController");
+
+/**
+ * Fetch all published blogs
+ * @route POST /api/blog/fetchall
+ * @group Blog - Blog management
+ * @param {string} category.query - Optional category filter
+ * @param {string} tag.query - Optional tag filter
+ * @param {boolean} featured.query - Filter featured blogs only
+ * @returns {object} 200 - { success: true, data: [Blog] }
+ * @returns {Error}  default - Unexpected error
+ */
+router.post("/blog/fetchall", ApiBlogController.getAllBlogs);
+
+/**
+ * Fetch single blog details by slug
+ * @route POST /api/blog/{slug}
+ * @group Blog - Blog management
+ * @param {string} slug.path.required - Blog slug
+ * @returns {object} 200 - { success: true, data: Blog }
+ * @returns {Error}  default - Blog not found
+ */
+router.post("/blog/:slug", ApiBlogController.getBlogBySlug);
 
 
 module.exports = router;        
