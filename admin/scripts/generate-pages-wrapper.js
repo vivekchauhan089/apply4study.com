@@ -519,12 +519,12 @@ async function main() {
     // Generate updated HTML links and scripts
     const cssLinks = distCssFiles.map((f) => {
       const rel = path.relative(DIST_DIR, f).replace(/\\/g, "/");
-      return `<link rel="preload" as="style" href="${rel}">\n<link rel="stylesheet" href="${rel}">`;
+      return `<link rel="preload" as="style" href="/${rel}">\n<link rel="stylesheet" href="/${rel}">`;
     });
 
     const jsScripts = distJsFiles.map((f) => {
       const rel = path.relative(DIST_DIR, f).replace(/\\/g, "/");
-      return `<script src="${rel}" defer></script>`;
+      return `<script src="/${rel}" defer></script>`;
     });
     jsScripts.push(`<script src="https://checkout.razorpay.com/v1/checkout.js" defer></script>`);
     console.log(`🧩 Detected ${cssFiles.length} CSS and ${jsFiles.length} JS assets from build/static`);
