@@ -410,7 +410,7 @@ export async function generateBlogPages(cssLinks, jsScripts) {
       const seoHtml = await generateSEO(blogSeo);
 
       // Create HTML
-      const htmlContent = ReactDOMServer.renderToString(
+      let htmlContent = ReactDOMServer.renderToString(
         React.createElement(BlogPage, { blog })
       );
 
@@ -423,19 +423,18 @@ export async function generateBlogPages(cssLinks, jsScripts) {
         });          
         blog_tag_html += '</ul>';
       }
-      htmlContent.replace(/BLOG_TITLE/g, blog.title);
-      htmlContent.replace(/BLOG_SUMARRY/g, blog.summary);
-      htmlContent.replace(/BLOG_HERO_IMG/g, getSequentialImage());
-      htmlContent.replace(/BLOG_CONTENT/g, blog.contentExcerpt);
-      htmlContent.replace(/BLOG_CATEGORY/g, blog.category);
-      htmlContent.replace(/BLOG_TAGS/g, blog_tag_html);
-
-      htmlContent.replace(/BLOG_AUTH_NAME/g, blog.author.name);
-      htmlContent.replace(/BLOG_AUTH_IMG/g, getSequentialAImage());
-      htmlContent.replace(/BLOG_AUTH_BIO/g, blog.author.bio);
-
-      htmlContent.replace(/BLOG_PUBLISH_DATE/g, formatDate(blog.publishDate).readable);
-      htmlContent.replace(/BLOG_PUBLISH_DATE_YMD/g, formatDate(blog.publishDate).ymd);
+      htmlContent = htmlContent
+        .replace(/BLOG_TITLE/g, blog.title)
+        .replace(/BLOG_SUMARRY/g, blog.summary)
+        .replace(/BLOG_HERO_IMG/g, getSequentialImage())
+        .replace(/BLOG_CONTENT/g, blog.contentExcerpt)
+        .replace(/BLOG_CATEGORY/g, blog.category)
+        .replace(/BLOG_TAGS/g, blog_tag_html)
+        .replace(/BLOG_AUTH_NAME/g, blog.author.name)
+        .replace(/BLOG_AUTH_IMG/g, getSequentialAImage())
+        .replace(/BLOG_AUTH_BIO/g, blog.author.bio)
+        .replace(/BLOG_PUBLISH_DATE/g, formatDate(blog.publishDate).readable)
+        .replace(/BLOG_PUBLISH_DATE_YMD/g, formatDate(blog.publishDate).ymd);
 
       let fullHtml = `
         <!DOCTYPE html>
