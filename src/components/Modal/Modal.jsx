@@ -3,10 +3,13 @@ import { Modal, Button, Form, Toast, ToastContainer } from 'react-bootstrap';
 
 let ReCAPTCHA = null;
 if (typeof window !== "undefined") {
-  ReCAPTCHA = require("react-google-recaptcha").default;
+  import("react-google-recaptcha").then(mod => {
+    ReCAPTCHA = mod.default;
+  });
 }
 
 const Modals = ({ show, onHide, type }) => {
+  const [ready, setReady] = useState(false);
   const [validated, setValidated] = useState(false);
   const [formData, setFormData] = useState({
     first_name: '',
@@ -154,6 +157,10 @@ const Modals = ({ show, onHide, type }) => {
     }
   }, [message]);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") setReady(true);
+  }, []);
+
   return (
     <>
       <Modal show={show} onHide={onHide} className={type === 'register' ? 'modal-sm registermodal' : 'modal-sm subscribemodal'}>
@@ -246,7 +253,7 @@ const Modals = ({ show, onHide, type }) => {
                   />
                 </Form.Group>
 
-                {ReCAPTCHA && (
+                {ready && ReCAPTCHA && (
                 <Form.Group className="mt-3">
                   {/* Google reCAPTCHA */}
                   <ReCAPTCHA

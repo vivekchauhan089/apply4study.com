@@ -20,7 +20,9 @@ import useSEO from "../hooks/useSEO.jsx";
 
 let ReCAPTCHA = null;
 if (typeof window !== "undefined") {
-  ReCAPTCHA = require("react-google-recaptcha").default;
+  import("react-google-recaptcha").then(mod => {
+    ReCAPTCHA = mod.default;
+  });
 }
 
 const testimonials = [
@@ -68,6 +70,7 @@ export default function GetStarted() {
 
   const APP_URL = process.env.REACT_APP_URL;
 
+  const [ready, setReady] = useState(false);
   const [validated, setValidated] = useState(false);
   const [formData, setFormData] = useState({
     first_name: '',
@@ -205,6 +208,10 @@ export default function GetStarted() {
       return () => clearTimeout(timer);
     }
   }, [message]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") setReady(true);
+  }, []);
 
   useSEO({
     title: "Get Started — Join Apply4Study",
@@ -349,7 +356,7 @@ export default function GetStarted() {
                       <div className={errors.termsMsgClass}>{errors.termsAccepted}</div>
                     </div>
 
-                    {ReCAPTCHA && (
+                    {ready && ReCAPTCHA && (
                     <div className="mb-3">
                       {/* Google reCAPTCHA */}
                       <ReCAPTCHA

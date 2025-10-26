@@ -163,7 +163,10 @@ async function transpileAllJSX(dir) {
 // Import page module from .mjs
 async function importJSX(pageName) {
   let tempFile;
-  if (pageName === "Layout") {
+
+  if (pageName === "App") {
+    tempFile = path.join(TEMP_DIR, "app.mjs");
+  } else if (pageName === "Layout") {
     tempFile = path.join(TEMP_DIR, "layouts", "layout.mjs");
   } else {
     tempFile = path.join(TEMP_DIR, "pages", `${pageName}.mjs`);
@@ -224,6 +227,29 @@ async function generateStaticPages(cssLinks, jsScripts) {
       SearchResults: 'search.html',
     };
 
+    global.window = {};
+    global.document = {
+      createElement: () => ({}),
+      getElementById: () => null,
+      querySelector: () => null,
+      addEventListener: () => {},
+      removeEventListener: () => {},
+    };
+    Object.defineProperty(global, "navigator", {
+      value: { userAgent: "node.js" },
+      writable: false,
+    });
+    global.localStorage = {
+      getItem: () => null,
+      setItem: () => {},
+      removeItem: () => {},
+    };
+    global.matchMedia = () => ({
+      matches: false,
+      addListener: () => {},
+      removeListener: () => {},
+    });
+
     await new Promise(async (resolve, reject) => {
       try {
         var countr = 0;
@@ -234,20 +260,21 @@ async function generateStaticPages(cssLinks, jsScripts) {
         var total_files = pageFiles.length;
 
         for (const file of pageFiles) {
-          const pageName = path.basename(file, ".jsx");
+          var pageName = path.basename(file, ".jsx");
           try {
 
-            const Page = await importJSX(pageName);
+            let Page = await importJSX(pageName);
 
             if (!Page || (typeof Page !== "function" && typeof Page !== "object")) {
               throw new Error(`Invalid React component in ${file}`);
             }
 
-            const Layout = await importJSX("Layout");
+            let App = await importJSX("App");
+            // let Layout = await importJSX("Layout");
 
-            const pageSeo = seoConfig[pageName];
+            let pageSeo = seoConfig[pageName];
             // console.log("seo config ", pageSeo);
-            const pageSeoHtml = await generateSEO(pageSeo);
+            let pageSeoHtml = await generateSEO(pageSeo);
 
             var outputFile;
             if (pageName === "Home") {
@@ -262,7 +289,7 @@ async function generateStaticPages(cssLinks, jsScripts) {
             const element = React.createElement(
               StaticRouter,
               { location: routePath },
-              React.createElement(Layout, null, React.createElement(Page))
+              React.createElement(App)
             );
             const htmlContent = ReactDOMServer.renderToString(element);
 
@@ -417,8 +444,33 @@ export async function generateBlogPages(cssLinks, jsScripts) {
     const BlogPage = await importJSX("BlogDetail");
     if (!BlogPage) throw new Error("BlogDetail.jsx not found or invalid");
 
+    global.window = {};
+    global.document = {
+      createElement: () => ({}),
+      getElementById: () => null,
+      querySelector: () => null,
+      addEventListener: () => {},
+      removeEventListener: () => {},
+    };
+    Object.defineProperty(global, "navigator", {
+      value: { userAgent: "node.js" },
+      writable: false,
+    });
+    global.localStorage = {
+      getItem: () => null,
+      setItem: () => {},
+      removeItem: () => {},
+    };
+    global.matchMedia = () => ({
+      matches: false,
+      addListener: () => {},
+      removeListener: () => {},
+    });
+
+    let App = await importJSX("App");
+
     // Import Layout
-    const Layout = await importJSX("Layout");
+    // const Layout = await importJSX("Layout");
 
     // 5️⃣ Generate HTML for each blog
     for (const blog of blogs) {
@@ -439,8 +491,13 @@ export async function generateBlogPages(cssLinks, jsScripts) {
       const element = React.createElement(
         StaticRouter,
         { location: `/blog/${slug}` },
-        React.createElement(Layout, null, React.createElement(BlogPage, { blog }))
+        React.createElement(App)
       );
+      /*const element = React.createElement(
+        StaticRouter,
+        { location: `/blog/${slug}` },
+        React.createElement(Layout, null, React.createElement(BlogPage, { blog }))
+      );*/
       var htmlContent = ReactDOMServer.renderToString(element);
 
       let blog_tag_html = '';

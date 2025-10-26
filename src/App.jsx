@@ -1,17 +1,16 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import LayoutRoutes from './routes/LayoutRoutes';
-import ChatButton from './components/common/ChatBtn';
+import LayoutRoutes from './routes/LayoutRoutes.jsx';
+import ChatButton from './components/common/ChatBtn.jsx';
 import useTrackLinkClicks from './hooks/useTrackLinkClicks.jsx';
 
 const App = ({ skipRedirects }) => {
   useTrackLinkClicks();
 
   return (
-    <BrowserRouter>
+    <>
       <LayoutRoutes skipRedirects={skipRedirects} />
       <ChatButton />
-    </BrowserRouter>
+    </>
   );
 }
 

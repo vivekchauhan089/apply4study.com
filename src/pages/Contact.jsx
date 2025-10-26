@@ -7,10 +7,13 @@ import useSEO from "../hooks/useSEO.jsx";
 
 let ReCAPTCHA = null;
 if (typeof window !== "undefined") {
-  ReCAPTCHA = require("react-google-recaptcha").default;
+  import("react-google-recaptcha").then(mod => {
+    ReCAPTCHA = mod.default;
+  });
 }
 
 export default function Contact() {
+  const [ready, setReady] = useState(false);
   const [validated, setValidated] = useState(false);
   const [IsMobile, setIsMobile] = useState(false);
   const [formData, setFormData] = useState({
@@ -159,6 +162,10 @@ export default function Contact() {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") setReady(true);
   }, []);
 
   useSEO({
@@ -385,7 +392,7 @@ export default function Contact() {
                       <div className={errors.contentMsgClass}>{errors.content}</div>
                     </div>
 
-                    {ReCAPTCHA && (
+                    {ready && ReCAPTCHA && (
                     <div className="col-md-12">
                       {/* Google reCAPTCHA */}
                       <ReCAPTCHA
