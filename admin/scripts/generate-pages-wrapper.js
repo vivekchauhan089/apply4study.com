@@ -6,6 +6,7 @@ import fs from "fs";
 import path from "path";
 import React from "react";
 import ReactDOMServer from "react-dom/server";
+import { StaticRouter } from "react-router-dom/server.js";
 import esbuild from "esbuild";
 import { fileURLToPath, pathToFileURL } from "url";
 import fsExtra from "fs-extra";
@@ -117,6 +118,7 @@ async function transpileAllJSX(dir) {
 
       // Ignore imports from 'swiper/css' or any css-like module
       code = code.replace(/import\s+['"].*\/css.*['"];?/g, '');
+      code = code.replace(/import\s+(\w+\s+from\s+)?['"].*\.scss['"];?/g, '');
 
       // Ignore CSS & replace image imports with string paths
       code = code.replace(/import\s+(\w+)\s+from\s+["'](.*\.(png|jpg|jpeg|svg|gif))["'];?/g,
@@ -124,6 +126,7 @@ async function transpileAllJSX(dir) {
 
       // Remove all CSS imports, local or node_modules
       code = code.replace(/import\s+['"].*\.css['"];?/g, '');
+      code = code.replace(/import\s+['"].*\.scss['"];?/g, '');
 
       /*import { transform } from "@swc/core";
 
@@ -159,9 +162,15 @@ async function transpileAllJSX(dir) {
 
 // Import page module from .mjs
 async function importJSX(pageName) {
-  const tempFile = path.join(TEMP_DIR, "pages", `${pageName}.mjs`);
+  let tempFile;
+  if (pageName === "Layout") {
+    tempFile = path.join(TEMP_DIR, "layouts", "layout.mjs");
+  } else {
+    tempFile = path.join(TEMP_DIR, "pages", `${pageName}.mjs`);
+  }
   if (!fs.existsSync(tempFile)) throw new Error(`Temp module not found: ${tempFile}`);
-  return await import(pathToFileURL(tempFile).href);
+  const module = await import(pathToFileURL(tempFile).href);
+  return module?.default || module;
 }
 
 async function generateSEO(seoData = {}) {
@@ -228,19 +237,34 @@ async function generateStaticPages(cssLinks, jsScripts) {
           const pageName = path.basename(file, ".jsx");
           try {
 
-            const pageModule = await importJSX(pageName);
-            let Page = pageModule?.default || pageModule;
+            const Page = await importJSX(pageName);
 
             if (!Page || (typeof Page !== "function" && typeof Page !== "object")) {
               throw new Error(`Invalid React component in ${file}`);
             }
 
+            const Layout = await importJSX("Layout");
+
             const pageSeo = seoConfig[pageName];
             // console.log("seo config ", pageSeo);
             const pageSeoHtml = await generateSEO(pageSeo);
 
-            const outputFile = path.join(DIST_DIR, routeMap[pageName] || `${pageName.toLowerCase()}.html`);
-            const htmlContent = ReactDOMServer.renderToString(React.createElement(Page));
+            var outputFile;
+            if (pageName === "Home") {
+              outputFile = path.join(DIST_DIR, routeMap[pageName] || `${pageName.toLowerCase()}.html`);
+            } else {
+              outputFile = path.join(DIST_DIR, pageName, `index.html`);
+              await fsExtra.ensureDir(path.dirname(outputFile));
+            }
+            
+            const routePath = pageName === "Home" ? "/" : `/${pageName.toLowerCase()}`;
+            // Render page inside Layout
+            const element = React.createElement(
+              StaticRouter,
+              { location: routePath },
+              React.createElement(Layout, null, React.createElement(Page))
+            );
+            const htmlContent = ReactDOMServer.renderToString(element);
 
             let fullHtml = `<!DOCTYPE html>
       <html lang="en">
@@ -256,7 +280,7 @@ async function generateStaticPages(cssLinks, jsScripts) {
       ${cssLinks.join("\n")}
       </head>
       <body>
-      <div id="root">${htmlContent}</div>
+      <div id="root" data-prerendered="true">${htmlContent}</div>
       ${jsScripts.join("\n")}
       </body>
       </html>`;
@@ -390,9 +414,11 @@ export async function generateBlogPages(cssLinks, jsScripts) {
     const blogs = blogData.data;
 
     // 4️⃣ Import the BlogDetail.jsx page once
-    const blogPageModule = await importJSX("BlogDetail");
-    const BlogPage = blogPageModule?.default || blogPageModule;
+    const BlogPage = await importJSX("BlogDetail");
     if (!BlogPage) throw new Error("BlogDetail.jsx not found or invalid");
+
+    // Import Layout
+    const Layout = await importJSX("Layout");
 
     // 5️⃣ Generate HTML for each blog
     for (const blog of blogs) {
@@ -404,15 +430,18 @@ export async function generateBlogPages(cssLinks, jsScripts) {
       const blogSeo = {
         title: blog?.seo?.metaTitle || blog?.title,
         description: blog.seo.metaDescription?.slice(0, 150) || blog?.summary || "",
-        canonical: blog?.seo?.canonical || `${process.env.REACT_APP_URL}/blog/${blog.slug}`,
+        canonical: blog?.seo?.canonical || `${process.env.REACT_APP_URL}/Blog/${blog.slug}`,
         keywords: Array.isArray(blog?.seo?.keywords) ? blog.seo.keywords.join(", ") : blog?.seo?.keywords,
       };
       const seoHtml = await generateSEO(blogSeo);
 
-      // Create HTML
-      let htmlContent = ReactDOMServer.renderToString(
-        React.createElement(BlogPage, { blog })
+      // Render page inside Layout
+      const element = React.createElement(
+        StaticRouter,
+        { location: `/blog/${slug}` },
+        React.createElement(Layout, null, React.createElement(BlogPage, { blog }))
       );
+      var htmlContent = ReactDOMServer.renderToString(element);
 
       let blog_tag_html = '';
       if (blog.tags != "" && Array.isArray(blog.tags)) {
@@ -451,7 +480,7 @@ export async function generateBlogPages(cssLinks, jsScripts) {
           ${cssLinks.join("\n")}
         </head>
         <body>
-          <div id="root">${htmlContent}</div>
+          <div id="root" data-prerendered="true">${htmlContent}</div>
           ${jsScripts.join("\n")}
         </body>
         </html>
@@ -475,8 +504,7 @@ export async function generateBlogPages(cssLinks, jsScripts) {
   } catch (err) {
     console.error("❌ Error generating blog pages:", err);
   }  finally {
-    fsExtra.removeSync(path.join(DIST_DIR,'blogdetail.html'));
-    fsExtra.removeSync(path.join(DIST_DIR,'blogdetail.html.gz'));
+    fsExtra.removeSync(path.join(DIST_DIR,'BlogDetail'));
     fsExtra.removeSync(TEMP_DIR);
     console.log("🧹 Cleaned up temporary .temp directory");
   }

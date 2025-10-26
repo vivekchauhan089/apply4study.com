@@ -3,10 +3,12 @@ import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import reportWebVitals from './reportWebVitals.jsx';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+const container = document.getElementById("root");
+const isPrerendered = container?.dataset.prerendered === "true";
+ReactDOM.hydrateRoot(
+  container,
   <React.StrictMode>
-    <App />
+    <App skipRedirects={isPrerendered} />
   </React.StrictMode>
 );
 

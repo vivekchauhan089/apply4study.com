@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Footer.scss';
 import logo from '../../assets/img/apply4study_logo.png';
-import LazyImage from '../common/LazyImage';
+import LazyImage from '../common/LazyImage.jsx';
 
 export default function Footer() {
   const [email, setEmail] = useState("");
@@ -131,12 +131,12 @@ export default function Footer() {
       <div className='text-center bg-dark text-white py-3'>
         <p>&copy; {new Date().getFullYear()} Apply4Study. All rights reserved.</p>
         <nav>
-          <ul className={`${styles.footerNav} d-flex justify-content-center list-unstyled m-0 p-0`}>
+          <ul className={`d-flex justify-content-center list-unstyled m-0 p-0`}>
             {['Terms & Conditions', 'Privacy & Policy'].map((path) => (
               <li key={path} className="mx-2">
                 <Link
                   to={path === 'home' ? '/' : `/${path.toLowerCase().replace(' & ', '-')}`}
-                  className={`${styles.footerLinks}`}
+                  className=""
                 >
                   {path.charAt(0).toUpperCase() + path.slice(1)}
                 </Link>

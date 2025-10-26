@@ -219,7 +219,7 @@ export default function Blog() {
 
                     <div id="comment-1" className="comment">
                       <div className="d-flex">
-                        <div className="comment-img"><LazyImage src="assets/img/blog/comments-1.jpg" alt="" loading="lazy" /></div>
+                        <div className="comment-img"><LazyImage src="/assets/img/blog/comments-1.jpg" alt="" loading="lazy" /></div>
                         <div>
                           <h5><a href="">Georgia Reader</a> <a href="#" className="reply"><i className="bi bi-reply-fill"></i> Reply</a></h5>
                           <time dateTime="2020-01-01">01 Jan,2022</time>
@@ -233,7 +233,7 @@ export default function Blog() {
 
                     <div id="comment-2" className="comment">
                       <div className="d-flex">
-                        <div className="comment-img"><LazyImage src="assets/img/blog/comments-2.jpg" alt="" loading="lazy"/></div>
+                        <div className="comment-img"><LazyImage src="/assets/img/blog/comments-2.jpg" alt="" loading="lazy"/></div>
                         <div>
                           <h5><a href="">Aron Alvarado</a> <a href="#" className="reply"><i className="bi bi-reply-fill"></i> Reply</a></h5>
                           <time dateTime="2020-01-01">01 Jan,2022</time>
@@ -245,7 +245,7 @@ export default function Blog() {
 
                       <div id="comment-reply-1" className="comment comment-reply">
                         <div className="d-flex">
-                          <div className="comment-img"><LazyImage src="assets/img/blog/comments-3.jpg" alt="" loading="lazy"/></div>
+                          <div className="comment-img"><LazyImage src="/assets/img/blog/comments-3.jpg" alt="" loading="lazy"/></div>
                           <div>
                             <h5><a href="">Lynda Small</a> <a href="#" className="reply"><i className="bi bi-reply-fill"></i> Reply</a></h5>
                             <time dateTime="2020-01-01">01 Jan,2022</time>
@@ -261,7 +261,7 @@ export default function Blog() {
 
                         <div id="comment-reply-2" className="comment comment-reply">
                           <div className="d-flex">
-                            <div className="comment-img"><LazyImage src="assets/img/blog/comments-4.jpg" alt="" loading="lazy"/></div>
+                            <div className="comment-img"><LazyImage src="/assets/img/blog/comments-4.jpg" alt="" loading="lazy"/></div>
                             <div>
                               <h5><a href="">Sianna Ramsay</a> <a href="#" className="reply"><i className="bi bi-reply-fill"></i> Reply</a></h5>
                               <time dateTime="2020-01-01">01 Jan,2022</time>
@@ -279,7 +279,7 @@ export default function Blog() {
 
                     <div id="comment-3" className="comment">
                       <div className="d-flex">
-                        <div className="comment-img"><LazyImage src="assets/img/blog/comments-5.jpg" alt="" loading="lazy"/></div>
+                        <div className="comment-img"><LazyImage src="/assets/img/blog/comments-5.jpg" alt="" loading="lazy"/></div>
                         <div>
                           <h5><a href="">Nolan Davidson</a> <a href="#" className="reply"><i className="bi bi-reply-fill"></i> Reply</a></h5>
                           <time dateTime="2020-01-01">01 Jan,2022</time>
@@ -294,7 +294,7 @@ export default function Blog() {
 
                     <div id="comment-4" className="comment">
                       <div className="d-flex">
-                        <div className="comment-img"><LazyImage src="assets/img/blog/comments-6.jpg" alt="" loading="lazy"/></div>
+                        <div className="comment-img"><LazyImage src="/assets/img/blog/comments-6.jpg" alt="" loading="lazy"/></div>
                         <div>
                           <h5><a href="">Kay Duggan</a> <a href="#" className="reply"><i className="bi bi-reply-fill"></i> Reply</a></h5>
                           <time dateTime="2020-01-01">01 Jan,2022</time>
@@ -385,41 +385,41 @@ export default function Blog() {
                   <div className="recent-posts-widget widget-item">
                     <h3 className="widget-title">Recent Posts</h3>
                     <div className="post-item">
-                      <LazyImage src="assets/img/blog/blog-recent-1.jpg" alt="" className="flex-shrink-0" loading="lazy"/>
+                      <LazyImage src="/assets/img/blog/blog-recent-1.jpg" alt="" className="flex-shrink-0" loading="lazy"/>
                       <div>
-                        <h4><a href="blog-details.html">Nihil blanditiis at in nihil autem</a></h4>
+                        <h4><a href="#">Nihil blanditiis at in nihil autem</a></h4>
                         <time dateTime="2020-01-01">Jan 1, 2020</time>
                       </div>
                     </div>
 
                     <div className="post-item">
-                      <LazyImage src="assets/img/blog/blog-recent-2.jpg" alt="" className="flex-shrink-0" loading="lazy"/>
+                      <LazyImage src="/assets/img/blog/blog-recent-2.jpg" alt="" className="flex-shrink-0" loading="lazy"/>
                       <div>
-                        <h4><a href="blog-details.html">Quidem autem et impedit</a></h4>
+                        <h4><a href="#">Quidem autem et impedit</a></h4>
                         <time dateTime="2020-01-01">Jan 1, 2020</time>
                       </div>
                     </div>
 
                     <div className="post-item">
-                      <LazyImage src="assets/img/blog/blog-recent-3.jpg" alt="" className="flex-shrink-0" loading="lazy"/>
+                      <LazyImage src="/assets/img/blog/blog-recent-3.jpg" alt="" className="flex-shrink-0" loading="lazy"/>
                       <div>
-                        <h4><a href="blog-details.html">Id quia et et ut maxime similique occaecati ut</a></h4>
+                        <h4><a href="#">Id quia et et ut maxime similique occaecati ut</a></h4>
                         <time dateTime="2020-01-01">Jan 1, 2020</time>
                       </div>
                     </div>
 
                     <div className="post-item">
-                      <LazyImage src="assets/img/blog/blog-recent-4.jpg" alt="" className="flex-shrink-0" loading="lazy"/>
+                      <LazyImage src="/assets/img/blog/blog-recent-4.jpg" alt="" className="flex-shrink-0" loading="lazy"/>
                       <div>
-                        <h4><a href="blog-details.html">Laborum corporis quo dara net para</a></h4>
+                        <h4><a href="#">Laborum corporis quo dara net para</a></h4>
                         <time dateTime="2020-01-01">Jan 1, 2020</time>
                       </div>
                     </div>
 
                     <div className="post-item">
-                      <LazyImage src="assets/img/blog/blog-recent-5.jpg" alt="" className="flex-shrink-0" loading="lazy"/>
+                      <LazyImage src="/assets/img/blog/blog-recent-5.jpg" alt="" className="flex-shrink-0" loading="lazy"/>
                       <div>
-                        <h4><a href="blog-details.html">Et dolores corrupti quae illo quod dolor</a></h4>
+                        <h4><a href="#">Et dolores corrupti quae illo quod dolor</a></h4>
                         <time dateTime="2020-01-01">Jan 1, 2020</time>
                       </div>
                     </div>

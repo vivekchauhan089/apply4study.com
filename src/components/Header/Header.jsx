@@ -2,8 +2,8 @@ import React, { use, useEffect, useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import styles from './Header.scss';
 import logo from '../../assets/img/apply4study_logo.png';
-import LazyImage from '../common/LazyImage';
-import SearchResults from '../../pages/SearchResults';
+import LazyImage from '../common/LazyImage.jsx';
+import SearchResults from '../../pages/SearchResults.jsx';
 import Modals from '../Modal/Modal.jsx';
 import { Button } from 'react-bootstrap';
 
@@ -117,7 +117,7 @@ export default function Header() {
 
 
   return (
-    <header id="header" className={`${styles.header} header d-flex align-items-center fixed-top`}>
+    <header id="header" className={`header d-flex align-items-center fixed-top`}>
       <div className="top-info-bar">
         {/* Desktop info bar */}
         {!isMobile && (
@@ -179,10 +179,10 @@ export default function Header() {
       </div>
       <div className="container-fluid container-xl position-relative">
         <div className='d-flex align-items-center justify-content-between w-100'>
-          <Link to='/' className={`${styles.logo} logo d-flex align-items-center`}>
+          <Link to='/' className={`logo d-flex align-items-center`}>
             <LazyImage src={logo} alt="logo" className="img-fluid" fetchPriority="high" />
           </Link>
-          <nav id="navmenu" className={`${styles.navmenu} navmenu`}>
+          <nav id="navmenu" className={`navmenu`}>
             <ul>
               {navLinks.map(({ path, label }) => (
                 path === "/get-started" && isMobile ? (
@@ -190,7 +190,7 @@ export default function Header() {
                     <NavLink
                       to={path}
                       className={({ isActive }) =>
-                        isActive ? `${styles.active} active nav-link` : 'nav-link'
+                        isActive ? `active nav-link` : 'nav-link'
                       }
                     >
                       {label}
@@ -201,7 +201,7 @@ export default function Header() {
                     <NavLink
                       to={path}
                       className={({ isActive }) =>
-                        isActive ? `${styles.active} active nav-link` : 'nav-link'
+                        isActive ? `active nav-link` : 'nav-link'
                       }
                     >
                       {label}

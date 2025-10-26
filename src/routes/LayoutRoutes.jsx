@@ -21,7 +21,7 @@ import TermsConditions from '../pages/TermsConditions';
 import ShippingPolicy from '../pages/ShippingPolicy';
 import RefundPolicy from '../pages/RefundPolicy';
 
-const LayoutRoutes = () => (
+const LayoutRoutes = ({ skipRedirects }) => (
   <Routes>
     <Route path='/' element={<Layout />}>
       <Route index element={<Home />} />
@@ -39,6 +39,8 @@ const LayoutRoutes = () => (
       <Route path='shipping-policy' element={<ShippingPolicy />} />
       <Route path='refund-policy' element={<RefundPolicy />} />
       <Route path="search" element={<SearchResults />} />
+      {/* SPA fallback */}
+      {!skipRedirects && <Route path="*" element={<Home />} /> }
     </Route>
   </Routes>
 );

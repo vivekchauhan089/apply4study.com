@@ -1,8 +1,8 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import Header from '../components/Header/Header';
-import Footer from '../components/Footer/Footer';
-import ThemeToggle from '../components/common/ThemeToggle';
+import Header from '../components/Header/Header.jsx';
+import Footer from '../components/Footer/Footer.jsx';
+import ThemeToggle from '../components/common/ThemeToggle.jsx';
 
 
 const Layout = () => (
