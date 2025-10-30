@@ -6,7 +6,7 @@ const path = require('path');
 const request = require('request');
 const cheerio = require('cheerio');
 
-const START_URL = process.env.REACT_APP_URL || 'https://www.apply4study.com';
+const START_URL = process.env.REACT_APP_URL || 'https://apply4study.com';
 const MAX_PAGES = 500;
 const BUILD_DIR = path.join(process.cwd(), 'build');
 const SITEMAP_PATH1 = path.join(BUILD_DIR, 'sitemap.xml');
