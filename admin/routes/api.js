@@ -352,4 +352,48 @@ router.post("/blog/fetchall", ApiBlogController.getAllBlogs);
 router.post("/blog/:slug", ApiBlogController.getBlogBySlug);
 
 
+const MenuController = require('../controllers/menuController');
+
+/**
+ * Fetch all menus
+ * @route POST /api/menu/fetchall
+ * @group Menu - Menu management
+ * @returns {object} 200 - { success: true, data: [Menu] }
+ * @returns {Error}  default - Unexpected error
+ */
+router.post('/menu/fetchall', MenuController.getAllMenus);
+
+/**
+ * Create a new menu
+ * @route POST /api/menu/create
+ * @group Menu - Menu management
+ * @param {Menu.model} Menu.body.required - Menu details
+ * @returns {object} 201 - { success: true, data: Menu }
+ * @returns {Error}  default - Unexpected error
+ */
+router.post('/menu/create', MenuController.createMenu);
+
+
+const PageController = require('../controllers/pageController');
+
+/**
+ * Fetch all pages with matching menus
+ * @route POST /api/page/fetchall
+ * @group Page - Page management
+ * @returns {object} 200 - { success: true, data: [Page] }
+ * @returns {Error}  default - Unexpected error
+ */
+router.post('/page/fetchall', PageController.getAllPages);
+
+/**
+ * Create a new page
+ * @route POST /api/page/create
+ * @group Page - Page management
+ * @param {Page.model} Page.body.required - Page details
+ * @returns {object} 201 - { success: true, data: Page }
+ * @returns {Error}  default - Unexpected error
+ */
+router.post('/page/create', PageController.createPage);
+
+
 module.exports = router;        

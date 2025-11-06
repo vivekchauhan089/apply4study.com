@@ -24,12 +24,40 @@ export default function Header() {
   const [isMobile, setIsMobile] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const [modalType, setModalType] = useState('register');
+  const [navLinks, setNavLinks] = useState([]);
 
   const handleOpenModal = (type) => {
     setModalType(type);      
     setModalShow(true); 
   };
 
+  useEffect(() => {
+    const fetchMenus = async () => {
+      try {
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/api/menu/fetchall`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+        });
+
+        const data = await res.json();
+
+        if (data.success && Array.isArray(data.data)) {
+          // Format menus into { path, label }
+          const formattedMenus = data.data.map((menu) => ({
+            path: `/${menu.slug}`,
+            label: menu.title,
+          }));
+          setNavLinks(formattedMenus);
+        } else {
+          console.warn('⚠️ Unexpected API response:', data);
+        }
+      } catch (error) {
+        console.error('❌ Failed to load menus:', error);
+      }
+    };
+
+    fetchMenus();
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
