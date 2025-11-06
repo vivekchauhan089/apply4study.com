@@ -18,6 +18,8 @@ import PrivacyPolicy from '../pages/PrivacyPolicy.jsx';
 import TermsConditions from '../pages/TermsConditions.jsx';
 import ShippingPolicy from '../pages/ShippingPolicy.jsx';
 import RefundPolicy from '../pages/RefundPolicy.jsx';
+import AboutUs from '../pages/AboutUs.jsx';
+import WebDevelopment from '../pages/services/WebDevelopment.jsx';
 
 // ✅ Styles (safe for prerender)
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -54,6 +56,9 @@ const LayoutRoutes = ({ skipRedirects }) => {
         <Route path='shipping-policy' element={<ShippingPolicy />} />
         <Route path='refund-policy' element={<RefundPolicy />} />
         <Route path='search' element={<SearchResults />} />
+        <Route path='about-us' element={<AboutUs />} />
+        <Route path='services/web-development' element={<WebDevelopment />} />
+
         {/* SPA fallback */}
         {!skipRedirects && <Route path='*' element={<Home />} />}
       </Route>
