@@ -1,0 +1,1 @@
+This is a placeholder. Replace with a real MP4 file named sample_video.mp4 in the same folder and update pubspec.yaml accordingly.

@@ -1,0 +1,24 @@
+name: learning_app
+description: A sample learning app (local-only) with login, course detail, video player, progress tracking, AI tutor mock and dark mode toggle.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.18.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  provider: ^6.0.5
+  shared_preferences: ^2.1.1
+  video_player: ^2.5.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/videos/sample_video_placeholder.txt
