@@ -1,4 +1,4 @@
-var Menu = require.main.require('./models/Menu');
+var Menu = require.main.require('./models/Menus');
 var Users = require.main.require('./models/Users');
 var Roles = require.main.require('./models/Roles');
 

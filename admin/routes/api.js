@@ -352,7 +352,7 @@ router.post("/blog/fetchall", ApiBlogController.getAllBlogs);
 router.post("/blog/:slug", ApiBlogController.getBlogBySlug);
 
 
-const MenuController = require('../controllers/menuController');
+const MenuController = require('../controllers/api/MenuController');
 
 /**
  * Fetch all menus
@@ -367,14 +367,14 @@ router.post('/menu/fetchall', MenuController.getAllMenus);
  * Create a new menu
  * @route POST /api/menu/create
  * @group Menu - Menu management
- * @param {Menu.model} Menu.body.required - Menu details
+ * @param {Menus.model} Menu.body.required - Menu details
  * @returns {object} 201 - { success: true, data: Menu }
  * @returns {Error}  default - Unexpected error
  */
 router.post('/menu/create', MenuController.createMenu);
 
 
-const PageController = require('../controllers/pageController');
+const PageController = require('../controllers/api/PageController');
 
 /**
  * Fetch all pages with matching menus

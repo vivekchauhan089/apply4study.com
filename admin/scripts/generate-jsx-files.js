@@ -82,13 +82,15 @@ async function getFullSlug(menu) {
 
         fs.mkdirSync(folderPath, { recursive: true });
 
-
+        var dirSlash = '../';
+        if (slugParts.length)
+          slugParts.forEach((s)=> { dirSlash += '../'; });
 
         const jsxContent = `
 import React from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import useSEO from "../../hooks/useSEO.jsx";
+import useSEO from "${dirSlash}hooks/useSEO.jsx";
 
 export default function ${componentName}() {
   const APP_URL = process.env.REACT_APP_URL;

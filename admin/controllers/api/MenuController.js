@@ -1,4 +1,6 @@
 let router = require('express').Router();
+let config = require('../../config/config');
+var request = require('request');
 const Pages = require.main.require("./models/Pages");
 const Menus = require.main.require("./models/Menus");
 
@@ -10,6 +12,11 @@ async function getAllMenus(req, res) {
   try {
     const menus = await Menus.aggregate([
       {
+        $match: {
+          status: { $in: ["published"] },
+        },
+      },
+      {
         $lookup: {
           from: "pages",          // ✅ reference to pages collection
           localField: "slug",     // match menu.slug
@@ -19,7 +26,6 @@ async function getAllMenus(req, res) {
       },
       {
         $match: {
-          "status": "published",
           "pageData.0": { $exists: true },                // ensure a matching page exists
           "pageData.status": "published",                 // ensure the page is published
         },

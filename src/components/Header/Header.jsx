@@ -34,7 +34,7 @@ export default function Header() {
   useEffect(() => {
     const fetchMenus = async () => {
       try {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/api/menu/fetchall`, {
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/menu/fetchall`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
         });

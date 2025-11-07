@@ -2,7 +2,7 @@
 import React from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import useSEO from "../../hooks/useSEO.jsx";
+import useSEO from "../hooks/useSEO.jsx";
 
 export default function AboutUs() {
   const APP_URL = process.env.REACT_APP_URL;
