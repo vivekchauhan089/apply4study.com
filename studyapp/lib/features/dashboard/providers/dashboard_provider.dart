@@ -25,11 +25,28 @@ class DashboardProvider extends ChangeNotifier {
   void loadDemo() {
     _courses.clear();
     _courses.addAll([
-      Course(id: 'c1', title: 'Application Essay Mastery', subtitle: 'Structure & storytelling', progress: 0.34, lessons: 9, category: 'Writing', accentHex: 'B3E5FC'),
-      Course(id: 'c2', title: 'Study Planner', subtitle: 'Weekly & monthly plans', progress: 0.72, lessons: 6, category: 'Productivity', accentHex: 'E1F5D9'),
-      Course(id: 'c3', title: 'Test Prep: Math', subtitle: 'Key strategies & drills', progress: 0.18, lessons: 14, category: 'Test Prep', accentHex: 'FFF3CC'),
-      Course(id: 'c4', title: 'Scholarship Applications', subtitle: 'Find & apply', progress: 0.52, lessons: 7, category: 'Applications', accentHex: 'F0E5FF'),
-      Course(id: 'c5', title: 'Interview Practice', subtitle: 'Mock interviews & tips', progress: 0.06, lessons: 4, category: 'Career', accentHex: 'FFEAE6'),
+      Course(
+        id: 1,
+        title: 'Flutter for Beginners',
+        description: 'Learn to build mobile apps using Flutter.',
+        subtitle: 'Build Mobile App', 
+        lessons: 12,
+        progress: 0.35,
+        category: 'Writing', 
+        accentHex: 'B3E5FC',
+        videoAsset: 'assets/videos/mov_bbb.mp4',
+      ),
+      Course(
+        id: 2,
+        title: 'Advanced Dart',
+        subtitle: 'Advanced Dart', 
+        description: 'Deep dive into Dart programming language.',
+        lessons: 8,
+        progress: 0.6,
+        category: 'Writing', 
+        accentHex: 'B3E5FC',
+        videoAsset: 'assets/videos/sample_video_placeholder.txt',
+      ),
     ]);
     notifyListeners();
   }

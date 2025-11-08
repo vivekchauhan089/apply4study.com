@@ -5,7 +5,7 @@ import 'video_player_screen.dart';
 import 'ai_chat_screen.dart';
 
 class CourseDetail extends StatefulWidget {
-  static const routeName = '/course_detail';
+  static const routeName = '/courseDetail';
   final int courseId;
   const CourseDetail({super.key, required this.courseId});
 

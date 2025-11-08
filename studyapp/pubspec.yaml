@@ -9,10 +9,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  go_router: ^14.1.4
+  google_fonts: ^6.2.1
   cupertino_icons: ^1.0.2
   provider: ^6.0.5
   shared_preferences: ^2.1.1
   video_player: ^2.5.1
+  flutter_svg: ^2.0.10+1
 
 dev_dependencies:
   flutter_test:
@@ -21,4 +24,10 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+    - assets/images/logo.svg
+    - assets/images/banner1.svg
+    - assets/images/banner2.svg
+    - assets/images/avatar_male.svg
+    - assets/images/avatar_female.svg
     - assets/videos/sample_video_placeholder.txt
+    - assets/videos/mov_bbb.mp4

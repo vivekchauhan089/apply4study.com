@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'course_detail.dart';
-import '../models/course.dart';
-import '../widgets/course_card.dart';
+// import 'course_detail.dart';
 import '../providers/course_provider.dart';
 import '../theme/theme_notifier.dart';
+import '../widgets/course_card.dart';
 
 class CoursesScreen extends StatelessWidget {
   const CoursesScreen({super.key});
@@ -39,7 +38,7 @@ class CoursesScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('All Courses'),
-        actions: [
+        /*actions: [
           IconButton(
             icon: Icon(
               themeNotifier.isDarkMode
@@ -50,13 +49,23 @@ class CoursesScreen extends StatelessWidget {
               themeNotifier.toggleTheme();
             },
           ),
-        ],
+        ],*/
       ),
       body: ListView.builder(
         itemCount: courses.length,
         itemBuilder: (context, index) {
           final course = courses[index];
-          return ListTile(
+          // Alternate background color
+          final backgroundColor = index % 2 == 0
+              ? Colors.indigo.withOpacity(0.08) // even rows
+              : Colors.grey.withOpacity(0.08);  // odd rows
+
+          return Container(
+            color: backgroundColor,
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            child: CourseCard(course: course),
+          );
+          /*return ListTile(
             title: Text(course.title ?? 'Untitled'),
             subtitle: Text(course.description ?? 'No description'),
             onTap: () {
@@ -67,7 +76,7 @@ class CoursesScreen extends StatelessWidget {
                 ),
               );
             },
-          );
+          );*/
         },
       ),
     );

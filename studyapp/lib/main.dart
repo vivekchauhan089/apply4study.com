@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'providers/app_provider.dart';
-
+import 'features/dashboard/providers/dashboard_provider.dart';
+import 'features/dashboard/screens/dashboard_screen.dart';
 import 'providers/course_provider.dart';
 import 'models/course.dart';
 import 'screens/login_screen.dart';
-import 'screens/home_screen.dart';
+// import 'screens/home_screen.dart';
 import 'screens/courses_screen.dart';
 
 import 'screens/course_detail.dart';
@@ -22,6 +23,7 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => DashboardProvider()),
         ChangeNotifierProvider(create: (_) => CourseProvider()),
         ChangeNotifierProvider(create: (_) => ThemeNotifier()),
         ChangeNotifierProvider(create: (_) => AppProvider(darkMode: darkMode)),
@@ -53,9 +55,12 @@ class LearningApp extends StatelessWidget {
         initialRoute: '/',
         routes: {
           '/': (context) => const EntryDecider(),
-          '/home': (context) => const HomeScreen(),
+          //'/home': (context) => const HomeScreen(),
+          '/home': (_) => ChangeNotifierProvider(
+            create: (_) => DashboardProvider(),
+            child: const DashboardScreen(),
+          ),
           '/courses': (context) => const CoursesScreen(),
-
           '/courseDetail': (context) {
             final args = ModalRoute.of(context)!.settings.arguments as Course;
             return CourseDetail(courseId: args.id);
@@ -111,6 +116,6 @@ class _EntryDeciderState extends State<EntryDecider> {
     if (_username == null) {
       return const LoginScreen();
     }
-    return const HomeScreen();
+    return const DashboardScreen();
   }
 }
