@@ -13,9 +13,12 @@ dependencies:
   google_fonts: ^6.2.1
   cupertino_icons: ^1.0.2
   provider: ^6.0.5
+  table_calendar: ^3.0.9
   shared_preferences: ^2.1.1
   video_player: ^2.5.1
   flutter_svg: ^2.0.10+1
+  carousel_slider: ^5.1.1
+  confetti: ^0.7.0
 
 dev_dependencies:
   flutter_test:

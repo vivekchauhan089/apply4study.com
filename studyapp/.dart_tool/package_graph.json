@@ -7,6 +7,8 @@
       "name": "learning_app",
       "version": "1.0.0+1",
       "dependencies": [
+        "carousel_slider",
+        "confetti",
         "cupertino_icons",
         "flutter",
         "flutter_svg",
@@ -14,6 +16,7 @@
         "google_fonts",
         "provider",
         "shared_preferences",
+        "table_calendar",
         "video_player"
       ],
       "devDependencies": [
@@ -36,6 +39,21 @@
         "stream_channel",
         "test_api",
         "vector_math"
+      ]
+    },
+    {
+      "name": "confetti",
+      "version": "0.7.0",
+      "dependencies": [
+        "flutter",
+        "vector_math"
+      ]
+    },
+    {
+      "name": "carousel_slider",
+      "version": "5.1.1",
+      "dependencies": [
+        "flutter"
       ]
     },
     {
@@ -72,6 +90,15 @@
         "shared_preferences_platform_interface",
         "shared_preferences_web",
         "shared_preferences_windows"
+      ]
+    },
+    {
+      "name": "table_calendar",
+      "version": "3.2.0",
+      "dependencies": [
+        "flutter",
+        "intl",
+        "simple_gesture_detector"
       ]
     },
     {
@@ -339,6 +366,22 @@
       "dependencies": [
         "flutter",
         "shared_preferences_platform_interface"
+      ]
+    },
+    {
+      "name": "simple_gesture_detector",
+      "version": "0.2.1",
+      "dependencies": [
+        "flutter"
+      ]
+    },
+    {
+      "name": "intl",
+      "version": "0.20.2",
+      "dependencies": [
+        "clock",
+        "meta",
+        "path"
       ]
     },
     {

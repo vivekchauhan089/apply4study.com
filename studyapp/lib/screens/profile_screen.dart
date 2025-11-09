@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import '../providers/app_provider.dart';
+// import '../shared/widgets/bottom_nav.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -49,6 +50,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ElevatedButton.icon(onPressed: _logout, icon: const Icon(Icons.logout), label: const Text('Logout')),
         ]),
       ),
+      // bottomNavigationBar: const BottomNav(),
     );
   }
 }

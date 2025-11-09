@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/course.dart';
+import '../../../models/course.dart';
 
 class DashboardProvider extends ChangeNotifier {
   final List<Course> _courses = [];
@@ -27,25 +27,42 @@ class DashboardProvider extends ChangeNotifier {
     _courses.addAll([
       Course(
         id: 1,
-        title: 'Flutter for Beginners',
-        description: 'Learn to build mobile apps using Flutter.',
-        subtitle: 'Build Mobile App', 
-        lessons: 12,
-        progress: 0.35,
-        category: 'Writing', 
-        accentHex: 'B3E5FC',
-        videoAsset: 'assets/videos/mov_bbb.mp4',
+        title: "Flutter Basics",
+        subtitle: "Build beautiful apps",
+        description: "Learn to create mobile apps using Flutter.",
+        category: "Development",
+        lessons: 10,
+        progress: 0.4,
+        accentHex: "#3F51B5",
+        videoAsset: "assets/videos/mov_bbb.mp4",
+        duration: "3h 00m",      // added
+        instructor: "John Doe",   // added
       ),
       Course(
         id: 2,
-        title: 'Advanced Dart',
-        subtitle: 'Advanced Dart', 
-        description: 'Deep dive into Dart programming language.',
+        title: "UI Design Principles",
+        subtitle: "Master mobile design",
+        description: "Learn layout, typography, and design thinking.",
+        category: "Design",
         lessons: 8,
-        progress: 0.6,
-        category: 'Writing', 
-        accentHex: 'B3E5FC',
-        videoAsset: 'assets/videos/sample_video_placeholder.txt',
+        progress: 0.7,
+        accentHex: "#E91E63",
+        videoAsset: "assets/videos/mov_bbb.mp4",
+        duration: "2h 30m",      // added
+        instructor: "Jane Smith", // added
+      ),
+      Course(
+        id: 3,
+        title: "AI for Everyone",
+        subtitle: "Demystify AI concepts",
+        description: "Understand how AI works and its real applications.",
+        category: "AI",
+        lessons: 12,
+        progress: 0.2,
+        accentHex: "#009688",
+        videoAsset: "assets/videos/mov_bbb.mp4",
+        duration: "4h 15m",       // added
+        instructor: "Emily Johnson", // added
       ),
     ]);
     notifyListeners();

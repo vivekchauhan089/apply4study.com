@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/course.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+// import '../shared/widgets/bottom_nav.dart';
 
 class ProgressScreen extends StatefulWidget {
   const ProgressScreen({super.key});
@@ -45,6 +46,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
           );
         }).toList(),
       ),
+      // bottomNavigationBar: const BottomNav(),
     );
   }
 }

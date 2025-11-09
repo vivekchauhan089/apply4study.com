@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class AiChatScreen extends StatefulWidget {
-  const AiChatScreen({super.key});
+  final VoidCallback? onBack; // ✅ add onBack callback
+  
+  const AiChatScreen({super.key, this.onBack});
 
   @override
   State<AiChatScreen> createState() => _AiChatScreenState();
@@ -36,7 +38,15 @@ class _AiChatScreenState extends State<AiChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('AI Tutor')),
+      appBar: AppBar(
+        title: const Text('AI Tutor'),
+        leading: widget.onBack != null
+          ? IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: widget.onBack,
+            )
+          : null,
+      ),
       body: Column(
         children: [
           Expanded(

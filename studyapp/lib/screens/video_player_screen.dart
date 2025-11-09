@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+// import '../shared/widgets/bottom_nav.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
   final String videoAsset;
   final Function(double) onProgressUpdate;
-  const VideoPlayerScreen({super.key, required this.videoAsset, required this.onProgressUpdate});
+  final VoidCallback? onBack; // ✅ add onBack callback
+
+  const VideoPlayerScreen({super.key, required this.videoAsset, required this.onProgressUpdate, this.onBack});
 
   @override
   State<VideoPlayerScreen> createState() => _VideoPlayerScreenState();
@@ -56,7 +59,15 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   Widget build(BuildContext context) {
     if (!_initialized) {
       return Scaffold(
-        appBar: AppBar(title: const Text('Video Player')),
+        appBar: AppBar(
+          title: const Text('Video Player'),
+          leading: widget.onBack != null
+            ? IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: widget.onBack,
+              )
+            : null
+        ),
         body: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -88,6 +99,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
         },
         child: Icon(_controller!.value.isPlaying ? Icons.pause : Icons.play_arrow),
       ),
+      // bottomNavigationBar: const BottomNav(),
     );
   }
 }
