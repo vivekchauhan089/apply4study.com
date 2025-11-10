@@ -43,7 +43,7 @@ class _AiChatScreenState extends State<AiChatScreen> {
         leading: widget.onBack != null
           ? IconButton(
               icon: const Icon(Icons.arrow_back),
-              onPressed: widget.onBack,
+              onPressed: widget.onBack ?? () => Navigator.pop(context),
             )
           : null,
       ),

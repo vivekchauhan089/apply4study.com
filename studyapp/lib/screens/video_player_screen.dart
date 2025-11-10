@@ -3,8 +3,8 @@ import 'package:video_player/video_player.dart';
 // import '../shared/widgets/bottom_nav.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
-  final String videoAsset;
-  final Function(double) onProgressUpdate;
+  final String videoAsset; // required
+  final void Function(double) onProgressUpdate; // required
   final VoidCallback? onBack; // ✅ add onBack callback
 
   const VideoPlayerScreen({super.key, required this.videoAsset, required this.onProgressUpdate, this.onBack});
@@ -84,7 +84,15 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       );
     }
     return Scaffold(
-      appBar: AppBar(title: const Text('Video Player')),
+      appBar: AppBar(
+        title: const Text('Video Player'),
+        leading: widget.onBack != null
+          ? IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: widget.onBack ?? () => Navigator.pop(context),
+            )
+          : null,
+      ),
       body: Center(
         child: AspectRatio(
           aspectRatio: _controller!.value.aspectRatio,

@@ -71,12 +71,14 @@ class _MainNavScreenState extends State<MainNavScreen> {
         _showCourseProgress = false;
       });
 
-  void _openCourseProgress() => setState(() {
-        _showCourseProgress = true;
-        _showCourses = false;
-        _showAIChat = false;
-        _selectedCourseId = null;
-      });
+  void _openCourseProgress(Course course) {
+    setState(() {
+      _showCourseProgress = true;
+      _showCourses = false;
+      _showAIChat = false;
+      _selectedCourseId = course.id;
+    });
+  }
 
   void _onBackPressed() => setState(() {
         if (_selectedCourseId != null) {
@@ -102,44 +104,19 @@ class _MainNavScreenState extends State<MainNavScreen> {
   Widget build(BuildContext context) {
     Widget content;
 
-    if (_selectedCourseId != null) {
-      final course = sampleCourses.firstWhere((c) => c.id == _selectedCourseId!);
-      content = CourseDetail(
-        courseId: _selectedCourseId!,
-        onClose: _onBackPressed,
-        onOpenAIChat: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => AiChatScreen(onBack: _onBackPressed)),
-          );
-        },
-        onOpenCourseProgress: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => VideoPlayerScreen(
-                videoAsset: course.videoAsset, // ✅ required
-                onProgressUpdate: (p) {
-                  // ❌ Cannot call _saveProgress here! It's internal to CourseDetail
-                  // You can optionally update a course model's progress if needed
-                  // e.g., course.progress = p;
-                }, // ✅ required
-                onBack: _onBackPressed,
-              ),
-            ),
-          );
-        },
-      );
-    } else if (_showCourseProgress) {
+    if (_showCourseProgress && _selectedCourseId != null) {
       final course = sampleCourses.firstWhere((c) => c.id == _selectedCourseId!);
       content = VideoPlayerScreen(
-        videoAsset: course.videoAsset, // ✅ required
-        onProgressUpdate: (p) {
-          // ❌ Cannot call _saveProgress here! It's internal to CourseDetail
-          // You can optionally update a course model's progress if needed
-          // e.g., course.progress = p;
-        },
+        videoAsset: course.videoAsset,
+        onProgressUpdate: course.updateProgress,
         onBack: _onBackPressed,
+      );
+    } else if (_selectedCourseId != null) {
+      content = CourseDetail(
+        courseId: _selectedCourseId!,
+        onBack: _onBackPressed,
+        onOpenAIChat: _openAIChat,
+        onOpenCourseProgress: _openCourseProgress, // pass callback
       );
     } else if (_showAIChat) {
       content = AiChatScreen(onBack: _onBackPressed);

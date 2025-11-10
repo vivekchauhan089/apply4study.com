@@ -11,18 +11,18 @@ import '../core/app_theme.dart';
 class CourseDetail extends StatefulWidget {
   static const routeName = '/courseDetail';
   final int courseId;
-  final VoidCallback? onClose; // ✅ callback to close overlay
+  final VoidCallback? onBack; // ✅ callback to close overlay
   final VoidCallback? onOpenAIChat;
-  final VoidCallback? onOpenCourseProgress;
+  final void Function(Course)? onOpenCourseProgress;
 
-  const CourseDetail({super.key, required this.courseId, this.onClose, this.onOpenAIChat, this.onOpenCourseProgress});
+  const CourseDetail({super.key, required this.courseId, this.onBack, this.onOpenAIChat, this.onOpenCourseProgress});
 
   @override
   State<CourseDetail> createState() => _CourseDetailState();
 }
 
 class _CourseDetailState extends State<CourseDetail> with TickerProviderStateMixin {
-  Course? course;
+  late final Course course;
   double progress = 0.0;
   late ConfettiController _confettiController;
   List<bool> lessonCompleted = [];
@@ -38,9 +38,9 @@ class _CourseDetailState extends State<CourseDetail> with TickerProviderStateMix
       orElse: () => sampleCourses.first,
     );
 
-    progress = course!.progress;
-    lessonCompleted = List<bool>.filled(course!.lessons, false);
-    expanded = List<bool>.filled(course!.lessons, false);
+    progress = course.progress;
+    lessonCompleted = List<bool>.filled(course.lessons, false);
+    expanded = List<bool>.filled(course.lessons, false);
 
     _loadProgress();
   }
@@ -53,31 +53,32 @@ class _CourseDetailState extends State<CourseDetail> with TickerProviderStateMix
 
   Future<void> _loadProgress() async {
     final prefs = await SharedPreferences.getInstance();
-    final key = 'course_progress_${course!.id}';
-    final val = prefs.getDouble(key) ?? course!.progress;
+    final key = 'course_progress_${course.id}';
+    final val = prefs.getDouble(key) ?? course.progress;
     setState(() => progress = val);
   }
 
   Future<void> _saveProgress(double p) async {
     final prefs = await SharedPreferences.getInstance();
-    final key = 'course_progress_${course!.id}';
+    final key = 'course_progress_${course.id}';
     await prefs.setDouble(key, p);
     setState(() => progress = p);
   }
 
   void _playLesson(int index) {
     if (widget.onOpenCourseProgress != null) {
-      widget.onOpenCourseProgress!(); // ✅ call the passed callback
+      widget.onOpenCourseProgress!(course); // pass course to MainNavScreen
     } else {
       Navigator.push(
         context,
         PageRouteBuilder(
           pageBuilder: (_, __, ___) => VideoPlayerScreen(
-            videoAsset: course!.videoAsset,
-            onProgressUpdate: (p) => _saveProgress(p),
+            videoAsset: course.videoAsset,
+            onProgressUpdate: _saveProgress,
+            onBack: () => Navigator.pop(context),
           ),
           transitionsBuilder: (_, animation, secondaryAnimation, child) {
-            const begin = Offset(0.0, 1.0); // start from bottom
+            const begin = Offset(0.0, 1.0);
             const end = Offset.zero;
             const curve = Curves.easeInOut;
 
@@ -92,32 +93,32 @@ class _CourseDetailState extends State<CourseDetail> with TickerProviderStateMix
         setState(() {
           lessonCompleted[index] = true;
           final completed = lessonCompleted.where((x) => x).length;
-          final newProgress = completed / course!.lessons;
+          final newProgress = completed / course.lessons;
           _saveProgress(newProgress);
           if (newProgress >= 1.0) _confettiController.play();
         });
       });
-    }    
+    }
   }
 
   void _launchAIChat() {
     _confettiController.play();
     if (widget.onOpenAIChat != null) {
-      widget.onOpenAIChat!(); // ✅ call the callback
+      widget.onOpenAIChat!(); // invoke callback
     } else {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (_) => const AiChatScreen()),
+        MaterialPageRoute(
+          builder: (_) => AiChatScreen(
+            onBack: () => Navigator.pop(context),
+          )
+        ),
       );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (course == null) {
-      return const Scaffold(body: Center(child: Text('Course not found')));
-    }
-
     final theme = Theme.of(context);
     final isTablet = MediaQuery.of(context).size.width > 700;
 
@@ -161,11 +162,11 @@ class _CourseDetailState extends State<CourseDetail> with TickerProviderStateMix
         if (progress > 0 && progress < 1) const SizedBox(height: 20),
 
         // 📘 Info
-        Text(course!.title,
+        Text(course.title,
             style: theme.textTheme.displaySmall!
                 .copyWith(fontSize: 26, color: AppTheme.primaryOrange)),
         const SizedBox(height: 10),
-        Text(course!.description,
+        Text(course.description,
             style: theme.textTheme.bodyLarge!.copyWith(color: AppTheme.textSecondary)),
         const SizedBox(height: 24),
 
@@ -224,7 +225,7 @@ class _CourseDetailState extends State<CourseDetail> with TickerProviderStateMix
         // 📘 Lessons (Slide-Up Expandable Cards)
         Text("Lessons", style: theme.textTheme.titleLarge),
         const SizedBox(height: 10),
-        ...List.generate(course!.lessons, (index) {
+        ...List.generate(course.lessons, (index) {
           final completed = lessonCompleted[index];
           final isExpanded = expanded[index];
 
@@ -334,9 +335,9 @@ class _CourseDetailState extends State<CourseDetail> with TickerProviderStateMix
             children: [
               Text("Course Info", style: theme.textTheme.titleLarge),
               const SizedBox(height: 10),
-              _infoRow(Icons.timer, "Duration", course!.duration),
-              _infoRow(Icons.video_collection_outlined, "Lessons", "${course!.lessons}"),
-              _infoRow(Icons.person_outline, "Instructor", course!.instructor),
+              _infoRow(Icons.timer, "Duration", course.duration),
+              _infoRow(Icons.video_collection_outlined, "Lessons", "${course.lessons}"),
+              _infoRow(Icons.person_outline, "Instructor", course.instructor),
             ],
           ),
         ),
@@ -345,12 +346,12 @@ class _CourseDetailState extends State<CourseDetail> with TickerProviderStateMix
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(course!.title), 
+        title: Text(course.title), 
         centerTitle: true,
-        leading: widget.onClose != null
+        leading: widget.onBack != null
           ? IconButton(
               icon: const Icon(Icons.arrow_back),
-              onPressed: widget.onClose, // closes overlay
+              onPressed: widget.onBack, // closes overlay
             )
           : null,
       ),
