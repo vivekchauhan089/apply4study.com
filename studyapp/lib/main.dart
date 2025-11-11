@@ -10,6 +10,13 @@ import 'navigation/app_router.dart';
 // import 'screens/login_screen.dart';
 
 void main() async {
+  Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
+  Workmanager().registerPeriodicTask(
+    '1',
+    syncTaskName,
+    frequency: const Duration(minutes: 15), // Android minimum ~15m
+  );
+
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
   final darkMode = prefs.getBool('darkMode') ?? false;

@@ -9,8 +9,10 @@ import '../../../shared/widgets/search_bar.dart';
 class DashboardScreen extends StatelessWidget {
   final ValueChanged<int>? onCourseSelected; // ✅ added for navigation to detail
   final VoidCallback? onAllCoursesPressed;
+  final VoidCallback? onOpenAIChat;
+  final VoidCallback? onProfilePressed;
 
-  const DashboardScreen({super.key, this.onCourseSelected, this.onAllCoursesPressed});
+  const DashboardScreen({super.key, this.onCourseSelected, this.onAllCoursesPressed, this.onOpenAIChat, this.onProfilePressed});
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +33,15 @@ class DashboardScreen extends StatelessWidget {
           ),
           IconButton(
             icon: const Icon(Icons.chat_bubble_outline),
-            onPressed: () => Navigator.pushNamed(context, '/ai_chat'),
+            onPressed: onOpenAIChat ?? () { 
+              Navigator.pushNamed(context, '/ai_chat');
+            },
           ),
           IconButton(
             icon: const Icon(Icons.person_outline),
-            onPressed: () => Navigator.pushNamed(context, '/profile'),
+            onPressed: onProfilePressed ?? () { 
+              Navigator.pushNamed(context, '/profile');
+            },
           ),
         ],
       ),

@@ -4,34 +4,44 @@ import 'package:confetti/confetti.dart';
 import '../models/course.dart';
 import 'video_player_screen.dart';
 import 'ai_chat_screen.dart';
-// import '../shared/widgets/bottom_nav.dart';
 import '../core/app_theme.dart';
-// import 'dart:math';
 
 class CourseDetail extends StatefulWidget {
   static const routeName = '/courseDetail';
   final int courseId;
-  final VoidCallback? onBack; // ✅ callback to close overlay
+  final VoidCallback? onBack; // ✅ callback to go back to dashboard
   final VoidCallback? onOpenAIChat;
   final void Function(Course)? onOpenCourseProgress;
 
-  const CourseDetail({super.key, required this.courseId, this.onBack, this.onOpenAIChat, this.onOpenCourseProgress});
+  const CourseDetail({
+    super.key,
+    required this.courseId,
+    this.onBack,
+    this.onOpenAIChat,
+    this.onOpenCourseProgress,
+  });
 
   @override
   State<CourseDetail> createState() => _CourseDetailState();
 }
 
-class _CourseDetailState extends State<CourseDetail> with TickerProviderStateMixin {
+class _CourseDetailState extends State<CourseDetail>
+    with TickerProviderStateMixin {
   late final Course course;
   double progress = 0.0;
   late ConfettiController _confettiController;
   List<bool> lessonCompleted = [];
   List<bool> expanded = [];
 
+  // ✅ new flags for inline navigation
+  bool _showAIChat = false;
+  bool _showVideo = false;
+
   @override
   void initState() {
     super.initState();
-    _confettiController = ConfettiController(duration: const Duration(seconds: 2));
+    _confettiController =
+        ConfettiController(duration: const Duration(seconds: 2));
 
     course = sampleCourses.firstWhere(
       (c) => c.id == widget.courseId,
@@ -65,60 +75,77 @@ class _CourseDetailState extends State<CourseDetail> with TickerProviderStateMix
     setState(() => progress = p);
   }
 
+  // --- Inline navigation handlers ---
+  void _openAIChat() => setState(() {
+        _showAIChat = true;
+        _showVideo = false;
+      });
+
+  void _openVideo() => setState(() {
+        _showVideo = true;
+        _showAIChat = false;
+      });
+
+  void _onBackPressed() => setState(() {
+        if (_showAIChat || _showVideo) {
+          _showAIChat = false;
+          _showVideo = false;
+        } else {
+          widget.onBack?.call();
+        }
+      });
+
+  // --- Lesson / AI actions ---
   void _playLesson(int index) {
     if (widget.onOpenCourseProgress != null) {
-      widget.onOpenCourseProgress!(course); // pass course to MainNavScreen
+      widget.onOpenCourseProgress!(course);
     } else {
-      Navigator.push(
-        context,
-        PageRouteBuilder(
-          pageBuilder: (_, __, ___) => VideoPlayerScreen(
-            videoAsset: course.videoAsset,
-            onProgressUpdate: _saveProgress,
-            onBack: () => Navigator.pop(context),
-          ),
-          transitionsBuilder: (_, animation, secondaryAnimation, child) {
-            const begin = Offset(0.0, 1.0);
-            const end = Offset.zero;
-            const curve = Curves.easeInOut;
-
-            final tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-            return SlideTransition(
-              position: animation.drive(tween),
-              child: child,
-            );
-          },
-        ),
-      ).then((_) {
-        setState(() {
-          lessonCompleted[index] = true;
-          final completed = lessonCompleted.where((x) => x).length;
-          final newProgress = completed / course.lessons;
-          _saveProgress(newProgress);
-          if (newProgress >= 1.0) _confettiController.play();
-        });
-      });
+      _openVideo();
     }
   }
 
   void _launchAIChat() {
-    _confettiController.play();
     if (widget.onOpenAIChat != null) {
-      widget.onOpenAIChat!(); // invoke callback
+      widget.onOpenAIChat!();
     } else {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => AiChatScreen(
-            onBack: () => Navigator.pop(context),
-          )
-        ),
-      );
+      _openAIChat();
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    Widget screenContent;
+
+    if (_showAIChat) {
+      screenContent = AiChatScreen(onBack: _onBackPressed);
+    } else if (_showVideo) {
+      screenContent = VideoPlayerScreen(
+        videoAsset: course.videoAsset,
+        onProgressUpdate: _saveProgress,
+        onBack: _onBackPressed,
+      );
+    } else {
+      screenContent = _buildCourseDetail(context);
+    }
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(course.title),
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: _onBackPressed,
+        ),
+      ),
+      body: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 300),
+        child: screenContent,
+      ),
+    );
+  }
+
+  // --- Course Detail Layout ---
+  Widget _buildCourseDetail(BuildContext context) {
     final theme = Theme.of(context);
     final isTablet = MediaQuery.of(context).size.width > 700;
 
@@ -126,6 +153,7 @@ class _CourseDetailState extends State<CourseDetail> with TickerProviderStateMix
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 20),
+
         // 🎯 Progress Banner
         if (progress > 0 && progress < 1)
           Container(
@@ -133,17 +161,24 @@ class _CourseDetailState extends State<CourseDetail> with TickerProviderStateMix
             padding: const EdgeInsets.all(16),
             child: Row(
               children: [
-                const Icon(Icons.play_circle_outline, color: Colors.white, size: 40),
+                const Icon(Icons.play_circle_outline,
+                    color: Colors.white, size: 40),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Continue where you left off",
-                          style: theme.textTheme.titleMedium!.copyWith(
-                              color: Colors.white, fontWeight: FontWeight.bold)),
-                      Text("${(progress * 100).toStringAsFixed(0)}% completed",
-                          style: theme.textTheme.bodySmall!.copyWith(color: Colors.white70)),
+                      Text(
+                        "Continue where you left off",
+                        style: theme.textTheme.titleMedium!.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        "${(progress * 100).toStringAsFixed(0)}% completed",
+                        style: theme.textTheme.bodySmall!
+                            .copyWith(color: Colors.white70),
+                      ),
                     ],
                   ),
                 ),
@@ -151,7 +186,8 @@ class _CourseDetailState extends State<CourseDetail> with TickerProviderStateMix
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
                     foregroundColor: AppTheme.primaryBlue,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12)),
                   ),
                   onPressed: () => _playLesson(0),
                   child: const Text("Resume"),
@@ -159,6 +195,7 @@ class _CourseDetailState extends State<CourseDetail> with TickerProviderStateMix
               ],
             ),
           ),
+
         if (progress > 0 && progress < 1) const SizedBox(height: 20),
 
         // 📘 Info
@@ -167,7 +204,8 @@ class _CourseDetailState extends State<CourseDetail> with TickerProviderStateMix
                 .copyWith(fontSize: 26, color: AppTheme.primaryOrange)),
         const SizedBox(height: 10),
         Text(course.description,
-            style: theme.textTheme.bodyLarge!.copyWith(color: AppTheme.textSecondary)),
+            style: theme.textTheme.bodyLarge!
+                .copyWith(color: AppTheme.textSecondary)),
         const SizedBox(height: 24),
 
         // 📊 Progress Bar
@@ -179,7 +217,8 @@ class _CourseDetailState extends State<CourseDetail> with TickerProviderStateMix
             value: progress,
             minHeight: 10,
             backgroundColor: Colors.grey.shade300,
-            valueColor: const AlwaysStoppedAnimation(AppTheme.primaryOrange),
+            valueColor:
+                const AlwaysStoppedAnimation(AppTheme.primaryOrange),
           ),
         ),
         const SizedBox(height: 28),
@@ -193,11 +232,15 @@ class _CourseDetailState extends State<CourseDetail> with TickerProviderStateMix
               backgroundColor: Colors.transparent,
               shadowColor: Colors.transparent,
               padding: const EdgeInsets.symmetric(vertical: 16),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(14)),
             ),
             icon: const Icon(Icons.play_circle_fill, color: Colors.white),
             label: const Text('Start Lesson',
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16)),
             onPressed: () => _playLesson(0),
           ),
         ),
@@ -212,17 +255,21 @@ class _CourseDetailState extends State<CourseDetail> with TickerProviderStateMix
               backgroundColor: Colors.transparent,
               shadowColor: Colors.transparent,
               padding: const EdgeInsets.symmetric(vertical: 16),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(14)),
             ),
             icon: const Icon(Icons.chat_bubble_outline, color: Colors.white),
             label: const Text('Ask AI Tutor',
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16)),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16)),
             onPressed: _launchAIChat,
           ),
         ),
         const SizedBox(height: 30),
 
-        // 📘 Lessons (Slide-Up Expandable Cards)
+        // 📘 Lessons (Expandable Cards)
         Text("Lessons", style: theme.textTheme.titleLarge),
         const SizedBox(height: 10),
         ...List.generate(course.lessons, (index) {
@@ -237,28 +284,41 @@ class _CourseDetailState extends State<CourseDetail> with TickerProviderStateMix
               borderRadius: BorderRadius.circular(16),
               color: Colors.white,
               boxShadow: [
-                BoxShadow(color: Colors.black12, blurRadius: 8, offset: const Offset(0, 4)),
+                BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 8,
+                    offset: const Offset(0, 4)),
               ],
             ),
             child: InkWell(
               borderRadius: BorderRadius.circular(16),
-              onTap: () => setState(() => expanded[index] = !expanded[index]),
+              onTap: () =>
+                  setState(() => expanded[index] = !expanded[index]),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ListTile(
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 6),
                     leading: Icon(
-                      completed ? Icons.check_circle : Icons.play_circle_fill,
-                      color: completed ? Colors.green : AppTheme.primaryOrange,
+                      completed
+                          ? Icons.check_circle
+                          : Icons.play_circle_fill,
+                      color: completed
+                          ? Colors.green
+                          : AppTheme.primaryOrange,
                       size: 32,
                     ),
-                    title: Text("Lesson ${index + 1}", style: theme.textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w600)),
-                    subtitle: Text("Duration: ${(index + 1) * 5} mins"),
+                    title: Text("Lesson ${index + 1}",
+                        style: theme.textTheme.titleMedium!
+                            .copyWith(fontWeight: FontWeight.w600)),
+                    subtitle:
+                        Text("Duration: ${(index + 1) * 5} mins"),
                     trailing: AnimatedRotation(
                       turns: isExpanded ? 0.5 : 0,
                       duration: const Duration(milliseconds: 250),
-                      child: Icon(Icons.keyboard_arrow_down, color: AppTheme.primaryBlue),
+                      child: Icon(Icons.keyboard_arrow_down,
+                          color: AppTheme.primaryBlue),
                     ),
                   ),
                   ClipRect(
@@ -267,11 +327,13 @@ class _CourseDetailState extends State<CourseDetail> with TickerProviderStateMix
                       curve: Curves.easeInOut,
                       child: isExpanded
                           ? Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 8),
                               child: Column(
                                 children: [
                                   ClipRRect(
-                                    borderRadius: BorderRadius.circular(12),
+                                    borderRadius:
+                                        BorderRadius.circular(12),
                                     child: Image.asset(
                                       'assets/images/lesson${(index % 3) + 1}.jpg',
                                       height: 160,
@@ -281,32 +343,56 @@ class _CourseDetailState extends State<CourseDetail> with TickerProviderStateMix
                                   ),
                                   const SizedBox(height: 12),
                                   Text(
-                                    "This lesson introduces key examples and hands-on exercises to reinforce your understanding. Perfect for learners who prefer visual and interactive study.",
-                                    style: theme.textTheme.bodyMedium!.copyWith(color: Colors.grey[700]),
+                                    "This lesson introduces key examples and hands-on exercises to reinforce understanding.",
+                                    style: theme.textTheme.bodyMedium!
+                                        .copyWith(color: Colors.grey[700]),
                                   ),
                                   const SizedBox(height: 12),
                                   Row(
                                     children: [
                                       Expanded(
                                         child: ElevatedButton.icon(
-                                          icon: const Icon(Icons.play_arrow),
-                                          label: const Text("Play Lesson"),
+                                          icon:
+                                              const Icon(Icons.play_arrow),
+                                          label:
+                                              const Text("Play Lesson"),
                                           style: ElevatedButton.styleFrom(
-                                              backgroundColor: AppTheme.primaryBlue,
-                                              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-                                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
-                                          onPressed: () => _playLesson(index),
+                                              backgroundColor:
+                                                  AppTheme.primaryBlue,
+                                              padding:
+                                                  const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 18,
+                                                      vertical: 10),
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius
+                                                          .circular(
+                                                              12))),
+                                          onPressed: () =>
+                                              _playLesson(index),
                                         ),
                                       ),
                                       const SizedBox(width: 10),
                                       Expanded(
                                         child: ElevatedButton.icon(
-                                          icon: const Icon(Icons.chat_bubble_outline),
-                                          label: const Text("Ask AI Tutor"),
+                                          icon: const Icon(
+                                              Icons.chat_bubble_outline),
+                                          label:
+                                              const Text("Ask AI Tutor"),
                                           style: ElevatedButton.styleFrom(
-                                              backgroundColor: AppTheme.primaryOrange,
-                                              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-                                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+                                              backgroundColor:
+                                                  AppTheme.primaryOrange,
+                                              padding:
+                                                  const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 18,
+                                                      vertical: 10),
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius
+                                                          .circular(
+                                                              12))),
                                           onPressed: _launchAIChat,
                                         ),
                                       ),
@@ -326,7 +412,7 @@ class _CourseDetailState extends State<CourseDetail> with TickerProviderStateMix
 
         const SizedBox(height: 30),
 
-        // 📘 Course Info Glass Card
+        // 📘 Course Info
         Container(
           padding: const EdgeInsets.all(16),
           decoration: AppTheme.glassEffect(),
@@ -336,7 +422,8 @@ class _CourseDetailState extends State<CourseDetail> with TickerProviderStateMix
               Text("Course Info", style: theme.textTheme.titleLarge),
               const SizedBox(height: 10),
               _infoRow(Icons.timer, "Duration", course.duration),
-              _infoRow(Icons.video_collection_outlined, "Lessons", "${course.lessons}"),
+              _infoRow(Icons.video_collection_outlined, "Lessons",
+                  "${course.lessons}"),
               _infoRow(Icons.person_outline, "Instructor", course.instructor),
             ],
           ),
@@ -344,38 +431,27 @@ class _CourseDetailState extends State<CourseDetail> with TickerProviderStateMix
       ],
     );
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(course.title), 
-        centerTitle: true,
-        leading: widget.onBack != null
-          ? IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: widget.onBack, // closes overlay
-            )
-          : null,
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: isTablet
-            ? Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(child: content),
-                  const SizedBox(width: 20),
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: AppTheme.orangeGradientBox(),
-                      child: const Center(
-                        child: Icon(Icons.play_circle_fill, color: Colors.white, size: 100),
-                      ),
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16),
+      child: isTablet
+          ? Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(child: content),
+                const SizedBox(width: 20),
+                Expanded(
+                  child: Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: AppTheme.orangeGradientBox(),
+                    child: const Center(
+                      child: Icon(Icons.play_circle_fill,
+                          color: Colors.white, size: 100),
                     ),
                   ),
-                ],
-              )
-            : content,
-      ),
+                ),
+              ],
+            )
+          : content,
     );
   }
 
@@ -388,10 +464,12 @@ class _CourseDetailState extends State<CourseDetail> with TickerProviderStateMix
           Icon(icon, color: AppTheme.primaryOrange, size: 22),
           const SizedBox(width: 10),
           Text("$label: ",
-              style: theme.textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w600)),
+              style: theme.textTheme.bodyMedium!
+                  .copyWith(fontWeight: FontWeight.w600)),
           Expanded(
             child: Text(value,
-                style: theme.textTheme.bodyMedium!.copyWith(color: AppTheme.textSecondary),
+                style: theme.textTheme.bodyMedium!
+                    .copyWith(color: AppTheme.textSecondary),
                 overflow: TextOverflow.ellipsis),
           ),
         ],

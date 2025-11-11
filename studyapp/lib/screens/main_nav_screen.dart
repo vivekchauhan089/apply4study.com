@@ -24,23 +24,23 @@ class _MainNavScreenState extends State<MainNavScreen> {
 
   // ✅ Navigation flags
   bool _showCourses = false;
-  bool _showAIChat = false;
-  bool _showCourseProgress = false;
-
   int? _selectedCourseId;
+  bool _showAIChat = false;
+  bool _showVideo = false;
 
   late final List<Widget> _pages;
 
   @override
   void initState() {
     super.initState();
-
     _pages = [
       ChangeNotifierProvider(
         create: (_) => DashboardProvider()..loadDemo(),
         child: DashboardScreen(
           onCourseSelected: _onCourseSelected,
           onAllCoursesPressed: _openCourses,
+          onOpenAIChat: _openAIChat,
+          onProfilePressed: () => _onTabTapped(3),
         ),
       ),
       const PlannerScreen(),
@@ -49,77 +49,83 @@ class _MainNavScreenState extends State<MainNavScreen> {
     ];
   }
 
-  // --- Navigation handlers ---
-  void _openCourses() => setState(() {
-        _showCourses = true;
-        _selectedCourseId = null;
-        _showAIChat = false;
-        _showCourseProgress = false;
-      });
-
-  void _onCourseSelected(int courseId) => setState(() {
-        _selectedCourseId = courseId;
-        _showCourses = false;
-        _showAIChat = false;
-        _showCourseProgress = false;
-      });
-
-  void _openAIChat() => setState(() {
-        _showAIChat = true;
-        _showCourses = false;
-        _selectedCourseId = null;
-        _showCourseProgress = false;
-      });
-
-  void _openCourseProgress(Course course) {
+  // ---------- Handlers ----------
+  void _openCourses() {
     setState(() {
-      _showCourseProgress = true;
-      _showCourses = false;
+      _showCourses = true;
+      _selectedCourseId = null;
       _showAIChat = false;
-      _selectedCourseId = course.id;
+      _showVideo = false;
     });
   }
 
-  void _onBackPressed() => setState(() {
-        if (_selectedCourseId != null) {
-          _selectedCourseId = null;
-        } else if (_showCourseProgress) {
-          _showCourseProgress = false;
-        } else if (_showAIChat) {
-          _showAIChat = false;
-        } else if (_showCourses) {
-          _showCourses = false;
-        }
-      });
+  void _onCourseSelected(int courseId) {
+    setState(() {
+      _selectedCourseId = courseId;
+      _showAIChat = false;
+      _showVideo = false;
+    });
+  }
 
-  void _onTabTapped(int index) => setState(() {
-        _currentIndex = index;
-        _showCourses = false;
+  void _openAIChat() {
+    setState(() {
+      _showAIChat = true;
+      _showVideo = false;
+    });
+  }
+
+  void _openCourseProgress(Course course) {
+    setState(() {
+      _showVideo = true;
+      _showAIChat = false;
+    });
+  }
+
+  void _onBackPressed() {
+    setState(() {
+      if (_showAIChat || _showVideo) {
         _showAIChat = false;
-        _showCourseProgress = false;
+        _showVideo = false;
+      } else if (_selectedCourseId != null) {
         _selectedCourseId = null;
-      });
+      } else if (_showCourses) {
+        _showCourses = false;
+      }
+    });
+  }
 
+  void _onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+      _showCourses = false;
+      _selectedCourseId = null;
+      _showAIChat = false;
+      _showVideo = false;
+    });
+  }
+
+  // ---------- Build ----------
   @override
   Widget build(BuildContext context) {
     Widget content;
 
-    if (_showCourseProgress && _selectedCourseId != null) {
-      final course = sampleCourses.firstWhere((c) => c.id == _selectedCourseId!);
+    if (_showVideo && _selectedCourseId != null) {
+      final course =
+          sampleCourses.firstWhere((c) => c.id == _selectedCourseId!);
       content = VideoPlayerScreen(
         videoAsset: course.videoAsset,
         onProgressUpdate: course.updateProgress,
         onBack: _onBackPressed,
       );
+    } else if (_showAIChat) {
+      content = AiChatScreen(onBack: _onBackPressed);
     } else if (_selectedCourseId != null) {
       content = CourseDetail(
         courseId: _selectedCourseId!,
         onBack: _onBackPressed,
         onOpenAIChat: _openAIChat,
-        onOpenCourseProgress: _openCourseProgress, // pass callback
+        onOpenCourseProgress: _openCourseProgress,
       );
-    } else if (_showAIChat) {
-      content = AiChatScreen(onBack: _onBackPressed);
     } else if (_showCourses) {
       content = CoursesScreen(
         onCourseSelected: _onCourseSelected,
@@ -131,9 +137,11 @@ class _MainNavScreenState extends State<MainNavScreen> {
 
     return Scaffold(
       body: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 250),
+        duration: const Duration(milliseconds: 300),
         child: content,
       ),
+
+      // ✅ Always show bottom nav, even for AI/Video
       bottomNavigationBar: BottomNav(
         currentIndex: _currentIndex,
         onTabTapped: _onTabTapped,
