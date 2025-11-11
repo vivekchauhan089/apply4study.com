@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:workmanager/workmanager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'providers/app_provider.dart';
 import 'features/dashboard/providers/dashboard_provider.dart';
 import 'providers/course_provider.dart';
@@ -9,15 +11,52 @@ import 'core/app_theme.dart';
 import 'navigation/app_router.dart';
 // import 'screens/login_screen.dart';
 
-void main() async {
-  Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
-  Workmanager().registerPeriodicTask(
-    '1',
-    syncTaskName,
-    frequency: const Duration(minutes: 15), // Android minimum ~15m
-  );
+import 'services/notification_service.dart';
+import 'data/database/sync_manager.dart';
+import 'services/background_sync.dart';
+import 'data/local_db.dart';
+import 'providers/progress_provider.dart';
 
+const String syncTaskName = 'background_sync';
+
+void callbackDispatcher() {
+  Workmanager().executeTask((task, inputData) async {
+    await SyncManager.initDb(); // ✅ ensure DB ready in background isolate
+    final syncManager = SyncManager();
+    await syncManager.syncCourses();
+    // await syncManager.syncLessons(); // ✅ include lessons if available
+    return Future.value(true);
+  });
+}
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  await NotificationService.initialize();
+
+  // ✅ Init DB once globally
+  await SyncManager.initDb();
+
+  // ✅ Optional: immediate sync when app opens
+  final syncManager = SyncManager();
+  await syncManager.syncCourses();
+  // await syncManager.syncLessons();
+
+  // ✅ Background sync
+  await BackgroundSyncService.initialize();
+  
+  // ✅ Background sync (WorkManager)
+  /*await Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
+  await Workmanager().registerPeriodicTask(
+    'background_sync_task',
+    syncTaskName,
+    frequency: const Duration(minutes: 15), // Minimum allowed on Android
+    constraints: Constraints(
+      networkType: NetworkType.connected,
+    ),
+  );*/
+
   final prefs = await SharedPreferences.getInstance();
   final darkMode = prefs.getBool('darkMode') ?? false;
 
@@ -28,6 +67,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => CourseProvider()),
         ChangeNotifierProvider(create: (_) => ThemeNotifier()),
         ChangeNotifierProvider(create: (_) => AppProvider(darkMode: darkMode)),
+        ChangeNotifierProvider(create: (_) => ProgressProvider(LocalDb())),
       ],
       child: const LearningApp(),
     ),

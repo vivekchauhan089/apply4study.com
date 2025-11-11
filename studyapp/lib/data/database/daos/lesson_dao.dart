@@ -26,4 +26,15 @@ class LessonDao {
     final db = await dbProvider.database;
     await db.delete('lessons');
   }
+
+  Future<void> markSynced(int lessonId) async {
+    final db = await dbProvider.database;
+    await db.update(
+      'lessons',
+      {'synced': 1},
+      where: 'id = ?',
+      whereArgs: [lessonId],
+    );
+  }
+
 }
