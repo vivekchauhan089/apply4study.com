@@ -12,6 +12,8 @@
         "connectivity_plus",
         "cupertino_icons",
         "drift",
+        "drift_flutter",
+        "ffi",
         "firebase_core",
         "firebase_messaging",
         "flutter",
@@ -26,7 +28,7 @@
         "path_provider",
         "provider",
         "shared_preferences",
-        "sqlite3",
+        "sqlite3_flutter_libs",
         "table_calendar",
         "video_player",
         "workmanager"
@@ -123,15 +125,28 @@
       ]
     },
     {
-      "name": "sqlite3",
-      "version": "2.9.4",
+      "name": "ffi",
+      "version": "2.1.4",
+      "dependencies": []
+    },
+    {
+      "name": "sqlite3_flutter_libs",
+      "version": "0.5.40",
       "dependencies": [
-        "collection",
-        "ffi",
+        "flutter"
+      ]
+    },
+    {
+      "name": "drift_flutter",
+      "version": "0.2.7",
+      "dependencies": [
+        "drift",
+        "flutter",
         "meta",
         "path",
-        "typed_data",
-        "web"
+        "path_provider",
+        "sqlite3",
+        "sqlite3_flutter_libs"
       ]
     },
     {
@@ -663,6 +678,18 @@
       ]
     },
     {
+      "name": "sqlite3",
+      "version": "2.9.4",
+      "dependencies": [
+        "collection",
+        "ffi",
+        "meta",
+        "path",
+        "typed_data",
+        "web"
+      ]
+    },
+    {
       "name": "cli_util",
       "version": "0.4.2",
       "dependencies": [
@@ -750,28 +777,16 @@
       ]
     },
     {
-      "name": "typed_data",
-      "version": "1.4.0",
+      "name": "nm",
+      "version": "0.5.0",
       "dependencies": [
-        "collection"
+        "dbus"
       ]
     },
     {
       "name": "web",
       "version": "1.1.1",
       "dependencies": []
-    },
-    {
-      "name": "ffi",
-      "version": "2.1.4",
-      "dependencies": []
-    },
-    {
-      "name": "nm",
-      "version": "0.5.0",
-      "dependencies": [
-        "dbus"
-      ]
     },
     {
       "name": "connectivity_plus_platform_interface",
@@ -1146,6 +1161,13 @@
       "dependencies": [
         "meta",
         "path"
+      ]
+    },
+    {
+      "name": "typed_data",
+      "version": "1.4.0",
+      "dependencies": [
+        "collection"
       ]
     },
     {

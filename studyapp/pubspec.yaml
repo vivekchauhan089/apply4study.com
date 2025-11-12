@@ -30,7 +30,9 @@ dependencies:
   flutter_lints: ^6.0.0
   firebase_core: ^4.2.1
   connectivity_plus: ^7.0.0
-  sqlite3: ^2.9.4
+  drift_flutter: ^0.2.7
+  sqlite3_flutter_libs: ^0.5.40
+  ffi: ^2.1.4
 
 dev_dependencies:
   flutter_test:

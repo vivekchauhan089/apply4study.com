@@ -1,56 +1,33 @@
-// import 'dart:ffi';
-// import 'package:sqlite3/sqlite3.dart';
-// import 'package:sqlite3_flutter_libs/sqlite3_flutter_libs.dart';
+import 'package:drift/drift.dart';
 import '../app_database.dart';
-import '../../models/course.dart';
 
 class CourseDao {
-  final dbProvider = AppDatabaseInstance.instance;
+  final db = AppDatabaseInstance.instance;
 
-  void insertCourse(Course course) {
-    dbProvider.db.execute(
-      '''
-      INSERT OR REPLACE INTO courses (id, title, description, progress, synced)
-      VALUES (?, ?, ?, ?, ?)
-      ''',
-      [
-        course.id,
-        course.title,
-        course.description,
-        course.progress,
-        course.synced ? 1 : 0,
-      ],
-    );
+  // ✅ Insert or update course
+  Future<int> insertCourse(CoursesCompanion course) {
+    return db.into(db.courses).insertOnConflictUpdate(course);
   }
 
-  List<Course> getAllCourses() {
-    final result = dbProvider.db.select('SELECT * FROM courses');
-    return result.map((row) {
-      return Course(
-        id: row['id'] as int,
-        title: row['title'] as String,
-        description: row['description'] as String,
-        progress: row['progress'] as double,
-        synced: (row['synced'] as int) == 1,
-      );
-    }).toList();
+  // ✅ Get all courses
+  Future<List<CourseEntity>> getAllCourses() async {
+    return await db.select(db.courses).get();
   }
 
-  void updateProgress(int id, double progress) {
-    dbProvider.db.execute(
-      'UPDATE courses SET progress = ? WHERE id = ?',
-      [progress, id],
-    );
+  // ✅ Update course progress
+  Future<void> updateProgress(int id, double progress) async {
+    await (db.update(db.courses)..where((t) => t.id.equals(id)))
+        .write(CoursesCompanion(progress: Value(progress)));
   }
 
-  void markSynced(int id) {
-    dbProvider.db.execute(
-      'UPDATE courses SET synced = 1 WHERE id = ?',
-      [id],
-    );
+  // ✅ Mark a course as synced
+  Future<void> markSynced(int id) async {
+    await (db.update(db.courses)..where((t) => t.id.equals(id)))
+        .write(const CoursesCompanion(synced: Value(true)));
   }
 
-  void clearAll() {
-    dbProvider.db.execute('DELETE FROM courses');
+  // ✅ Delete all courses
+  Future<void> clearAll() async {
+    await db.delete(db.courses).go();
   }
 }

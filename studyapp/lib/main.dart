@@ -32,7 +32,16 @@ void callbackDispatcher() {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+      apiKey: "AIzaSyA9W_97LA7cFGJap...E_vibYjsiMwJkqddxk",
+      appId: "1:888359295086:android:136b6d6a28abd1ba",
+      messagingSenderId: "888359295086",
+      projectId: "jobrontofsipl",
+      authDomain: "https://jobrontofsipl.firebaseio.com",
+      storageBucket: "jobrontofsipl.firebasestorage.app",
+    ),
+  );
 
   await NotificationService.initialize();
 
