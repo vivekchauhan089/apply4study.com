@@ -467,6 +467,342 @@ class CoursesCompanion extends UpdateCompanion<Course> {
   }
 }
 
+class $LessonsTable extends Lessons with TableInfo<$LessonsTable, Lesson> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $LessonsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _courseIdMeta =
+      const VerificationMeta('courseId');
+  @override
+  late final GeneratedColumn<int> courseId = GeneratedColumn<int>(
+      'course_id', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+      'title', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _durationMeta =
+      const VerificationMeta('duration');
+  @override
+  late final GeneratedColumn<int> duration = GeneratedColumn<int>(
+      'duration', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _completedMeta =
+      const VerificationMeta('completed');
+  @override
+  late final GeneratedColumn<bool> completed = GeneratedColumn<bool>(
+      'completed', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("completed" IN (0, 1))'),
+      defaultValue: const Constant(false));
+  static const VerificationMeta _syncedMeta = const VerificationMeta('synced');
+  @override
+  late final GeneratedColumn<bool> synced = GeneratedColumn<bool>(
+      'synced', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("synced" IN (0, 1))'),
+      defaultValue: const Constant(false));
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, courseId, title, duration, completed, synced];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'lessons';
+  @override
+  VerificationContext validateIntegrity(Insertable<Lesson> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('course_id')) {
+      context.handle(_courseIdMeta,
+          courseId.isAcceptableOrUnknown(data['course_id']!, _courseIdMeta));
+    } else if (isInserting) {
+      context.missing(_courseIdMeta);
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+          _titleMeta, title.isAcceptableOrUnknown(data['title']!, _titleMeta));
+    } else if (isInserting) {
+      context.missing(_titleMeta);
+    }
+    if (data.containsKey('duration')) {
+      context.handle(_durationMeta,
+          duration.isAcceptableOrUnknown(data['duration']!, _durationMeta));
+    } else if (isInserting) {
+      context.missing(_durationMeta);
+    }
+    if (data.containsKey('completed')) {
+      context.handle(_completedMeta,
+          completed.isAcceptableOrUnknown(data['completed']!, _completedMeta));
+    }
+    if (data.containsKey('synced')) {
+      context.handle(_syncedMeta,
+          synced.isAcceptableOrUnknown(data['synced']!, _syncedMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Lesson map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Lesson(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      courseId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}course_id'])!,
+      title: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}title'])!,
+      duration: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}duration'])!,
+      completed: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}completed'])!,
+      synced: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}synced'])!,
+    );
+  }
+
+  @override
+  $LessonsTable createAlias(String alias) {
+    return $LessonsTable(attachedDatabase, alias);
+  }
+}
+
+class Lesson extends DataClass implements Insertable<Lesson> {
+  final int id;
+  final int courseId;
+  final String title;
+  final int duration;
+  final bool completed;
+  final bool synced;
+  const Lesson(
+      {required this.id,
+      required this.courseId,
+      required this.title,
+      required this.duration,
+      required this.completed,
+      required this.synced});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['course_id'] = Variable<int>(courseId);
+    map['title'] = Variable<String>(title);
+    map['duration'] = Variable<int>(duration);
+    map['completed'] = Variable<bool>(completed);
+    map['synced'] = Variable<bool>(synced);
+    return map;
+  }
+
+  LessonsCompanion toCompanion(bool nullToAbsent) {
+    return LessonsCompanion(
+      id: Value(id),
+      courseId: Value(courseId),
+      title: Value(title),
+      duration: Value(duration),
+      completed: Value(completed),
+      synced: Value(synced),
+    );
+  }
+
+  factory Lesson.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Lesson(
+      id: serializer.fromJson<int>(json['id']),
+      courseId: serializer.fromJson<int>(json['courseId']),
+      title: serializer.fromJson<String>(json['title']),
+      duration: serializer.fromJson<int>(json['duration']),
+      completed: serializer.fromJson<bool>(json['completed']),
+      synced: serializer.fromJson<bool>(json['synced']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'courseId': serializer.toJson<int>(courseId),
+      'title': serializer.toJson<String>(title),
+      'duration': serializer.toJson<int>(duration),
+      'completed': serializer.toJson<bool>(completed),
+      'synced': serializer.toJson<bool>(synced),
+    };
+  }
+
+  Lesson copyWith(
+          {int? id,
+          int? courseId,
+          String? title,
+          int? duration,
+          bool? completed,
+          bool? synced}) =>
+      Lesson(
+        id: id ?? this.id,
+        courseId: courseId ?? this.courseId,
+        title: title ?? this.title,
+        duration: duration ?? this.duration,
+        completed: completed ?? this.completed,
+        synced: synced ?? this.synced,
+      );
+  Lesson copyWithCompanion(LessonsCompanion data) {
+    return Lesson(
+      id: data.id.present ? data.id.value : this.id,
+      courseId: data.courseId.present ? data.courseId.value : this.courseId,
+      title: data.title.present ? data.title.value : this.title,
+      duration: data.duration.present ? data.duration.value : this.duration,
+      completed: data.completed.present ? data.completed.value : this.completed,
+      synced: data.synced.present ? data.synced.value : this.synced,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Lesson(')
+          ..write('id: $id, ')
+          ..write('courseId: $courseId, ')
+          ..write('title: $title, ')
+          ..write('duration: $duration, ')
+          ..write('completed: $completed, ')
+          ..write('synced: $synced')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, courseId, title, duration, completed, synced);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Lesson &&
+          other.id == this.id &&
+          other.courseId == this.courseId &&
+          other.title == this.title &&
+          other.duration == this.duration &&
+          other.completed == this.completed &&
+          other.synced == this.synced);
+}
+
+class LessonsCompanion extends UpdateCompanion<Lesson> {
+  final Value<int> id;
+  final Value<int> courseId;
+  final Value<String> title;
+  final Value<int> duration;
+  final Value<bool> completed;
+  final Value<bool> synced;
+  const LessonsCompanion({
+    this.id = const Value.absent(),
+    this.courseId = const Value.absent(),
+    this.title = const Value.absent(),
+    this.duration = const Value.absent(),
+    this.completed = const Value.absent(),
+    this.synced = const Value.absent(),
+  });
+  LessonsCompanion.insert({
+    this.id = const Value.absent(),
+    required int courseId,
+    required String title,
+    required int duration,
+    this.completed = const Value.absent(),
+    this.synced = const Value.absent(),
+  })  : courseId = Value(courseId),
+        title = Value(title),
+        duration = Value(duration);
+  static Insertable<Lesson> custom({
+    Expression<int>? id,
+    Expression<int>? courseId,
+    Expression<String>? title,
+    Expression<int>? duration,
+    Expression<bool>? completed,
+    Expression<bool>? synced,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (courseId != null) 'course_id': courseId,
+      if (title != null) 'title': title,
+      if (duration != null) 'duration': duration,
+      if (completed != null) 'completed': completed,
+      if (synced != null) 'synced': synced,
+    });
+  }
+
+  LessonsCompanion copyWith(
+      {Value<int>? id,
+      Value<int>? courseId,
+      Value<String>? title,
+      Value<int>? duration,
+      Value<bool>? completed,
+      Value<bool>? synced}) {
+    return LessonsCompanion(
+      id: id ?? this.id,
+      courseId: courseId ?? this.courseId,
+      title: title ?? this.title,
+      duration: duration ?? this.duration,
+      completed: completed ?? this.completed,
+      synced: synced ?? this.synced,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (courseId.present) {
+      map['course_id'] = Variable<int>(courseId.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (duration.present) {
+      map['duration'] = Variable<int>(duration.value);
+    }
+    if (completed.present) {
+      map['completed'] = Variable<bool>(completed.value);
+    }
+    if (synced.present) {
+      map['synced'] = Variable<bool>(synced.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LessonsCompanion(')
+          ..write('id: $id, ')
+          ..write('courseId: $courseId, ')
+          ..write('title: $title, ')
+          ..write('duration: $duration, ')
+          ..write('completed: $completed, ')
+          ..write('synced: $synced')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $ProgressSyncsTable extends ProgressSyncs
     with TableInfo<$ProgressSyncsTable, ProgressSync> {
   @override
@@ -806,12 +1142,14 @@ abstract class _$LocalDb extends GeneratedDatabase {
   _$LocalDb(QueryExecutor e) : super(e);
   $LocalDbManager get managers => $LocalDbManager(this);
   late final $CoursesTable courses = $CoursesTable(this);
+  late final $LessonsTable lessons = $LessonsTable(this);
   late final $ProgressSyncsTable progressSyncs = $ProgressSyncsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [courses, progressSyncs];
+  List<DatabaseSchemaEntity> get allSchemaEntities =>
+      [courses, lessons, progressSyncs];
 }
 
 typedef $$CoursesTableCreateCompanionBuilder = CoursesCompanion Function({
@@ -1032,6 +1370,179 @@ typedef $$CoursesTableProcessedTableManager = ProcessedTableManager<
     (Course, BaseReferences<_$LocalDb, $CoursesTable, Course>),
     Course,
     PrefetchHooks Function()>;
+typedef $$LessonsTableCreateCompanionBuilder = LessonsCompanion Function({
+  Value<int> id,
+  required int courseId,
+  required String title,
+  required int duration,
+  Value<bool> completed,
+  Value<bool> synced,
+});
+typedef $$LessonsTableUpdateCompanionBuilder = LessonsCompanion Function({
+  Value<int> id,
+  Value<int> courseId,
+  Value<String> title,
+  Value<int> duration,
+  Value<bool> completed,
+  Value<bool> synced,
+});
+
+class $$LessonsTableFilterComposer extends Composer<_$LocalDb, $LessonsTable> {
+  $$LessonsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get courseId => $composableBuilder(
+      column: $table.courseId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get title => $composableBuilder(
+      column: $table.title, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get duration => $composableBuilder(
+      column: $table.duration, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get completed => $composableBuilder(
+      column: $table.completed, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get synced => $composableBuilder(
+      column: $table.synced, builder: (column) => ColumnFilters(column));
+}
+
+class $$LessonsTableOrderingComposer
+    extends Composer<_$LocalDb, $LessonsTable> {
+  $$LessonsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get courseId => $composableBuilder(
+      column: $table.courseId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get title => $composableBuilder(
+      column: $table.title, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get duration => $composableBuilder(
+      column: $table.duration, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get completed => $composableBuilder(
+      column: $table.completed, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get synced => $composableBuilder(
+      column: $table.synced, builder: (column) => ColumnOrderings(column));
+}
+
+class $$LessonsTableAnnotationComposer
+    extends Composer<_$LocalDb, $LessonsTable> {
+  $$LessonsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get courseId =>
+      $composableBuilder(column: $table.courseId, builder: (column) => column);
+
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<int> get duration =>
+      $composableBuilder(column: $table.duration, builder: (column) => column);
+
+  GeneratedColumn<bool> get completed =>
+      $composableBuilder(column: $table.completed, builder: (column) => column);
+
+  GeneratedColumn<bool> get synced =>
+      $composableBuilder(column: $table.synced, builder: (column) => column);
+}
+
+class $$LessonsTableTableManager extends RootTableManager<
+    _$LocalDb,
+    $LessonsTable,
+    Lesson,
+    $$LessonsTableFilterComposer,
+    $$LessonsTableOrderingComposer,
+    $$LessonsTableAnnotationComposer,
+    $$LessonsTableCreateCompanionBuilder,
+    $$LessonsTableUpdateCompanionBuilder,
+    (Lesson, BaseReferences<_$LocalDb, $LessonsTable, Lesson>),
+    Lesson,
+    PrefetchHooks Function()> {
+  $$LessonsTableTableManager(_$LocalDb db, $LessonsTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$LessonsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$LessonsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$LessonsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<int> courseId = const Value.absent(),
+            Value<String> title = const Value.absent(),
+            Value<int> duration = const Value.absent(),
+            Value<bool> completed = const Value.absent(),
+            Value<bool> synced = const Value.absent(),
+          }) =>
+              LessonsCompanion(
+            id: id,
+            courseId: courseId,
+            title: title,
+            duration: duration,
+            completed: completed,
+            synced: synced,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required int courseId,
+            required String title,
+            required int duration,
+            Value<bool> completed = const Value.absent(),
+            Value<bool> synced = const Value.absent(),
+          }) =>
+              LessonsCompanion.insert(
+            id: id,
+            courseId: courseId,
+            title: title,
+            duration: duration,
+            completed: completed,
+            synced: synced,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$LessonsTableProcessedTableManager = ProcessedTableManager<
+    _$LocalDb,
+    $LessonsTable,
+    Lesson,
+    $$LessonsTableFilterComposer,
+    $$LessonsTableOrderingComposer,
+    $$LessonsTableAnnotationComposer,
+    $$LessonsTableCreateCompanionBuilder,
+    $$LessonsTableUpdateCompanionBuilder,
+    (Lesson, BaseReferences<_$LocalDb, $LessonsTable, Lesson>),
+    Lesson,
+    PrefetchHooks Function()>;
 typedef $$ProgressSyncsTableCreateCompanionBuilder = ProgressSyncsCompanion
     Function({
   Value<int> id,
@@ -1220,6 +1731,8 @@ class $LocalDbManager {
   $LocalDbManager(this._db);
   $$CoursesTableTableManager get courses =>
       $$CoursesTableTableManager(_db, _db.courses);
+  $$LessonsTableTableManager get lessons =>
+      $$LessonsTableTableManager(_db, _db.lessons);
   $$ProgressSyncsTableTableManager get progressSyncs =>
       $$ProgressSyncsTableTableManager(_db, _db.progressSyncs);
 }

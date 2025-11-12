@@ -2,9 +2,9 @@ class Lesson {
   final int? id;
   final int courseId;
   final String title;
-  final int duration; // in minutes
-  bool completed;
-  bool synced;
+  final int duration;
+  final bool completed;
+  final bool synced;
 
   Lesson({
     this.id,
@@ -15,7 +15,7 @@ class Lesson {
     this.synced = false,
   });
 
-  Map<String, dynamic> toMap() => {
+  Map<String, Object?> toMap() => {
         'id': id,
         'courseId': courseId,
         'title': title,
@@ -24,12 +24,12 @@ class Lesson {
         'synced': synced ? 1 : 0,
       };
 
-  factory Lesson.fromMap(Map<String, dynamic> map) => Lesson(
-        id: map['id'],
-        courseId: map['courseId'],
-        title: map['title'] ?? '',
-        duration: map['duration'] ?? 0,
-        completed: (map['completed'] ?? 0) == 1,
-        synced: (map['synced'] ?? 0) == 1,
+  factory Lesson.fromMap(Map<String, Object?> map) => Lesson(
+        id: map['id'] as int?,
+        courseId: map['courseId'] as int,
+        title: map['title'] as String,
+        duration: map['duration'] as int,
+        completed: (map['completed'] as int) == 1,
+        synced: (map['synced'] as int) == 1,
       );
 }

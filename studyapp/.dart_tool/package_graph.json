@@ -26,8 +26,7 @@
         "path_provider",
         "provider",
         "shared_preferences",
-        "sqflite",
-        "sqlite3_flutter_libs",
+        "sqlite3",
         "table_calendar",
         "video_player",
         "workmanager"
@@ -124,20 +123,38 @@
       ]
     },
     {
+      "name": "sqlite3",
+      "version": "2.9.4",
+      "dependencies": [
+        "collection",
+        "ffi",
+        "meta",
+        "path",
+        "typed_data",
+        "web"
+      ]
+    },
+    {
+      "name": "connectivity_plus",
+      "version": "7.0.0",
+      "dependencies": [
+        "collection",
+        "connectivity_plus_platform_interface",
+        "flutter",
+        "flutter_web_plugins",
+        "meta",
+        "nm",
+        "web"
+      ]
+    },
+    {
       "name": "firebase_core",
-      "version": "3.15.2",
+      "version": "4.2.1",
       "dependencies": [
         "firebase_core_platform_interface",
         "firebase_core_web",
         "flutter",
         "meta"
-      ]
-    },
-    {
-      "name": "sqlite3_flutter_libs",
-      "version": "0.5.40",
-      "dependencies": [
-        "flutter"
       ]
     },
     {
@@ -153,20 +170,8 @@
       "dependencies": []
     },
     {
-      "name": "sqflite",
-      "version": "2.4.2",
-      "dependencies": [
-        "flutter",
-        "path",
-        "sqflite_android",
-        "sqflite_common",
-        "sqflite_darwin",
-        "sqflite_platform_interface"
-      ]
-    },
-    {
       "name": "flutter_local_notifications_linux",
-      "version": "4.0.1",
+      "version": "6.0.0",
       "dependencies": [
         "dbus",
         "ffi",
@@ -178,18 +183,19 @@
     },
     {
       "name": "flutter_local_notifications",
-      "version": "17.2.4",
+      "version": "19.5.0",
       "dependencies": [
         "clock",
         "flutter",
         "flutter_local_notifications_linux",
         "flutter_local_notifications_platform_interface",
+        "flutter_local_notifications_windows",
         "timezone"
       ]
     },
     {
       "name": "firebase_messaging",
-      "version": "15.2.10",
+      "version": "16.0.4",
       "dependencies": [
         "firebase_core",
         "firebase_core_platform_interface",
@@ -201,7 +207,7 @@
     },
     {
       "name": "confetti",
-      "version": "0.7.0",
+      "version": "0.8.0",
       "dependencies": [
         "flutter",
         "vector_math"
@@ -227,7 +233,7 @@
     },
     {
       "name": "video_player",
-      "version": "2.10.0",
+      "version": "2.10.1",
       "dependencies": [
         "flutter",
         "html",
@@ -285,7 +291,7 @@
     },
     {
       "name": "go_router",
-      "version": "14.8.1",
+      "version": "17.0.0",
       "dependencies": [
         "collection",
         "flutter",
@@ -306,24 +312,12 @@
     },
     {
       "name": "http",
-      "version": "1.5.0",
+      "version": "1.6.0",
       "dependencies": [
         "async",
         "http_parser",
         "meta",
         "web"
-      ]
-    },
-    {
-      "name": "connectivity_plus",
-      "version": "4.0.2",
-      "dependencies": [
-        "connectivity_plus_platform_interface",
-        "flutter",
-        "flutter_web_plugins",
-        "js",
-        "meta",
-        "nm"
       ]
     },
     {
@@ -669,18 +663,6 @@
       ]
     },
     {
-      "name": "sqlite3",
-      "version": "2.9.4",
-      "dependencies": [
-        "collection",
-        "ffi",
-        "meta",
-        "path",
-        "typed_data",
-        "web"
-      ]
-    },
-    {
       "name": "cli_util",
       "version": "0.4.2",
       "dependencies": [
@@ -768,8 +750,48 @@
       ]
     },
     {
+      "name": "typed_data",
+      "version": "1.4.0",
+      "dependencies": [
+        "collection"
+      ]
+    },
+    {
+      "name": "web",
+      "version": "1.1.1",
+      "dependencies": []
+    },
+    {
+      "name": "ffi",
+      "version": "2.1.4",
+      "dependencies": []
+    },
+    {
+      "name": "nm",
+      "version": "0.5.0",
+      "dependencies": [
+        "dbus"
+      ]
+    },
+    {
+      "name": "connectivity_plus_platform_interface",
+      "version": "2.0.1",
+      "dependencies": [
+        "flutter",
+        "meta",
+        "plugin_platform_interface"
+      ]
+    },
+    {
+      "name": "flutter_web_plugins",
+      "version": "0.0.0",
+      "dependencies": [
+        "flutter"
+      ]
+    },
+    {
       "name": "firebase_core_web",
-      "version": "2.24.1",
+      "version": "3.3.0",
       "dependencies": [
         "firebase_core_platform_interface",
         "flutter",
@@ -795,67 +817,19 @@
       "dependencies": []
     },
     {
-      "name": "sqflite_common",
-      "version": "2.5.6",
-      "dependencies": [
-        "meta",
-        "path",
-        "synchronized"
-      ]
-    },
-    {
-      "name": "sqflite_platform_interface",
-      "version": "2.4.0",
-      "dependencies": [
-        "flutter",
-        "meta",
-        "platform",
-        "plugin_platform_interface",
-        "sqflite_common"
-      ]
-    },
-    {
-      "name": "sqflite_darwin",
-      "version": "2.4.2",
-      "dependencies": [
-        "flutter",
-        "meta",
-        "path",
-        "sqflite_common",
-        "sqflite_platform_interface"
-      ]
-    },
-    {
-      "name": "sqflite_android",
-      "version": "2.4.2+2",
-      "dependencies": [
-        "flutter",
-        "path",
-        "sqflite_common",
-        "sqflite_platform_interface"
-      ]
-    },
-    {
       "name": "xdg_directories",
-      "version": "0.2.0+3",
+      "version": "1.1.0",
       "dependencies": [
         "meta",
-        "path",
-        "process"
+        "path"
       ]
     },
     {
       "name": "flutter_local_notifications_platform_interface",
-      "version": "7.2.0",
+      "version": "9.1.0",
       "dependencies": [
-        "flutter",
         "plugin_platform_interface"
       ]
-    },
-    {
-      "name": "ffi",
-      "version": "2.1.4",
-      "dependencies": []
     },
     {
       "name": "dbus",
@@ -869,14 +843,27 @@
     },
     {
       "name": "timezone",
-      "version": "0.9.4",
+      "version": "0.10.1",
       "dependencies": [
+        "http",
         "path"
       ]
     },
     {
+      "name": "flutter_local_notifications_windows",
+      "version": "1.0.3",
+      "dependencies": [
+        "ffi",
+        "flutter",
+        "flutter_local_notifications_platform_interface",
+        "meta",
+        "timezone",
+        "xml"
+      ]
+    },
+    {
       "name": "firebase_messaging_web",
-      "version": "3.10.10",
+      "version": "4.1.0",
       "dependencies": [
         "_flutterfire_internals",
         "firebase_core",
@@ -890,7 +877,7 @@
     },
     {
       "name": "firebase_messaging_platform_interface",
-      "version": "4.6.10",
+      "version": "4.7.4",
       "dependencies": [
         "_flutterfire_internals",
         "firebase_core",
@@ -945,7 +932,7 @@
     },
     {
       "name": "video_player_avfoundation",
-      "version": "2.8.5",
+      "version": "2.8.6",
       "dependencies": [
         "flutter",
         "video_player_platform_interface"
@@ -1049,13 +1036,6 @@
       ]
     },
     {
-      "name": "flutter_web_plugins",
-      "version": "0.0.0",
-      "dependencies": [
-        "flutter"
-      ]
-    },
-    {
       "name": "workmanager_apple",
       "version": "0.9.1+2",
       "dependencies": [
@@ -1081,11 +1061,6 @@
       ]
     },
     {
-      "name": "web",
-      "version": "1.1.1",
-      "dependencies": []
-    },
-    {
       "name": "http_parser",
       "version": "4.1.2",
       "dependencies": [
@@ -1093,29 +1068,6 @@
         "source_span",
         "string_scanner",
         "typed_data"
-      ]
-    },
-    {
-      "name": "nm",
-      "version": "0.5.0",
-      "dependencies": [
-        "dbus"
-      ]
-    },
-    {
-      "name": "js",
-      "version": "0.6.7",
-      "dependencies": [
-        "meta"
-      ]
-    },
-    {
-      "name": "connectivity_plus_platform_interface",
-      "version": "1.2.4",
-      "dependencies": [
-        "flutter",
-        "meta",
-        "plugin_platform_interface"
       ]
     },
     {
@@ -1190,17 +1142,10 @@
     },
     {
       "name": "file",
-      "version": "6.1.4",
+      "version": "7.0.1",
       "dependencies": [
         "meta",
         "path"
-      ]
-    },
-    {
-      "name": "typed_data",
-      "version": "1.4.0",
-      "dependencies": [
-        "collection"
       ]
     },
     {
@@ -1276,25 +1221,6 @@
       ]
     },
     {
-      "name": "synchronized",
-      "version": "3.4.0",
-      "dependencies": []
-    },
-    {
-      "name": "platform",
-      "version": "3.1.6",
-      "dependencies": []
-    },
-    {
-      "name": "process",
-      "version": "4.2.4",
-      "dependencies": [
-        "file",
-        "path",
-        "platform"
-      ]
-    },
-    {
       "name": "xml",
       "version": "6.6.1",
       "dependencies": [
@@ -1305,7 +1231,7 @@
     },
     {
       "name": "_flutterfire_internals",
-      "version": "1.3.59",
+      "version": "1.3.64",
       "dependencies": [
         "collection",
         "firebase_core",
@@ -1328,6 +1254,11 @@
       "dependencies": [
         "source_span"
       ]
+    },
+    {
+      "name": "platform",
+      "version": "3.1.6",
+      "dependencies": []
     },
     {
       "name": "vm_service",

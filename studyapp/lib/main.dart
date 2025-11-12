@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:workmanager/workmanager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_core/firebase_core.dart';
+
 import 'providers/app_provider.dart';
 import 'features/dashboard/providers/dashboard_provider.dart';
 import 'providers/course_provider.dart';
@@ -21,7 +22,7 @@ const String syncTaskName = 'background_sync';
 
 void callbackDispatcher() {
   Workmanager().executeTask((task, inputData) async {
-    await SyncManager.initDb(); // ✅ ensure DB ready in background isolate
+    SyncManager.initDb(); // ✅ ensure DB ready in background isolate
     final syncManager = SyncManager();
     await syncManager.syncCourses();
     // await syncManager.syncLessons(); // ✅ include lessons if available
@@ -36,7 +37,7 @@ void main() async {
   await NotificationService.initialize();
 
   // ✅ Init DB once globally
-  await SyncManager.initDb();
+  SyncManager.initDb();
 
   // ✅ Optional: immediate sync when app opens
   final syncManager = SyncManager();

@@ -6,10 +6,10 @@ const String syncTask = "background_sync";
 void callbackDispatcher() {
   Workmanager().executeTask((task, inputData) async {
     if (task == syncTask) {
-      await SyncManager.initDb();
+      SyncManager.initDb();
       final syncManager = SyncManager();
       await syncManager.syncCourses();
-      print("✅ Background sync completed");
+      // print("✅ Background sync completed");
     }
     return Future.value(true);
   });

@@ -1,40 +1,57 @@
-import 'package:sqflite/sqflite.dart';
+// import 'dart:ffi';
+// import 'package:sqlite3/sqlite3.dart';
+// import 'package:sqlite3_flutter_libs/sqlite3_flutter_libs.dart';
 import '../app_database.dart';
 import '../../models/lesson.dart';
 
 class LessonDao {
-  final dbProvider = AppDatabase.instance;
+  final dbProvider = AppDatabaseInstance.instance;
 
-  Future<int> insertLesson(Lesson lesson) async {
-    final db = await dbProvider.database;
-    return await db.insert('lessons', lesson.toMap(),
-        conflictAlgorithm: ConflictAlgorithm.replace);
-  }
-
-  Future<List<Lesson>> getLessonsByCourse(int courseId) async {
-    final db = await dbProvider.database;
-    final result = await db.query('lessons', where: 'courseId = ?', whereArgs: [courseId]);
-    return result.map((json) => Lesson.fromMap(json)).toList();
-  }
-
-  Future<void> markCompleted(int id) async {
-    final db = await dbProvider.database;
-    await db.update('lessons', {'completed': 1}, where: 'id = ?', whereArgs: [id]);
-  }
-
-  Future<void> clearAll() async {
-    final db = await dbProvider.database;
-    await db.delete('lessons');
-  }
-
-  Future<void> markSynced(int lessonId) async {
-    final db = await dbProvider.database;
-    await db.update(
-      'lessons',
-      {'synced': 1},
-      where: 'id = ?',
-      whereArgs: [lessonId],
+  void insertLesson(Lesson lesson) {
+    dbProvider.db.execute(
+      'INSERT OR REPLACE INTO lessons (id, courseId, title, duration, completed) VALUES (?, ?, ?, ?, ?)',
+      [
+        lesson.id,
+        lesson.courseId,
+        lesson.title,
+        lesson.duration,
+        lesson.completed ? 1 : 0,
+      ],
     );
   }
 
+  List<Lesson> getLessonsByCourse(int courseId) {
+    final result = dbProvider.db.select(
+      'SELECT * FROM lessons WHERE courseId = ?',
+      [courseId],
+    );
+
+    return result.map((row) {
+      return Lesson(
+        id: row['id'] as int,
+        courseId: row['courseId'] as int,
+        title: row['title'] as String,
+        duration: row['duration'] as int,
+        completed: (row['completed'] as int) == 1,
+      );
+    }).toList();
+  }
+
+  void markCompleted(int id) {
+    dbProvider.db.execute(
+      'UPDATE lessons SET completed = 1 WHERE id = ?',
+      [id],
+    );
+  }
+
+  void clearAll() {
+    dbProvider.db.execute('DELETE FROM lessons');
+  }
+
+  void markSynced(int lessonId) {
+    dbProvider.db.execute(
+      'UPDATE lessons SET synced = 1 WHERE id = ?',
+      [lessonId],
+    );
+  }
 }

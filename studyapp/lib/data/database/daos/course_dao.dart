@@ -1,34 +1,56 @@
-import 'package:sqflite/sqflite.dart';
+// import 'dart:ffi';
+// import 'package:sqlite3/sqlite3.dart';
+// import 'package:sqlite3_flutter_libs/sqlite3_flutter_libs.dart';
 import '../app_database.dart';
 import '../../models/course.dart';
 
 class CourseDao {
-  final dbProvider = AppDatabase.instance;
+  final dbProvider = AppDatabaseInstance.instance;
 
-  Future<int> insertCourse(Course course) async {
-    final db = await dbProvider.database;
-    return await db.insert('courses', course.toMap(),
-        conflictAlgorithm: ConflictAlgorithm.replace);
+  void insertCourse(Course course) {
+    dbProvider.db.execute(
+      '''
+      INSERT OR REPLACE INTO courses (id, title, description, progress, synced)
+      VALUES (?, ?, ?, ?, ?)
+      ''',
+      [
+        course.id,
+        course.title,
+        course.description,
+        course.progress,
+        course.synced ? 1 : 0,
+      ],
+    );
   }
 
-  Future<List<Course>> getAllCourses() async {
-    final db = await dbProvider.database;
-    final result = await db.query('courses');
-    return result.map((json) => Course.fromMap(json)).toList();
+  List<Course> getAllCourses() {
+    final result = dbProvider.db.select('SELECT * FROM courses');
+    return result.map((row) {
+      return Course(
+        id: row['id'] as int,
+        title: row['title'] as String,
+        description: row['description'] as String,
+        progress: row['progress'] as double,
+        synced: (row['synced'] as int) == 1,
+      );
+    }).toList();
   }
 
-  Future<void> updateProgress(int id, double progress) async {
-    final db = await dbProvider.database;
-    await db.update('courses', {'progress': progress}, where: 'id = ?', whereArgs: [id]);
+  void updateProgress(int id, double progress) {
+    dbProvider.db.execute(
+      'UPDATE courses SET progress = ? WHERE id = ?',
+      [progress, id],
+    );
   }
 
-  Future<void> markSynced(int id) async {
-    final db = await dbProvider.database;
-    await db.update('courses', {'synced': 1}, where: 'id = ?', whereArgs: [id]);
+  void markSynced(int id) {
+    dbProvider.db.execute(
+      'UPDATE courses SET synced = 1 WHERE id = ?',
+      [id],
+    );
   }
 
-  Future<void> clearAll() async {
-    final db = await dbProvider.database;
-    await db.delete('courses');
+  void clearAll() {
+    dbProvider.db.execute('DELETE FROM courses');
   }
 }

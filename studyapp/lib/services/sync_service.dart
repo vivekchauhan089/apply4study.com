@@ -8,13 +8,15 @@ import '../data/local_db.dart';
 class SyncService {
   final LocalDb db;
   final String serverBaseUrl;
-  StreamSubscription<ConnectivityResult>? _sub;
+  StreamSubscription<List<ConnectivityResult>>? _sub;
 
   SyncService({required this.db, required this.serverBaseUrl});
 
-  void start() {
-    _sub = Connectivity().onConnectivityChanged.listen((status) {
-      if (status != ConnectivityResult.none) {
+  /// Initialize connectivity listener for auto background sync
+  void init() {
+    _sub = Connectivity().onConnectivityChanged.listen((statuses) {
+      final hasConnection = statuses.any((s) => s != ConnectivityResult.none);
+      if (hasConnection) {
         _syncPending();
       }
     });
@@ -56,15 +58,6 @@ class SyncService {
     }
   }
 
-  /// Initialize connectivity listener for auto background sync
-  void init() {
-    _sub = Connectivity().onConnectivityChanged.listen((result) {
-      if (result != ConnectivityResult.none) {
-        syncAll(); // background sync when back online
-      }
-    });
-  }
-
   /// 🔄 Full sync
   Future<void> syncAll() async {
     await syncCourses();
@@ -103,7 +96,7 @@ class SyncService {
       // Push unsynced local progress data
       await syncProgressQueue();
     } catch (e) {
-      print('syncCourses error: $e');
+      // print('syncCourses error: $e');
     }
   }
 
@@ -129,7 +122,7 @@ class SyncService {
           await db.incrementAttempts(p.id);
         }
       } catch (e) {
-        print('syncProgressQueue error: $e');
+        // print('syncProgressQueue error: $e');
         await db.incrementAttempts(p.id);
       }
     }
@@ -141,11 +134,11 @@ class SyncService {
           await http.get(Uri.parse('$serverBaseUrl/courses/$courseId/lessons'));
 
       if (response.statusCode == 200) {
-        final List<dynamic> lessons = jsonDecode(response.body);
+        // final List<dynamic> lessons = jsonDecode(response.body);
 
         // If you already have a LessonDao or table
         // ignore this TODO once added
-        for (final l in lessons) {
+        // for (final l in lessons) {
           // Example: if your LocalDb has a lessons table
           // await db.upsertLesson(LessonsCompanion(
           //   id: Value(l['id'] as int),
@@ -162,17 +155,16 @@ class SyncService {
           // ));
 
           // For now, just print (useful during dev)
-          print('✅ Synced lesson: ${l['title']} (Course: $courseId)');
-        }
+          // print('✅ Synced lesson: ${l['title']} (Course: $courseId)');
+        // }
 
-        print('✅ All lessons synced for course $courseId');
+        // print('✅ All lessons synced for course $courseId');
       } else {
-        print('⚠️ Server returned ${response.statusCode} for course $courseId');
+        // print('⚠️ Server returned ${response.statusCode} for course $courseId');
       }
-    } catch (e, st) {
-      print('❌ syncLessons error for course $courseId: $e');
-      print(st);
+    } catch (e) {
+      // print('❌ syncLessons error for course $courseId: $e');
+      // print(st);
     }
   }
-
 }

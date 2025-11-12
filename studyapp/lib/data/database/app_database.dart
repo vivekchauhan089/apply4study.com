@@ -1,49 +1,60 @@
-import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
+import 'dart:io';
+import 'package:drift/drift.dart';
+import 'package:drift/wasm.dart';
+import 'package:drift/native.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as p;
+import 'package:flutter/foundation.dart' show kIsWeb;
 
-class AppDatabase {
-  static final AppDatabase instance = AppDatabase._init();
-  static Database? _database;
+part 'app_database.g.dart';
 
-  AppDatabase._init();
+class Courses extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get title => text()();
+  TextColumn get description => text()();
+  RealColumn get progress => real().withDefault(const Constant(0.0))();
+  BoolColumn get synced => boolean().withDefault(const Constant(false))();
+}
 
-  Future<Database> get database async {
-    if (_database != null) return _database!;
-    _database = await _initDB('apply4study.db');
-    return _database!;
+class Lessons extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  IntColumn get courseId => integer()();
+  TextColumn get title => text()();
+  IntColumn get duration => integer().withDefault(const Constant(0))();
+  BoolColumn get completed => boolean().withDefault(const Constant(false))();
+}
+
+@DriftDatabase(tables: [Courses, Lessons])
+class AppDatabase extends _$AppDatabase {
+  AppDatabase() : super(_openConnection());
+
+  int get schemaVersion => 1;
+}
+
+LazyDatabase _openConnection() {
+  if (kIsWeb) {
+    // ✅ Use IndexedDB on Chrome/web
+    return LazyDatabase(() async {
+      final result = await WasmDatabase.open(
+        databaseName: 'localdb',
+        sqlite3Uri: Uri.parse('sqlite3.wasm'), // optional
+        driftWorkerUri: Uri.parse('drift_worker.js'), // optional
+      );
+      return result as QueryExecutor;
+    });
+  } else {
+    // ✅ Use SQLite on desktop
+    return LazyDatabase(() async {
+      final dir = await getApplicationDocumentsDirectory();
+      final path = p.join(dir.path, 'apply4study.db');
+      return NativeDatabase(File(path));
+    });
   }
+}
 
-  Future<Database> _initDB(String filePath) async {
-    final dbPath = await getDatabasesPath();
-    final path = join(dbPath, filePath);
-    return await openDatabase(path, version: 1, onCreate: _createDB);
-  }
 
-  Future _createDB(Database db, int version) async {
-    await db.execute('''
-      CREATE TABLE courses(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT,
-        description TEXT,
-        progress REAL,
-        synced INTEGER DEFAULT 0
-      )
-    ''');
+final AppDatabase appDatabase = AppDatabase();
 
-    await db.execute('''
-      CREATE TABLE lessons(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        courseId INTEGER,
-        title TEXT,
-        duration INTEGER,
-        completed INTEGER DEFAULT 0,
-        FOREIGN KEY(courseId) REFERENCES courses(id)
-      )
-    ''');
-  }
-
-  Future close() async {
-    final db = await instance.database;
-    db.close();
-  }
+class AppDatabaseInstance {
+  static final AppDatabase instance = appDatabase;
 }
