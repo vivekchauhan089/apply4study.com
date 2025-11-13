@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:workmanager/workmanager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 import 'providers/app_provider.dart';
 import 'features/dashboard/providers/dashboard_provider.dart';
@@ -12,6 +13,8 @@ import 'core/app_theme.dart';
 import 'navigation/app_router.dart';
 // import 'screens/login_screen.dart';
 
+import 'config/firebase_options.dart';
+import 'utils/service_worker_registrar.dart';
 import 'services/notification_service.dart';
 import 'data/database/sync_manager.dart';
 import 'services/background_sync.dart';
@@ -32,18 +35,15 @@ void callbackDispatcher() {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // ✅ Initialize Firebase
   await Firebase.initializeApp(
-    options: const FirebaseOptions(
-      apiKey: "AIzaSyA9W_97LA7cFGJap...E_vibYjsiMwJkqddxk",
-      appId: "1:888359295086:android:136b6d6a28abd1ba",
-      messagingSenderId: "888359295086",
-      projectId: "jobrontofsipl",
-      authDomain: "https://jobrontofsipl.firebaseio.com",
-      storageBucket: "jobrontofsipl.firebasestorage.app",
-    ),
+    options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  await NotificationService.initialize();
+  if (kIsWeb) {
+    await registerServiceWorker();
+  }
 
   // ✅ Init DB once globally
   SyncManager.initDb();
@@ -53,8 +53,12 @@ void main() async {
   await syncManager.syncCourses();
   // await syncManager.syncLessons();
 
-  // ✅ Background sync
-  await BackgroundSyncService.initialize();
+  if (!kIsWeb) {
+    // ✅ Safe: only initialize Background on mobile
+    await BackgroundSyncService.initialize();
+  } else {
+    debugPrint('🌐 Skipping Background initialization on web');
+  }
   
   // ✅ Background sync (WorkManager)
   /*await Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
@@ -82,6 +86,11 @@ void main() async {
       child: const LearningApp(),
     ),
   );
+
+  // ✅ Run after widget tree is ready
+  WidgetsBinding.instance.addPostFrameCallback((_) async {
+    await NotificationService.initialize();
+  });
 }
 
 class LearningApp extends StatelessWidget {

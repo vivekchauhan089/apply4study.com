@@ -37,8 +37,20 @@ class SyncManager {
   /// ✅ Sync courses with remote server
   Future<void> syncCourses({bool fromBackground = false}) async {
     try {
+      final courseRequestData = {
+        'category': 'programming',
+        'user_id': '1',
+        'source': 'mobile_app',
+      };
       // 🔹 Fetch from server
-      final response = await http.get(Uri.parse('https://your-api/courses'));
+      final response = await http.post(
+        Uri.parse('http://localhost:8083/api/courses'),
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMjM0LCJ1c2VyX3R5cGVfaWQiOjAsInJvbGUiOiJndWVzdCIsImlhdCI6MTc1ODg4NDcwOCwiZXhwIjoxNzY0MDY4NzA4fQ.zWg19kpqcRf0sxKzrioWP_HzogoC5fHQPeGHTE6nZpc',
+        },
+        body: jsonEncode(courseRequestData), // ✅ convert to JSON
+      );
       if (response.statusCode == 200) {
         final List data = jsonDecode(response.body);
         for (final c in data) {
@@ -57,7 +69,7 @@ class SyncManager {
       for (final c in unsynced) {
         try {
           final res = await http.post(
-            Uri.parse('https://your-api/sync-course'),
+            Uri.parse('http://localhost:8083/api/courses'),
             body: jsonEncode({
               'id': c.id,
               'title': c.title,
@@ -65,7 +77,10 @@ class SyncManager {
               'progress': c.progress,
               'synced': c.synced,
             }),
-            headers: {'Content-Type': 'application/json'},
+            headers: {
+              'Content-Type': 'application/json',
+              'x-access-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMjM0LCJ1c2VyX3R5cGVfaWQiOjAsInJvbGUiOiJndWVzdCIsImlhdCI6MTc1ODg4NDcwOCwiZXhwIjoxNzY0MDY4NzA4fQ.zWg19kpqcRf0sxKzrioWP_HzogoC5fHQPeGHTE6nZpc',
+            },
           );
 
           if (res.statusCode == 200) {
@@ -91,8 +106,20 @@ class SyncManager {
   Future<void> syncLessons(int courseId, {bool fromBackground = false}) async {
     try {
       // 🔹 Fetch from server
-      final response = await http.get(
-          Uri.parse('https://your-api/courses/$courseId/lessons'));
+      final lessonRequestData = {
+        'course_id': '1',
+        'user_id': '1',
+        'source': 'mobile_app',
+      };
+
+      final response = await http.post(
+        Uri.parse('http://localhost:8083/api/courses/$courseId/lessons'),
+        body: jsonEncode(lessonRequestData),
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMjM0LCJ1c2VyX3R5cGVfaWQiOjAsInJvbGUiOiJndWVzdCIsImlhdCI6MTc1ODg4NDcwOCwiZXhwIjoxNzY0MDY4NzA4fQ.zWg19kpqcRf0sxKzrioWP_HzogoC5fHQPeGHTE6nZpc',
+        },
+      );
       if (response.statusCode == 200) {
         final List data = jsonDecode(response.body);
         for (final l in data) {
@@ -114,7 +141,7 @@ class SyncManager {
       for (final l in unsynced) {
         try {
           final res = await http.post(
-            Uri.parse('https://your-api/courses/$courseId/sync-lesson'),
+            Uri.parse('http://localhost:8083/api/courses/$courseId/sync-lesson'),
             body: jsonEncode({
               'id': l.id,
               'courseId': l.courseId,
@@ -122,7 +149,10 @@ class SyncManager {
               'duration': l.duration,
               'completed': l.completed,
             }),
-            headers: {'Content-Type': 'application/json'},
+            headers: {
+              'Content-Type': 'application/json',
+              'x-access-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMjM0LCJ1c2VyX3R5cGVfaWQiOjAsInJvbGUiOiJndWVzdCIsImlhdCI6MTc1ODg4NDcwOCwiZXhwIjoxNzY0MDY4NzA4fQ.zWg19kpqcRf0sxKzrioWP_HzogoC5fHQPeGHTE6nZpc',
+            },
           );
 
           if (res.statusCode == 200) {

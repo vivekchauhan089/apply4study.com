@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import '../models/course.dart';
 
 class CourseProvider with ChangeNotifier {
