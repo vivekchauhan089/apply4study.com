@@ -24,7 +24,7 @@ class NotificationService {
         debugPrint('🌐 Initializing FCM for Web...');
         await _firebaseMessaging.requestPermission();
         String? token = await _firebaseMessaging.getToken(
-          vapidKey: "BKXJzZ19yKzZJGvXpHXLdeRc5lnkf-iGaRUbCOaMiXZOdZ3MZWhvdf1Y3ggX8jlwKmSNVQPCSMYgRZcvaFUXldw", // ✅ found in Firebase Cloud Messaging settings
+          vapidKey: "BL7SlflJR7q7Sk4bOBUg9dWiBhCx1SxrD6E88n-gbKUbus_08JznP291vyyQxrWWjIcrtW7FzytIhge3qMQBFd0", // ✅ found in Firebase Cloud Messaging settings
         );
         debugPrint("🔥 Web FCM Token: $token");
 
@@ -65,6 +65,8 @@ class NotificationService {
         final token = await _firebaseMessaging.getToken();
         debugPrint("🔥 FCM Token: $token");
       }
+    } on FirebaseException catch (e) {
+     debugPrint('⚠️ Notification init error: $e');
     } catch (e, st) {
       debugPrint('⚠️ Notification init error: $e');
       debugPrint('Stack trace: $st');

@@ -36,13 +36,17 @@ void callbackDispatcher() {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // ✅ Initialize Firebase
+  // ✅ Initialize Firebase on mobile/desktop
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
+  
   if (kIsWeb) {
-    await registerServiceWorker();
+    // ✅ Initialize Firebase on web
+    // await registerServiceWorker();
+
+    // Wait a bit to let SW finish registering
+    await Future.delayed(Duration(seconds: 3));
   }
 
   // ✅ Init DB once globally

@@ -16,8 +16,8 @@ class DefaultFirebaseOptions {
       );
     }
     return const FirebaseOptions(
-      apiKey: "AIzaSyA9W_97LA7cFGJapE_vibYjsiMwJkqddxk",
-      appId: "1:888359295086:android:136b6d6a28abd1ba",
+      apiKey: "AIzaSyC_0qpwRw0xCKKb_Txl4qMloOPG_mpv9VY",
+      appId: "1:888359295086:web:6bd5e43f7389ed644aae7f",
       messagingSenderId: "888359295086",
       projectId: "jobrontofsipl",
       storageBucket: "jobrontofsipl.firebasestorage.app",        
