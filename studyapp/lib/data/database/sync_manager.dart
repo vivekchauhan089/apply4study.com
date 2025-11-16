@@ -44,7 +44,7 @@ class SyncManager {
       };
       // 🔹 Fetch from server
       final response = await http.post(
-        Uri.parse('http://localhost:8083/api/courses'),
+        Uri.parse('https://apply4study.com/api/courses'),
         headers: {
           'Content-Type': 'application/json',
           'x-access-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMjM0LCJ1c2VyX3R5cGVfaWQiOjAsInJvbGUiOiJndWVzdCIsImlhdCI6MTc1ODg4NDcwOCwiZXhwIjoxNzY0MDY4NzA4fQ.zWg19kpqcRf0sxKzrioWP_HzogoC5fHQPeGHTE6nZpc',
@@ -69,7 +69,7 @@ class SyncManager {
       for (final c in unsynced) {
         try {
           final res = await http.post(
-            Uri.parse('http://localhost:8083/api/courses'),
+            Uri.parse('https://apply4study.com/api/courses'),
             body: jsonEncode({
               'id': c.id,
               'title': c.title,
@@ -113,7 +113,7 @@ class SyncManager {
       };
 
       final response = await http.post(
-        Uri.parse('http://localhost:8083/api/courses/$courseId/lessons'),
+        Uri.parse('https://apply4study.com/api/courses/$courseId/lessons'),
         body: jsonEncode(lessonRequestData),
         headers: {
           'Content-Type': 'application/json',
@@ -141,7 +141,7 @@ class SyncManager {
       for (final l in unsynced) {
         try {
           final res = await http.post(
-            Uri.parse('http://localhost:8083/api/courses/$courseId/sync-lesson'),
+            Uri.parse('https://apply4study.com/api/courses/$courseId/sync-lesson'),
             body: jsonEncode({
               'id': l.id,
               'courseId': l.courseId,

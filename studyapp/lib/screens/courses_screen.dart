@@ -82,7 +82,7 @@ class _CoursesScreenState extends State<CoursesScreen> {
                     // Category Dropdown
                     Expanded(
                       child: DropdownButtonFormField<String>(
-                        value: selectedCategory,
+                        initialValue: selectedCategory,
                         decoration: const InputDecoration(
                           labelText: 'Category',
                           border: OutlineInputBorder(),
@@ -108,7 +108,7 @@ class _CoursesScreenState extends State<CoursesScreen> {
                     // Date Dropdown
                     Expanded(
                       child: DropdownButtonFormField<String>(
-                        value: selectedDate,
+                        initialValue: selectedDate,
                         decoration: const InputDecoration(
                           labelText: 'Date',
                           border: OutlineInputBorder(),

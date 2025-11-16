@@ -17,7 +17,6 @@ class AppTheme {
   static ThemeData light() {
     final base = ThemeData.light(useMaterial3: true);
     return base.copyWith(
-      useMaterial3: true,
       primaryColor: primaryOrange,
       scaffoldBackgroundColor: backgroundLight,
       colorScheme: ColorScheme.fromSeed(
@@ -72,22 +71,22 @@ class AppTheme {
       // 🟦 Gradient CTA Buttons (styled transparent here; use blueGradientBox for background)
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
-          padding: MaterialStateProperty.all(
+          padding: WidgetStateProperty.all(
             const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
           ),
-          shape: MaterialStateProperty.all(
+          shape: WidgetStateProperty.all(
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
           ),
-          foregroundColor: MaterialStateProperty.all(Colors.white),
-          textStyle: MaterialStateProperty.all(
+          foregroundColor: WidgetStateProperty.all(Colors.white),
+          textStyle: WidgetStateProperty.all(
             const TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
           ),
-          backgroundColor: MaterialStateProperty.resolveWith<Color>(
+          backgroundColor: WidgetStateProperty.resolveWith<Color>(
             (_) => Colors.transparent,
           ),
-          overlayColor: MaterialStateProperty.all(primaryOrange.withOpacity(0.1)),
-          elevation: MaterialStateProperty.all(3),
-          shadowColor: MaterialStateProperty.all(primaryBlue.withOpacity(0.25)),
+          overlayColor: WidgetStateProperty.all(primaryOrange.withOpacity(0.1)),
+          elevation: WidgetStateProperty.all(3),
+          shadowColor: WidgetStateProperty.all(primaryBlue.withOpacity(0.25)),
         ),
       ),
 

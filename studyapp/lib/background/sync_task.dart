@@ -21,9 +21,12 @@ void callbackDispatcher() {
 
     try {
       final resp = await http.post(
-        Uri.parse('https://yourserver.com/api/sync/progress'),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({'items': payload}),
+        Uri.parse('https://apply4study.com/api/courses'),
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMjM0LCJ1c2VyX3R5cGVfaWQiOjAsInJvbGUiOiJndWVzdCIsImlhdCI6MTc1ODg4NDcwOCwiZXhwIjoxNzY0MDY4NzA4fQ.zWg19kpqcRf0sxKzrioWP_HzogoC5fHQPeGHTE6nZpc',
+        },
+        body: jsonEncode(payload),
       );
       if (resp.statusCode == 200) {
         final data = jsonDecode(resp.body);

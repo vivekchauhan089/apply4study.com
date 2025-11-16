@@ -14,7 +14,7 @@ import 'navigation/app_router.dart';
 // import 'screens/login_screen.dart';
 
 import 'config/firebase_options.dart';
-import 'utils/service_worker_registrar.dart';
+// import 'utils/service_worker_registrar.dart';
 import 'services/notification_service.dart';
 import 'data/database/sync_manager.dart';
 import 'services/background_sync.dart';
