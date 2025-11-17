@@ -1,1 +1,0 @@
- E:\\Projects\\apply4study.com\\studyapp\\.dart_tool\\flutter_build\\b4c87a9c28f8dec8d9715fc0543655b6\\native_assets.json: 

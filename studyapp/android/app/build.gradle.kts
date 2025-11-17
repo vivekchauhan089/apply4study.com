@@ -29,19 +29,31 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+
+        multiDexEnabled = true
     }
 
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("debug")
+            // signingConfig = signingConfigs.getByName("release")
+            isMinifyEnabled = true
+            isShrinkResources = true
         }
+        debug {
+            isMinifyEnabled = false
+        }
+    }
+
+    packagingOptions {
+        jniLibs.useLegacyPackaging = false
     }
 }
 
 dependencies {
     implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.multidex:multidex:2.0.1")
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")   // ✅ Kotlin DSL syntax
 }
 
