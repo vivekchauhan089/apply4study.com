@@ -13,12 +13,11 @@ Features included:
 
 How to run:
 1. Install Flutter and set up environment (on Windows, follow https://flutter.dev/docs/get-started/install/windows).
-2. Copy this project to your machine or download the ZIP from ChatGPT.
-3. In project root:
+2. In project root:
    ```bash
    flutter pub get
    flutter run
    ```
-4. Replace `assets/videos/sample_video_placeholder.txt` with your actual `sample_video.mp4` file and update pubspec if required.
+3. Replace `assets/videos/sample_video_placeholder.txt` with your actual `sample_video.mp4` file and update pubspec if required.
 
 Note: The included "video" is a text placeholder file. Replace with a real video file (MP4) and update the asset path if you want real playback.

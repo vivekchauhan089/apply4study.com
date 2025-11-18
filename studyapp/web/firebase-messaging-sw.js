@@ -33,6 +33,6 @@ self.addEventListener('notificationclick', (event) => {
   console.log("🔔 SW Notification click Received:", event.notification);  
   event.notification.close();
   event.waitUntil(
-    clients.openWindow('https://your-app-url.com') // Change to your app URL
+    clients.openWindow('https://apply4study.com') // Change to your app URL
   );
 });

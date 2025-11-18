@@ -1,11 +1,11 @@
 {
-    "name": "studyapp",
-    "short_name": "studyapp",
+    "name": "Apply4study",
+    "short_name": "Apply4study",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "An elearning platform to help students apply for higher studies abroad.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

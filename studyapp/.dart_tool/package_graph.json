@@ -1,10 +1,10 @@
 {
   "roots": [
-    "learning_app"
+    "apply4study"
   ],
   "packages": [
     {
-      "name": "learning_app",
+      "name": "apply4study",
       "version": "1.0.0+1",
       "dependencies": [
         "app_settings",

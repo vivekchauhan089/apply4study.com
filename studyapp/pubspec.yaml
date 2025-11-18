@@ -1,4 +1,4 @@
-name: learning_app
+name: apply4study
 description: A sample learning app (local-only) with login, course detail, video player, progress tracking, AI tutor mock and dark mode toggle.
 publish_to: 'none'
 version: 1.0.0+1
@@ -52,3 +52,8 @@ flutter:
     - assets/images/avatar_female.svg
     - assets/videos/sample_video_placeholder.txt
     - assets/videos/mov_bbb.mp4
+    - assets/images/logo.png
+    - assets/images/banner1.png
+    - assets/images/banner2.png
+    - assets/images/avatar_male.png
+    - assets/images/avatar_female.png
