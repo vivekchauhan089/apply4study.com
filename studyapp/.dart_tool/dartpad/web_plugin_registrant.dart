@@ -9,6 +9,8 @@
 import 'package:connectivity_plus/src/connectivity_plus_web.dart';
 import 'package:firebase_core_web/firebase_core_web.dart';
 import 'package:firebase_messaging_web/firebase_messaging_web.dart';
+import 'package:flutter_native_splash/flutter_native_splash_web.dart';
+import 'package:permission_handler_html/permission_handler_html.dart';
 import 'package:shared_preferences_web/shared_preferences_web.dart';
 import 'package:video_player_web/video_player_web.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
@@ -18,6 +20,8 @@ void registerPlugins([final Registrar? pluginRegistrar]) {
   ConnectivityPlusWebPlugin.registerWith(registrar);
   FirebaseCoreWeb.registerWith(registrar);
   FirebaseMessagingWeb.registerWith(registrar);
+  FlutterNativeSplashWeb.registerWith(registrar);
+  WebPermissionHandler.registerWith(registrar);
   SharedPreferencesPlugin.registerWith(registrar);
   VideoPlayerPlugin.registerWith(registrar);
   registrar.registerMessageHandler();

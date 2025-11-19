@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:country_code_picker/country_code_picker.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 import '../core/app_theme.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -9,23 +13,62 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  final _formKey = GlobalKey<FormState>();
-  final _nameCtrl = TextEditingController();
-  final _emailCtrl = TextEditingController();
-  final _passwordCtrl = TextEditingController();
+  final TextEditingController _nameCtrl = TextEditingController();
+  final TextEditingController _emailCtrl = TextEditingController();
+  final TextEditingController _mobileCtrl = TextEditingController();
+
+  String _dialCode = "+91";
   bool _loading = false;
 
-  void _signUp() {
-    if (!_formKey.currentState!.validate()) return;
+  Future<void> _createAccount() async {
+    final name = _nameCtrl.text.trim();
+    final email = _emailCtrl.text.trim();
+    final mobile = _mobileCtrl.text.trim();
+
+    if (name.isEmpty || email.isEmpty || mobile.length < 10) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Please fill all fields correctly")),
+      );
+      return;
+    }
 
     setState(() => _loading = true);
-    Future.delayed(const Duration(seconds: 1), () {
-      setState(() => _loading = false);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Account created successfully!")),
+
+    try {
+      final response = await http.post(
+        Uri.parse("https://apply4study.com/api/signup"),
+        body: {
+          "name": name,
+          "email": email,
+          "mobile": mobile,
+          "dial_code": _dialCode,
+        },
       );
-      Navigator.pop(context);
-    });
+
+      final data = jsonDecode(response.body);
+
+      if (!mounted) return;
+
+      if (data["status"] == 200) {
+        Navigator.pushNamed(
+          context,
+          "/login",
+          arguments: {
+            "mobile": "$_dialCode$mobile"
+          },
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(data["message"] ?? "Signup failed")),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Network error")),
+      );
+    }
+
+    setState(() => _loading = false);
   }
 
   @override
@@ -33,141 +76,167 @@ class _SignUpScreenState extends State<SignUpScreen> {
     final theme = Theme.of(context);
 
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 36),
-          child: Column(
-            children: [
-              // 🔶 Header
-              Container(
-                decoration: AppTheme.orangeGradientBox(),
-                padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 16),
-                width: double.infinity,
-                child: Column(
-                  children: [
-                    const Icon(Icons.person_add_alt_1_rounded, size: 70, color: Colors.white),
-                    const SizedBox(height: 12),
-                    Text(
-                      "Create Account",
-                      style: theme.textTheme.titleLarge!.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 26,
-                      ),
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+
+        // 🔶 Full-screen orange gradient
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.orange.shade600, Colors.orange.shade900],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+
+        child: SafeArea(
+          child: Center(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                children: [
+                  // WHITE CARD
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(26),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(18),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.15),
+                          blurRadius: 20,
+                          offset: const Offset(0, 8),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 6),
-                    Text(
-                      "Join Apply4Study and begin your journey",
-                      style: theme.textTheme.bodyMedium!.copyWith(
-                        color: Colors.white.withOpacity(0.9),
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Icon(Icons.person_add_alt_1,
+                            size: 75, color: Colors.orange),
 
-              const SizedBox(height: 36),
+                        const SizedBox(height: 10),
 
-              // 🪪 Sign-up Card
-              Container(
-                decoration: AppTheme.glassEffect(),
-                padding: const EdgeInsets.all(24),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      TextFormField(
-                        controller: _nameCtrl,
-                        decoration: const InputDecoration(
-                          labelText: 'Full Name',
-                          prefixIcon: Icon(Icons.person_outline),
+                        Text(
+                          "Create Account",
+                          style: theme.textTheme.titleLarge!.copyWith(
+                            color: Colors.black87,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 28,
+                          ),
                         ),
-                        validator: (v) => v == null || v.isEmpty ? 'Enter your name' : null,
-                      ),
-                      const SizedBox(height: 16),
-                      TextFormField(
-                        controller: _emailCtrl,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: const InputDecoration(
-                          labelText: 'Email',
-                          prefixIcon: Icon(Icons.email_outlined),
-                        ),
-                        validator: (v) => v != null && v.contains('@')
-                            ? null
-                            : 'Enter a valid email address',
-                      ),
-                      const SizedBox(height: 16),
-                      TextFormField(
-                        controller: _passwordCtrl,
-                        obscureText: true,
-                        decoration: const InputDecoration(
-                          labelText: 'Password',
-                          prefixIcon: Icon(Icons.lock_outline),
-                        ),
-                        validator: (v) => v != null && v.length >= 6
-                            ? null
-                            : 'Password must be at least 6 characters',
-                      ),
-                      const SizedBox(height: 30),
 
-                      // 💙 Gradient Sign-up Button
-                      GestureDetector(
-                        onTap: _loading ? null : _signUp,
-                        child: Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          decoration: AppTheme.blueGradientBox(),
-                          alignment: Alignment.center,
-                          child: _loading
-                              ? const SizedBox(
-                                  height: 22,
-                                  width: 22,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2.5,
-                                    color: Colors.white,
-                                  ),
-                                )
-                              : Text(
-                                  "Sign Up",
-                                  style: theme.textTheme.labelLarge!.copyWith(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w700,
+                        const SizedBox(height: 25),
+
+                        // NAME
+                        TextFormField(
+                          controller: _nameCtrl,
+                          decoration: const InputDecoration(
+                            labelText: "Full Name",
+                            prefixIcon: Icon(Icons.person),
+                          ),
+                        ),
+
+                        const SizedBox(height: 18),
+
+                        // EMAIL
+                        TextFormField(
+                          controller: _emailCtrl,
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: const InputDecoration(
+                            labelText: "Email Address",
+                            prefixIcon: Icon(Icons.email),
+                          ),
+                        ),
+
+                        const SizedBox(height: 18),
+
+                        // MOBILE + COUNTRY CODE
+                        Row(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(
+                                    color: Colors.grey.shade400,
+                                    width: 1,
                                   ),
                                 ),
+                              ),
+                              child: CountryCodePicker(
+                                onChanged: (code) {
+                                  setState(() => _dialCode = code.dialCode ?? "+91");
+                                },
+                                initialSelection: "IN",
+                                favorite: const ["IN", "US", "GB"],
+                                showCountryOnly: false,
+                                padding: EdgeInsets.zero,
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: TextFormField(
+                                controller: _mobileCtrl,
+                                keyboardType: TextInputType.phone,
+                                decoration: const InputDecoration(
+                                  labelText: "Mobile Number",
+                                  prefixIcon: Icon(Icons.phone),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
 
-              const SizedBox(height: 24),
+                        const SizedBox(height: 18),
 
-              // 📜 Footer
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Already have an account? ",
-                    style: theme.textTheme.bodyMedium!.copyWith(
-                      color: AppTheme.textSecondary,
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () => Navigator.pop(context),
-                    child: Text(
-                      "Login",
-                      style: theme.textTheme.bodyMedium!.copyWith(
-                        color: AppTheme.primaryBlue,
-                        fontWeight: FontWeight.w700,
-                      ),
+                        // SIGNUP BUTTON
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: _loading ? null : _createAccount,
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 14),
+                              backgroundColor: AppTheme.primaryBlue,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                            child: _loading
+                                ? const SizedBox(
+                                    height: 22,
+                                    width: 22,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                : const Text(
+                                    "Sign Up",
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.white),
+                                  ),
+                          ),
+                        ),
+
+                        const SizedBox(height: 20),
+
+                        GestureDetector(
+                          onTap: () => Navigator.pop(context),
+                          child: Text(
+                            "Already have an account? Login",
+                            style: theme.textTheme.bodyMedium!.copyWith(
+                              color: AppTheme.orangeAccent,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
-            ],
+            ),
           ),
         ),
       ),

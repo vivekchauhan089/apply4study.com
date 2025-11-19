@@ -21,6 +21,8 @@ import 'services/background_sync.dart';
 import 'data/local_db.dart';
 import 'providers/progress_provider.dart';
 
+import 'utils/permission_manager.dart';
+
 const String syncTaskName = 'background_sync';
 
 void callbackDispatcher() {
@@ -87,18 +89,22 @@ void main() async {
         ChangeNotifierProvider(create: (_) => AppProvider(darkMode: darkMode)),
         ChangeNotifierProvider(create: (_) => ProgressProvider(LocalDb())),
       ],
-      child: const LearningApp(),
+      child: const Apply4StudyApp(),
     ),
   );
 
   // ✅ Run after widget tree is ready
   WidgetsBinding.instance.addPostFrameCallback((_) async {
+    if (!kIsWeb) {
+      await PermissionManager.requestAllPermissions();
+      // debugPrint('📱 Permissions requested on mobile/desktop');
+    }
     await NotificationService.initialize();
   });
 }
 
-class LearningApp extends StatelessWidget {
-  const LearningApp({super.key});
+class Apply4StudyApp extends StatelessWidget {
+  const Apply4StudyApp({super.key});
 
   @override
   Widget build(BuildContext context) {

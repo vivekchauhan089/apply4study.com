@@ -3,9 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   // 🎨 Brand Colors (Apply4Study Visual System)
-  static const Color primaryOrange = Color(0xFFFF8A00);
+  static const Color primaryOrange = Color(0xFFE65100);
   static const Color orangeAccent = primaryOrange; // <-- added alias for previous usage
-  static const Color secondaryYellow = Color(0xFFFFC400);
+  static const Color secondaryYellow = Color(0xFFFB8C00);
   static const Color primaryBlue = Color(0xFF004AAD);
   static const Color accentBlue = Color(0xFF00BFFF);
   static const Color backgroundLight = Color(0xFFF9FAFB);

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../screens/splash_screen.dart';
 import '../screens/login_screen.dart';
+import '../screens/otp_screen.dart';
 import '../screens/signup_screen.dart';
 import '../screens/forgot_password_screen.dart';
 import '../screens/main_nav_screen.dart';
@@ -16,13 +18,16 @@ class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(builder: (_) => const EntryDecider());
+        return MaterialPageRoute(builder: (_) => const SplashScreen());
 
       case '/home':
         return MaterialPageRoute(builder: (_) => const MainNavScreen());
 
       case '/login':
         return MaterialPageRoute(builder: (_) => const LoginScreen());
+
+      case '/otp':
+        return MaterialPageRoute(builder: (_) => const OtpScreen());
 
       case '/signup':
         return MaterialPageRoute(builder: (_) => const SignUpScreen());
@@ -77,7 +82,7 @@ class _EntryDeciderState extends State<EntryDecider> {
 
   Future<void> _checkLogin() async {
     final prefs = await SharedPreferences.getInstance();
-    final username = prefs.getString('username');
+    final username = prefs.getString('mobile');
     setState(() {
       _username = username;
       _loading = false;

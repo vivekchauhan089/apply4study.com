@@ -23,7 +23,7 @@ class DashboardScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Row(children: [
-          SvgPicture.asset('images/logo.png', width: 36, height: 36),
+          SvgPicture.asset('assets/images/logo.png', width: 36, height: 36),
           const SizedBox(width: 12),
         ]),
         actions: [
@@ -51,8 +51,8 @@ class DashboardScreen extends StatelessWidget {
           children: [
             CarouselSlider(
               items: [
-                'images/banner1.png',
-                'images/banner2.png',
+                'assets/images/banner1.svg',
+                'assets/images/banner2.svg',
               ].map((path) {
                 return SvgPicture.asset(
                   path,

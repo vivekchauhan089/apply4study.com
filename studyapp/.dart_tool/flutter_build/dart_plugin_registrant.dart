@@ -6,25 +6,25 @@
 // @dart = 3.0
 
 import 'dart:io'; // flutter_ignore: dart_io_import.
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:path_provider_android/path_provider_android.dart';
-import 'package:shared_preferences_android/shared_preferences_android.dart';
-import 'package:video_player_android/video_player_android.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:path_provider_foundation/path_provider_foundation.dart';
-import 'package:shared_preferences_foundation/shared_preferences_foundation.dart';
-import 'package:video_player_avfoundation/video_player_avfoundation.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter_local_notifications_linux/flutter_local_notifications_linux.dart';
-import 'package:path_provider_linux/path_provider_linux.dart';
-import 'package:shared_preferences_linux/shared_preferences_linux.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:path_provider_foundation/path_provider_foundation.dart';
-import 'package:shared_preferences_foundation/shared_preferences_foundation.dart';
-import 'package:video_player_avfoundation/video_player_avfoundation.dart';
-import 'package:flutter_local_notifications_windows/flutter_local_notifications_windows.dart';
-import 'package:path_provider_windows/path_provider_windows.dart';
-import 'package:shared_preferences_windows/shared_preferences_windows.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart' as flutter_local_notifications;
+import 'package:path_provider_android/path_provider_android.dart' as path_provider_android;
+import 'package:shared_preferences_android/shared_preferences_android.dart' as shared_preferences_android;
+import 'package:video_player_android/video_player_android.dart' as video_player_android;
+import 'package:flutter_local_notifications/flutter_local_notifications.dart' as flutter_local_notifications;
+import 'package:path_provider_foundation/path_provider_foundation.dart' as path_provider_foundation;
+import 'package:shared_preferences_foundation/shared_preferences_foundation.dart' as shared_preferences_foundation;
+import 'package:video_player_avfoundation/video_player_avfoundation.dart' as video_player_avfoundation;
+import 'package:connectivity_plus/connectivity_plus.dart' as connectivity_plus;
+import 'package:flutter_local_notifications_linux/flutter_local_notifications_linux.dart' as flutter_local_notifications_linux;
+import 'package:path_provider_linux/path_provider_linux.dart' as path_provider_linux;
+import 'package:shared_preferences_linux/shared_preferences_linux.dart' as shared_preferences_linux;
+import 'package:flutter_local_notifications/flutter_local_notifications.dart' as flutter_local_notifications;
+import 'package:path_provider_foundation/path_provider_foundation.dart' as path_provider_foundation;
+import 'package:shared_preferences_foundation/shared_preferences_foundation.dart' as shared_preferences_foundation;
+import 'package:video_player_avfoundation/video_player_avfoundation.dart' as video_player_avfoundation;
+import 'package:flutter_local_notifications_windows/flutter_local_notifications_windows.dart' as flutter_local_notifications_windows;
+import 'package:path_provider_windows/path_provider_windows.dart' as path_provider_windows;
+import 'package:shared_preferences_windows/shared_preferences_windows.dart' as shared_preferences_windows;
 
 @pragma('vm:entry-point')
 class _PluginRegistrant {
@@ -33,7 +33,7 @@ class _PluginRegistrant {
   static void register() {
     if (Platform.isAndroid) {
       try {
-        AndroidFlutterLocalNotificationsPlugin.registerWith();
+        flutter_local_notifications.AndroidFlutterLocalNotificationsPlugin.registerWith();
       } catch (err) {
         print(
           '`flutter_local_notifications` threw an error: $err. '
@@ -42,7 +42,7 @@ class _PluginRegistrant {
       }
 
       try {
-        PathProviderAndroid.registerWith();
+        path_provider_android.PathProviderAndroid.registerWith();
       } catch (err) {
         print(
           '`path_provider_android` threw an error: $err. '
@@ -51,7 +51,7 @@ class _PluginRegistrant {
       }
 
       try {
-        SharedPreferencesAndroid.registerWith();
+        shared_preferences_android.SharedPreferencesAndroid.registerWith();
       } catch (err) {
         print(
           '`shared_preferences_android` threw an error: $err. '
@@ -60,7 +60,7 @@ class _PluginRegistrant {
       }
 
       try {
-        AndroidVideoPlayer.registerWith();
+        video_player_android.AndroidVideoPlayer.registerWith();
       } catch (err) {
         print(
           '`video_player_android` threw an error: $err. '
@@ -70,7 +70,7 @@ class _PluginRegistrant {
 
     } else if (Platform.isIOS) {
       try {
-        IOSFlutterLocalNotificationsPlugin.registerWith();
+        flutter_local_notifications.IOSFlutterLocalNotificationsPlugin.registerWith();
       } catch (err) {
         print(
           '`flutter_local_notifications` threw an error: $err. '
@@ -79,7 +79,7 @@ class _PluginRegistrant {
       }
 
       try {
-        PathProviderFoundation.registerWith();
+        path_provider_foundation.PathProviderFoundation.registerWith();
       } catch (err) {
         print(
           '`path_provider_foundation` threw an error: $err. '
@@ -88,7 +88,7 @@ class _PluginRegistrant {
       }
 
       try {
-        SharedPreferencesFoundation.registerWith();
+        shared_preferences_foundation.SharedPreferencesFoundation.registerWith();
       } catch (err) {
         print(
           '`shared_preferences_foundation` threw an error: $err. '
@@ -97,7 +97,7 @@ class _PluginRegistrant {
       }
 
       try {
-        AVFoundationVideoPlayer.registerWith();
+        video_player_avfoundation.AVFoundationVideoPlayer.registerWith();
       } catch (err) {
         print(
           '`video_player_avfoundation` threw an error: $err. '
@@ -107,7 +107,7 @@ class _PluginRegistrant {
 
     } else if (Platform.isLinux) {
       try {
-        ConnectivityPlusLinuxPlugin.registerWith();
+        connectivity_plus.ConnectivityPlusLinuxPlugin.registerWith();
       } catch (err) {
         print(
           '`connectivity_plus` threw an error: $err. '
@@ -116,7 +116,7 @@ class _PluginRegistrant {
       }
 
       try {
-        LinuxFlutterLocalNotificationsPlugin.registerWith();
+        flutter_local_notifications_linux.LinuxFlutterLocalNotificationsPlugin.registerWith();
       } catch (err) {
         print(
           '`flutter_local_notifications_linux` threw an error: $err. '
@@ -125,7 +125,7 @@ class _PluginRegistrant {
       }
 
       try {
-        PathProviderLinux.registerWith();
+        path_provider_linux.PathProviderLinux.registerWith();
       } catch (err) {
         print(
           '`path_provider_linux` threw an error: $err. '
@@ -134,7 +134,7 @@ class _PluginRegistrant {
       }
 
       try {
-        SharedPreferencesLinux.registerWith();
+        shared_preferences_linux.SharedPreferencesLinux.registerWith();
       } catch (err) {
         print(
           '`shared_preferences_linux` threw an error: $err. '
@@ -144,7 +144,7 @@ class _PluginRegistrant {
 
     } else if (Platform.isMacOS) {
       try {
-        MacOSFlutterLocalNotificationsPlugin.registerWith();
+        flutter_local_notifications.MacOSFlutterLocalNotificationsPlugin.registerWith();
       } catch (err) {
         print(
           '`flutter_local_notifications` threw an error: $err. '
@@ -153,7 +153,7 @@ class _PluginRegistrant {
       }
 
       try {
-        PathProviderFoundation.registerWith();
+        path_provider_foundation.PathProviderFoundation.registerWith();
       } catch (err) {
         print(
           '`path_provider_foundation` threw an error: $err. '
@@ -162,7 +162,7 @@ class _PluginRegistrant {
       }
 
       try {
-        SharedPreferencesFoundation.registerWith();
+        shared_preferences_foundation.SharedPreferencesFoundation.registerWith();
       } catch (err) {
         print(
           '`shared_preferences_foundation` threw an error: $err. '
@@ -171,7 +171,7 @@ class _PluginRegistrant {
       }
 
       try {
-        AVFoundationVideoPlayer.registerWith();
+        video_player_avfoundation.AVFoundationVideoPlayer.registerWith();
       } catch (err) {
         print(
           '`video_player_avfoundation` threw an error: $err. '
@@ -181,7 +181,7 @@ class _PluginRegistrant {
 
     } else if (Platform.isWindows) {
       try {
-        FlutterLocalNotificationsWindows.registerWith();
+        flutter_local_notifications_windows.FlutterLocalNotificationsWindows.registerWith();
       } catch (err) {
         print(
           '`flutter_local_notifications_windows` threw an error: $err. '
@@ -190,7 +190,7 @@ class _PluginRegistrant {
       }
 
       try {
-        PathProviderWindows.registerWith();
+        path_provider_windows.PathProviderWindows.registerWith();
       } catch (err) {
         print(
           '`path_provider_windows` threw an error: $err. '
@@ -199,7 +199,7 @@ class _PluginRegistrant {
       }
 
       try {
-        SharedPreferencesWindows.registerWith();
+        shared_preferences_windows.SharedPreferencesWindows.registerWith();
       } catch (err) {
         print(
           '`shared_preferences_windows` threw an error: $err. '

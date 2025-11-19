@@ -148,8 +148,7 @@ class _CoursesScreenState extends State<CoursesScreen> {
 
                           return Container(
                             color: backgroundColor,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 6),
+                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                             child: CourseCard(
                               course: course,
                               onCourseSelected: widget.onCourseSelected, // ✅ key fix

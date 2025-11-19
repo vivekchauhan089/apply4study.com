@@ -2,10 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 // import '../../shared/widgets/bottom_nav.dart';
 import '../../providers/course_provider.dart';
-import 'course_detail.dart';
+import '../../screens/course_detail.dart';
 
 class DiscoverScreen extends StatefulWidget {
-  const DiscoverScreen({super.key});
+  final ValueChanged<int>? onCourseSelected; // ✅ added for navigation to detail
+  final VoidCallback? onBack; // ✅ added for back navigation
+
+  const DiscoverScreen({
+    super.key,
+    this.onCourseSelected,
+    this.onBack
+  });
 
   @override
   State<DiscoverScreen> createState() => _DiscoverScreenState();
@@ -176,96 +183,108 @@ class _DiscoverScreenState extends State<DiscoverScreen>
             // 📚 Courses List or Shimmer
             Expanded(
               child: _isLoading
-                  ? ListView.builder(
-                      itemCount: 6,
-                      itemBuilder: (_, __) => _buildShimmerCard(),
-                    )
-                  : courses.isEmpty
-                      ? const Center(child: Text('No courses found'))
-                      : ListView.separated(
-                          itemCount: courses.length,
-                          separatorBuilder: (_, __) => const SizedBox(height: 12),
-                          itemBuilder: (context, index) {
-                            final course = courses[index];
+                ? ListView.builder(
+                    itemCount: 6,
+                    itemBuilder: (_, __) => _buildShimmerCard(),
+                  )
+                : courses.isEmpty
+                  ? const Center(child: Text('No courses found'))
+                  : ListView.separated(
+                    itemCount: courses.length,
+                    separatorBuilder: (_, __) => const SizedBox(height: 12),
+                    itemBuilder: (context, index) {
+                      final course = courses[index];
 
-                            final courseAnimation = Tween<Offset>(
-                              begin: const Offset(0, 0.3),
-                              end: Offset.zero,
-                            ).animate(
-                              CurvedAnimation(
-                                parent: _controller,
-                                curve: Interval(
-                                  0.5 + (index / courses.length) * 0.5,
-                                  1.0,
-                                  curve: Curves.easeOut,
-                                ),
-                              ),
-                            );
+                      final courseAnimation = Tween<Offset>(
+                        begin: const Offset(0, 0.3),
+                        end: Offset.zero,
+                      ).animate(
+                        CurvedAnimation(
+                          parent: _controller,
+                          curve: Interval(
+                            0.5 + (index / courses.length) * 0.5,
+                            1.0,
+                            curve: Curves.easeOut,
+                          ),
+                        ),
+                      );
 
-                            return SlideTransition(
-                              position: courseAnimation,
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) =>
-                                          CourseDetail(courseId: course.id),
-                                    ),
-                                  );
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.all(12),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(16),
-                                    boxShadow: const [
-                                      BoxShadow(
-                                        color: Colors.black12,
-                                        blurRadius: 6,
-                                        offset: Offset(0, 3),
-                                      )
-                                    ],
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        height: 60,
-                                        width: 60,
-                                        decoration: BoxDecoration(
-                                          color: Colors.grey.shade300,
-                                          borderRadius: BorderRadius.circular(12),
-                                        ),
-                                        child: const Icon(Icons.play_circle_fill,
-                                            size: 36, color: Colors.white),
-                                      ),
-                                      const SizedBox(width: 12),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(course.title,
-                                                style: const TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.bold)),
-                                            const SizedBox(height: 4),
-                                            Text(course.subtitle,
-                                                style: const TextStyle(
-                                                    fontSize: 14,
-                                                    color: Colors.grey)),
-                                          ],
-                                        ),
-                                      ),
-                                      const Icon(Icons.arrow_forward_ios,
-                                          size: 16, color: Colors.grey),
-                                    ],
-                                  ),
+                      return SlideTransition(
+                        position: courseAnimation,
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => CourseDetail(
+                                  courseId: course.id,
+                                  onBack: widget.onBack ?? () => Navigator.of(context).pop(),
                                 ),
                               ),
                             );
                           },
+                          child: Container(
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(16),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.black12,
+                                  blurRadius: 6,
+                                  offset: Offset(0, 3),
+                                )
+                              ],
+                            ),
+                            child: Row(
+                              children: [
+                                Container(
+                                  height: 60,
+                                  width: 60,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey.shade300,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: const Icon(
+                                    Icons.play_circle_fill,
+                                    size: 36, 
+                                    color: Colors.white
+                                  ),
+                                ),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        course.title,
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold
+                                        )
+                                      ),
+                                      const SizedBox(height: 4),
+                                      Text(
+                                        course.subtitle,
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.grey
+                                        )
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 16, color: Colors.grey
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
+                      );
+                    },
+                  ),
             ),
           ],
         ),
