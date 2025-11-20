@@ -213,15 +213,19 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                         position: courseAnimation,
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => CourseDetail(
-                                  courseId: course.id,
-                                  onBack: widget.onBack ?? () => Navigator.of(context).pop(),
+                            if (widget.onCourseSelected != null) {
+                              widget.onCourseSelected!(course.id);
+                            } else {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => CourseDetail(
+                                    courseId: course.id,
+                                    onBack: widget.onBack ?? () => Navigator.of(context).pop(),
+                                  ),
                                 ),
-                              ),
-                            );
+                              );
+                            }
                           },
                           child: Container(
                             padding: const EdgeInsets.all(12),

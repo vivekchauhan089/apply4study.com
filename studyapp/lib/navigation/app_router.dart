@@ -12,6 +12,7 @@ import '../screens/profile_screen.dart';
 import '../screens/ai_chat_screen.dart';
 import '../screens/progress_screen.dart';
 import '../models/course.dart';
+import '../screens/notification_screen.dart';
 // import '../features/dashboard/screens/dashboard_screen.dart';
 
 class AppRouter {
@@ -22,6 +23,9 @@ class AppRouter {
 
       case '/home':
         return MaterialPageRoute(builder: (_) => const MainNavScreen());
+
+      case '/notifications':
+        return MaterialPageRoute(builder: (_) => const NotificationScreen()); 
 
       case '/login':
         return MaterialPageRoute(builder: (_) => const LoginScreen());

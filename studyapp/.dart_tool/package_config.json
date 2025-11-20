@@ -620,6 +620,12 @@
       "languageVersion": "3.6"
     },
     {
+      "name": "pull_to_refresh_flutter3",
+      "rootUri": "file:///C:/Users/vivek.kumar5/AppData/Local/Pub/Cache/hosted/pub.dev/pull_to_refresh_flutter3-2.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "recase",
       "rootUri": "file:///C:/Users/vivek.kumar5/AppData/Local/Pub/Cache/hosted/pub.dev/recase-4.1.0",
       "packageUri": "lib/",
@@ -762,6 +768,12 @@
       "rootUri": "file:///C:/Users/vivek.kumar5/AppData/Local/Pub/Cache/hosted/pub.dev/test_api-0.7.7",
       "packageUri": "lib/",
       "languageVersion": "3.5"
+    },
+    {
+      "name": "timeago",
+      "rootUri": "file:///C:/Users/vivek.kumar5/AppData/Local/Pub/Cache/hosted/pub.dev/timeago-3.7.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "timezone",

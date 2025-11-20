@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'main_nav_screen.dart';
+import 'login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -44,9 +46,11 @@ class _SplashScreenState extends State<SplashScreen>
     if (!mounted) return;
 
     if (mobile != null && mobile.isNotEmpty) {
-      Navigator.pushReplacementNamed(context, "/dashboard");
+      Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (_) => const MainNavScreen()));
     } else {
-      Navigator.pushReplacementNamed(context, "/login");
+      Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (_) => const LoginScreen()));
     }
   }
 

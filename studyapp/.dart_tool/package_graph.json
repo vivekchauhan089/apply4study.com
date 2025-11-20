@@ -31,9 +31,11 @@
         "path_provider",
         "permission_handler",
         "provider",
+        "pull_to_refresh_flutter3",
         "shared_preferences",
         "sqlite3_flutter_libs",
         "table_calendar",
+        "timeago",
         "video_player",
         "web",
         "workmanager"
@@ -127,6 +129,20 @@
         "stream_channel",
         "test_api",
         "vector_math"
+      ]
+    },
+    {
+      "name": "pull_to_refresh_flutter3",
+      "version": "2.0.2",
+      "dependencies": [
+        "flutter"
+      ]
+    },
+    {
+      "name": "timeago",
+      "version": "3.7.1",
+      "dependencies": [
+        "intl"
       ]
     },
     {
@@ -834,6 +850,15 @@
       ]
     },
     {
+      "name": "intl",
+      "version": "0.20.2",
+      "dependencies": [
+        "clock",
+        "meta",
+        "path"
+      ]
+    },
+    {
       "name": "ansicolor",
       "version": "2.0.3",
       "dependencies": []
@@ -1171,15 +1196,6 @@
       "version": "0.2.1",
       "dependencies": [
         "flutter"
-      ]
-    },
-    {
-      "name": "intl",
-      "version": "0.20.2",
-      "dependencies": [
-        "clock",
-        "meta",
-        "path"
       ]
     },
     {

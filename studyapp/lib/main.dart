@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 
 import 'providers/app_provider.dart';
 import 'features/dashboard/providers/dashboard_provider.dart';
+import 'providers/notification_provider.dart';
 import 'providers/course_provider.dart';
 import 'theme/theme_notifier.dart';
 import 'core/app_theme.dart';
@@ -84,6 +85,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => DashboardProvider()),
+        ChangeNotifierProvider(create: (_) => NotificationProvider()),
         ChangeNotifierProvider(create: (_) => CourseProvider()),
         ChangeNotifierProvider(create: (_) => ThemeNotifier()),
         ChangeNotifierProvider(create: (_) => AppProvider(darkMode: darkMode)),

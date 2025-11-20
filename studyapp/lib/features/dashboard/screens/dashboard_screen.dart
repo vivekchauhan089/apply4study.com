@@ -11,8 +11,9 @@ class DashboardScreen extends StatelessWidget {
   final VoidCallback? onAllCoursesPressed;
   final VoidCallback? onOpenAIChat;
   final VoidCallback? onProfilePressed;
+  final VoidCallback? onOpenNotifications;
 
-  const DashboardScreen({super.key, this.onCourseSelected, this.onAllCoursesPressed, this.onOpenAIChat, this.onProfilePressed});
+  const DashboardScreen({super.key, this.onCourseSelected, this.onAllCoursesPressed, this.onOpenAIChat, this.onProfilePressed, this.onOpenNotifications});
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +23,17 @@ class DashboardScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Row(children: [
           SvgPicture.asset('assets/images/logo.png', width: 36, height: 36),
           const SizedBox(width: 12),
         ]),
         actions: [
           IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.notifications_none),
+            icon: const Icon(Icons.notifications),
+            onPressed: onOpenNotifications ?? () { 
+              Navigator.pushNamed(context, '/notifications');
+            },
           ),
           IconButton(
             icon: const Icon(Icons.chat_bubble_outline),

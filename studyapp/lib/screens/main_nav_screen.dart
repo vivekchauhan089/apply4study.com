@@ -9,6 +9,7 @@ import '../screens/courses_screen.dart';
 import '../screens/course_detail.dart';
 import '../screens/ai_chat_screen.dart';
 import '../screens/video_player_screen.dart';
+import '../screens/notification_screen.dart';
 import '../shared/widgets/bottom_nav.dart';
 import '../models/course.dart';
 
@@ -27,6 +28,7 @@ class _MainNavScreenState extends State<MainNavScreen> {
   int? _selectedCourseId;
   bool _showAIChat = false;
   bool _showVideo = false;
+  bool _showNotifications = false;
 
   late final List<Widget> _pages;
 
@@ -41,10 +43,13 @@ class _MainNavScreenState extends State<MainNavScreen> {
           onAllCoursesPressed: _openCourses,
           onOpenAIChat: _openAIChat,
           onProfilePressed: () => _onTabTapped(3),
+          onOpenNotifications: _openNotifications,
         ),
       ),
       const PlannerScreen(),
-      const DiscoverScreen(),
+      DiscoverScreen(
+        onCourseSelected: _onCourseSelected, // ← FIX
+      ),
       const ProfileScreen(),
     ];
   }
@@ -56,6 +61,7 @@ class _MainNavScreenState extends State<MainNavScreen> {
       _selectedCourseId = null;
       _showAIChat = false;
       _showVideo = false;
+      _showNotifications = false;
     });
   }
 
@@ -64,12 +70,22 @@ class _MainNavScreenState extends State<MainNavScreen> {
       _selectedCourseId = courseId;
       _showAIChat = false;
       _showVideo = false;
+      _showNotifications = false;
     });
   }
 
   void _openAIChat() {
     setState(() {
       _showAIChat = true;
+      _showVideo = false;
+      _showNotifications = false;
+    });
+  }
+
+  void _openNotifications() {
+    setState(() {
+      _showNotifications = true;
+      _showAIChat = false;
       _showVideo = false;
     });
   }
@@ -78,14 +94,16 @@ class _MainNavScreenState extends State<MainNavScreen> {
     setState(() {
       _showVideo = true;
       _showAIChat = false;
+      _showNotifications = false;
     });
   }
 
   void _onBackPressed() {
     setState(() {
-      if (_showAIChat || _showVideo) {
+      if (_showAIChat || _showVideo || _showNotifications) {
         _showAIChat = false;
         _showVideo = false;
+        _showNotifications = false;
       } else if (_selectedCourseId != null) {
         _selectedCourseId = null;
       } else if (_showCourses) {
@@ -101,6 +119,7 @@ class _MainNavScreenState extends State<MainNavScreen> {
       _selectedCourseId = null;
       _showAIChat = false;
       _showVideo = false;
+      _showNotifications = false;
     });
   }
 
@@ -129,6 +148,10 @@ class _MainNavScreenState extends State<MainNavScreen> {
     } else if (_showCourses) {
       content = CoursesScreen(
         onCourseSelected: _onCourseSelected,
+        onBack: _onBackPressed,
+      );
+    } else if (_showNotifications) {
+      content = NotificationScreen(
         onBack: _onBackPressed,
       );
     } else {
