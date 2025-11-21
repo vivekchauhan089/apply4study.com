@@ -396,4 +396,73 @@ router.post('/page/fetchall', PageController.getAllPages);
 router.post('/page/create', PageController.createPage);
 
 
+const SmsController = require("../controllers/SmsController");
+
+/**
+ * Send OTP to a mobile number
+ * @route POST /api/sms/send
+ * @group SMS - OTP Management
+ * @param {string} mobile_no.body.required - Recipient mobile number
+ * @returns {object} 200 - { success: true, message: "OTP sent", token_id }
+ * @returns {Error}  default - Unexpected error
+ */
+router.post('/sms/send', SmsController.sendSmsOtp);
+
+/**
+ * Verify OTP
+ * @route POST /api/sms/verify
+ * @group SMS - OTP Management
+ * @param {string} mobile_no.body.required - Mobile number
+ * @param {string} otp.body.required - OTP (6 digits)
+ * @returns {object} 200 - { success: true, message: "OTP verified", token_status }
+ * @returns {Error}  default - Unexpected error
+ */
+router.post('/sms/verify', SmsController.verifySmsOtp);
+
+/**
+ * Expire OTP Token Manually or Via CRON
+ * @route POST /api/sms/expire
+ * @group SMS - OTP Management
+ * @param {string} token_id.body.required - Token ID
+ * @returns {object} 200 - { success: true, message: "Token expired" }
+ * @returns {Error}  default - Unexpected error
+ */
+router.post('/sms/expire', SmsController.expireToken);
+
+
+const NotificationController = require("../controllers/NotificationController");
+
+/**
+ * Send a notification
+ * @route POST /api/notification/send
+ * @group Notification - Notification management
+ * @returns {object} 201 - { success: true, data: Notification }
+ */
+router.post("/notification/send", NotificationController.sendNotification);
+
+/**
+ * Fetch notifications (paginated)
+ * @route POST /api/notifications
+ * @group Notification
+ * @returns {object} 200 - Paginated notification response
+ */
+router.post("/notifications", NotificationController.getUserNotifications);
+
+/**
+ * Mark notification as read
+ * @route POST /api/notification/markread
+ * @group Notification - Notification management
+ * @returns {object} 200 - Status message
+ */
+router.post("/notification/markread", NotificationController.markAsRead);
+
+/**
+ * Delete notification
+ * @route POST /api/notification/delete
+ * @group Notification - Notification management
+ * @returns {object} 200 - Status message
+ */
+router.post("/notification/delete", NotificationController.deleteNotification);
+
+
 module.exports = router;        

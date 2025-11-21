@@ -185,7 +185,7 @@ module.exports.sendEmail = function(data) {
         emailContent = {
             from: config.mailFrom, // Sender address
             to: emailTo,
-            bcc: ['balu.venkatesan1@livguard.com'],  
+            bcc: ['test@yopmail.com'],  
             subject: data.subject, // Subject line
             html: data.content, // Plain text body
             attachments : data.attachments
