@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/course.dart';
-import '../screens/course_detail.dart';
+import '../screens/courses/course_detail.dart';
 
 class CourseCard extends StatelessWidget {
   final Course course;
@@ -44,7 +44,7 @@ class CourseCard extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.indigo.withOpacity(0.08),
+          color: Colors.indigo.withAlpha((0.08 * 255).round()),
           borderRadius: BorderRadius.circular(12),
         ),
         padding: const EdgeInsets.all(12),

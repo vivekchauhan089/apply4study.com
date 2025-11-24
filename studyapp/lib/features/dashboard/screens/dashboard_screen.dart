@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/dashboard_provider.dart';
 import '../widgets/course_card.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+// Using PNG fallbacks for web stability; avoid parsing large SVGs at runtime
 import 'package:carousel_slider/carousel_slider.dart';
 import '../../../shared/widgets/search_bar.dart';
 
@@ -22,10 +22,235 @@ class DashboardScreen extends StatelessWidget {
     final cats = provider.categories;
 
     return Scaffold(
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+
+            // ⭐ Avatar Image Section
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 18),
+              child: Center(
+                child: CircleAvatar(
+                  radius: 24,
+                  backgroundColor: Colors.orange.shade600,
+                  backgroundImage: AssetImage('assets/images/avatar_male.png'),
+                ),
+              ),
+            ),
+
+            // 🔸 Thin Orange Line Divider
+            Container(
+              height: 2,
+              color: Colors.orange.shade900,
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+            ),
+
+            const SizedBox(height: 10),
+
+            // -------------------------------
+            // 📌 MOST USED BY ALL USERS
+            // -------------------------------
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Text("Quick Actions",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+            ),
+
+            ListTile(
+              leading: const Icon(Icons.document_scanner_outlined),
+              title: const Text('OCR Scanner (Bills, Notes)'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/ocr');
+              },
+            ),
+
+            ListTile(
+              leading: const Icon(Icons.qr_code_scanner),
+              title: const Text('Scan & Pay'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/qrscan');
+              },
+            ),
+
+            ListTile(
+              leading: const Icon(Icons.local_shipping),
+              title: const Text('Food Delivery'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/food');
+              },
+            ),
+
+            ListTile(
+              leading: const Icon(Icons.local_taxi),
+              title: const Text('Cab Booking'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/cab');
+              },
+            ),
+
+            ListTile(
+              leading: const Icon(Icons.local_offer),
+              title: const Text('Best Deals & Discounts'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/deals');
+              },
+            ),
+
+            ListTile(
+              leading: const Icon(Icons.shopping_bag),
+              title: const Text('Orders'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/orders');
+              },
+            ),
+
+            // -------------------------------
+            // 🎓 STUDENT-SPECIFIC UTILITIES
+            // -------------------------------
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Text("Student Tools",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+            ),
+
+            ListTile(
+              leading: const Icon(Icons.work_outline),
+              title: const Text('Jobs & Internships'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/jobs');
+              },
+            ),
+
+            ListTile(
+              leading: const Icon(Icons.school_outlined),
+              title: const Text('Courses & Learning'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/courses');
+              },
+            ),
+
+            ListTile(
+              leading: const Icon(Icons.compare_arrows),
+              title: const Text('Compare Colleges / Courses'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/compare');
+              },
+            ),
+
+            // -------------------------------
+            // 🧰 DAILY UTILITIES
+            // -------------------------------
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Text("Utilities",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+            ),
+
+            ListTile(
+              leading: const Icon(Icons.receipt_long),
+              title: const Text('Expense Tracker'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/expenses');
+              },
+            ),
+
+            ListTile(
+              leading: const Icon(Icons.map_outlined),
+              title: const Text('Nearby Services'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/nearby');
+              },
+            ),
+
+            ListTile(
+                leading: const Icon(Icons.support_agent),
+                title: const Text('Help & Support'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/support');
+              },
+            ),
+
+            ListTile(
+              leading: const Icon(Icons.notifications_active_outlined),
+              title: const Text('Payment Reminders'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/reminders');
+              },
+            ),
+
+            ListTile(
+              leading: const Icon(Icons.track_changes),
+              title: const Text('Friend Tracker'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/track');
+              },
+            ),
+
+            // -------------------------------
+            // ⚙️ SETTINGS
+            // -------------------------------
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Text("App Settings",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+            ),
+
+            ListTile(
+              leading: const Icon(Icons.person),
+              title: const Text('Profile'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/profile');
+              },
+            ),
+
+            ListTile(
+              leading: const Icon(Icons.settings),
+              title: const Text('Settings'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/settings');
+              },
+            ),
+
+            ListTile(
+              leading: const Icon(Icons.logout),
+              title: const Text('Logout'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/logout');
+              },
+            ),
+          ],
+        ),
+      ),
+      
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Row(children: [
-          SvgPicture.asset('assets/images/logo.png', width: 36, height: 36),
+          Builder(
+            builder: (context) => IconButton(
+              icon: const Icon(Icons.menu),   // ← Drawer icon
+              onPressed: () => Scaffold.of(context).openDrawer(),
+            ),
+          ),
+          const SizedBox(width: 6),
+          Image.asset('assets/images/logo.png', width: 36, height: 36),
           const SizedBox(width: 12),
         ]),
         actions: [
@@ -55,10 +280,10 @@ class DashboardScreen extends StatelessWidget {
           children: [
             CarouselSlider(
               items: [
-                'assets/images/banner1.svg',
-                'assets/images/banner2.svg',
+                'assets/images/banner1.png',
+                'assets/images/banner2.png',
               ].map((path) {
-                return SvgPicture.asset(
+                return Image.asset(
                   path,
                   fit: BoxFit.cover,
                   width: double.infinity,

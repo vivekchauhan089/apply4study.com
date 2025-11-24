@@ -1,18 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../screens/splash_screen.dart';
-import '../screens/login_screen.dart';
-import '../screens/otp_screen.dart';
-import '../screens/signup_screen.dart';
-import '../screens/forgot_password_screen.dart';
-import '../screens/main_nav_screen.dart';
-import '../screens/courses_screen.dart';
-import '../screens/course_detail.dart';
-import '../screens/profile_screen.dart';
-import '../screens/ai_chat_screen.dart';
-import '../screens/progress_screen.dart';
+import '../screens/splash/splash_screen.dart';
+import '../screens/auth/login_screen.dart';
+import '../screens/auth/otp_screen.dart';
+import '../screens/auth/signup_screen.dart';
+import '../screens/auth/forgot_password_screen.dart';
+import '../screens/auth/logout_screen.dart';
+import '../screens/navigation/main_nav_screen.dart';
+import '../screens/courses/courses_screen.dart';
+import '../screens/courses/course_detail.dart';
+import '../screens/profile/profile_screen.dart';
+import '../screens/chat/ai_chat_screen.dart';
+import '../screens/courses/progress_screen.dart';
 import '../models/course.dart';
-import '../screens/notification_screen.dart';
+import '../screens/notifications/notification_screen.dart';
+import '../screens/ocr/receipt_scan_screen.dart';
+import '../screens/food/food_home_screen.dart';
+import '../screens/cab/cab_booking_screen.dart';
+import '../screens/ecommerce/deals_screen.dart';
+import '../screens/jobs/jobs_screen.dart';
+import '../screens/payments/scan_pay_screen.dart';
+import '../screens/payments/reminders_screen.dart';
+import '../screens/iot/friend_tracker_screen.dart';
+import '../screens/orders/orders_screen.dart';
+import '../screens/compare/compare_screen.dart';
+import '../screens/expenses/expenses_screen.dart';
+import '../screens/nearby/nearby_screen.dart';
+import '../screens/support/support_screen.dart';
+import '../screens/settings/settings_screen.dart';
 // import '../features/dashboard/screens/dashboard_screen.dart';
 
 class AppRouter {
@@ -56,6 +71,51 @@ class AppRouter {
 
       case '/progress':
         return MaterialPageRoute(builder: (_) => const ProgressScreen());
+      
+      case '/ocr':
+        return MaterialPageRoute(builder: (_) => const ReceiptScanScreen());
+
+      case '/food':
+        return MaterialPageRoute(builder: (_) => const FoodHomeScreen());
+
+      case '/cab':
+        return MaterialPageRoute(builder: (_) => const CabBookingScreen());
+
+      case '/deals':
+        return MaterialPageRoute(builder: (_) => const DealsScreen());
+
+      case '/jobs':
+        return MaterialPageRoute(builder: (_) => const JobsScreen());
+
+      case '/qrscan':
+        return MaterialPageRoute(builder: (_) => const ScanPayScreen());
+
+      case '/reminders':
+        return MaterialPageRoute(builder: (_) => const RemindersScreen());
+
+      case '/track':
+        return MaterialPageRoute(builder: (_) => const FriendTrackerScreen());
+
+      case '/orders':
+        return MaterialPageRoute(builder: (_) => const OrdersScreen());
+
+      case '/compare':
+        return MaterialPageRoute(builder: (_) => const CompareScreen());
+
+      case '/expenses':
+        return MaterialPageRoute(builder: (_) => const ExpensesScreen());
+
+      case '/nearby':
+        return MaterialPageRoute(builder: (_) => const NearbyScreen());
+
+      case '/support':
+        return MaterialPageRoute(builder: (_) => const SupportScreen());
+
+      case '/settings':
+        return MaterialPageRoute(builder: (_) => const SettingsScreen());
+
+      case '/logout':
+        return MaterialPageRoute(builder: (_) => const LogoutScreen());
 
       default:
         return MaterialPageRoute(

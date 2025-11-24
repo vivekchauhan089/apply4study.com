@@ -7,21 +7,12 @@ import 'package:flutter/material.dart';
 Future<void> registerServiceWorker() async {
   try {
     final serviceWorker = web.window.navigator.serviceWorker;
-    if (serviceWorker != false) {
-      // ✅ Convert Dart String → JS string (JSAny)
-      final jsPath = '/firebase-messaging-sw.js'.toJS;
-
-      // ✅ Register SW file — note: use JS interop via `callMethod`
-      final promise = serviceWorker.register(jsPath);
-
-      // ✅ Convert JS Promise → Dart Future
-      final reg = await promise.toDart;
-      debugPrint('✅ Service Worker registered at: ${reg.scope}');
-
-    } else {
-      // print('⚠️ Service Workers not supported in this browser.');
-      return;
-    }
+    // Attempt to register the service worker; if the platform doesn't support
+    // it, the operation will throw and be handled by the surrounding try/catch.
+    final jsPath = '/firebase-messaging-sw.js'.toJS;
+    final promise = serviceWorker.register(jsPath);
+    final reg = await promise.toDart;
+    debugPrint('✅ Service Worker registered at: ${reg.scope}');
   } catch (e) {
     // print('⚠️ Service Worker registration failed: $e');
   }

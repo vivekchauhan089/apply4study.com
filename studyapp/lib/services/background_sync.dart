@@ -17,7 +17,7 @@ void callbackDispatcher() {
 
 class BackgroundSyncService {
   static Future<void> initialize() async {
-    await Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
+    await Workmanager().initialize(callbackDispatcher);
 
     // Run every 15 minutes (minimum on Android)
     await Workmanager().registerPeriodicTask(

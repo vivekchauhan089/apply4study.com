@@ -19,11 +19,10 @@ class AppTheme {
     return base.copyWith(
       primaryColor: primaryOrange,
       scaffoldBackgroundColor: backgroundLight,
-      colorScheme: ColorScheme.fromSeed(
+        colorScheme: ColorScheme.fromSeed(
         seedColor: primaryOrange,
         primary: primaryOrange,
         secondary: primaryBlue,
-        background: backgroundLight,
         surface: Colors.white,
       ),
 
@@ -84,9 +83,9 @@ class AppTheme {
           backgroundColor: WidgetStateProperty.resolveWith<Color>(
             (_) => Colors.transparent,
           ),
-          overlayColor: WidgetStateProperty.all(primaryOrange.withOpacity(0.1)),
+          overlayColor: WidgetStateProperty.all(primaryOrange.withAlpha((0.1 * 255).round())),
           elevation: WidgetStateProperty.all(3),
-          shadowColor: WidgetStateProperty.all(primaryBlue.withOpacity(0.25)),
+          shadowColor: WidgetStateProperty.all(primaryBlue.withAlpha((0.25 * 255).round())),
         ),
       ),
 
@@ -198,15 +197,15 @@ class AppTheme {
 
   // 🧠 Glass effect (for banners or floating cards)
   static BoxDecoration glassEffect() => BoxDecoration(
-        color: Colors.white.withOpacity(0.7),
+        color: Colors.white.withAlpha((0.7 * 255).round()),
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withAlpha((0.05 * 255).round()),
             blurRadius: 12,
             offset: const Offset(0, 6),
           ),
         ],
-        border: Border.all(color: Colors.white.withOpacity(0.4)),
+        border: Border.all(color: Colors.white.withAlpha((0.4 * 255).round())),
       );
 }

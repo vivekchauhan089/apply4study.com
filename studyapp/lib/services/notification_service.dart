@@ -8,8 +8,8 @@ import 'package:app_settings/app_settings.dart'; // Add this in pubspec.yaml
 import 'package:provider/provider.dart';
 import '../providers/app_provider.dart';
 import '../features/dashboard/screens/dashboard_screen.dart';
-import '../screens/ai_chat_screen.dart';
-import '../screens/profile_screen.dart';
+import '../screens/chat/ai_chat_screen.dart';
+import '../screens/profile/profile_screen.dart';
 
 class NotificationService {
   static final _firebaseMessaging = FirebaseMessaging.instance;
@@ -36,7 +36,7 @@ class NotificationService {
         debugPrint('📱 Initializing FCM for Mobile...');
         final context = navigatorKey.currentContext;
         if (context != null) {
-          await _handleNotificationPermission(context);
+          await _handleNotificationPermission();
         } else {
           debugPrint('⚠️ Context not available yet — skipping permission request.');
         }
@@ -74,11 +74,10 @@ class NotificationService {
   }
 
   /// Handles notification permission safely
-  static Future<void> _handleNotificationPermission(BuildContext context) async {
+  static Future<void> _handleNotificationPermission() async {
     try {
       final settings = await _firebaseMessaging.getNotificationSettings();
       debugPrint('🔔 Current permission: ${settings.authorizationStatus}');
-
       if (settings.authorizationStatus == AuthorizationStatus.notDetermined ||
           settings.authorizationStatus == AuthorizationStatus.denied) {
         final newSettings = await _firebaseMessaging.requestPermission(
@@ -87,9 +86,11 @@ class NotificationService {
           sound: true,
         );
 
+        final ctx = navigatorKey.currentContext;
         if (newSettings.authorizationStatus == AuthorizationStatus.authorized) {
           debugPrint('✅ User granted permission');
-          _showSnackBar(context, 'Notifications enabled successfully ✅');
+          // ignore: use_build_context_synchronously
+          if (ctx != null) _showSnackBar(ctx, 'Notifications enabled successfully ✅');
         } else if (newSettings.authorizationStatus == AuthorizationStatus.provisional) {
           debugPrint('⚠️ User granted provisional permission');
         } else {
@@ -98,12 +99,16 @@ class NotificationService {
       } else if (settings.authorizationStatus == AuthorizationStatus.authorized) {
         debugPrint('✅ Permission already granted — no need to re-request.');
       } else if (settings.authorizationStatus == AuthorizationStatus.denied) {
-        _showPermissionBlockedDialog(context);
+        final ctx = navigatorKey.currentContext;
+        // ignore: use_build_context_synchronously
+        if (ctx != null) _showPermissionBlockedDialog(ctx);
       }
     } on FirebaseException catch (e) {
       if (e.code == 'permission-blocked') {
         debugPrint('🔒 Permission permanently blocked.');
-        _showPermissionBlockedDialog(context);
+        final ctx = navigatorKey.currentContext;
+        // ignore: use_build_context_synchronously
+        if (ctx != null) _showPermissionBlockedDialog(ctx);
       } else {
         debugPrint('❌ FirebaseException during permission check: ${e.code}');
       }
@@ -172,16 +177,14 @@ class NotificationService {
 
   /// Show simple snackbar for feedback
   static void _showSnackBar(BuildContext context, String message) {
-    if (context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(message),
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: Colors.green.shade600,
-          duration: const Duration(seconds: 2),
-        ),
-      );
-    }
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: Colors.green.shade600,
+        duration: const Duration(seconds: 2),
+      ),
+    );
   }
 }
 
@@ -197,7 +200,7 @@ class _SettingsLifecycleWatcher extends WidgetsBindingObserver {
         NotificationService._isCheckingAfterSettings) {
       NotificationService._isCheckingAfterSettings = false;
       debugPrint('🔁 App returned from Settings — rechecking permissions...');
-      NotificationService._handleNotificationPermission(context);
+      NotificationService._handleNotificationPermission();
       WidgetsBinding.instance.removeObserver(this);
     }
   }
