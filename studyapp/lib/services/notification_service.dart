@@ -3,7 +3,12 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:app_settings/app_settings.dart'; // Add this in pubspec.yaml
+import 'package:flutter/services.dart';
+import 'package:app_settings/app_settings.dart';
+import 'package:http/http.dart' as http;
+import 'package:device_info_plus/device_info_plus.dart';
+import 'dart:io';
+import 'dart:convert';
 
 import 'package:provider/provider.dart';
 import '../providers/app_provider.dart';
@@ -17,6 +22,42 @@ class NotificationService {
   static bool _isCheckingAfterSettings = false;
   static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
+  /// Register device with API using existing token
+  static Future<void> _registerDevice(String? token) async {
+    if (token == null) return;
+    
+    try {
+      final deviceInfo = DeviceInfoPlugin();
+      Map<String, dynamic> deviceData = {'fcm_token': token};
+
+      if (Platform.isAndroid) {
+        final info = await deviceInfo.androidInfo;
+        deviceData.addAll({
+          'device_id': info.id,
+          'device_name': info.model,
+          'os': 'Android',
+          'os_version': info.version.release,
+        });
+      } else if (Platform.isIOS) {
+        final info = await deviceInfo.iosInfo;
+        deviceData.addAll({
+          'device_id': info.identifierForVendor ?? '',
+          'device_name': info.name,
+          'os': 'iOS',
+          'os_version': info.systemVersion,
+        });
+      }
+
+      await http.post(
+        Uri.parse('https://apply4study.com/api/device/register'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(deviceData),
+      );
+    } catch (e) {
+      // Silent fail
+    }
+  }
+
   /// Initialize Firebase and local notifications safely
   static Future<void> initialize() async {
     try {
@@ -24,13 +65,13 @@ class NotificationService {
         debugPrint('🌐 Initializing FCM for Web...');
         await _firebaseMessaging.requestPermission();
         String? token = await _firebaseMessaging.getToken(
-          vapidKey: "BL7SlflJR7q7Sk4bOBUg9dWiBhCx1SxrD6E88n-gbKUbus_08JznP291vyyQxrWWjIcrtW7FzytIhge3qMQBFd0", // ✅ found in Firebase Cloud Messaging settings
+          vapidKey: "BL7SlflJR7q7Sk4bOBUg9dWiBhCx1SxrD6E88n-gbKUbus_08JznP291vyyQxrWWjIcrtW7FzytIhge3qMQBFd0",
         );
         debugPrint("🔥 Web FCM Token: $token");
+        await _registerDevice(token);
 
         FirebaseMessaging.onMessage.listen((RemoteMessage message) {
           debugPrint('📩 Web FCM message: ${message.notification?.title}');
-          // You can show a custom in-app notification UI here
         });
       } else {
         debugPrint('📱 Initializing FCM for Mobile...');
@@ -40,11 +81,19 @@ class NotificationService {
         } else {
           debugPrint('⚠️ Context not available yet — skipping permission request.');
         }
+        
+        // Check permission and close app if not enabled
+        final notificationSettings = await _firebaseMessaging.getNotificationSettings();
+        if (notificationSettings.authorizationStatus != AuthorizationStatus.authorized) {
+          SystemNavigator.pop();
+          return;
+        }
 
         // ✅ Local notifications only for Android/iOS
         const androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
-        const settings = InitializationSettings(android: androidSettings);
-        await _localNotifications.initialize(settings);
+        const iosSettings = DarwinInitializationSettings();
+        const initSettings = InitializationSettings(android: androidSettings, iOS: iosSettings);
+        await _localNotifications.initialize(initSettings);
 
         // ✅ Foreground listener (mobile only)
         FirebaseMessaging.onMessage.listen((RemoteMessage message) {
@@ -64,6 +113,7 @@ class NotificationService {
 
         final token = await _firebaseMessaging.getToken();
         debugPrint("🔥 FCM Token: $token");
+        await _registerDevice(token);
       }
     } on FirebaseException catch (e) {
      debugPrint('⚠️ Notification init error: $e');
@@ -95,13 +145,12 @@ class NotificationService {
           debugPrint('⚠️ User granted provisional permission');
         } else {
           debugPrint('🚫 Permission denied or blocked');
+          SystemNavigator.pop();
         }
       } else if (settings.authorizationStatus == AuthorizationStatus.authorized) {
         debugPrint('✅ Permission already granted — no need to re-request.');
       } else if (settings.authorizationStatus == AuthorizationStatus.denied) {
-        final ctx = navigatorKey.currentContext;
-        // ignore: use_build_context_synchronously
-        if (ctx != null) _showPermissionBlockedDialog(ctx);
+        SystemNavigator.pop();
       }
     } on FirebaseException catch (e) {
       if (e.code == 'permission-blocked') {

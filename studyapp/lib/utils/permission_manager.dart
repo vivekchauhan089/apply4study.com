@@ -19,9 +19,24 @@ class PermissionManager {
     return true;
   }
 
-  /// Ask for Location Permission
+  /// Ask for Location Permission with retry
   static Future<bool> requestLocationPermission() async {
-    final status = await Permission.locationWhenInUse.request();
+    var status = await Permission.locationWhenInUse.status;
+    
+    if (status.isDenied) {
+      status = await Permission.locationWhenInUse.request();
+    }
+    
+    if (status.isPermanentlyDenied) {
+      await openAppSettings();
+    }
+    
+    return status.isGranted;
+  }
+  
+  /// Check if location permission is enabled
+  static Future<bool> isLocationEnabled() async {
+    final status = await Permission.locationWhenInUse.status;
     return status.isGranted;
   }
 

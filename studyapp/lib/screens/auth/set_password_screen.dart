@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:google_fonts/google_fonts.dart';
 import '../../core/app_theme.dart';
+import '../../utils/device_helper.dart';
 
 class SetPasswordScreen extends StatefulWidget {
   const SetPasswordScreen({super.key});
@@ -92,9 +93,10 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
 
     setState(() => _loading = true);
 
+    final deviceId = await DeviceHelper.getDeviceId();
     final res = await http.post(
       Uri.parse("https://apply4study.com/api/updatePassword"),
-      body: {"mobile": mobile, "password": pass},
+      body: {"mobile": mobile, "password": pass, "device_id": deviceId},
     );
 
     final data = jsonDecode(res.body);
@@ -127,7 +129,6 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
     return Scaffold(
       body: Container(
         width: double.infinity,
-        height: double.infinity,
 
         // 🔶 Full-screen orange gradient
           decoration: BoxDecoration(

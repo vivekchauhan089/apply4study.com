@@ -67,6 +67,15 @@ class DashboardScreen extends StatelessWidget {
             ),
 
             ListTile(
+              leading: const Icon(Icons.health_and_safety),
+              title: const Text('Health Scanner'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, '/skin-scanner');
+              },
+            ),
+
+            ListTile(
               leading: const Icon(Icons.qr_code_scanner),
               title: const Text('Scan & Pay'),
               onTap: () {

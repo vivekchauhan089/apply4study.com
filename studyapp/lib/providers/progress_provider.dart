@@ -1,6 +1,9 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:drift/drift.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import '../data/local_db.dart';
 
 class ProgressProvider with ChangeNotifier, WidgetsBindingObserver {
@@ -63,8 +66,7 @@ class ProgressProvider with ChangeNotifier, WidgetsBindingObserver {
       debugPrint('🔄 Syncing ${pending.length} progress entries...');
       for (final entry in pending) {
         try {
-          // TODO: Replace with real API call
-          await Future.delayed(const Duration(milliseconds: 800));
+          await _syncProgressToAPI(entry.courseId, entry.progress);
 
           // ✅ Mark as synced
           await db.markProgressSynced(entry.id);
@@ -76,6 +78,45 @@ class ProgressProvider with ChangeNotifier, WidgetsBindingObserver {
       safeNotify();
     } catch (e, st) {
       debugPrint('❌ syncPendingProgress error: $e\n$st');
+    }
+  }
+
+  /// 🔸 Sync progress to API
+  Future<void> _syncProgressToAPI(int courseId, double progress) async {
+    final prefs = await SharedPreferences.getInstance();
+    final mobile = prefs.getString('mobile') ?? '';
+    
+    await http.post(
+      Uri.parse('https://apply4study.com/api/progress/update'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'mobile': mobile,
+        'course_id': courseId,
+        'progress': progress,
+      }),
+    );
+  }
+
+  /// 🔸 Get enrolled courses from API
+  Future<List<Map<String, dynamic>>> getEnrolledCourses() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final mobile = prefs.getString('mobile') ?? '';
+      
+      final response = await http.post(
+        Uri.parse('https://apply4study.com/api/courses/enrolled'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'mobile': mobile}),
+      );
+      
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return List<Map<String, dynamic>>.from(data['courses'] ?? []);
+      }
+      return [];
+    } catch (e) {
+      debugPrint('❌ getEnrolledCourses error: $e');
+      return [];
     }
   }
 }

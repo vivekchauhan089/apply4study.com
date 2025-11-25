@@ -1,4 +1,4 @@
-# Learning App (Flutter) - Sample Project
+# Apply4Study App
 
 This is a lightweight Flutter learning app template for learning purposes.
 

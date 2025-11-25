@@ -134,37 +134,21 @@ class SyncService {
           await http.get(Uri.parse('$serverBaseUrl/courses/$courseId/lessons'));
 
       if (response.statusCode == 200) {
-        // final List<dynamic> lessons = jsonDecode(response.body);
+        final List<dynamic> lessons = jsonDecode(response.body);
 
-        // If you already have a LessonDao or table
-        // ignore this TODO once added
-        // for (final l in lessons) {
-          // Example: if your LocalDb has a lessons table
-          // await db.upsertLesson(LessonsCompanion(
-          //   id: Value(l['id'] as int),
-          //   courseId: Value(courseId),
-          //   title: Value(l['title'] as String?),
-          //   description: Value(l['description'] as String?),
-          //   duration: Value((l['duration'] ?? 0) as int),
-          //   videoUrl: Value(l['videoUrl'] as String?),
-          //   updatedAt: Value(
-          //     l['updatedAt'] != null && l['updatedAt'].toString().isNotEmpty
-          //         ? DateTime.tryParse(l['updatedAt'])
-          //         : null,
-          //   ),
-          // ));
-
-          // For now, just print (useful during dev)
-          // print('✅ Synced lesson: ${l['title']} (Course: $courseId)');
-        // }
-
-        // print('✅ All lessons synced for course $courseId');
-      } else {
-        // print('⚠️ Server returned ${response.statusCode} for course $courseId');
+        for (final l in lessons) {
+          await db.upsertLesson(LessonsCompanion(
+            id: Value(l['id'] as int),
+            courseId: Value(courseId),
+            title: Value(l['title'] as String? ?? ''),
+            duration: Value((l['duration'] ?? 0) as int),
+            completed: Value(l['completed'] as bool? ?? false),
+            synced: const Value(true),
+          ));
+        }
       }
     } catch (e) {
-      // print('❌ syncLessons error for course $courseId: $e');
-      // print(st);
+      // Handle sync error silently
     }
   }
 }

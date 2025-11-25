@@ -1,0 +1,61 @@
+Flutter crash report.
+Please report a bug at https://github.com/flutter/flutter/issues.
+
+## command
+
+flutter widget-preview start --machine --web-server --dtd-url ws://127.0.0.1:54382/xZaSRrT21as= --devtools-server-address http://127.0.0.1:9100/
+
+## exception
+
+_TypeError: Null check operator used on a null value
+
+```
+#0      PreviewManifest.updatePubspecHash (package:flutter_tools/src/widget_preview/preview_manifest.dart:145:64)
+#1      PreviewPubspecBuilder.populatePreviewPubspec (package:flutter_tools/src/widget_preview/preview_pubspec_builder.dart:174:21)
+<asynchronous suspension>
+```
+
+## flutter doctor
+
+```
+[✓] Flutter (Channel stable, 3.38.3, on Microsoft Windows [Version 10.0.26100.1742], locale en-IN) [1,183ms]
+    • Flutter version 3.38.3 on channel stable at C:\Users\vivek.kumar5\flutter\flutter
+    • Upstream repository https://github.com/flutter/flutter.git
+    • Framework revision 19074d12f7 (5 days ago), 2025-11-20 17:53:13 -0500
+    • Engine revision 13e658725d
+    • Dart version 3.10.1
+    • DevTools version 2.51.1
+    • Feature flags: enable-web, enable-linux-desktop, enable-macos-desktop, enable-windows-desktop, enable-android, enable-ios, cli-animations, enable-native-assets, omit-legacy-version-file, enable-lldb-debugging
+
+[✓] Windows Version (11 Pro 64-bit, 24H2, 2009) [5.0s]
+
+[✓] Android toolchain - develop for Android devices (Android SDK version 35.0.0) [5.4s]
+    • Android SDK at C:\Android\Sdk
+    • Emulator version unknown
+    • Platform android-36, build-tools 35.0.0
+    • ANDROID_HOME = C:\Android\Sdk
+    • Java binary at: C:\Program Files\Common Files\Oracle\Java\javapath\java.exe
+      This JDK was found in the system PATH.
+      To manually set the JDK path, use: `flutter config --jdk-dir="path/to/jdk"`.
+    • Java version Java(TM) SE Runtime Environment (build 19.0.1+10-21)
+    • All Android licenses accepted.
+
+[✓] Chrome - develop for the web [1,200ms]
+    • Chrome at C:\Program Files\Google\Chrome\Application\chrome.exe
+
+[!] Visual Studio - develop Windows apps (Visual Studio Build Tools 2019 16.11.8) [1,198ms]
+    • Visual Studio at C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools
+    • Visual Studio Build Tools 2019 version 16.11.32002.261
+    ✗ The current Visual Studio installation is incomplete.
+      Please use Visual Studio Installer to complete the installation or reinstall Visual Studio.
+
+[✓] Connected device (3 available) [713ms]
+    • Windows (desktop) • windows • windows-x64    • Microsoft Windows [Version 10.0.26100.1742]
+    • Chrome (web)      • chrome  • web-javascript • Google Chrome 142.0.7444.176
+    • Edge (web)        • edge    • web-javascript • Microsoft Edge 142.0.3595.94
+
+[✓] Network resources [904ms]
+    • All expected network resources are available.
+
+! Doctor found issues in 1 category.
+```

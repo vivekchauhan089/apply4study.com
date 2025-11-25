@@ -5,7 +5,9 @@ import '../../providers/app_provider.dart';
 // import '../shared/widgets/bottom_nav.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+  final VoidCallback? onBack; // ✅ added for back navigation
+  
+  const ProfileScreen({super.key, this.onBack});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -22,13 +24,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Future<void> _load() async {
     final prefs = await SharedPreferences.getInstance();
-    setState(() { _username = prefs.getString('username') ?? 'Learner'; });
+    setState(() { _username = prefs.getString('username') ?? prefs.getString('mobile') ?? 'Learner'; });
   }
 
   Future<void> _logout() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('username');
-    if (mounted) Navigator.pushReplacementNamed(context, '/');
+    await prefs.clear();
+    if (!mounted) return;
+    Navigator.pushReplacementNamed(context, '/');
   }
 
   @override
@@ -37,12 +40,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
-        leading: Navigator.canPop(context)
-            ? IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: () => Navigator.pop(context),
-              )
-            : null,
+        leading: widget.onBack != null ? IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: widget.onBack,
+        ) : null,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),

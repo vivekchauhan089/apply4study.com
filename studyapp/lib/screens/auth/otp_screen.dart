@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../../core/app_theme.dart';
+import '../../utils/device_helper.dart';
 
 class OtpScreen extends StatefulWidget {
   const OtpScreen({super.key});
@@ -55,9 +56,10 @@ class _OtpScreenState extends State<OtpScreen> {
 
     startTimer();
 
+    final deviceId = await DeviceHelper.getDeviceId();
     await http.post(
       Uri.parse("https://apply4study.com/api/sms/send"),
-      body: {"mobile": mobileNumber},
+      body: {"mobile": mobileNumber, "device_id": deviceId},
     );
 
     if (!mounted) return;
@@ -80,9 +82,10 @@ class _OtpScreenState extends State<OtpScreen> {
 
     setState(() => _loading = true);
 
+    final deviceId = await DeviceHelper.getDeviceId();
     final response = await http.post(
       Uri.parse("https://apply4study.com/api/sms/verify"),
-      body: {"mobile": mobileNumber, "otp": otp},
+      body: {"mobile": mobileNumber, "otp": otp, "device_id": deviceId},
     );
 
     final data = jsonDecode(response.body);
@@ -98,6 +101,7 @@ class _OtpScreenState extends State<OtpScreen> {
           arguments: {"mobile": mobileNumber},
         );
       } else {
+        await prefs.setString("mobile", mobileNumber);
         await prefs.setBool("loggedIn", true);
         if (!mounted) return;
         Navigator.pushReplacementNamed(context, "/home");
@@ -127,7 +131,6 @@ class _OtpScreenState extends State<OtpScreen> {
     return Scaffold(
       body: Container(
         width: double.infinity,
-        height: double.infinity,
 
         // 🔶 Full-screen orange gradient
         decoration: BoxDecoration(

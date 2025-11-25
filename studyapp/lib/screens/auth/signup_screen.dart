@@ -4,8 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import '../../core/app_theme.dart';
+import '../../utils/permission_manager.dart';
+import '../../utils/device_helper.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -21,7 +24,46 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String? _selectedUserType = "Student";
 
   String _dialCode = "+91";
+  String _countryCode = 'IN';
   bool _loading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _detectCountryFromLocation();
+  }
+
+  Future<void> _detectCountryFromLocation() async {
+    try {
+      final hasPermission = await PermissionManager.isLocationEnabled();
+      if (!hasPermission) {
+        await PermissionManager.requestLocationPermission();
+      }
+
+      final position = await Geolocator.getCurrentPosition(
+        locationSettings: const LocationSettings(
+          accuracy: LocationAccuracy.low,
+          timeLimit: Duration(seconds: 5),
+        ),
+      );
+
+      final placemarks = await placemarkFromCoordinates(
+        position.latitude,
+        position.longitude,
+      );
+
+      if (placemarks.isNotEmpty && placemarks.first.isoCountryCode != null) {
+        final countryCode = placemarks.first.isoCountryCode!;
+        if (mounted) {
+          setState(() {
+            _countryCode = countryCode;
+          });
+        }
+      }
+    } catch (e) {
+      // Keep default IN if location fails
+    }
+  }
 
   Future<void> _createAccount() async {
     final name = _nameCtrl.text.trim();
@@ -41,6 +83,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     setState(() => _loading = true);
 
     try {
+      final deviceId = await DeviceHelper.getDeviceId();
       final response = await http.post(
         Uri.parse("https://apply4study.com/api/signup"),
         body: {
@@ -49,6 +92,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           "mobile": mobile,
           "dial_code": _dialCode,
           "user_type": userType,
+          "device_id": deviceId,
         },
       );
 
@@ -89,7 +133,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Scaffold(
       body: Container(
         width: double.infinity,
-        height: double.infinity,
 
         // 🔶 Full-screen orange gradient
         decoration: BoxDecoration(
@@ -196,13 +239,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     onChanged: (country) {
                                       setState(() {
                                         _dialCode = country.dialCode!;
+                                        _countryCode = country.code!;
                                       });
                                     },
-                                    initialSelection: 'IN',
+                                    initialSelection: _countryCode,
                                     favorite: ['+91', 'IN'],
                                     hideMainText: true,
                                     showCountryOnly: true,
                                     showOnlyCountryWhenClosed: true,
+                                    flagWidth: 40,
                                   ),
                                 ),
                               ),

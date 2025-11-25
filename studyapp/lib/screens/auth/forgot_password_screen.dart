@@ -5,8 +5,11 @@ import 'package:country_code_picker/country_code_picker.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import '../../core/app_theme.dart';
+import '../../utils/permission_manager.dart';
+import '../../utils/device_helper.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -17,8 +20,47 @@ class ForgotPasswordScreen extends StatefulWidget {
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   String _dialCode = "+91";
+  String _countryCode = 'IN';
   final TextEditingController _mobileCtrl = TextEditingController();
   bool _loading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _detectCountryFromLocation();
+  }
+
+  Future<void> _detectCountryFromLocation() async {
+    try {
+      final hasPermission = await PermissionManager.isLocationEnabled();
+      if (!hasPermission) {
+        await PermissionManager.requestLocationPermission();
+      }
+
+      final position = await Geolocator.getCurrentPosition(
+        locationSettings: const LocationSettings(
+          accuracy: LocationAccuracy.low,
+          timeLimit: Duration(seconds: 5),
+        ),
+      );
+
+      final placemarks = await placemarkFromCoordinates(
+        position.latitude,
+        position.longitude,
+      );
+
+      if (placemarks.isNotEmpty && placemarks.first.isoCountryCode != null) {
+        final countryCode = placemarks.first.isoCountryCode!;
+        if (mounted) {
+          setState(() {
+            _countryCode = countryCode;
+          });
+        }
+      }
+    } catch (e) {
+      // Keep default IN if location fails
+    }
+  }
 
   Future<void> _sendOtp() async {
     final mobile = _mobileCtrl.text.trim();
@@ -39,9 +81,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
     // API CALL
     try {
+      final deviceId = await DeviceHelper.getDeviceId();
       final response = await http.post(
         Uri.parse("https://apply4study.com/api/sms/send"),
-        body: {"mobile": mobile, "mode": "forgot"},
+        body: {"mobile": mobile, "mode": "forgot", "device_id": deviceId},
       );
 
       final data = jsonDecode(response.body);
@@ -84,7 +127,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     return Scaffold(
       body: Container(
         width: double.infinity,
-        height: double.infinity,
 
         // 🔶 Full-screen orange gradient
         decoration: BoxDecoration(
@@ -178,13 +220,15 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                       onChanged: (country) {
                                         setState(() {
                                           _dialCode = country.dialCode!;
+                                          _countryCode = country.code!;
                                         });
                                       },
-                                      initialSelection: 'IN',
+                                      initialSelection: _countryCode,
                                       favorite: ['+91', 'IN'],
                                       hideMainText: true,
                                       showCountryOnly: true,
                                       showOnlyCountryWhenClosed: true,
+                                      flagWidth: 40,
                                     ),
                                   ),
                                 ),

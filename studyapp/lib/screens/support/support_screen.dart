@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../services/api_service.dart';
+import 'package:http/http.dart' as http;
 
 class SupportMessage {
   final String id;
@@ -36,6 +36,7 @@ class _SupportScreenState extends State<SupportScreen> {
   Future<void> _load() async {
     final prefs = await SharedPreferences.getInstance();
     final raw = prefs.getStringList(_prefsKey) ?? [];
+    if (!mounted) return;
     setState(() => _messages = raw.map((s) => SupportMessage.fromJson(jsonDecode(s) as Map<String, dynamic>)).toList());
   }
 
@@ -44,9 +45,15 @@ class _SupportScreenState extends State<SupportScreen> {
     await prefs.setStringList(_prefsKey, _messages.map((m) => jsonEncode(m.toJson())).toList());
   }
 
+  void _openWhatsAppBot() {
+    Navigator.pushNamed(context, '/whatsapp-chat');
+  }
+
   Future<void> _compose() async {
     final subj = TextEditingController();
     final body = TextEditingController();
+    // Capture messenger before any async operations
+    final messenger = ScaffoldMessenger.of(context);
     final ok = await showDialog<bool>(
       context: context,
       builder: (_) => AlertDialog(
@@ -67,15 +74,31 @@ class _SupportScreenState extends State<SupportScreen> {
     if (ok != true) return;
     final now = DateTime.now();
     final msg = SupportMessage(id: now.millisecondsSinceEpoch.toString(), subject: subj.text.trim(), message: body.text.trim(), createdAt: now);
+    if (!mounted) return;
     setState(() => _messages.insert(0, msg));
-    // Capture messenger before awaiting to avoid using BuildContext across async gaps
-    final messenger = ScaffoldMessenger.of(context);
     await _save();
     // Try sending to server; if it fails, keep local copy and notify user
     try {
-      await ApiService.instance.sendSupportMessage({'subject': msg.subject, 'message': msg.message, 'createdAt': msg.createdAt.toIso8601String()});
+      final prefs = await SharedPreferences.getInstance();
+      final mobile = prefs.getString('mobile') ?? '';
+      
+      final response = await http.post(
+        Uri.parse('https://apply4study.com/api/support/email'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'mobile': mobile,
+          'subject': msg.subject,
+          'message': msg.message,
+          'createdAt': msg.createdAt.toIso8601String(),
+        }),
+      );
+      
       if (!mounted) return;
-      messenger.showSnackBar(const SnackBar(content: Text('Message sent to support')));
+      if (response.statusCode == 200) {
+        messenger.showSnackBar(const SnackBar(content: Text('Message sent to support')));
+      } else {
+        messenger.showSnackBar(const SnackBar(content: Text('Message saved locally. Support will contact you.')));
+      }
     } catch (_) {
       if (!mounted) return;
       messenger.showSnackBar(const SnackBar(content: Text('Message saved locally. Support will contact you.')));
@@ -90,7 +113,26 @@ class _SupportScreenState extends State<SupportScreen> {
         padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
-            ElevatedButton(onPressed: _compose, child: const Text('Contact Support')),
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton.icon(
+                    onPressed: _compose,
+                    icon: const Icon(Icons.email),
+                    label: const Text('Email Support'),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: ElevatedButton.icon(
+                    onPressed: _openWhatsAppBot,
+                    icon: const Icon(Icons.chat),
+                    label: const Text('WhatsApp Bot'),
+                    style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                  ),
+                ),
+              ],
+            ),
             const SizedBox(height: 12),
             const Text('Messages sent (local history):', style: TextStyle(fontWeight: FontWeight.w600)),
             const SizedBox(height: 8),

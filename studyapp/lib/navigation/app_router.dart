@@ -15,6 +15,8 @@ import '../screens/courses/progress_screen.dart';
 import '../models/course.dart';
 import '../screens/notifications/notification_screen.dart';
 import '../screens/ocr/receipt_scan_screen.dart';
+import '../screens/skin_scanner/skin_scanner_screen.dart';
+import '../screens/skin_scanner/health_report_screen.dart';
 import '../screens/food/food_home_screen.dart';
 import '../screens/cab/cab_booking_screen.dart';
 import '../screens/ecommerce/deals_screen.dart';
@@ -27,6 +29,7 @@ import '../screens/compare/compare_screen.dart';
 import '../screens/expenses/expenses_screen.dart';
 import '../screens/nearby/nearby_screen.dart';
 import '../screens/support/support_screen.dart';
+import '../screens/whatsapp_chat/whatsapp_chat_screen.dart';
 import '../screens/settings/settings_screen.dart';
 // import '../features/dashboard/screens/dashboard_screen.dart';
 
@@ -37,10 +40,10 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const SplashScreen());
 
       case '/home':
-        return MaterialPageRoute(builder: (_) => const MainNavScreen());
+        return MaterialPageRoute(builder: (_) => const AuthGuard(child: MainNavScreen()));
 
       case '/notifications':
-        return MaterialPageRoute(builder: (_) => const NotificationScreen()); 
+        return MaterialPageRoute(builder: (_) => const AuthGuard(child: NotificationScreen())); 
 
       case '/login':
         return MaterialPageRoute(builder: (_) => const LoginScreen());
@@ -55,64 +58,73 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const ForgotPasswordScreen());
 
       case '/courses':
-        return MaterialPageRoute(builder: (_) => const CoursesScreen());
+        return MaterialPageRoute(builder: (_) => const AuthGuard(child: CoursesScreen()));
 
       case '/courseDetail':
         final course = settings.arguments as Course;
         return MaterialPageRoute(
-          builder: (_) => CourseDetail(courseId: course.id),
+          builder: (_) => AuthGuard(child: CourseDetail(courseId: course.id)),
         );
 
       case '/profile':
-        return MaterialPageRoute(builder: (_) => const ProfileScreen());
+        return MaterialPageRoute(builder: (_) => const AuthGuard(child: ProfileScreen()));
 
       case '/ai_chat':
-        return MaterialPageRoute(builder: (_) => const AiChatScreen());
+        return MaterialPageRoute(builder: (_) => const AuthGuard(child: AiChatScreen()));
 
       case '/progress':
-        return MaterialPageRoute(builder: (_) => const ProgressScreen());
+        return MaterialPageRoute(builder: (_) => const AuthGuard(child: ProgressScreen()));
       
       case '/ocr':
-        return MaterialPageRoute(builder: (_) => const ReceiptScanScreen());
+        return MaterialPageRoute(builder: (_) => const AuthGuard(child: ReceiptScanScreen()));
+
+      case '/skin-scanner':
+        return MaterialPageRoute(builder: (_) => const AuthGuard(child: SkinScannerScreen()));
+
+      case '/health-report':
+        return MaterialPageRoute(builder: (_) => const AuthGuard(child: HealthReportScreen()));
 
       case '/food':
-        return MaterialPageRoute(builder: (_) => const FoodHomeScreen());
+        return MaterialPageRoute(builder: (_) => const AuthGuard(child: FoodHomeScreen()));
 
       case '/cab':
-        return MaterialPageRoute(builder: (_) => const CabBookingScreen());
+        return MaterialPageRoute(builder: (_) => const AuthGuard(child: CabBookingScreen()));
 
       case '/deals':
-        return MaterialPageRoute(builder: (_) => const DealsScreen());
+        return MaterialPageRoute(builder: (_) => const AuthGuard(child: DealsScreen()));
 
       case '/jobs':
-        return MaterialPageRoute(builder: (_) => const JobsScreen());
+        return MaterialPageRoute(builder: (_) => const AuthGuard(child: JobsScreen()));
 
       case '/qrscan':
-        return MaterialPageRoute(builder: (_) => const ScanPayScreen());
+        return MaterialPageRoute(builder: (_) => const AuthGuard(child: ScanPayScreen()));
 
       case '/reminders':
-        return MaterialPageRoute(builder: (_) => const RemindersScreen());
+        return MaterialPageRoute(builder: (_) => const AuthGuard(child: RemindersScreen()));
 
       case '/track':
-        return MaterialPageRoute(builder: (_) => const FriendTrackerScreen());
+        return MaterialPageRoute(builder: (_) => const AuthGuard(child: FriendTrackerScreen()));
 
       case '/orders':
-        return MaterialPageRoute(builder: (_) => const OrdersScreen());
+        return MaterialPageRoute(builder: (_) => const AuthGuard(child: OrdersScreen()));
 
       case '/compare':
-        return MaterialPageRoute(builder: (_) => const CompareScreen());
+        return MaterialPageRoute(builder: (_) => const AuthGuard(child: CompareScreen()));
 
       case '/expenses':
-        return MaterialPageRoute(builder: (_) => const ExpensesScreen());
+        return MaterialPageRoute(builder: (_) => const AuthGuard(child: ExpensesScreen()));
 
       case '/nearby':
-        return MaterialPageRoute(builder: (_) => const NearbyScreen());
+        return MaterialPageRoute(builder: (_) => const AuthGuard(child: NearbyScreen()));
 
       case '/support':
-        return MaterialPageRoute(builder: (_) => const SupportScreen());
+        return MaterialPageRoute(builder: (_) => const AuthGuard(child: SupportScreen()));
+
+      case '/whatsapp-chat':
+        return MaterialPageRoute(builder: (_) => const AuthGuard(child: WhatsAppChatScreen()));
 
       case '/settings':
-        return MaterialPageRoute(builder: (_) => const SettingsScreen());
+        return MaterialPageRoute(builder: (_) => const AuthGuard(child: SettingsScreen()));
 
       case '/logout':
         return MaterialPageRoute(builder: (_) => const LogoutScreen());
@@ -167,5 +179,49 @@ class _EntryDeciderState extends State<EntryDecider> {
 
     // ✅ Load MainNavScreen instead of Dashboard directly
     return const MainNavScreen();
+  }
+}
+
+class AuthGuard extends StatefulWidget {
+  final Widget child;
+  const AuthGuard({super.key, required this.child});
+
+  @override
+  State<AuthGuard> createState() => _AuthGuardState();
+}
+
+class _AuthGuardState extends State<AuthGuard> {
+  bool _checking = true;
+  bool _isAuthenticated = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkAuth();
+  }
+
+  Future<void> _checkAuth() async {
+    final prefs = await SharedPreferences.getInstance();
+    final mobile = prefs.getString('mobile');
+    if (!mounted) return;
+    setState(() {
+      _isAuthenticated = mobile != null && mobile.isNotEmpty;
+      _checking = false;
+    });
+    
+    if (!_isAuthenticated) {
+      Navigator.pushReplacementNamed(context, '/login');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_checking) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+    
+    return _isAuthenticated ? widget.child : const SizedBox.shrink();
   }
 }

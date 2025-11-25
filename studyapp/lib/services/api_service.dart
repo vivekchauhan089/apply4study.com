@@ -13,7 +13,7 @@ class ApiService {
   static final ApiService instance = ApiService._private();
 
   /// Configure your backend base URL here or via environment
-  String baseUrl = 'https://api.example.com';
+  String baseUrl = 'https://apply4study.com';
 
   Map<String, String> get _defaultHeaders => {'Content-Type': 'application/json'};
 

@@ -2,12 +2,15 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import '../../core/app_theme.dart';
+import '../../utils/permission_manager.dart';
+import '../../utils/device_helper.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -19,7 +22,46 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _mobileCtrl = TextEditingController();
   String _dialCode = "+91";
+  String _countryCode = 'IN';
   bool _loading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _detectCountryFromLocation();
+  }
+
+  Future<void> _detectCountryFromLocation() async {
+    try {
+      final hasPermission = await PermissionManager.isLocationEnabled();
+      if (!hasPermission) {
+        await PermissionManager.requestLocationPermission();
+      }
+
+      final position = await Geolocator.getCurrentPosition(
+        locationSettings: const LocationSettings(
+          accuracy: LocationAccuracy.low,
+          timeLimit: Duration(seconds: 5),
+        ),
+      );
+
+      final placemarks = await placemarkFromCoordinates(
+        position.latitude,
+        position.longitude,
+      );
+
+      if (placemarks.isNotEmpty && placemarks.first.isoCountryCode != null) {
+        final countryCode = placemarks.first.isoCountryCode!;
+        if (mounted) {
+          setState(() {
+            _countryCode = countryCode;
+          });
+        }
+      }
+    } catch (e) {
+      // Keep default IN if location fails
+    }
+  }
 
   // ------------------------- LOGIN LOGIC --------------------------
   Future<void> _login() async {
@@ -37,14 +79,13 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => _loading = true);
 
     try {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString("mobile", "$_dialCode$mobile");
+      final deviceId = await DeviceHelper.getDeviceId();
 
       // --- API Call (with timeout) ---
       final response = await http
           .post(
             Uri.parse("https://apply4study.com/api/sms/send"),
-            body: {"mobile": "$_dialCode$mobile","mode":"login"},
+            body: {"mobile": "$_dialCode$mobile","mode":"login","device_id":deviceId},
           )
           .timeout(const Duration(seconds: 15));
 
@@ -54,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
         if (mounted) {
           Navigator.pushNamed(
             context,
-            "/home",
+            "/otp",
             arguments: {
               "mobile": "$_dialCode$mobile",
               "mode": "login",
@@ -187,9 +228,7 @@ This sheet is fully scrollable and draggable.
     return Scaffold(
       body: Container(
         width: double.infinity,
-        height: double.infinity,
 
-        // 🔶 Full-screen orange gradient
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [Colors.orange.shade600, Colors.orange.shade900],
@@ -280,13 +319,15 @@ This sheet is fully scrollable and draggable.
                                     onChanged: (country) {
                                       setState(() {
                                         _dialCode = country.dialCode!;
+                                        _countryCode = country.code!;
                                       });
                                     },
-                                    initialSelection: 'IN',
+                                    initialSelection: _countryCode,
                                     favorite: ['+91', 'IN'],
                                     hideMainText: true,
                                     showCountryOnly: true,
                                     showOnlyCountryWhenClosed: true,
+                                    flagWidth: 40,
                                   ),
                                 ),
                               ),

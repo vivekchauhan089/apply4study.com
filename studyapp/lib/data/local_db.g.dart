@@ -1138,18 +1138,353 @@ class ProgressSyncsCompanion extends UpdateCompanion<ProgressSync> {
   }
 }
 
+class $HealthScansTable extends HealthScans
+    with TableInfo<$HealthScansTable, HealthScan> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $HealthScansTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _mobileMeta = const VerificationMeta('mobile');
+  @override
+  late final GeneratedColumn<String> mobile = GeneratedColumn<String>(
+      'mobile', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _scanTypeMeta =
+      const VerificationMeta('scanType');
+  @override
+  late final GeneratedColumn<String> scanType = GeneratedColumn<String>(
+      'scan_type', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _valueMeta = const VerificationMeta('value');
+  @override
+  late final GeneratedColumn<String> value = GeneratedColumn<String>(
+      'value', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _statusMeta = const VerificationMeta('status');
+  @override
+  late final GeneratedColumn<String> status = GeneratedColumn<String>(
+      'status', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _scanDateMeta =
+      const VerificationMeta('scanDate');
+  @override
+  late final GeneratedColumn<DateTime> scanDate = GeneratedColumn<DateTime>(
+      'scan_date', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, mobile, scanType, value, status, scanDate];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'health_scans';
+  @override
+  VerificationContext validateIntegrity(Insertable<HealthScan> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('mobile')) {
+      context.handle(_mobileMeta,
+          mobile.isAcceptableOrUnknown(data['mobile']!, _mobileMeta));
+    } else if (isInserting) {
+      context.missing(_mobileMeta);
+    }
+    if (data.containsKey('scan_type')) {
+      context.handle(_scanTypeMeta,
+          scanType.isAcceptableOrUnknown(data['scan_type']!, _scanTypeMeta));
+    } else if (isInserting) {
+      context.missing(_scanTypeMeta);
+    }
+    if (data.containsKey('value')) {
+      context.handle(
+          _valueMeta, value.isAcceptableOrUnknown(data['value']!, _valueMeta));
+    } else if (isInserting) {
+      context.missing(_valueMeta);
+    }
+    if (data.containsKey('status')) {
+      context.handle(_statusMeta,
+          status.isAcceptableOrUnknown(data['status']!, _statusMeta));
+    } else if (isInserting) {
+      context.missing(_statusMeta);
+    }
+    if (data.containsKey('scan_date')) {
+      context.handle(_scanDateMeta,
+          scanDate.isAcceptableOrUnknown(data['scan_date']!, _scanDateMeta));
+    } else if (isInserting) {
+      context.missing(_scanDateMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  HealthScan map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return HealthScan(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      mobile: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}mobile'])!,
+      scanType: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}scan_type'])!,
+      value: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}value'])!,
+      status: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}status'])!,
+      scanDate: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}scan_date'])!,
+    );
+  }
+
+  @override
+  $HealthScansTable createAlias(String alias) {
+    return $HealthScansTable(attachedDatabase, alias);
+  }
+}
+
+class HealthScan extends DataClass implements Insertable<HealthScan> {
+  final int id;
+  final String mobile;
+  final String scanType;
+  final String value;
+  final String status;
+  final DateTime scanDate;
+  const HealthScan(
+      {required this.id,
+      required this.mobile,
+      required this.scanType,
+      required this.value,
+      required this.status,
+      required this.scanDate});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['mobile'] = Variable<String>(mobile);
+    map['scan_type'] = Variable<String>(scanType);
+    map['value'] = Variable<String>(value);
+    map['status'] = Variable<String>(status);
+    map['scan_date'] = Variable<DateTime>(scanDate);
+    return map;
+  }
+
+  HealthScansCompanion toCompanion(bool nullToAbsent) {
+    return HealthScansCompanion(
+      id: Value(id),
+      mobile: Value(mobile),
+      scanType: Value(scanType),
+      value: Value(value),
+      status: Value(status),
+      scanDate: Value(scanDate),
+    );
+  }
+
+  factory HealthScan.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return HealthScan(
+      id: serializer.fromJson<int>(json['id']),
+      mobile: serializer.fromJson<String>(json['mobile']),
+      scanType: serializer.fromJson<String>(json['scanType']),
+      value: serializer.fromJson<String>(json['value']),
+      status: serializer.fromJson<String>(json['status']),
+      scanDate: serializer.fromJson<DateTime>(json['scanDate']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'mobile': serializer.toJson<String>(mobile),
+      'scanType': serializer.toJson<String>(scanType),
+      'value': serializer.toJson<String>(value),
+      'status': serializer.toJson<String>(status),
+      'scanDate': serializer.toJson<DateTime>(scanDate),
+    };
+  }
+
+  HealthScan copyWith(
+          {int? id,
+          String? mobile,
+          String? scanType,
+          String? value,
+          String? status,
+          DateTime? scanDate}) =>
+      HealthScan(
+        id: id ?? this.id,
+        mobile: mobile ?? this.mobile,
+        scanType: scanType ?? this.scanType,
+        value: value ?? this.value,
+        status: status ?? this.status,
+        scanDate: scanDate ?? this.scanDate,
+      );
+  HealthScan copyWithCompanion(HealthScansCompanion data) {
+    return HealthScan(
+      id: data.id.present ? data.id.value : this.id,
+      mobile: data.mobile.present ? data.mobile.value : this.mobile,
+      scanType: data.scanType.present ? data.scanType.value : this.scanType,
+      value: data.value.present ? data.value.value : this.value,
+      status: data.status.present ? data.status.value : this.status,
+      scanDate: data.scanDate.present ? data.scanDate.value : this.scanDate,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('HealthScan(')
+          ..write('id: $id, ')
+          ..write('mobile: $mobile, ')
+          ..write('scanType: $scanType, ')
+          ..write('value: $value, ')
+          ..write('status: $status, ')
+          ..write('scanDate: $scanDate')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, mobile, scanType, value, status, scanDate);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is HealthScan &&
+          other.id == this.id &&
+          other.mobile == this.mobile &&
+          other.scanType == this.scanType &&
+          other.value == this.value &&
+          other.status == this.status &&
+          other.scanDate == this.scanDate);
+}
+
+class HealthScansCompanion extends UpdateCompanion<HealthScan> {
+  final Value<int> id;
+  final Value<String> mobile;
+  final Value<String> scanType;
+  final Value<String> value;
+  final Value<String> status;
+  final Value<DateTime> scanDate;
+  const HealthScansCompanion({
+    this.id = const Value.absent(),
+    this.mobile = const Value.absent(),
+    this.scanType = const Value.absent(),
+    this.value = const Value.absent(),
+    this.status = const Value.absent(),
+    this.scanDate = const Value.absent(),
+  });
+  HealthScansCompanion.insert({
+    this.id = const Value.absent(),
+    required String mobile,
+    required String scanType,
+    required String value,
+    required String status,
+    required DateTime scanDate,
+  })  : mobile = Value(mobile),
+        scanType = Value(scanType),
+        value = Value(value),
+        status = Value(status),
+        scanDate = Value(scanDate);
+  static Insertable<HealthScan> custom({
+    Expression<int>? id,
+    Expression<String>? mobile,
+    Expression<String>? scanType,
+    Expression<String>? value,
+    Expression<String>? status,
+    Expression<DateTime>? scanDate,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (mobile != null) 'mobile': mobile,
+      if (scanType != null) 'scan_type': scanType,
+      if (value != null) 'value': value,
+      if (status != null) 'status': status,
+      if (scanDate != null) 'scan_date': scanDate,
+    });
+  }
+
+  HealthScansCompanion copyWith(
+      {Value<int>? id,
+      Value<String>? mobile,
+      Value<String>? scanType,
+      Value<String>? value,
+      Value<String>? status,
+      Value<DateTime>? scanDate}) {
+    return HealthScansCompanion(
+      id: id ?? this.id,
+      mobile: mobile ?? this.mobile,
+      scanType: scanType ?? this.scanType,
+      value: value ?? this.value,
+      status: status ?? this.status,
+      scanDate: scanDate ?? this.scanDate,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (mobile.present) {
+      map['mobile'] = Variable<String>(mobile.value);
+    }
+    if (scanType.present) {
+      map['scan_type'] = Variable<String>(scanType.value);
+    }
+    if (value.present) {
+      map['value'] = Variable<String>(value.value);
+    }
+    if (status.present) {
+      map['status'] = Variable<String>(status.value);
+    }
+    if (scanDate.present) {
+      map['scan_date'] = Variable<DateTime>(scanDate.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('HealthScansCompanion(')
+          ..write('id: $id, ')
+          ..write('mobile: $mobile, ')
+          ..write('scanType: $scanType, ')
+          ..write('value: $value, ')
+          ..write('status: $status, ')
+          ..write('scanDate: $scanDate')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$LocalDb extends GeneratedDatabase {
   _$LocalDb(QueryExecutor e) : super(e);
   $LocalDbManager get managers => $LocalDbManager(this);
   late final $CoursesTable courses = $CoursesTable(this);
   late final $LessonsTable lessons = $LessonsTable(this);
   late final $ProgressSyncsTable progressSyncs = $ProgressSyncsTable(this);
+  late final $HealthScansTable healthScans = $HealthScansTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [courses, lessons, progressSyncs];
+      [courses, lessons, progressSyncs, healthScans];
 }
 
 typedef $$CoursesTableCreateCompanionBuilder = CoursesCompanion Function({
@@ -1725,6 +2060,182 @@ typedef $$ProgressSyncsTableProcessedTableManager = ProcessedTableManager<
     ),
     ProgressSync,
     PrefetchHooks Function()>;
+typedef $$HealthScansTableCreateCompanionBuilder = HealthScansCompanion
+    Function({
+  Value<int> id,
+  required String mobile,
+  required String scanType,
+  required String value,
+  required String status,
+  required DateTime scanDate,
+});
+typedef $$HealthScansTableUpdateCompanionBuilder = HealthScansCompanion
+    Function({
+  Value<int> id,
+  Value<String> mobile,
+  Value<String> scanType,
+  Value<String> value,
+  Value<String> status,
+  Value<DateTime> scanDate,
+});
+
+class $$HealthScansTableFilterComposer
+    extends Composer<_$LocalDb, $HealthScansTable> {
+  $$HealthScansTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get mobile => $composableBuilder(
+      column: $table.mobile, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get scanType => $composableBuilder(
+      column: $table.scanType, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get value => $composableBuilder(
+      column: $table.value, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get status => $composableBuilder(
+      column: $table.status, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get scanDate => $composableBuilder(
+      column: $table.scanDate, builder: (column) => ColumnFilters(column));
+}
+
+class $$HealthScansTableOrderingComposer
+    extends Composer<_$LocalDb, $HealthScansTable> {
+  $$HealthScansTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get mobile => $composableBuilder(
+      column: $table.mobile, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get scanType => $composableBuilder(
+      column: $table.scanType, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get value => $composableBuilder(
+      column: $table.value, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get status => $composableBuilder(
+      column: $table.status, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get scanDate => $composableBuilder(
+      column: $table.scanDate, builder: (column) => ColumnOrderings(column));
+}
+
+class $$HealthScansTableAnnotationComposer
+    extends Composer<_$LocalDb, $HealthScansTable> {
+  $$HealthScansTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get mobile =>
+      $composableBuilder(column: $table.mobile, builder: (column) => column);
+
+  GeneratedColumn<String> get scanType =>
+      $composableBuilder(column: $table.scanType, builder: (column) => column);
+
+  GeneratedColumn<String> get value =>
+      $composableBuilder(column: $table.value, builder: (column) => column);
+
+  GeneratedColumn<String> get status =>
+      $composableBuilder(column: $table.status, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get scanDate =>
+      $composableBuilder(column: $table.scanDate, builder: (column) => column);
+}
+
+class $$HealthScansTableTableManager extends RootTableManager<
+    _$LocalDb,
+    $HealthScansTable,
+    HealthScan,
+    $$HealthScansTableFilterComposer,
+    $$HealthScansTableOrderingComposer,
+    $$HealthScansTableAnnotationComposer,
+    $$HealthScansTableCreateCompanionBuilder,
+    $$HealthScansTableUpdateCompanionBuilder,
+    (HealthScan, BaseReferences<_$LocalDb, $HealthScansTable, HealthScan>),
+    HealthScan,
+    PrefetchHooks Function()> {
+  $$HealthScansTableTableManager(_$LocalDb db, $HealthScansTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$HealthScansTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$HealthScansTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$HealthScansTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<String> mobile = const Value.absent(),
+            Value<String> scanType = const Value.absent(),
+            Value<String> value = const Value.absent(),
+            Value<String> status = const Value.absent(),
+            Value<DateTime> scanDate = const Value.absent(),
+          }) =>
+              HealthScansCompanion(
+            id: id,
+            mobile: mobile,
+            scanType: scanType,
+            value: value,
+            status: status,
+            scanDate: scanDate,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required String mobile,
+            required String scanType,
+            required String value,
+            required String status,
+            required DateTime scanDate,
+          }) =>
+              HealthScansCompanion.insert(
+            id: id,
+            mobile: mobile,
+            scanType: scanType,
+            value: value,
+            status: status,
+            scanDate: scanDate,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$HealthScansTableProcessedTableManager = ProcessedTableManager<
+    _$LocalDb,
+    $HealthScansTable,
+    HealthScan,
+    $$HealthScansTableFilterComposer,
+    $$HealthScansTableOrderingComposer,
+    $$HealthScansTableAnnotationComposer,
+    $$HealthScansTableCreateCompanionBuilder,
+    $$HealthScansTableUpdateCompanionBuilder,
+    (HealthScan, BaseReferences<_$LocalDb, $HealthScansTable, HealthScan>),
+    HealthScan,
+    PrefetchHooks Function()>;
 
 class $LocalDbManager {
   final _$LocalDb _db;
@@ -1735,4 +2246,6 @@ class $LocalDbManager {
       $$LessonsTableTableManager(_db, _db.lessons);
   $$ProgressSyncsTableTableManager get progressSyncs =>
       $$ProgressSyncsTableTableManager(_db, _db.progressSyncs);
+  $$HealthScansTableTableManager get healthScans =>
+      $$HealthScansTableTableManager(_db, _db.healthScans);
 }
