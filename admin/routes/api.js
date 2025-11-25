@@ -465,4 +465,23 @@ router.post("/notification/markread", NotificationController.markAsRead);
 router.post("/notification/delete", NotificationController.deleteNotification);
 
 
+const DeviceController = require("../controllers/DeviceController");
+
+/**
+ * Register or Update Device Info
+ * @route POST /api/device/register
+ * @group Device - Device Management
+ * @param {string} device_id.body.required - Unique device identifier
+ * @param {string} device_token.body.required - FCM/APNS token
+ * @param {string} os.body.optional - Operating system (Android/iOS)
+ * @param {string} os_version.body.optional - OS version
+ * @param {string} app_version.body.optional - App version
+ * @param {string} manufacturer.body.optional - Device manufacturer
+ * @param {string} model.body.optional - Device model
+ * @returns {object} 200 - { success: true, data: device }
+ * @returns {Error} default - Unexpected error
+ */
+router.post('/device/register', DeviceController.register);
+
+
 module.exports = router;        
