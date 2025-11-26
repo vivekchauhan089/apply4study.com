@@ -129,6 +129,7 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
     return Scaffold(
       body: Container(
         width: double.infinity,
+        height: double.infinity,
 
         // 🔶 Full-screen orange gradient
           decoration: BoxDecoration(

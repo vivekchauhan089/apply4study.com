@@ -127,6 +127,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     return Scaffold(
       body: Container(
         width: double.infinity,
+        height: double.infinity,
 
         // 🔶 Full-screen orange gradient
         decoration: BoxDecoration(
@@ -209,34 +210,36 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         // Country Code + Mobile
                         Row(
                           children: [
-                            Expanded(
-                              flex: 1,
-                              child: SizedBox(
-                                height: 60, // match TextFormField height
-                                child: Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(bottom: 20), // fine-tune vertical alignment
-                                    child: CountryCodePicker(
-                                      onChanged: (country) {
-                                        setState(() {
-                                          _dialCode = country.dialCode!;
-                                          _countryCode = country.code!;
-                                        });
-                                      },
-                                      initialSelection: _countryCode,
-                                      favorite: ['+91', 'IN'],
-                                      hideMainText: true,
-                                      showCountryOnly: true,
-                                      showOnlyCountryWhenClosed: true,
-                                      flagWidth: 40,
-                                    ),
+                            SizedBox(
+                              width: 100,
+                              height: 80,
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 20),
+                                child: CountryCodePicker(
+                                  onChanged: (country) {
+                                    setState(() {
+                                      _dialCode = country.dialCode!;
+                                      _countryCode = country.code!;
+                                    });
+                                  },
+                                  initialSelection: _countryCode,
+                                  favorite: ['+91', 'IN'],
+                                  showFlag: true,
+                                  showDropDownButton: true,
+                                  padding: EdgeInsets.zero,
+                                  showCountryOnly: true,
+                                  showOnlyCountryWhenClosed: true,
+                                  hideMainText: true,
+                                  flagDecoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(2),
                                   ),
                                 ),
                               ),
                             ),
 
+                            const SizedBox(width: 8),
+
                             Expanded(
-                              flex: 3,
                               child: TextFormField(
                                 controller: _mobileCtrl,
                                 keyboardType: TextInputType.phone,

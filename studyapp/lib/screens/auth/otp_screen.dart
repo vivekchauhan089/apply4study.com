@@ -131,6 +131,7 @@ class _OtpScreenState extends State<OtpScreen> {
     return Scaffold(
       body: Container(
         width: double.infinity,
+        height: double.infinity,
 
         // 🔶 Full-screen orange gradient
         decoration: BoxDecoration(
