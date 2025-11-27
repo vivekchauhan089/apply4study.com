@@ -129,9 +129,9 @@ async function sendSmsOtp(req, res) {
 // ==================================================================
 async function verifySmsOtp(req, res) {
   try {
-    const { mobile, otp, token } = req.body;
+    const { mobile, otp, device_id } = req.body;
 
-    if (!mobile || !otp || !token) {
+    if (!mobile || !otp || !device_id) {
       return res.status(400).json({
         success: false,
         message: "Mobile, OTP & Token required",
@@ -139,11 +139,15 @@ async function verifySmsOtp(req, res) {
     }
 
     const record = await Sms.findOne({
-      mobile,
-      otp,
-      token,
-      token_status: "Active",
-    }).populate("device_id"); // ⭐ join device info
+        mobile,
+        otp,
+        token_status: "Active"
+    })
+    .populate({
+      path: "deviceinfos",
+      match: { device_id }
+    })
+    .sort({ createdAt: -1 }); // ⭐ join device info
 
     if (!record) {
       return res.status(400).json({
