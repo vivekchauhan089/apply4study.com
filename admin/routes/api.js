@@ -396,7 +396,7 @@ router.post('/page/fetchall', PageController.getAllPages);
 router.post('/page/create', PageController.createPage);
 
 
-const SmsController = require("../controllers/SmsController");
+const SmsController = require("../controllers/api/SmsController");
 
 /**
  * Send OTP to a mobile number
@@ -430,7 +430,7 @@ router.post('/sms/verify', SmsController.verifySmsOtp);
 router.post('/sms/expire', SmsController.expireToken);
 
 
-const NotificationController = require("../controllers/NotificationController");
+const NotificationController = require("../controllers/api/NotificationController");
 
 /**
  * Send a notification
@@ -463,6 +463,25 @@ router.post("/notification/markread", NotificationController.markAsRead);
  * @returns {object} 200 - Status message
  */
 router.post("/notification/delete", NotificationController.deleteNotification);
+
+
+const DeviceController = require("../controllers/api/DeviceController");
+
+/**
+ * Register or Update Device Info
+ * @route POST /api/device/register
+ * @group Device - Device Management
+ * @param {string} device_id.body.required - Unique device identifier
+ * @param {string} device_token.body.required - FCM/APNS token
+ * @param {string} os.body.optional - Operating system (Android/iOS)
+ * @param {string} os_version.body.optional - OS version
+ * @param {string} app_version.body.optional - App version
+ * @param {string} manufacturer.body.optional - Device manufacturer
+ * @param {string} model.body.optional - Device model
+ * @returns {object} 200 - { success: true, data: device }
+ * @returns {Error} default - Unexpected error
+ */
+router.post('/device/register', DeviceController.register);
 
 
 module.exports = router;        

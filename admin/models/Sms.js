@@ -1,9 +1,16 @@
 const mongoose = require("mongoose");
 
 const smsSchema = new mongoose.Schema({
-  mobile_no: {
+  mobile: {
     type: String,
     required: true,
+  },
+
+  // ⭐ Reference to DeviceInfo collection (JOIN)
+  device_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "DeviceInfo",
+    required: false,
   },
 
   otp: {
@@ -12,8 +19,9 @@ const smsSchema = new mongoose.Schema({
   },
 
   date_created: {
-    type: String, 
-    default: () => new Date().toISOString().replace("T", " ").substring(0, 19),
+    type: String,
+    default: () =>
+      new Date().toISOString().replace("T", " ").substring(0, 19),
   },
 
   token: {
@@ -29,12 +37,12 @@ const smsSchema = new mongoose.Schema({
 
   token_verified: {
     type: String,
-    default: "", 
+    default: "",
   },
 
   token_expired: {
     type: String,
-    default: "", 
+    default: "",
   },
 });
 
