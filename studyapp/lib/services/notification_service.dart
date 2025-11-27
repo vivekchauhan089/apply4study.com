@@ -6,6 +6,8 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/services.dart';
 import 'package:app_settings/app_settings.dart';
 import 'package:http/http.dart' as http;
+import 'package:web/web.dart' as web;
+import 'package:uuid/uuid.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'dart:io';
 import 'dart:convert';
@@ -22,34 +24,148 @@ class NotificationService {
   static bool _isCheckingAfterSettings = false;
   static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
+  static String getWebDeviceId() {
+    const storageKey = "studyapp_device_id";
+    // Check if already stored
+    String? existing = web.window.localStorage.getItem(storageKey);
+    if (existing != null && existing.isNotEmpty) {
+      return existing;
+    }
+    // If not exists → generate new UUID
+    String newId = const Uuid().v4();
+    web.window.localStorage.setItem(storageKey, newId);
+    return newId;
+  }
+
   /// Register device with API using existing token
   static Future<void> _registerDevice(String? token) async {
     if (token == null) return;
     
     try {
       final deviceInfo = DeviceInfoPlugin();
-      Map<String, dynamic> deviceData = {'fcm_token': token};
+      Map<String, dynamic> deviceData = {'device_token': token};
 
-      if (Platform.isAndroid) {
+      // ==============================
+      // 🌐 WEB (Chrome, Safari, Firefox…)
+      // ==============================
+      if (kIsWeb) {
+        deviceData.addAll({
+          'device_id': getWebDeviceId(), // best available for web
+          'model': 'Web Browser',
+          'os': web.window.navigator.platform != "" ? web.window.navigator.platform : "Web",
+          'os_version': 'N/A',
+          'app_version': "1.0.0",
+          'manufacturer': 'Browser',
+          'brand': web.window.navigator.vendor,
+          'device': web.window.navigator.userAgent,
+        });
+      }
+
+      // ===== Mobile / Desktop Platforms =====
+
+      // ==============================
+      // 🤖 ANDROID
+      // ==============================
+      else if (Platform.isAndroid) {
         final info = await deviceInfo.androidInfo;
         deviceData.addAll({
           'device_id': info.id,
-          'device_name': info.model,
-          'os': 'Android',
+          'model': info.model,
+          'os': "Android",
           'os_version': info.version.release,
+          'app_version': "1.0.0",
+          'manufacturer': info.manufacturer,
+          'brand': info.brand,
+          'device': info.device,
         });
-      } else if (Platform.isIOS) {
+      }
+
+      // ==============================
+      // 🍎 iOS
+      // ==============================
+      else if (Platform.isIOS) {
         final info = await deviceInfo.iosInfo;
         deviceData.addAll({
           'device_id': info.identifierForVendor ?? '',
-          'device_name': info.name,
-          'os': 'iOS',
+          'model': info.name,
+          'os': "iOS",
           'os_version': info.systemVersion,
+          'app_version': "1.0.0",
+          'manufacturer': "Apple",
+          'brand': info.modelName,
+          'device': info.model,
+        });
+      }
+
+      // ==============================
+      // 🪟 WINDOWS (Desktop)
+      // ==============================
+      else if (Platform.isWindows) {
+        final info = await deviceInfo.windowsInfo;
+        deviceData.addAll({
+          'device_id': info.deviceId,
+          'model': info.computerName,
+          'os': "Windows",
+          'os_version': info.releaseId,
+          'app_version': "1.0.0",
+          'manufacturer': info.platformId,
+          'brand': info.productName,
+          'device': info.productName,
+        });
+      }
+
+      // ==============================
+      // 🐧 LINUX (Desktop)
+      // ==============================
+      else if (Platform.isLinux) {
+        final info = await deviceInfo.linuxInfo;
+        deviceData.addAll({
+          'device_id': info.machineId ?? "unknown",
+          'model': info.name != "" ? info.name : "Linux Desktop",
+          'os': "Linux",
+          'os_version': info.version ?? "",
+          'app_version': "1.0.0",
+          'manufacturer': "Linux",
+          'brand': "Linux",
+          'device': info.prettyName != "" ? info.prettyName : "Linux Device",
+        });
+      }
+
+      // ==============================
+      // 🍏 macOS (Desktop)
+      // ==============================
+      else if (Platform.isMacOS) {
+        final info = await deviceInfo.macOsInfo;
+        deviceData.addAll({
+          'device_id': info.systemGUID ?? "unknown",
+          'model': info.model,
+          'os': "macOS",
+          'os_version': info.osRelease,
+          'app_version': "1.0.0",
+          'manufacturer': "Apple",
+          'brand': "Mac",
+          'device': info.model,
+        });
+      }
+
+      // ==============================
+      // ❓ Fallback (Any unknown OS)
+      // ==============================
+      else {
+        deviceData.addAll({
+          'device_id': 'unknown',
+          'model': 'unknown',
+          'os': 'unknown',
+          'os_version': 'unknown',
+          'app_version': "1.0.0",
+          'manufacturer': 'unknown',
+          'brand': 'unknown',
+          'device': 'unknown',
         });
       }
 
       await http.post(
-        Uri.parse('https://apply4study.com/api/device/register'),
+        Uri.parse('http://localhost:8083/api/device/register'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(deviceData),
       );
@@ -71,7 +187,7 @@ class NotificationService {
         await _registerDevice(token);
 
         FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-          debugPrint('📩 Web FCM message: ${message.notification?.title}');
+          debugPrint('📩 Web FCM message: ${message.data}');
         });
       } else {
         debugPrint('📱 Initializing FCM for Mobile...');

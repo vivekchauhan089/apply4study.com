@@ -4,12 +4,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:web/web.dart' as web;
 
 import '../../core/app_theme.dart';
 import '../../utils/device_helper.dart';
 
 class OtpScreen extends StatefulWidget {
-  const OtpScreen({super.key});
+  final String? mobile;
+  final String? mode;
+
+  const OtpScreen({
+    super.key,
+    this.mobile,
+    this.mode,
+  });
 
   @override
   State<OtpScreen> createState() => _OtpScreenState();
@@ -29,6 +37,8 @@ class _OtpScreenState extends State<OtpScreen> {
   @override
   void initState() {
     super.initState();
+    mobileNumber = widget.mobile ?? "";
+    mode = widget.mode ?? "login";
     startTimer();
   }
 
@@ -56,9 +66,11 @@ class _OtpScreenState extends State<OtpScreen> {
 
     startTimer();
 
-    final deviceId = await DeviceHelper.getDeviceId();
+    String deviceId = await DeviceHelper.getDeviceId();
+    deviceId = (deviceId.isNotEmpty && deviceId != "unknown") ? deviceId : (web.window.localStorage.getItem("studyapp_device_id") ?? "");
+
     await http.post(
-      Uri.parse("https://apply4study.com/api/sms/send"),
+      Uri.parse("http://localhost:8083/api/sms/send"),
       body: {"mobile": mobileNumber, "device_id": deviceId},
     );
 
@@ -81,23 +93,24 @@ class _OtpScreenState extends State<OtpScreen> {
     }
 
     setState(() => _loading = true);
+    String deviceId = await DeviceHelper.getDeviceId();
+    deviceId = (deviceId.isNotEmpty && deviceId != "unknown") ? deviceId : (web.window.localStorage.getItem("studyapp_device_id") ?? "");
 
-    final deviceId = await DeviceHelper.getDeviceId();
     final response = await http.post(
-      Uri.parse("https://apply4study.com/api/sms/verify"),
+      Uri.parse("http://localhost:8083/api/sms/verify"),
       body: {"mobile": mobileNumber, "otp": otp, "device_id": deviceId},
     );
 
     final data = jsonDecode(response.body);
 
-    if (data["status"] == 200) {
+    if (data["success"] == true) {
       final prefs = await SharedPreferences.getInstance();
 
       if (mode == "forgot") {
         if (!mounted) return;
-        Navigator.pushReplacementNamed(
+        Navigator.pushNamed(
           context,
-          "/set-password",
+          "/setPassword",
           arguments: {"mobile": mobileNumber},
         );
       } else {
@@ -121,12 +134,6 @@ class _OtpScreenState extends State<OtpScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final args = ModalRoute.of(context)?.settings.arguments;
-
-    if (args is Map) {
-      mobileNumber = args["mobile"] ?? "";
-      mode = args["mode"] == true ? "forgot" : "login";
-    }
 
     return Scaffold(
       body: Container(

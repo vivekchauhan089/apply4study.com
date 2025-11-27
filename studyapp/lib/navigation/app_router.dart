@@ -31,6 +31,7 @@ import '../screens/nearby/nearby_screen.dart';
 import '../screens/support/support_screen.dart';
 import '../screens/whatsapp_chat/whatsapp_chat_screen.dart';
 import '../screens/settings/settings_screen.dart';
+import '../screens/auth/set_password_screen.dart';
 // import '../features/dashboard/screens/dashboard_screen.dart';
 
 class AppRouter {
@@ -49,13 +50,18 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const LoginScreen());
 
       case '/otp':
-        return MaterialPageRoute(builder: (_) => const OtpScreen());
+        final args = settings.arguments as Map<String, dynamic>?;
+        return MaterialPageRoute(builder: (_) => OtpScreen(mobile: args?['mobile'] ?? '', mode: args?['mode'] ?? ''));
 
       case '/signup':
         return MaterialPageRoute(builder: (_) => const SignUpScreen());
 
       case '/forgotPassword':
         return MaterialPageRoute(builder: (_) => const ForgotPasswordScreen());
+
+      case '/setPassword':
+        final args = settings.arguments as Map<String, dynamic>?;
+        return MaterialPageRoute(builder: (_) => SetPasswordScreen(mobile: args?['mobile'] ?? ''));
 
       case '/courses':
         return MaterialPageRoute(builder: (_) => const AuthGuard(child: CoursesScreen()));

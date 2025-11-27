@@ -6,6 +6,7 @@ import 'package:country_code_picker/country_code_picker.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:web/web.dart' as web;
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import '../../core/app_theme.dart';
@@ -21,7 +22,6 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _mobileCtrl = TextEditingController();
-  String _dialCode = "+91";
   String _countryCode = 'IN';
   bool _loading = false;
 
@@ -79,25 +79,27 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => _loading = true);
 
     try {
-      final deviceId = await DeviceHelper.getDeviceId();
+      String deviceId = await DeviceHelper.getDeviceId();
+      deviceId = (deviceId.isNotEmpty && deviceId != "unknown") ? deviceId : (web.window.localStorage.getItem("studyapp_device_id") ?? "");
+
 
       // --- API Call (with timeout) ---
       final response = await http
           .post(
-            Uri.parse("https://apply4study.com/api/sms/send"),
-            body: {"mobile": "$_dialCode$mobile","mode":"login","device_id":deviceId},
+            Uri.parse("http://localhost:8083/api/sms/send"),
+            body: {"mobile": mobile,"mode":"login","device_id":deviceId},
           )
           .timeout(const Duration(seconds: 15));
 
       final data = jsonDecode(response.body);
 
-      if (data["status"] == 200) {
+      if (data["success"] == true) {
         if (mounted) {
           Navigator.pushNamed(
             context,
             "/otp",
             arguments: {
-              "mobile": "$_dialCode$mobile",
+              "mobile": mobile,
               "mode": "login",
             },
           );
@@ -316,7 +318,6 @@ This sheet is fully scrollable and draggable.
                               child: CountryCodePicker(
                                 onChanged: (country) {
                                   setState(() {
-                                    _dialCode = country.dialCode!;
                                     _countryCode = country.code!;
                                   });
                                 },

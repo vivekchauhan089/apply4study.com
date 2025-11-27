@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:web/web.dart' as web;
 import 'dart:convert';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:geocoding/geocoding.dart';
@@ -19,7 +20,6 @@ class ForgotPasswordScreen extends StatefulWidget {
 }
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
-  String _dialCode = "+91";
   String _countryCode = 'IN';
   final TextEditingController _mobileCtrl = TextEditingController();
   bool _loading = false;
@@ -77,11 +77,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     setState(() => _loading = true);
 
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString("reset_mobile", "$_dialCode$mobile");
+    await prefs.setString("reset_mobile", mobile);
 
     // API CALL
     try {
-      final deviceId = await DeviceHelper.getDeviceId();
+      String deviceId = await DeviceHelper.getDeviceId();
+      deviceId = (deviceId.isNotEmpty && deviceId != "unknown") ? deviceId : (web.window.localStorage.getItem("studyapp_device_id") ?? "");
+
       final response = await http.post(
         Uri.parse("https://apply4study.com/api/sms/send"),
         body: {"mobile": mobile, "mode": "forgot", "device_id": deviceId},
@@ -91,13 +93,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
       if (!mounted) return;
 
-      if (data["status"] == 200) {
+      if (data["success"] == true) {
         if (mounted) {
           Navigator.pushNamed(
             context,
             "/otp",
             arguments: {
-              "mobile": "$_dialCode$mobile",
+              "mobile": mobile,
               "mode": "forgot",
             },
           );
@@ -218,7 +220,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                 child: CountryCodePicker(
                                   onChanged: (country) {
                                     setState(() {
-                                      _dialCode = country.dialCode!;
                                       _countryCode = country.code!;
                                     });
                                   },

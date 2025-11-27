@@ -1,12 +1,14 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:web/web.dart' as web;
 import 'package:google_fonts/google_fonts.dart';
 import '../../core/app_theme.dart';
 import '../../utils/device_helper.dart';
 
 class SetPasswordScreen extends StatefulWidget {
-  const SetPasswordScreen({super.key});
+  final String? mobile;
+  const SetPasswordScreen({super.key,this.mobile});
 
   @override
   State<SetPasswordScreen> createState() => _SetPasswordScreenState();
@@ -27,6 +29,12 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
   String _strengthLabel = "";
   Color _strengthColor = Colors.grey;
   double _strengthValue = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    mobile = widget.mobile ?? "";
+  }
 
   void _checkPasswordStrength(String pass) {
     if (pass.isEmpty) {
@@ -93,7 +101,9 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
 
     setState(() => _loading = true);
 
-    final deviceId = await DeviceHelper.getDeviceId();
+    String deviceId = await DeviceHelper.getDeviceId();
+    deviceId = (deviceId.isNotEmpty && deviceId != "unknown") ? deviceId : (web.window.localStorage.getItem("studyapp_device_id") ?? "");
+
     final res = await http.post(
       Uri.parse("https://apply4study.com/api/updatePassword"),
       body: {"mobile": mobile, "password": pass, "device_id": deviceId},
@@ -102,7 +112,7 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
     final data = jsonDecode(res.body);
     if (!mounted) return;
 
-    if (data["status"] == 200) {
+    if (data["success"] == true) {
       if (mounted) {
         ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text("Password updated successfully!")));
@@ -123,8 +133,6 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final args = ModalRoute.of(context)?.settings.arguments;
-    if (args is String) mobile = args;
 
     return Scaffold(
       body: Container(
