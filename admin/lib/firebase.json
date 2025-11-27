@@ -1,5 +1,5 @@
 {
-  "type": "service_account",
+  "type": "",
   "project_id": "",
   "private_key_id": "",
   "private_key": "",
@@ -9,5 +9,5 @@
   "token_uri": "",
   "auth_provider_x509_cert_url": "",
   "client_x509_cert_url": "",
-  "universe_domain": "googleapis.com"
+  "universe_domain": ""
 }

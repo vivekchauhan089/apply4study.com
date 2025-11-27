@@ -1,6 +1,7 @@
 const request = require("request");
-const Sms = require("../models/Sms");
-const DeviceInfo = require("../models/DeviceInfo");
+const notifier = require.main.require("./lib/email");
+const Sms = require.main.require("./models/Sms");
+const DeviceInfo = require.main.require("./models/DeviceInfo");
 const crypto = require("crypto");
 
 // ➤ SMS Gateway URL
@@ -87,7 +88,7 @@ async function sendSmsOtp(req, res) {
     });
 
     // Send SMS
-    request.post(
+    /*request.post(
       {
         url: SMS_GATEWAY_URL,
         json: {
@@ -98,7 +99,16 @@ async function sendSmsOtp(req, res) {
       (error, response, body) => {
         console.log("SMS API Result:", body);
       }
-    );
+    );*/
+
+    var tokens = [];
+    // Send Notification
+    if(device.device_token) {
+      let title = 'Login OTP Notification';
+      let message = `Your OTP is ${otp}.`;
+      tokens.push(device.device_token);
+      await notifier.pushNotification(message, title, tokens);
+    }
 
     return res.json({
       success: true,
@@ -163,6 +173,52 @@ async function verifySmsOtp(req, res) {
 }
 
 // ==================================================================
+// ✔ EXPIRE OTP TOKEN (Manual or CRON)
+// ==================================================================
+async function expireToken(req, res) {
+  try {
+    const { token_id } = req.body;
+
+    if (!token_id) {
+      return res.status(400).json({
+        success: false,
+        message: "token_id is required",
+      });
+    }
+
+    // Find active token
+    const record = await Sms.findOne({
+      token: token_id,
+      token_status: "Active",
+    });
+
+    if (!record) {
+      return res.status(404).json({
+        success: false,
+        message: "Token not found or already expired",
+      });
+    }
+
+    // Expire the token
+    record.token_status = "Expire";
+    record.token_expired = new Date();
+    await record.save();
+
+    return res.json({
+      success: true,
+      message: "Token expired successfully",
+    });
+
+  } catch (error) {
+    console.error("Expire Token Error:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to expire token",
+    });
+  }
+}
+
+// ==================================================================
 // ✔ AUTO EXPIRE OLD OTPs (10 minutes)
 // ==================================================================
 async function autoExpireOldOtps(mobile) {
@@ -183,4 +239,4 @@ async function autoExpireOldOtps(mobile) {
   );
 }
 
-module.exports = { sendSmsOtp, verifySmsOtp };
+module.exports = { sendSmsOtp, verifySmsOtp, expireToken };

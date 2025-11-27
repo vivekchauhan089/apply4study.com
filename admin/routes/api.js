@@ -396,7 +396,7 @@ router.post('/page/fetchall', PageController.getAllPages);
 router.post('/page/create', PageController.createPage);
 
 
-const SmsController = require("../controllers/SmsController");
+const SmsController = require("../controllers/api/SmsController");
 
 /**
  * Send OTP to a mobile number
@@ -430,7 +430,7 @@ router.post('/sms/verify', SmsController.verifySmsOtp);
 router.post('/sms/expire', SmsController.expireToken);
 
 
-const NotificationController = require("../controllers/NotificationController");
+const NotificationController = require("../controllers/api/NotificationController");
 
 /**
  * Send a notification
@@ -465,7 +465,7 @@ router.post("/notification/markread", NotificationController.markAsRead);
 router.post("/notification/delete", NotificationController.deleteNotification);
 
 
-const DeviceController = require("../controllers/DeviceController");
+const DeviceController = require("../controllers/api/DeviceController");
 
 /**
  * Register or Update Device Info

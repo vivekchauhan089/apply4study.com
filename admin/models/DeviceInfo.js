@@ -19,7 +19,7 @@ const deviceInfoSchema = new mongoose.Schema({
 
   os: {
     type: String,
-    enum: ["android", "ios", "web"],
+    enum: ["android", "ios", "web", "windows", "linux", "macos", "Win32", "Win64", "Linux x86_64", "MacIntel", "MacPPC", "iPhone", "iPad", "Android"],
     default: "android",
   },
 

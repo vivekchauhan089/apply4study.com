@@ -1,4 +1,5 @@
-const Notification = require("../models/Notification");
+const notifier = require.main.require("./lib/email");
+const Notification = require.main.require("./models/Notification");
 
 module.exports = {
   
@@ -6,6 +7,11 @@ module.exports = {
   async sendNotification(req, res) {
     try {
       const { user_id, title, message } = req.body;
+
+      // send firebase notification
+      var tokens = [];
+      tokens.push(user_id);
+      await notifier.pushNotification(message, title, tokens);
 
       const notify = new Notification({
         user_id,

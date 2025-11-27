@@ -1,4 +1,4 @@
-const DeviceInfo = require("../models/DeviceInfo");
+const DeviceInfo = require.main.require("./models/DeviceInfo");
 
 async function register(req, res) {
   try {

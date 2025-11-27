@@ -260,3 +260,5 @@ module.exports.sendEmail = function(data) {
         });
     })   	
 };
+
+module.exports = { pushNotification };
