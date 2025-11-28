@@ -1,0 +1,39 @@
+name: supplychain_app
+description: Supply Chain Management App for Distributors and Consumers
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  http: ^1.0.0
+  shared_preferences: ^2.1.1
+  sqflite: ^2.2.8+4
+  path_provider: ^2.0.15
+  path: ^1.8.3
+  provider: ^6.0.5
+  google_fonts: ^6.2.1
+  intl: ^0.20.2
+
+  qr_flutter: ^4.1.0
+  image_picker: ^1.2.1
+  cached_network_image: ^3.3.1
+  mobile_scanner: ^5.2.3
+  razorpay_flutter: ^1.3.7
+  fl_chart: ^1.1.1
+  shimmer: ^3.0.0
+  badges: ^3.1.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
