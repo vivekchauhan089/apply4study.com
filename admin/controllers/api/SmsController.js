@@ -2,6 +2,7 @@ const request = require("request");
 const notifier = require.main.require("./lib/email");
 const Sms = require.main.require("./models/Sms");
 const DeviceInfo = require.main.require("./models/DeviceInfo");
+const waNotifier = require.main.require("./helper/waNotification");
 const crypto = require("crypto");
 
 // ➤ SMS Gateway URL
@@ -88,18 +89,33 @@ async function sendSmsOtp(req, res) {
     });
 
     // Send SMS
-    /*request.post(
-      {
-        url: SMS_GATEWAY_URL,
-        json: {
-          to: `+91${mobile}`,
-          message: `Your OTP is ${otp}.`,
+    /*
+    if (mobile != "")
+    {
+      request.post(
+        {
+          url: SMS_GATEWAY_URL,
+          json: {
+            to: `+91${mobile}`,
+            message: `Your OTP is ${otp}.`,
+          },
         },
-      },
-      (error, response, body) => {
-        console.log("SMS API Result:", body);
-      }
-    );*/
+        (error, response, body) => {
+          console.log("SMS API Result:", body);
+        }
+      );
+    }
+    */
+
+    var app_data = {};
+    if (mobile != "")
+    {
+      app_data.name = "Hello Student";
+      app_data.phone = mobile;
+      app_data.otp = otp;
+      app_data.template_name = "send_login_otp";
+      await waNotifier.sendWaNotification(app_data);
+    }
 
     var tokens = [];
     // Send Notification
