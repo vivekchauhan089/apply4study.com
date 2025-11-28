@@ -34,7 +34,7 @@ dependencies:
   sqlite3_flutter_libs: ^0.5.40
   ffi: ^2.1.4
   app_settings: ^6.1.1
-  web: ^1.1.1
+  universal_html: ^2.2.4
   permission_handler: ^12.0.1
   country_code_picker: ^3.4.1
   flutter_native_splash: ^2.4.7

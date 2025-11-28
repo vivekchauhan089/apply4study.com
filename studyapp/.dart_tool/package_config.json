@@ -128,12 +128,6 @@
       "languageVersion": "3.4"
     },
     {
-      "name": "code_assets",
-      "rootUri": "file:///C:/Users/vivek.kumar5/AppData/Local/Pub/Cache/hosted/pub.dev/code_assets-0.19.10",
-      "packageUri": "lib/",
-      "languageVersion": "3.9"
-    },
-    {
       "name": "code_builder",
       "rootUri": "file:///C:/Users/vivek.kumar5/AppData/Local/Pub/Cache/hosted/pub.dev/code_builder-4.11.0",
       "packageUri": "lib/",
@@ -213,7 +207,7 @@
     },
     {
       "name": "device_info_plus",
-      "rootUri": "file:///C:/Users/vivek.kumar5/AppData/Local/Pub/Cache/hosted/pub.dev/device_info_plus-12.2.0",
+      "rootUri": "file:///C:/Users/vivek.kumar5/AppData/Local/Pub/Cache/hosted/pub.dev/device_info_plus-12.3.0",
       "packageUri": "lib/",
       "languageVersion": "3.7"
     },
@@ -524,12 +518,6 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "hooks",
-      "rootUri": "file:///C:/Users/vivek.kumar5/AppData/Local/Pub/Cache/hosted/pub.dev/hooks-0.20.5",
-      "packageUri": "lib/",
-      "languageVersion": "3.9"
-    },
-    {
       "name": "html",
       "rootUri": "file:///C:/Users/vivek.kumar5/AppData/Local/Pub/Cache/hosted/pub.dev/html-0.15.6",
       "packageUri": "lib/",
@@ -680,12 +668,6 @@
       "languageVersion": "3.2"
     },
     {
-      "name": "native_toolchain_c",
-      "rootUri": "file:///C:/Users/vivek.kumar5/AppData/Local/Pub/Cache/hosted/pub.dev/native_toolchain_c-0.17.2",
-      "packageUri": "lib/",
-      "languageVersion": "3.9"
-    },
-    {
       "name": "nested",
       "rootUri": "file:///C:/Users/vivek.kumar5/AppData/Local/Pub/Cache/hosted/pub.dev/nested-1.0.0",
       "packageUri": "lib/",
@@ -696,12 +678,6 @@
       "rootUri": "file:///C:/Users/vivek.kumar5/AppData/Local/Pub/Cache/hosted/pub.dev/nm-0.5.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
-    },
-    {
-      "name": "objective_c",
-      "rootUri": "file:///C:/Users/vivek.kumar5/AppData/Local/Pub/Cache/hosted/pub.dev/objective_c-9.2.0",
-      "packageUri": "lib/",
-      "languageVersion": "3.9"
     },
     {
       "name": "package_config",
@@ -747,7 +723,7 @@
     },
     {
       "name": "path_provider_foundation",
-      "rootUri": "file:///C:/Users/vivek.kumar5/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_foundation-2.5.0",
+      "rootUri": "file:///C:/Users/vivek.kumar5/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_foundation-2.5.1",
       "packageUri": "lib/",
       "languageVersion": "3.9"
     },
@@ -1022,6 +998,12 @@
       "languageVersion": "3.5"
     },
     {
+      "name": "universal_html",
+      "rootUri": "file:///C:/Users/vivek.kumar5/AppData/Local/Pub/Cache/hosted/pub.dev/universal_html-2.3.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.6"
+    },
+    {
       "name": "universal_io",
       "rootUri": "file:///C:/Users/vivek.kumar5/AppData/Local/Pub/Cache/hosted/pub.dev/universal_io-2.3.1",
       "packageUri": "lib/",
@@ -1071,7 +1053,7 @@
     },
     {
       "name": "video_player_avfoundation",
-      "rootUri": "file:///C:/Users/vivek.kumar5/AppData/Local/Pub/Cache/hosted/pub.dev/video_player_avfoundation-2.8.7",
+      "rootUri": "file:///C:/Users/vivek.kumar5/AppData/Local/Pub/Cache/hosted/pub.dev/video_player_avfoundation-2.8.8",
       "packageUri": "lib/",
       "languageVersion": "3.9"
     },

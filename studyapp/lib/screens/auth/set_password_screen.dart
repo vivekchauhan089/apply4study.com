@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:web/web.dart' as web;
+import 'package:universal_html/html.dart' as html;
 import 'package:google_fonts/google_fonts.dart';
 import '../../core/app_theme.dart';
 import '../../utils/device_helper.dart';
@@ -30,6 +30,14 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
   Color _strengthColor = Colors.grey;
   double _strengthValue = 0;
 
+  // Password validation patterns
+  // ignore: deprecated_member_use
+  static final _upperCasePattern = RegExp(r"[A-Z]");
+  // ignore: deprecated_member_use
+  static final _digitPattern = RegExp(r"[0-9]");
+  // ignore: deprecated_member_use
+  static final _specialCharPattern = RegExp(r"[!@#\$&*~]");
+
   @override
   void initState() {
     super.initState();
@@ -48,9 +56,9 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
 
     int score = 0;
     if (pass.length >= 6) score++;
-    if (pass.contains(RegExp(r"[A-Z]"))) score++;
-    if (pass.contains(RegExp(r"[0-9]"))) score++;
-    if (pass.contains(RegExp(r"[!@#\$&*~]"))) score++;
+    if (_upperCasePattern.hasMatch(pass)) score++;
+    if (_digitPattern.hasMatch(pass)) score++;
+    if (_specialCharPattern.hasMatch(pass)) score++;
 
     if (score <= 1) {
       setState(() {
@@ -102,7 +110,7 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
     setState(() => _loading = true);
 
     String deviceId = await DeviceHelper.getDeviceId();
-    deviceId = (deviceId.isNotEmpty && deviceId != "unknown") ? deviceId : (web.window.localStorage.getItem("studyapp_device_id") ?? "");
+    deviceId = (deviceId.isNotEmpty && deviceId != "unknown") ? deviceId : (html.window.localStorage["studyapp_device_id"] ?? "");
 
     final res = await http.post(
       Uri.parse("https://apply4study.com/api/updatePassword"),

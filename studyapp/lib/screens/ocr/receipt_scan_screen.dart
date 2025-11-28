@@ -136,6 +136,7 @@ class _ReceiptScanScreenState extends State<ReceiptScanScreen> {
   List<Map<String, dynamic>> _extractItemsFromText(String text, int pageNumber) {
     final lines = text.split('\n');
     final items = <Map<String, dynamic>>[];
+    // ignore: deprecated_member_use
     final numberRegex = RegExp(r'([0-9]+(?:[.,][0-9]{1,2})?)');
 
     for (int i = 0; i < lines.length; i++) {
@@ -163,6 +164,7 @@ class _ReceiptScanScreenState extends State<ReceiptScanScreen> {
 
   String _generateSummary(String text, List<Map<String, dynamic>> items, double total) {
     final lines = text.split('\n').where((line) => line.trim().isNotEmpty).toList();
+    // ignore: deprecated_member_use
     final wordCount = text.split(RegExp(r'\s+')).where((word) => word.isNotEmpty).length;
     final lowerText = text.toLowerCase();
     
@@ -194,8 +196,10 @@ $additionalInfo''';
   }
   
   String _getSubjectType(String text) {
+    // ignore: deprecated_member_use
     if (text.contains(RegExp(r'[+\-*/=]|equation|algebra|geometry|calculus|trigonometry'))) {
       return 'Math Question Paper';
+    // ignore: deprecated_member_use
     } else if (text.contains(RegExp(r'physics|chemistry|biology|science|experiment|formula|atom|molecule'))) {
       return 'Science Question Paper';
     }
@@ -203,7 +207,9 @@ $additionalInfo''';
   }
   
   String _generateEducationalSummary(String text) {
+    // ignore: deprecated_member_use
     final questions = text.split(RegExp(r'\d+[.):]')).where((q) => q.trim().isNotEmpty).toList();
+    // ignore: deprecated_member_use
     final mathSymbols = RegExp(r'[+\-*/=]').allMatches(text).length;
     
     String hints = '';

@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/services.dart';
 import 'package:app_settings/app_settings.dart';
 import 'package:http/http.dart' as http;
-import 'package:web/web.dart' as web;
+import 'package:universal_html/html.dart' as html;
 import 'package:uuid/uuid.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'dart:io';
@@ -25,15 +25,17 @@ class NotificationService {
   static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   static String getWebDeviceId() {
+    if (!kIsWeb) return "";
+
     const storageKey = "studyapp_device_id";
-    // Check if already stored
-    String? existing = web.window.localStorage.getItem(storageKey);
+    String? existing = html.window.localStorage[storageKey];
     if (existing != null && existing.isNotEmpty) {
       return existing;
     }
+
     // If not exists → generate new UUID
     String newId = const Uuid().v4();
-    web.window.localStorage.setItem(storageKey, newId);
+    html.window.localStorage[storageKey] = newId;
     return newId;
   }
 
@@ -52,12 +54,12 @@ class NotificationService {
         deviceData.addAll({
           'device_id': getWebDeviceId(), // best available for web
           'model': 'Web Browser',
-          'os': web.window.navigator.platform != "" ? web.window.navigator.platform : "Web",
+          'os': html.window.navigator.platform != "" ? html.window.navigator.platform : "Web",
           'os_version': 'N/A',
           'app_version': "1.0.0",
           'manufacturer': 'Browser',
-          'brand': web.window.navigator.vendor,
-          'device': web.window.navigator.userAgent,
+          'brand': html.window.navigator.vendor,
+          'device': html.window.navigator.userAgent,
         });
       }
 
@@ -165,7 +167,7 @@ class NotificationService {
       }
 
       await http.post(
-        Uri.parse('http://localhost:8083/api/device/register'),
+        Uri.parse('https://apply4study.com/api/device/register'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(deviceData),
       );

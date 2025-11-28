@@ -6,7 +6,7 @@ import 'package:country_code_picker/country_code_picker.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:web/web.dart' as web;
+import 'package:universal_html/html.dart' as html;
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import '../../core/app_theme.dart';
@@ -80,13 +80,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
     try {
       String deviceId = await DeviceHelper.getDeviceId();
-      deviceId = (deviceId.isNotEmpty && deviceId != "unknown") ? deviceId : (web.window.localStorage.getItem("studyapp_device_id") ?? "");
+      deviceId = (deviceId.isNotEmpty && deviceId != "unknown") ? deviceId : (html.window.localStorage["studyapp_device_id"] ?? "");
 
 
       // --- API Call (with timeout) ---
       final response = await http
           .post(
-            Uri.parse("http://localhost:8083/api/sms/send"),
+            Uri.parse("https://apply4study.com/api/sms/send"),
             body: {"mobile": mobile,"mode":"login","device_id":deviceId},
           )
           .timeout(const Duration(seconds: 15));

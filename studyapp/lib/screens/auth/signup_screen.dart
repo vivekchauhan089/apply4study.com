@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
-import 'package:web/web.dart' as web;
+import 'package:universal_html/html.dart' as html;
 import 'dart:convert';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:geocoding/geocoding.dart';
@@ -85,7 +85,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     try {
       String deviceId = await DeviceHelper.getDeviceId();
-      deviceId = (deviceId.isNotEmpty && deviceId != "unknown") ? deviceId : (web.window.localStorage.getItem("studyapp_device_id") ?? "");
+      deviceId = (deviceId.isNotEmpty && deviceId != "unknown") ? deviceId : (html.window.localStorage["studyapp_device_id"] ?? "");
 
       final response = await http.post(
         Uri.parse("https://apply4study.com/api/signup"),

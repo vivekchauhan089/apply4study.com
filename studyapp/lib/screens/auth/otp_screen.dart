@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:web/web.dart' as web;
+import 'package:universal_html/html.dart' as html;
 
 import '../../core/app_theme.dart';
 import '../../utils/device_helper.dart';
@@ -67,10 +67,10 @@ class _OtpScreenState extends State<OtpScreen> {
     startTimer();
 
     String deviceId = await DeviceHelper.getDeviceId();
-    deviceId = (deviceId.isNotEmpty && deviceId != "unknown") ? deviceId : (web.window.localStorage.getItem("studyapp_device_id") ?? "");
+    deviceId = (deviceId.isNotEmpty && deviceId != "unknown") ? deviceId : (html.window.localStorage["studyapp_device_id"] ?? "");
 
     await http.post(
-      Uri.parse("http://localhost:8083/api/sms/send"),
+      Uri.parse("https://apply4study.com/api/sms/send"),
       body: {"mobile": mobileNumber, "device_id": deviceId},
     );
 
@@ -94,10 +94,10 @@ class _OtpScreenState extends State<OtpScreen> {
 
     setState(() => _loading = true);
     String deviceId = await DeviceHelper.getDeviceId();
-    deviceId = (deviceId.isNotEmpty && deviceId != "unknown") ? deviceId : (web.window.localStorage.getItem("studyapp_device_id") ?? "");
+    deviceId = (deviceId.isNotEmpty && deviceId != "unknown") ? deviceId : (html.window.localStorage["studyapp_device_id"] ?? "");
 
     final response = await http.post(
-      Uri.parse("http://localhost:8083/api/sms/verify"),
+      Uri.parse("https://apply4study.com/api/sms/verify"),
       body: {"mobile": mobileNumber, "otp": otp, "device_id": deviceId},
     );
 

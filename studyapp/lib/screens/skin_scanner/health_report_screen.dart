@@ -59,6 +59,7 @@ class _HealthReportScreenState extends State<HealthReportScreen> {
   }
 
   double _extractNumericValue(String value) {
+    // ignore: deprecated_member_use
     final regex = RegExp(r'(\d+\.?\d*)');
     final match = regex.firstMatch(value);
     return match != null ? double.tryParse(match.group(1)!) ?? 0 : 0;
